@@ -108,7 +108,6 @@
         display: inline-block;
         height: 44px;
         line-height: 44px;
-        padding: 0 27px;
         text-align: center;
         color: #fff;
         background-color: @dark_blue;
@@ -163,12 +162,60 @@
         }
       }
     }
+    .history{
+      text-align: right;
+      height:30px;
+      line-height: 30px;
+      padding: 0 10px;
+      a{
+        color:@light_blue;
+      }
+    }
+
+    .history-container{
+      .content{
+        width:938px;
+        height: 354px;
+        background-color: #fff;
+        margin: 10% auto 0;
+      }
+      .title{
+        position: relative;
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        padding: 0 20px;
+        background-color: @mask_blue;
+        color: #fff;
+        .iconfont{
+          position: absolute;
+          font-size: 20px;
+          color: #fff;
+          right: 10px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  
+  .success-content {
+    text-align: center;
+    font-size: 14px;
+    .iconfont {
+      font-size: 75px;
+      color: #6cbf0d;
+    }
+    p{
+      color: @f_dark;
+    }
   }
 </style>
 
 <template>
   <div class="punlish-container inner-container">
-    <div style="height:30px"></div>
+    <div class="history">
+      <a @click="historyShow = true">从历史求购中选择>></a>
+    </div>
     <div class="list-content">
       <ul class="row head clearfix" v-show="headShow">
         <li class="checkbox"></li>
@@ -195,7 +242,7 @@
             <li class="type">{{ item.data.ironTypeName }}</li>
             <li class="material">{{ item.data.materialName }}</li>
             <li class="surface">{{ item.data.surfaceName }}</li>
-            <li class="specifica">{{ item.data.specifications != '' ?  item.data.specifications : `${item.data.height}*${item.data.width}*${item.data.length}`}}</li>
+            <li class="specifica">{{ item.data.specifications != '' ? item.data.specifications : `${item.data.height}*${item.data.width}*${item.data.length}`}}</li>
             <li class="tolerance">{{ item.data.tolerance }}</li>
             <li class="quantity">{{ item.data.numbers != '' ? `${item.data.numbers}${item.data.numberUnit}`: '—'}}</li>
             <li class="quantity">{{ item.data.weights != '' ? `${item.data.weights}${item.data.weightUnit}`: '—'}}</li>
@@ -213,7 +260,28 @@
     </div>
     <div class="add-row" @click="addNew()" v-show="!isEditShow && isMax">新增一条</div>
     <div class="action-bar" v-show="!isEditShow">
-      <a class="btn" @click="publishSome">发布{{ checkItems.length > 0 ? `(${checkItems.length})` : '' }}</a>
+      <a class="btn goast" @click="checkAll">全选</a>
+      <a class="btn goast" @click="removeSome">批量删除</a>
+      <a class="btn" style="width: 110px" @click="publishSome">发布{{ checkItems.length > 0 ? `(${checkItems.length})` : '' }}</a>
+    </div>
+  
+    <Modal v-model="successShow" width="400px" ok-text="前往" cancel-text="留在此页" :mask-closable="false" @on-ok="jumpTo">
+      <div class="success-content">
+        <span class="iconfont icon-CombinedShape"></span>
+        <p>发布成功，是否跳转到我的求购？</p>
+      </div>
+    </Modal>
+
+    <div class="history-container" v-if="historyShow">
+      <div class="ivu-modal-mask"></div>
+      <div class="ivu-modal-wrap">
+        <div class="content">
+          <div class="title">
+              求购历史(最近6条)
+              <span class="iconfont icon-close" @click="historyShow = false"></span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -258,6 +326,8 @@
     },
     data() {
       return {
+        historyShow: false,
+        successShow: false,
         activeIndex: 0,
         list: []
       }
@@ -320,13 +390,12 @@
           if (this.needException) {
             this.deleteItem(this.activeIndex);
           } else {
-            alert('怎么处理呢？')
+            return false
           }
         }
       },
       // 单个发布后回调
       itemPublish(item) {
-        // alert("发布完成");
         // 如果有超过1条的数据，就是发布后列表中还有数据存在
         if (this.needException) {
           // 直接发布，删除数据
@@ -337,6 +406,7 @@
           this.$refs.ei[0].initItem();
         }
         this.updateStorge();
+        this.successShow = true;
       },
       // 编辑
       editItem(item, index) {
@@ -384,6 +454,29 @@
           this.list.push(data);
         }
       },
+      // 全选
+      checkAll() {
+        this.list.map(item => {
+          item.check = true;
+        })
+      },
+      //批量删除
+      removeSome() {
+        this.$Modal.confirm({
+          title: '是否要删除？',
+          content: '删除后将无法撤销，是否继续？',
+          onOk: () => {
+            let listData = this.$clearData(this.list);
+            this.list = _.filter(listData, function(el) {
+              return !el.check
+            });
+            if (this.list.length == 0)
+              this.addNew();
+            this.updateStorge();
+            this.$Message.success("已删除");
+          }
+        });
+      },
       // 批量发布
       publishSome() {
         if (this.checkItems.length > 0) {
@@ -395,7 +488,7 @@
               return !el.check
             });
             this.updateStorge();
-            this.$Message.success("发布成功！")
+            this.successShow = true;
           })
         }
       },
@@ -406,6 +499,10 @@
           return el.save;
         });
         this.$ls.set('publishList', willSave);
+      },
+      // 跳转到其他页面
+      jumpTo(){
+        alert("跳转到求购去")
       }
     },
     created() {

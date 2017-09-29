@@ -9,12 +9,18 @@ import axios from './http'
 import * as api from './api'
 import clickoutside from './directives/clickoutside'
 import _ from 'lodash'
+import * as filters from './filters/index' //过滤器
 import VueLocalStorage from 'vue-ls';
 
-import { Modal, Button, Message } from 'iview';
+Object.keys(filters).forEach(key => {
+    Vue.filter(key, filters[key])
+})
+
+import { Modal, Button, Message, Page } from 'iview';
 
 Vue.component(Modal.name, Modal);
 Vue.component(Button.name, Button);
+Vue.component(Page.name, Page);
 Vue.prototype.$Modal = Modal;
 Vue.prototype.$Message = Message;
 

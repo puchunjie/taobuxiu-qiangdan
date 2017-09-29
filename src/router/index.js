@@ -11,7 +11,18 @@ const router = new Router({
                 component: resolve => require(['@/views/publish/iron/index'], resolve),
             },
             {
+                path: '/buyer',
+                name: 'buyer',
+                component: resolve => require(['@/views/buyer/index'], resolve),
+                children: [{
+                    path: 'buys',
+                    name: 'buys',
+                    component: resolve => require(['@/views/buyer/buys/index'], resolve)
+                }]
+            },
+            {
                 path: '*',
+                name: 'notFound',
                 component: resolve => require(['@/views/notFound/index'], resolve)
             }
         ],

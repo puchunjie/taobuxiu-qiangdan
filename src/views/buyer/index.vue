@@ -1,0 +1,66 @@
+<template>
+    <div class="container">
+        <leftMenu :menus="menus"></leftMenu>
+        <div class="right-content">
+            <router-view></router-view>
+        </div>
+    </div>
+</template>
+
+<script>
+    import leftMenu from '@/components/leftMenu.vue'
+    export default {
+        components: {
+            leftMenu
+        },
+        data() {
+            return {
+                menus: [{
+                    title: '现货报价管理',
+                    icon: '',
+                    subs: [{
+                        name: '今日',
+                        count: 300,
+                        router: {}
+                    }, {
+                        name: '历史',
+                        count: 14002,
+                        router: {}
+                    }]
+                }, {
+                    title: '我的卖家档案',
+                    icon: '',
+                    subs: [{
+                            name: '基本信息',
+                            router: {}
+                        },
+                        {
+                            name: '经营范围',
+                            router: {}
+                        },
+                        {
+                            name: '权益说明',
+                            router: {}
+                        },
+                        {
+                            name: '发布优惠',
+                            router: {}
+                        }
+                    ]
+                }]
+            }
+        }
+    }
+</script>
+
+
+<style lang="less">
+    .container {
+        width: 100%;
+        .right-content{
+            margin:15px 0 0 175px;
+            padding-right: 15px;
+        }
+    }
+</style>
+

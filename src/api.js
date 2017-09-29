@@ -1,4 +1,4 @@
-// =================================地区=================================
+// =================================发布求购页面=================================
 /**
  * 查询地区信息
  * @params name - 可选
@@ -68,3 +68,17 @@ export const publish_one = '/demands/ironBuy/saveAndUpdateIronBuy'
  * 批量发布
  */
 export const publishSome = '/demands/ironBuy/saveIronBuyList'
+
+
+// =================================买家求购管理=================================
+/**
+ * 求购列表
+ * @params currentPage,pageSize,buyStatus(选填)
+ */
+export const getIronBuys = '/demands/ironBuy/queryIronBuyInfoPage'
+
+/**
+ * 求购报价列表
+ * @params ironBuyId
+ */
+export const getOfferList = '/demands/ironBuy/queryIronSellInfoPage'

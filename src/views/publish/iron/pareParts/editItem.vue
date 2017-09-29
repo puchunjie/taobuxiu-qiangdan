@@ -207,7 +207,7 @@
     
                 <div class="relation-content" v-show="tags.length > 0" v-clickoutside="clearTags">
                     <div class="tag" v-for="(tag,index) in tags" :key="index" @click="autoFillGG(tag)" :class="{'no-b':index === tags.length -1}">
-                        {{ tag.height ? '厚' + tag.height: '' }}宽{{ tag.width }}长{{ tag.length }}
+                        {{ tag.height ? tag.height + '*' : '' }}{{ tag.width }}*{{ tag.length }}
                     </div>
                 </div>
             </div>
@@ -417,13 +417,15 @@
             },
             // 单个发布
             publish() {
-                console.log(this.$clearData(this.item))
-                this.$http.post(this.$api.publish_one, this.$clearData(this.item)).then(res => {
-                    if (res.code === 1000) {
-                        this.$Message.success("发布成功！")
-                        this.$emit('on-publish');
-                    }
-                })
+                if (this.isOK) {
+                    this.$http.post(this.$api.publish_one, this.$clearData(this.item)).then(res => {
+                        if (res.code === 1000) {
+                            this.$emit('on-publish');
+                        }
+                    })
+                } else {
+                    this.$Message.error('请将信息正确填写完整！')
+                }
             },
             // 输入框选择完毕后的验证
             validate(data) {
