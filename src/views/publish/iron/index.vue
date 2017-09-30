@@ -144,7 +144,7 @@
           color: #FFCB30;
         }
         .icon-shanchu {
-          color: #FF5555;
+          color: @dark_red;
         }
       }
     }

@@ -32,8 +32,8 @@
             <div class="item surface">{{ item.surfaceName }}</div>
             <div class="item specifications">{{ item.specifications!= '' ? item.specifications : `${ item.height }*${ item.width }*${ item.length }` }}</div>
             <div class="item tolerance">{{ item.tolerance }}</div>
-            <div class="item number">{{ item.numbers ? `${ item.numbers }${ item.numberUnit }`: '-' }}</div>
-            <div class="item weight">{{ item.weights ? `${ item.weights }${ item.weightUnit }`: '-' }}</div>
+            <div class="item number">{{ item.numbers ? `${ item.numbers }${ item.numberUnit }`: '—' }}</div>
+            <div class="item weight">{{ item.weights ? `${ item.weights }${ item.weightUnit }`: '—' }}</div>
             <div class="item proPlaces">{{ item.proPlacesName }}</div>
         </div>
         <div class="remark">
@@ -94,6 +94,7 @@
             color: @f_dark;
             .item {
                 float: left;
+                height: 100%;
                 text-indent: 20px;
                 border-right: @b_d1;
                 border-bottom: @b_d1;

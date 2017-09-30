@@ -3,11 +3,10 @@
         <ul class="menu-list">
             <li class="menu-item" v-for="(item,index) in menus" :key="index">
                 <div class="item-title">
-                    <span class="iconfont icon-CombinedShape"></span>
-                    {{ item.title }}
+                    <span class="iconfont icon-CombinedShape"></span> {{ item.title }}
                 </div>
                 <ul class="sub-menu-list">
-                    <li v-for="(sub,i) in item.subs" :key="i">
+                    <li v-for="(sub,i) in item.subs" :class="{'active':sub.active}" :key="i" @click="routerGo(sub)">
                         {{ sub.name }}{{ sub.count ? `(${sub.count})`: '' }}
                     </li>
                 </ul>
@@ -18,8 +17,37 @@
 
 <script>
     export default {
-        props:{
-          menus:Array  
+        props: {
+            menus: Array
+        },
+        methods: {
+            routerGo(item) {
+                this.$router.push(item.router);
+                this.setHighLight();
+            },
+            // 设置高亮
+            setHighLight() {
+                this.initMenuActive();
+                let routerPath = this.$route.path;
+                this.menus.forEach(sub => {
+                    sub.subs.forEach(el => {
+                        if (routerPath.indexOf(el.router.name) > 0) {
+                            el.active = true;
+                            return false
+                        }
+                    })
+                })
+            },
+            initMenuActive() {
+                this.menus.forEach(sub => {
+                    sub.subs.forEach(el => {
+                        this.$set(el, 'active', false);
+                    })
+                });
+            }
+        },
+        created() {
+            this.setHighLight();
         }
     }
 </script>
@@ -40,27 +68,26 @@
         width: 100%;
         color: #fff;
         font-size: 14px;
-        .menu-item{
+        .menu-item {
             width: 100%;
-            .item-title{
+            .item-title {
                 width: 100%;
                 height: 50px;
                 line-height: 50px;
                 text-indent: 12px;
-                .iconfont{
+                .iconfont {
                     font-size: 20px;
                 }
             }
         }
-
-
-        .sub-menu-list{
+        .sub-menu-list {
             width: 100%;
-            li{
+            li {
                 line-height: 40px;
                 text-indent: 35px;
                 cursor: pointer;
-                &.active,&:hover{
+                &.active,
+                &:hover {
                     background-color: rgba(225, 225, 225, 0.3);
                 }
             }

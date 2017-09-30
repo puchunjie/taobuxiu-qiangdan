@@ -121,7 +121,7 @@ import statusBar from './parts/statusBar.vue'
       filterStatus(status){
         this.getListApi.buyStatus = status;
         this.activeIndex = 0;
-        this.getOfferList();
+        this.getIronBuys();
       }
     },
     watch: {

@@ -18,6 +18,20 @@ const router = new Router({
                     path: 'buys',
                     name: 'buys',
                     component: resolve => require(['@/views/buyer/buys/index'], resolve)
+                }, {
+                    path: 'userInfo',
+                    name: 'userInfo',
+                    component: resolve => require(['@/views/buyer/personalInfo/index'], resolve)
+                }]
+            },
+            {
+                path: '/seller',
+                name: 'seller',
+                component: resolve => require(['@/views/seller/index'], resolve),
+                children: [{
+                    path: 'userInfo',
+                    name: 'userInfo',
+                    component: resolve => require(['@/views/seller/personalInfo/index'], resolve)
                 }]
             },
             {

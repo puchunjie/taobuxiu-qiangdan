@@ -10,7 +10,7 @@
       <img class="logo" src="./assets/logo.png">
       <ul class="menu">
         <li>首页</li>
-        <li class="active">发布求购</li>
+        <li>发布求购</li>
       </ul>
       <div class="account-group">
         <a class="br">买家中心</a>
