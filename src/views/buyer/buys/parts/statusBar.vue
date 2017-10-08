@@ -10,29 +10,11 @@
 
 <script>
     export default {
+        props:{
+            status:Array
+        },
         data() {
             return {
-                status: [{
-                        name: '进行中',
-                        status: 1,
-                        count: 7
-                    },
-                    {
-                        name: '已成交',
-                        status: 2,
-                        count: 0
-                    },
-                    {
-                        name: '已失效',
-                        status: 3,
-                        count: 0
-                    },
-                    {
-                        name: '所有',
-                        status: '',
-                        count: 7
-                    }
-                ],
                 activeIndex: 0
             }
         },

@@ -9,10 +9,14 @@
         }
     }
     
+    .warp-warp {
+        float: left;
+        width: 33.3333%;
+    }
+    
     .input-item-warp {
         position: relative;
         display: block;
-        float: left;
         height: 36px;
         color: @f_dark;
         line-height: 36px;
@@ -167,85 +171,105 @@
 <template>
     <div class="item-group">
         <div class="contnet clearfix">
-            <div class="input-item-warp wid-180">
-                <label>货源所在地</label>
-                <input class="goast-input level1" :ref="item.id+'-city'" :id="item.id+'-city'" type="text" @focus="showFuzzy" v-model="item.locationName" @keyup="setInput">
-                <p class="err">{{ item.locationName == '' ? '请选择' : '无效内容' }}</p>
-            </div>
-            <div class="input-item-warp wid-240">
-                <label>品名</label>
-                <input class="goast-input level1" :ref="item.id+'-type'" :id="item.id+'-type'" type="text" @focus="showFuzzy" v-model="item.ironTypeName" @keyup="setInput">
-                <p class="err">{{ item.ironTypeName == '' ? '请选择' : '无效内容' }}</p>
-            </div>
-            <div class="input-item-warp wid-200">
-                <label>材质</label>
-                <input class="goast-input level1" :ref="item.id+'-material'" :id="item.id+'-material'" type="text" @focus="showFuzzy" v-model="item.materialName" @keyup="setInput">
-                <p class="err">{{ item.materialName == '' ? '请选择' : '无效内容' }}</p>
-            </div>
-            <div class="input-item-warp wid-140">
-                <label>表面</label>
-                <input class="goast-input level1" :ref="item.id+'-surface'" :id="item.id+'-surface'" type="text" @focus="showFuzzy" v-model="item.surfaceName" @keyup="setInput">
-                <p class="err">{{ item.surfaceName == '' ? '请选择' : '无效内容' }}</p>
-            </div>
-            <div class="input-item-warp wid-240">
-                <label>规格</label>
-                <div class="inline" v-if="isJB">
-                    <div class="inside-group">
-                        <input class="goast-input" stay="ok" @focus="showRelation(true)" @keyup="showRelation(true)" type="text" v-model="item.height">
-                        <span>厚</span>
-                    </div>
-                    <div class="inside-group">
-                        <input class="goast-input" stay="ok" @focus="showRelation(false)" @keyup="showRelation(false)" type="text" v-model="item.width">
-                        <span>宽</span>
-                    </div>
-                    <div class="inside-group">
-                        <input class="goast-input" stay="ok" @focus="showRelation(false)" @keyup="showRelation(false)" type="text" v-model="item.length">
-                        <span>长</span>
-                    </div>
+            <div class="warp-warp">
+                <div class="input-item-warp wid-180">
+                    <label>货源所在地</label>
+                    <input class="goast-input level1" :ref="item.id+'-city'" :id="item.id+'-city'" type="text" @focus="showFuzzy" v-model="item.locationName" @keyup="setInput">
+                    <p class="err">{{ item.locationName == '' ? '请选择' : '无效内容' }}</p>
                 </div>
-                <input v-else class="goast-input level1" type="text" v-model="item.specifications">
+            </div>
+            <div class="warp-warp">
+                <div class="input-item-warp wid-240">
+                    <label>品名</label>
+                    <input class="goast-input level1" :ref="item.id+'-type'" :id="item.id+'-type'" type="text" @focus="showFuzzy" v-model="item.ironTypeName" @keyup="setInput">
+                    <p class="err">{{ item.ironTypeName == '' ? '请选择' : '无效内容' }}</p>
+                </div>
+            </div>
+            <div class="warp-warp">
+                <div class="input-item-warp wid-200  no-margin">
+                    <label>材质</label>
+                    <input class="goast-input level1" :ref="item.id+'-material'" :id="item.id+'-material'" type="text" @focus="showFuzzy" v-model="item.materialName" @keyup="setInput">
+                    <p class="err">{{ item.materialName == '' ? '请选择' : '无效内容' }}</p>
+                </div>
+            </div>
+            <div class="warp-warp">
+                <div class="input-item-warp wid-140">
+                    <label>表面</label>
+                    <input class="goast-input level1" :ref="item.id+'-surface'" :id="item.id+'-surface'" type="text" @focus="showFuzzy" v-model="item.surfaceName" @keyup="setInput">
+                    <p class="err">{{ item.surfaceName == '' ? '请选择' : '无效内容' }}</p>
+                </div>
+            </div>
+            <div class="warp-warp">
+                <div class="input-item-warp wid-240">
+                    <label>规格</label>
+                    <div class="inline" v-if="isJB">
+                        <div class="inside-group">
+                            <input class="goast-input" stay="ok" @focus="showRelation(true)" @keyup="showRelation(true)" type="text" v-model="item.height">
+                            <span>厚</span>
+                        </div>
+                        <div class="inside-group">
+                            <input class="goast-input" stay="ok" @focus="showRelation(false)" @keyup="showRelation(false)" type="text" v-model="item.width">
+                            <span>宽</span>
+                        </div>
+                        <div class="inside-group">
+                            <input class="goast-input" stay="ok" @focus="showRelation(false)" @keyup="showRelation(false)" type="text" v-model="item.length">
+                            <span>长</span>
+                        </div>
+                    </div>
+                    <input v-else class="goast-input level1" type="text" v-model="item.specifications">
     
-                <div class="relation-content" v-show="tags.length > 0" v-clickoutside="clearTags">
-                    <div class="tag" v-for="(tag,index) in tags" :key="index" @click="autoFillGG(tag)" :class="{'no-b':index === tags.length -1}">
-                        {{ tag.height ? tag.height + '*' : '' }}{{ tag.width }}*{{ tag.length }}
+                    <div class="relation-content" v-show="tags.length > 0" v-clickoutside="clearTags">
+                        <div class="tag" v-for="(tag,index) in tags" :key="index" @click="autoFillGG(tag)" :class="{'no-b':index === tags.length -1}">
+                            {{ tag.height ? tag.height + '*' : '' }}{{ tag.width }}*{{ tag.length }}
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="input-item-warp wid-112 no-margin disabel">
-                <label>时间</label> 24小时
-            </div>
-            <div class="input-item-warp wid-180">
-                <label>公差</label>
-                <input class="goast-input level1" style="width:110px;text-align:right" type="text" v-model="item.tolerance">
-            </div>
-            <div class="input-item-warp wid-240" :class="{'on-err':unitTip}">
-                <label>单位</label>
-                <div class="inline">
-                    <div class="inside-group">
-                        <input class="goast-input" @blur="isUnitErr" style="width:75px" type="text" v-model="item.weights">
-                        <span>{{ item.weightUnit == '' ? 'x' : item.weightUnit }}</span>
-                    </div>
-                    <div class="inside-group">
-                        <input class="goast-input" @blur="isUnitErr" style="width:75px" type="text" v-model="item.numbers">
-                        <span>{{ item.numberUnit == '' ? 'x' : item.numberUnit }}</span>
-                    </div>
+            <div class="warp-warp">
+                <div class="input-item-warp wid-180  no-margin">
+                    <label>公差</label>
+                    <input class="goast-input level1" style="width:110px;text-align:right" type="text" v-model="item.tolerance">
                 </div>
-                <p class="err">至少填写一个单位！</p>
             </div>
-            <div class="input-item-warp wid-200">
-                <label>生产商</label>
-                <input class="goast-input level1" style="width:120px" :ref="item.id+'-proPlace'" :id="item.id+'-proPlace'" type="text" @focus="showFuzzy" v-model="item.proPlacesName" @keyup="setInput">
-                <p class="err">{{ item.ironTypeName == '' ? '请选择' : '无效内容' }}</p>
+            <div class="warp-warp">
+                <div class="input-item-warp wid-200">
+                    <label>生产商</label>
+                    <input class="goast-input level1" style="width:120px" :ref="item.id+'-proPlace'" :id="item.id+'-proPlace'" type="text" @focus="showFuzzy" v-model="item.proPlacesName" @keyup="setInput">
+                    <p class="err">{{ item.ironTypeName == '' ? '请选择' : '无效内容' }}</p>
+                </div>
             </div>
-            <div class="input-item-warp wid-550 no-margin">
-                <label>备注(选填)</label>
-                <input class="goast-input level1" type="text" v-model="item.remark" placeholder="请填写您的交货期等其他要求，最多35字">
+            <div class="warp-warp">
+                <div class="input-item-warp wid-240" :class="{'on-err':unitTip}">
+                    <label>单位</label>
+                    <div class="inline">
+                        <div class="inside-group">
+                            <input class="goast-input" @blur="isUnitErr" style="width:75px" type="text" v-model="item.weights">
+                            <span>{{ item.weightUnit == '' ? 'x' : item.weightUnit }}</span>
+                        </div>
+                        <div class="inside-group">
+                            <input class="goast-input" @blur="isUnitErr" style="width:75px" type="text" v-model="item.numbers">
+                            <span>{{ item.numberUnit == '' ? 'x' : item.numberUnit }}</span>
+                        </div>
+                    </div>
+                    <p class="err">至少填写一个单位！</p>
+                </div>
+            </div>
+            
+            <div class="warp-warp">
+                <div class="input-item-warp wid-112 no-margin disabel">
+                    <label>时间</label> 24小时
+                </div>
+            </div>
+            <div class="warp-warp">
+                <div class="input-item-warp wid-550  no-margin">
+                    <label>备注(选填)</label>
+                    <input class="goast-input level1" type="text" v-model="item.remark" placeholder="请填写您的交货期等其他要求，最多35字">
+                </div>
             </div>
         </div>
         <div class="footer-bar">
             <a class="btn goast" @click="close">取消</a>
-            <a class="btn" @click="save">保存</a>
-            <a class="btn" @click="publish">快速发布</a>
+            <a class="btn" @click="save">确认修改</a>
         </div>
     
         <fuzzySelector v-if="fuzzy.show" :x="fuzzy.x" :y="fuzzy.y" :oldVal="fuzzy.oldVal" :selectApi="fuzzy.selectApi" :queryStr="fuzzy.queryStr" @on-item-click="fuzzy.show = false" @outside-click="hideFuzzy" :id="activeTargetRef" :isCity="fuzzy.isCity" @on-destroy="validate"></fuzzySelector>
@@ -415,18 +439,6 @@
             close() {
                 this.$emit('on-close');
             },
-            // 单个发布
-            publish() {
-                if (this.isOK) {
-                    this.$http.post(this.$api.publish_one, this.$clearData(this.item)).then(res => {
-                        if (res.code === 1000) {
-                            this.$emit('on-publish');
-                        }
-                    })
-                } else {
-                    this.$Message.error('请将信息正确填写完整！')
-                }
-            },
             // 输入框选择完毕后的验证
             validate(data) {
                 let inputKey = data.id.split('-')[1];
@@ -437,6 +449,7 @@
                 } else {
                     this.setErr(this.$refs[data.id].parentElement)
                 }
+                
             },
             // 设置输入错误提示
             setErr(el) {

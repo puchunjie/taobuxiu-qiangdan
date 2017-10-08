@@ -99,6 +99,10 @@
       color: @mask_blue;
       border: 1px dashed @mask_blue;
       .borderRadius;
+      &:hover{
+        background-color: @goast_blue;
+        color: @mask_blue;
+      }
     }
     .action-bar {
       width: 100%;
@@ -195,6 +199,9 @@
           cursor: pointer;
         }
       }
+      .list{
+        width: 100%;
+      }
     }
   }
   
@@ -280,6 +287,7 @@
               求购历史(最近6条)
               <span class="iconfont icon-close" @click="historyShow = false"></span>
           </div>
+          <div class="list"></div>
         </div>
       </div>
     </div>
@@ -333,6 +341,10 @@
       }
     },
     computed: {
+      // 是否是点击复制后跳转过来？
+      isCopy(){
+        return this.$route.params.isCopy == 1
+      },
       // 是否显示表头,list中有保存的数据时才有
       headShow() {
         return this.list.find(el => {
@@ -502,13 +514,24 @@
       },
       // 跳转到其他页面
       jumpTo(){
-        alert("跳转到求购去")
+        this.$router.push({name:'buys',params:{isToday: 1}})
       }
     },
     created() {
       this.list = this.$ls.get('publishList') != null ? this.$ls.get('publishList') : [];
       if (this.list.length == 0)
         this.addNew();
+
+      if(this.isCopy){
+        let copyData = this.$ls.get('copyData');
+        if(this.isEditShow){
+          this.list[0].data = copyData;
+        }else{
+          this.addNew();
+          this.list[this.list.length-1].data = copyData;
+        }
+      }
+        
     }
   }
 </script>

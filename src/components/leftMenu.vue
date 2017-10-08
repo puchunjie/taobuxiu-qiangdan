@@ -28,15 +28,24 @@
             // 设置高亮
             setHighLight() {
                 this.initMenuActive();
-                let routerPath = this.$route.path;
-                this.menus.forEach(sub => {
-                    sub.subs.forEach(el => {
-                        if (routerPath.indexOf(el.router.name) > 0) {
-                            el.active = true;
-                            return false
-                        }
+                setTimeout(() => {
+                    let routerPath = this.$route.path;
+                    this.menus.forEach(sub => {
+                        sub.subs.forEach(el => {
+                            if (routerPath.indexOf(el.router.name) > 0) {
+                                if (this.$route.name == 'buys') {
+                                    if (el.router.params.isToday == this.$route.params.isToday) {
+                                        el.active = true;
+                                        return false
+                                    }
+                                } else {
+                                    el.active = true;
+                                    return false
+                                }
+                            }
+                        })
                     })
-                })
+                }, 50);
             },
             initMenuActive() {
                 this.menus.forEach(sub => {

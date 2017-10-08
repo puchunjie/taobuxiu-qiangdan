@@ -1,72 +1,48 @@
 <template>
-  <div>
-    <statusBar @on-filter-status="filterStatus"></statusBar>
+  <div class="buy-index">
+    <statusBar @on-filter-status="filterStatus" :status="statusData"></statusBar>
     <tabList @on-page-change="pageChange" :total="totalCount">
-      <tabCard v-for="(item,index) in list" @click.native="selectItem(index)" :class="{ 'active':activeIndex == index }" :key="index" :item="item"></tabCard>
+      <tabCard v-for="(item,index) in list" @click.native="selectItem(index)" :class="{ 'active':activeIndex == index }" :key="index" :item="item" :index="index" @on-edit="itemEdit" @on-del="deleteItem" @on-copy="copy(index)"></tabCard>
     </tabList>
     <div class="info-list">
       <Info :item="activeItem"></Info>
       <offerList :offerList="offerList"></offerList>
     </div>
+    <!-- 编辑面板 -->
+    <div class="edit-container" v-if="editShow">
+      <div class="inner-content">
+        <div class="head">
+          修改报价
+          <span class="iconfont icon-close" @click="editShow = false"></span>
+        </div>
+        <editItem :data="activeItem" @on-close="editShow = false" @on-save="doEdit"></editItem>
+      </div>
+    </div>
+  
   </div>
 </template>
 
 <script>
-import statusBar from './parts/statusBar.vue'
-  import tabCard from './parts/tabCard.vue'
-  import tabList from './parts/tabList.vue'
-  import Info from './parts/info.vue'
-  import offerList from './parts/offerList.vue'
+  import statusBar from './parts/statusBar.vue';
+  import tabCard from './parts/tabCard.vue';
+  import tabList from './parts/tabList.vue';
+  import Info from './parts/info.vue';
+  import offerList from './parts/offerList.vue';
+  import editItem from './parts/editItem.vue';
   
-  const mock = {
-    "ironTypeId": "40280d815e9e073e015e9e08b1410003",
-    "createUserId": "402800815e378255015e378a29340002",
-    "proPlacesId": "4028800a5ea2ebe3015ea2f519f90008",
-    "surfaceName": "No.1",
-    "numbers": 345,
-    "editStatus": "0",
-    "remark": "哈哈哈哈哈 嘿嘿嘿嘿 吼吼吼吼",
-    "appFlag": "1",
-    "numberUnit": "张",
-    "specifications": "",
-    "numberUnitId": "",
-    "locationId": "310100",
-    "weightUnitId": "40280d815e9d36d6015e9d435ce90000",
-    "id": "ff8080815ec306a9015ec60e3d6f000c",
-    "proPlacesName": "太钢",
-    "tolerance": "11.1-12.121",
-    "height": "0.1",
-    "locationName": "上海",
-    "updateUserId": "402800815e378255015e378a29340002",
-    "length": "100",
-    "updateUser": "admin",
-    "surfaceId": "4028800a5ea2ebe3015ea2f54afb000a",
-    "updateTime": 1506561375000,
-    "materialId": "ff8080815ea42e56015ea739201d0031",
-    "weights": 12,
-    "weightUnitName": "",
-    "numberUnitName": "",
-    "timeLimit": 86400000,
-    "materialName": "2507",
-    "createTime": 1506561375000,
-    "ironTypeName": "不锈钢板",
-    "buyStatus": "1",
-    "width": "100",
-    "createUser": "admin",
-    "status": "1",
-    "sellNum": 0,
-    "weightUnit": "吨"
-  };
   export default {
     components: {
       statusBar,
       tabCard,
       tabList,
       Info,
-      offerList
+      offerList,
+      editItem
     },
     data() {
       return {
+        ajaxLoading: true,
+        editShow: false,
         getListApi: {
           currentPage: 1,
           pageSize: 5,
@@ -75,15 +51,39 @@ import statusBar from './parts/statusBar.vue'
         list: [],
         totalCount: 0,
         activeIndex: 0,
-        offerList: []
+        offerList: [],
+        statusData: [{
+            name: '进行中',
+            status: 1,
+            count: 0
+          },
+          {
+            name: '已成交',
+            status: 2,
+            count: 0
+          },
+          {
+            name: '已失效',
+            status: 3,
+            count: 0
+          },
+          {
+            name: '所有',
+            status: '',
+            count: 0
+          }
+        ]
       }
     },
     computed: {
       activeItem() {
         return this.list.length > 0 ? this.list[this.activeIndex] : {}
       },
-      activeItemId(){
+      activeItemId() {
         return this.list.length > 0 ? this.list[this.activeIndex].id : ''
+      },
+      isToday() {
+        return this.$route.params.isToday
       }
     },
     methods: {
@@ -100,33 +100,102 @@ import statusBar from './parts/statusBar.vue'
       },
       // 获取求购列表
       getIronBuys() {
-        this.$http.post(this.$api.getIronBuys, this.getListApi).then(res => {
-          if(res.code === 1000){
+        let params = this.$clearData(this.getListApi);
+        params.today = this.isToday;
+        this.$http.post(this.$api.getIronBuys, params).then(res => {
+          if (res.code === 1000) {
             this.list = res.data.list;
             this.totalCount = res.data.totalCount;
+            if (res.data.ing) {
+              this.statusData[0].count = res.data.ing;
+              this.statusData[1].count = res.data.get;
+              this.statusData[2].count = res.data.end;
+              this.statusData[3].count = res.data.all;
+            }
+  
           }
         })
       },
       // 获取求购报价列表
-      getOfferList(){
-        this.$http.post(this.$api.getOfferList,{
+      getOfferList() {
+        this.$http.post(this.$api.getOfferList, {
           ironBuyId: this.activeItemId
         }).then(res => {
-          if(res.code === 1000){
+          if (res.code === 1000) {
             this.offerList = res.data;
           }
         })
       },
       //切换状态
-      filterStatus(status){
+      filterStatus(status) {
         this.getListApi.buyStatus = status;
         this.activeIndex = 0;
         this.getIronBuys();
+      },
+      // 打开编辑
+      itemEdit(i) {
+        this.activeIndex = i;
+        this.editShow = true;
+      },
+      // 确认修改
+      doEdit(item) {
+        this.$http.post(this.$api.publish_one, item).then(res => {
+          if (res.code === 1000) {
+            this.getIronBuys();
+            this.editShow = false;
+            this.$Message.success('修改成功！')
+          }
+        })
+      },
+      // 删除求购
+      deleteItem(item) {
+        let params = this.$clearData(item);
+        params.status = 0;
+        this.$http.post(this.$api.publish_one, params).then(res => {
+          if (res.code === 1000) {
+            this.getIronBuys();
+            this.$Message.success('已删除！')
+          }
+        })
+      },
+      // 复制
+      copy(index) {
+        this.activeIndex = index;
+        let saveList = this.$ls.get('publishList') != null ? this.$ls.get('publishList') : [];
+        if (saveList.length < 6) {
+          this.$Modal.confirm({
+            title: '复制成功！',
+            content: '求购信息已复制，是否千万发布页面进行发布？',
+            okText: '前往',
+            cancelText: '留在此页',
+            onOk: () => {
+              let data = this.$clearData(this.activeItem);
+              data.id = '';
+              delete data.buyStatus;
+              delete data.editStatus;
+              delete data.sellNum;
+              delete data.updateTime;
+              this.$ls.set('copyData', data);
+              this.$router.push({
+                name: 'publishIron',
+                params: {
+                  isCopy: 1
+                }
+              })
+            }
+          })
+        } else {
+          this.$Message.error('发布列表已经保存了六条信息,无法继续发布!')
+        }
       }
     },
     watch: {
-      activeItemId(){
+      activeItemId() {
         this.getOfferList();
+      },
+      isToday() {
+        this.getListApi.currentPage = 1;
+        this.getIronBuys();
       }
     },
     created() {
@@ -136,9 +205,182 @@ import statusBar from './parts/statusBar.vue'
 </script>
 
 
-<style lang="less" scoped>  
+<style lang="less" scoped>
+  @import '../../../assets/base.less';
   .info-list {
     margin: 16px 0 0 330px;
+  }
+  
+  .buy-index {
+    position: relative;
+  }
+  
+  .edit-container {
+    position: fixed;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .3);
+    z-index: 2223;
+    .inner-content {
+      width: 860px;
+      background-color: #fff;
+      margin: 200px auto;
+      .head {
+        position: relative;
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        color: #fff;
+        padding: 0 10px;
+        background-color: @mask_blue;
+        .iconfont {
+          position: absolute;
+          font-size: 20px;
+          color: #fff;
+          right: 10px;
+          cursor: pointer;
+        }
+      }
+      .content {
+        width: 100%;
+        height: 328px;
+        padding: 20px 40px;
+        border: @b_d1;
+      }
+    }
+    .input-item-warp {
+      position: relative;
+      display: block;
+      float: left;
+      height: 36px;
+      color: @f_dark;
+      line-height: 36px;
+      padding: 0 10px;
+      margin-right: 29px;
+      margin-bottom: 24px;
+      background-color: #fff;
+      border: @b_d1;
+      .borderRadius;
+      label {
+        margin-right: 12px;
+        color: @f_goast;
+      }
+      .err {
+        position: absolute;
+        display: none;
+        font-size: 12px;
+        right: 0;
+        bottom: -28px;
+        color: @dark_red;
+      }
+      &.on-err {
+        border-color: @dark_red!important;
+        .err {
+          display: block;
+        }
+      }
+      &:hover {
+        border-color: @mask_blue;
+      }
+      &.disabel {
+        background-color: #eee;
+        color: @f_ligth;
+        .noselect;
+      }
+      &.disabel:hover {
+        border-color: #d1d1d1;
+      }
+      &.no-margin {
+        margin-right: 0;
+      }
+      &.wid-112 {
+        width: 112px;
+      }
+      &.wid-140 {
+        width: 140px;
+        .level1 {
+          width: 70px;
+        }
+      }
+      &.wid-180 {
+        width: 180px;
+        .level1 {
+          width: 70px;
+        }
+      }
+      &.wid-200 {
+        width: 200px;
+        .level1 {
+          width: 130px;
+        }
+      }
+      &.wid-240 {
+        width: 240px;
+        .level1 {
+          width: 170px;
+        }
+      }
+      &.wid-550 {
+        width: 550px;
+        .level1 {
+          width: 445px;
+        }
+      }
+      .goast-input {
+        display: inline-block;
+        width: 100%;
+        border: 0;
+        background: none;
+        .ellipsis;
+        &:focus {
+          outline: 0;
+        }
+      }
+      .inline {
+        position: absolute;
+        right: 10px;
+        top: 0;
+      }
+      .inside-group {
+        float: left;
+        color: @f_goast;
+        input {
+          width: 45px;
+          text-align: right;
+        }
+      }
+      .relation-content {
+        position: absolute;
+        width: 240px;
+        left: 0;
+        background-color: #fff;
+        z-index: 100;
+        border: @b_d1;
+        .borderRadius;
+        .tag {
+          width: 100%;
+          height: 30px;
+          line-height: 30px;
+          padding: 0 10px;
+          cursor: pointer;
+          border-bottom: @b_d1;
+          color: @f_dark;
+          .ellipsis;
+          &.no-b {
+            border-bottom: 0;
+          }
+          &:hover {
+            background-color: @dark_blue;
+            color: #fff;
+          }
+        }
+      }
+    }
   }
 </style>
 

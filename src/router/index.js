@@ -6,7 +6,7 @@ const router = new Router({
         mode: 'history',
         base: '/qd/',
         routes: [{
-                path: '/publishIron',
+                path: '/publishIron-:isCopy',
                 name: 'publishIron',
                 component: resolve => require(['@/views/publish/iron/index'], resolve),
             },
@@ -15,12 +15,12 @@ const router = new Router({
                 name: 'buyer',
                 component: resolve => require(['@/views/buyer/index'], resolve),
                 children: [{
-                    path: 'buys',
+                    path: 'buys-:isToday',
                     name: 'buys',
                     component: resolve => require(['@/views/buyer/buys/index'], resolve)
                 }, {
-                    path: 'userInfo',
-                    name: 'userInfo',
+                    path: 'BuserInfo',
+                    name: 'BuserInfo',
                     component: resolve => require(['@/views/buyer/personalInfo/index'], resolve)
                 }]
             },
@@ -29,8 +29,8 @@ const router = new Router({
                 name: 'seller',
                 component: resolve => require(['@/views/seller/index'], resolve),
                 children: [{
-                    path: 'userInfo',
-                    name: 'userInfo',
+                    path: 'SuserInfo',
+                    name: 'SuserInfo',
                     component: resolve => require(['@/views/seller/personalInfo/index'], resolve)
                 }]
             },

@@ -1,5 +1,5 @@
 <style lang="less" scoped>
-    @import '../../../../assets/base.less';
+    @import '../../assets/base.less';
     .fuzzy-container {
         position: absolute;
         width: 422px;
@@ -162,7 +162,7 @@
                 return this.apiData != ''
             },
             classType() {
-                return this.id.replace(/\d|id/g, "")
+                return this.id.split("-")[1]
             }
         },
         methods: {
@@ -252,7 +252,7 @@
                 name: this.oldVal,
                 id: ''
             };
-    
+   
             this.$emit("on-destroy", {
                 valide: isValide,
                 id: id,

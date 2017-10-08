@@ -32,7 +32,9 @@
                     icon: '',
                     subs: [{
                             name: '基本信息',
-                            router: {}
+                            router: {
+                                name: 'SuserInfo'
+                            }
                         },
                         {
                             name: '经营范围',

@@ -22,12 +22,20 @@
                         name: '今日',
                         count: 300,
                         router: {
-                            name:'buys'
+                            name: 'buys',
+                            params: {
+                                isToday: 1
+                            }
                         }
                     }, {
                         name: '历史',
                         count: 14002,
-                        router: {}
+                        router: {
+                            name: 'buys',
+                            params: {
+                                isToday: 0
+                            }
+                        }
                     }]
                 }, {
                     title: '我的买家档案',
@@ -35,7 +43,7 @@
                     subs: [{
                             name: '基本信息',
                             router: {
-                                name:'userInfo'
+                                name: 'BuserInfo'
                             }
                         },
                         {
@@ -53,8 +61,8 @@
 <style lang="less">
     .container {
         width: 100%;
-        .right-content{
-            margin:15px 0 0 175px;
+        .right-content {
+            margin: 15px 0 0 175px;
             padding-right: 15px;
         }
     }

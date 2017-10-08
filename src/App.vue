@@ -1,29 +1,23 @@
 <template>
   <div id="app" class="main-container">
-    <div class="main-bar">
+     <div class="main-bar">
       <a class="back">返回主站</a>
       <a class="link">联系我们：400-800-1234</a>
       <a class="back fr">登录注册</a>
       <a class="back fr">旧版入口</a>
     </div>
-    <div class="main-header">
-      <img class="logo" src="./assets/logo.png">
-      <ul class="menu">
-        <li>首页</li>
-        <li>发布求购</li>
-      </ul>
-      <div class="account-group">
-        <a class="br">买家中心</a>
-        <a class="bl">卖家后台</a>
-      </div>
-    </div>
+    <PublicHead></PublicHead>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
+  import PublicHead from '@/components/publicHead'
   export default {
-    name: 'app'
+    name: 'app',
+    components: {
+      PublicHead
+    }
   }
 </script>
 
@@ -47,7 +41,7 @@
     padding: 0 10px;
     font-size: 12px;
     background-color: @bg_color;
-    z-index: 2222;
+    z-index: 1000;
     .back {
       color: @f_dark;
     }
@@ -66,7 +60,7 @@
     width: 100%;
     height: 80px;
     overflow: hidden;
-    z-index: 2222;
+    z-index: 1000;
     background-color: @dark_blue;
     .logo {
       display: block;
@@ -99,20 +93,28 @@
       width: 200px;
       height: 40px;
       border: 2px solid #fff;
+      background-color: #fff;
       margin: 20px 10px 0 0;
       line-height: 36px;
+      overflow: hidden;
       .borderRadius(40px);
       a {
         display: block;
         color: #fff;
+        background-color: @dark_blue;
         float: left;
         text-align: center;
         width: 50%;
+        height: 100%;
         &.br {
           border-right: 1px solid #fff;
         }
         &.bl {
           border-left: 1px solid #fff;
+        }
+        &.active{
+          background-color: #fff;
+          color: @dark_blue;
         }
       }
     }
@@ -120,7 +122,6 @@
   
   .inner-container {
     width: 1320px;
-    height: 100%;
     margin: 0 auto;
   }
 </style>

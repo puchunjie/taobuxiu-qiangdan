@@ -22,7 +22,7 @@
             <div class="action">
                 <span class="iconfont icon-fuzhi" @click.stop="copy"></span><br>
                 <span class="iconfont icon-shanchu" @click.stop="del"></span><br>
-                <span class="iconfont icon-bianji" @click.stop="edit"></span>
+                <span v-show="canEdit" class="iconfont icon-bianji" @click.stop="edit"></span>
             </div>
         </div>
     </div>
@@ -31,25 +31,31 @@
 <script>
     export default {
         props:{
-            item:Object
+            item:Object,
+            index:Number
+        },
+        computed: {
+            canEdit(){
+                return this.item.editStatus == 0
+            }
         },
         methods: {
             // 复制求购信息
             copy() {
-    
+                this.$emit('on-copy');
             },
             del() {
                 this.$Modal.confirm({
                     title: '是否要删除？',
                     content: '删除后将无法撤销，是否继续？',
                     onOk: () => {
-                        this.$emit('on-del', item.id);
+                        this.$emit('on-del', this.item);
                     }
                 });
             },
             // 编辑
             edit(){
-                
+                this.$emit('on-edit',this.index)
             }
         }
     }
