@@ -22,7 +22,7 @@
                         name: '今日',
                         count: 300,
                         router: {
-                            name: 'buys',
+                            name: 'Bbuys',
                             params: {
                                 isToday: 1
                             }
@@ -31,7 +31,7 @@
                         name: '历史',
                         count: 14002,
                         router: {
-                            name: 'buys',
+                            name: 'Bbuys',
                             params: {
                                 isToday: 0
                             }

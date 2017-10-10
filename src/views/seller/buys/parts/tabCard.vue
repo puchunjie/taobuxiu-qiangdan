@@ -1,5 +1,5 @@
 <template>
-    <div class="tab-card" :class="'status'+item.buyStatus">
+    <div class="tab-card-no" :class="'status'+item.offerStatus">
         <div class="content">
             <h3 class="point-title">
                 <span>{{ item.ironTypeName }}</span>
@@ -16,75 +16,55 @@
         </div>
         <div class="count-action">
             <div class="count">
-                <h3>{{ item.sellNum }}</h3>
-                <p>{{ item.buyStatus | statusStr }}</p>
-            </div>
-            <div class="action">
-                <span class="iconfont icon-fuzhi" @click.stop="copy"></span><br>
-                <span v-show="isIng" class="iconfont icon-shanchu" @click.stop="del"></span><br>
-                <span v-show="canEdit && isIng" class="iconfont icon-bianji" @click.stop="edit"></span>
+                <template v-if="item.offerStatus == 0">
+                    <span class="iconfont icon-ziyuan"></span>
+                    <countDown style="color:#fff" :normal="true" :endTime="item.updateTime + item.timeLimit"></countDown>
+                </template>
+                <template v-else>
+                    <h3>{{ item.sellNum }}</h3>
+                    <p>{{ item.offerStatus | statusStr }}</p>
+                </template>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+    import countDown from '@/components/countDown.vue'
     export default {
-        props: {
-            item: Object,
-            index: Number
+        components: {
+            countDown
         },
-        computed: {
-            canEdit() {
-                return this.item.editStatus == 0
-            },
-            isIng() {
-                return this.item.buyStatus == 1
-            }
+        props: {
+            item: Object
         },
         filters: {
             statusStr(status) {
                 switch (status) {
-                    case "1":
+                    case "0":
                         return '进行中'
                         break;
+                    case "1":
+                        return '已报价'
+                        break;
                     case "2":
-                        return '已成交'
+                        return '已中标'
                         break;
                     case "3":
-                        return '已失效'
+                        return '未中标'
                         break;
                     default:
                         break;
                 }
             }
         },
-        methods: {
-            // 复制求购信息
-            copy() {
-                this.$emit('on-copy');
-            },
-            del() {
-                this.$Modal.confirm({
-                    title: '是否要删除？',
-                    content: '删除后将无法撤销，是否继续？',
-                    onOk: () => {
-                        this.$emit('on-del', this.item);
-                    }
-                });
-            },
-            // 编辑
-            edit() {
-                this.$emit('on-edit', this.index)
-            }
-        }
     }
 </script>
 
 
 <style lang="less">
     @import '../../../../assets/base.less';
-    .tab-card {
+    .tab-card-no {
         position: relative;
         width: 312px;
         height: 100px;
@@ -139,6 +119,11 @@
                     font-size: 18px;
                 }
             }
+            .icon-ziyuan{
+                font-size: 52px;
+                margin: 10px 0 5px 0;
+                display: inline-block;
+            }
         }
         &.active:before {
             /*这里的伪元素用单冒号和双冒号都一样*/
@@ -151,14 +136,20 @@
             border-right: 10px transparent dashed;
             border-bottom: 10px transparent dashed;
         }
-        &:hover {
-            .count-action {
-                .count {
-                    display: none;
+        &.status0 {
+            background-color: @dark_red;
+            &:hover {
+                .content {
+                    border-color: @dark_red;
                 }
-                .action {
-                    display: block;
-                }
+            }
+        }
+        &.status0.active {
+            &:before {
+                border-left: 10px solid @dark_red;
+            }
+            .content {
+                border-color: @dark_red;
             }
         }
         &.status1 {
@@ -209,7 +200,7 @@
                 border-color: @f_goast;
             }
         }
-        &+.tab-card {
+        &+.tab-card-no {
             margin-top: 10px;
         }
     }

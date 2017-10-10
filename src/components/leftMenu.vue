@@ -20,6 +20,11 @@
         props: {
             menus: Array
         },
+        data(){
+            return{
+                documentHeight:800
+            }
+        },
         methods: {
             routerGo(item) {
                 this.$router.push(item.router);
@@ -33,7 +38,7 @@
                     this.menus.forEach(sub => {
                         sub.subs.forEach(el => {
                             if (routerPath.indexOf(el.router.name) > 0) {
-                                if (this.$route.name == 'buys') {
+                                if (this.$route.name == 'Bbuys' || this.$route.name == 'Sbuys') {
                                     if (el.router.params.isToday == this.$route.params.isToday) {
                                         el.active = true;
                                         return false
@@ -56,6 +61,10 @@
             }
         },
         created() {
+            let winHeight = document.body.clientHeight;
+            let docHeight = document.body.scrollHeight;
+            // console.log(document.body.offsetHeight)
+            this.documentHeight = docHeight >= winHeight ? docHeight : winHeight;
             this.setHighLight();
         }
     }
@@ -64,10 +73,9 @@
 
 <style lang="less" scoped>
     .left-menu {
-        position: absolute;
+        position: fixed;
         width: 160px;
         height: 100%;
-        min-height: 850px;
         top: 0;
         padding-top: 148px;
         background-color: #303653;

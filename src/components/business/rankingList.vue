@@ -76,10 +76,10 @@
                         background-color: @light_red;
                     }
                     &.win1{
-                        background-color: #FFCB30;
+                        background-color: @light_yellow;
                     }
                     &.win2{
-                        background-color: #6CBF0D;
+                        background-color: @light_green;
                     }
                 }
             }

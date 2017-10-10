@@ -461,7 +461,7 @@
                     if (res.code === 1000) {
                         this.item.weightUnitId = res.data.weightUnitId;
                         this.item.weightUnit = res.data.weightUnitCName;
-                        this.item.numUnitId = res.data.numUnitId;
+                        this.item.numberUnitId = res.data.numUnitId;
                         this.item.numberUnit = res.data.numUnitCName;
                     }
                 })

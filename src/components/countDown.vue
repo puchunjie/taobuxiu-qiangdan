@@ -1,5 +1,5 @@
 <style lang="less">
-    @import '../../../../assets/base.less';
+    @import '../assets/base.less';
     .cd {
         display: inline-block;
         font-size: 14px;
@@ -45,6 +45,10 @@
                 default: function() {
     
                 }
+            },
+            normal:{
+                type:Boolean,
+                default:false
             }
         },
         mounted() {
@@ -52,6 +56,7 @@
         },
         methods: {
             countdowm(timestamp) {
+                let normal = this.normal;
                 clearInterval(this.timer);
                 let self = this;
                 let intervalTime = 0;
@@ -68,16 +73,7 @@
                         hour = hour < 10 ? "0" + hour : hour;
                         min = min < 10 ? "0" + min : min;
                         sec = sec < 10 ? "0" + sec : sec;
-                        let format = `<span>${hour}</span>:<span>${min}</span>:<span>${sec}</span>`;
-                        // if (day > 0) {
-                        //     format = `${day}天${hour}小时${min}分${sec}秒`;
-                        // }
-                        // if (day <= 0 && hour > 0) {
-                        //     format = `<span>${hour}</span>:<span>${min}</span>:<span>${sec}</span>`;
-                        // }
-                        // if (day <= 0 && hour <= 0) {
-                        //     format = `<span>${min}</span>:<span>${sec}</span>`;
-                        // }
+                        let format = normal ? `${hour}:${min}:${sec}` :`<span>${hour}</span>:<span>${min}</span>:<span>${sec}</span>`;
                         self.content =  format;
                     } else {
                         clearInterval(self.timer);

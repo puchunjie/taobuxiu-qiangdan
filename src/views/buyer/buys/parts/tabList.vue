@@ -1,7 +1,7 @@
 <template>
     <div class="tab-list">
         <slot></slot>
-        <Page class="page-count" :total="total" :page-size="pageSize" size="small" @on-change="pageChange"></Page>
+        <Page class="page-count" ref="page" :total="total" :page-size="pageSize" size="small" @on-change="pageChange"></Page>
     </div>
 </template>
 
@@ -17,6 +17,9 @@
         methods: {
             pageChange(current){
                 this.$emit('on-page-change',current)
+            },
+            pageInit(){
+                this.$refs.page.currentPage = 1;
             }
         }
     }

@@ -2,16 +2,8 @@
     <div class="item-info">
         <div class="tit">
             求购详情
-            <div class="count-down">
-                <template v-if="item.buyStatus == 1">
-                    剩余时间：<countDown :endTime="item.updateTime + item.timeLimit"></countDown>
-                </template>
-                <template v-else-if="item.buyStatus == 2">
-                    成交时间：{{ item.updateTime | dateformat }}
-                </template>
-                <template v-else>
-                    失效时间：{{ item.updateTime | dateformat }}
-                </template>
+            <div class="seller-hyue">
+               买家活跃度
             </div>
         </div>
         <div class="table table-head">
@@ -43,11 +35,7 @@
 </template>
 
 <script>
-    import countDown from '@/components/countDown.vue'
     export default {
-        components: {
-          countDown  
-        },
         props:{
             item:Object
         }
@@ -79,12 +67,8 @@
             border-bottom: @b_d1;
             border-right: @b_d1;
             .p20;
-            .count-down{
-                position: absolute;
-                font-weight: normal;
-                color: @f_goast;
-                right: 20px;
-                top: 0;
+            .seller-hyue{
+                float: right;
             }
         }
         .table {

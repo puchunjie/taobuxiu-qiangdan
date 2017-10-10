@@ -7,7 +7,7 @@
         </ul>
         <div class="account-group">
             <router-link :to="{name:'BuserInfo'}" class="br" :class="{'active':isBuyer}">买家中心</router-link>
-            <router-link :to="{name:'SuserInfo'}" class="bl" :class="{'active':isSeller}">买家中心</router-link>
+            <router-link :to="{name:'SuserInfo'}" class="bl" :class="{'active':isSeller}">卖家中心</router-link>
         </div>
     </div>
 </template>

@@ -21,11 +21,21 @@
                     subs: [{
                         name: '今日',
                         count: 300,
-                        router: {}
+                        router: {
+                            name: 'Sbuys',
+                            params: {
+                                isToday: 1
+                            }
+                        }
                     }, {
                         name: '历史',
                         count: 14002,
-                        router: {}
+                        router: {
+                            name: 'Sbuys',
+                            params: {
+                                isToday: 0
+                            }
+                        }
                     }]
                 }, {
                     title: '我的卖家档案',
@@ -59,8 +69,8 @@
 <style lang="less">
     .container {
         width: 100%;
-        .right-content{
-            margin:15px 0 0 175px;
+        .right-content {
+            margin: 15px 0 0 175px;
             padding-right: 15px;
         }
     }

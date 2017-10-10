@@ -12,78 +12,18 @@
         </div>
         <div class="offers-scorll-warp">
             <p v-if="list.length == 0" class="no-data">暂无报价，请耐心等待。</p>
-            <div class="offer-group" v-for="(item,index) in list" :key="index">
-                <div class="list-row" v-if="item.offerStatus != 4">
-                    <div class="item date">{{ item.createTime | dateformat('MM-dd hh:mm') }}</div>
-                    <div class="item price">&yen;{{ item.offerPerPrice }}/{{ item.baseUnit }}</div>
-                    <div class="item tolerance">{{ item.tolerance }}</div>
-                    <div class="item proPlaces">{{ item.offerPlaces }}</div>
-                    <div class="item totlePrice">&yen;{{ item.offerPrice }}</div>
-                    <div class="item remark">{{ item.offerRemark }}</div>
-                    <div class="item action"></div>
-                </div>
-                <div class="company-info">
-                    <div class="item space">
-                        <!-- {{ item.offerStatus == 4 ? item.createTime | dateformat('MM-dd hh:mm') : ''}} -->
-                        <template v-if="item.offerStatus == 4">
-                            {{ item.createTime | dateformat('MM-dd hh:mm') }}
-                        </template>
-                    </div>
-                    <div class="item left name">
-                        无锡市世纪瑞隆不锈钢有限公司
-                        <span data-msg="备注" class="iconfont icon-cheng" style="color:#F5A623"></span>
-                        <span data-msg="备注" class="iconfont icon-bao" style="color:#C16BD6"></span>
-                        <span data-msg="哈哈哈哈哈" class="iconfont icon-pai-one" style="color:#D67829"></span>
-                    </div>
-                    <div class="item right">
-                        <span class="iconfont icon-hui" style="color:#FF5555"></span> 过年大促销，机不可失时不再来
-                    </div>
-                </div>
-                <div class="company-info">
-                    <div class="item space"></div>
-                    <div class="item left">
-                        张兴扬 15251523321 <span class="iconfont icon-qq" style="color:#2E71F0"></span>
-                    </div>
-                    <div class="item right"><span class="iconfont icon-dingwei" style="color:#FF5555"></span>无锡二仓库</div>
-                </div>
-                
-                <div class="miss" v-if="item.offerStatus == 4">
-                    <span class="iconfont icon-cray"></span>没有库存
-                </div>
-
-                <!-- 报价了才会显示按钮 -->
-                <a class="get-deal" v-if="item.offerStatus != 4">选他中标</a>
-                
-                <!-- 报价超过2条才会显示历史 -->
-                <div class="show-offer-history" @click="showHistory(item)" v-if="item.offerStatus != 4 && item.ironSell.length > 1">
-                    {{ item.historyShow ? '收起历史报价' : '展开历史报价' }}
-                    <span class="iconfont" :class=" item.historyShow ? 'icon-iconjiaobiaoxiangshang':'icon-iconjiaobiaoxiangxia'"></span>
-                </div>
-                <!-- 历史报价 -->
-                <div class="offer-history-list" v-show="item.historyShow">
-                    <div class="offer-item" v-for="(sub,i) in item.ironSell" :key="i">
-                        <div class="item date">{{ sub.createTime | dateformat('MM-dd hh:mm') }}</div>
-                        <div class="item time-line">
-                            <span class="note"></span>
-                            <span class="line top" v-if="i>0"></span>
-                            <span class="line bottom" v-if="i < item.ironSell.length - 1"></span>
-                        </div>
-                        <div class="item price">&yen;{{ sub.offerPerPrice }}/{{ sub.baseUnit }}</div>
-                        <div class="item tolerance">{{ sub.tolerance }}</div>
-                        <div class="item proPlace">{{ sub.offerPlaces }}</div>
-                        <div class="item totlePrice">&yen;{{ sub.offerPrice }}</div>
-                        <div class="item remark">{{ sub.offerRemark }}</div>
-                    </div>
-                </div>
-                <!-- 历史报价 -->
-            </div>
+            <offerItem v-for="(item,index) in list" :key="index" :item="item" @on-bidDone="spread"></offerItem>
         </div>
     </div>
 </template>
 
 
 <script>
+    import offerItem from './offerItem.vue'
     export default {
+        components: {
+            offerItem
+        },
         props: {
             offerList: Array
         },
@@ -100,9 +40,8 @@
                 });
                 this.list = list;
             },
-            //显示历史报价
-            showHistory(item) {
-                item.historyShow = !item.historyShow;
+            spread(){
+                this.$emit('on-bidDone')
             }
         },
         watch: {
@@ -120,9 +59,6 @@
 
 <style lang="less" scoped>
     @import '../../../../assets/base.less';
-    .p20() {
-        padding: 0 20px;
-    }
     
     .offer-list {
         width: 100%;

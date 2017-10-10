@@ -1,18 +1,21 @@
 <template>
   <div class="buy-index">
-    <statusBar @on-filter-status="filterStatus" :status="statusData"></statusBar>
-    <tabList @on-page-change="pageChange" :total="totalCount">
+    <statusBar ref="statusBar" @on-filter-status="filterStatus" :status="statusData"></statusBar>
+    <tabList @on-page-change="pageChange" :total="totalCount" ref="tabList">
       <tabCard v-for="(item,index) in list" @click.native="selectItem(index)" :class="{ 'active':activeIndex == index }" :key="index" :item="item" :index="index" @on-edit="itemEdit" @on-del="deleteItem" @on-copy="copy(index)"></tabCard>
     </tabList>
     <div class="info-list">
+      <div class="winner-panel" v-if="activeItem.buyStatus == 2">
+        <div class="tit">中标商家</div>
+      </div>
       <Info :item="activeItem"></Info>
-      <offerList :offerList="offerList"></offerList>
+      <offerList :offerList="offerList" @on-bidDone="bidDone"></offerList>
     </div>
     <!-- 编辑面板 -->
     <div class="edit-container" v-if="editShow">
       <div class="inner-content">
         <div class="head">
-          修改报价
+          编辑求购
           <span class="iconfont icon-close" @click="editShow = false"></span>
         </div>
         <editItem :data="activeItem" @on-close="editShow = false" @on-save="doEdit"></editItem>
@@ -106,7 +109,7 @@
           if (res.code === 1000) {
             this.list = res.data.list;
             this.totalCount = res.data.totalCount;
-            if (res.data.ing) {
+            if (res.data.ing != undefined) {
               this.statusData[0].count = res.data.ing;
               this.statusData[1].count = res.data.get;
               this.statusData[2].count = res.data.end;
@@ -129,6 +132,8 @@
       //切换状态
       filterStatus(status) {
         this.getListApi.buyStatus = status;
+        this.getListApi.currentPage = 1;
+        this.$refs.tabList.pageInit();
         this.activeIndex = 0;
         this.getIronBuys();
       },
@@ -187,6 +192,11 @@
         } else {
           this.$Message.error('发布列表已经保存了六条信息,无法继续发布!')
         }
+      },
+      // 选择中标
+      bidDone() {
+        this.$refs.statusBar.activeIndex = 1;
+        this.filterStatus(2);
       }
     },
     watch: {
@@ -194,7 +204,10 @@
         this.getOfferList();
       },
       isToday() {
+        // 当日和所有切换的时候，初始化所有参数
         this.getListApi.currentPage = 1;
+        this.getListApi.buyStatus = 1;
+        this.$refs.statusBar.activeIndex = 0;
         this.getIronBuys();
       }
     },
@@ -380,6 +393,20 @@
           }
         }
       }
+    }
+  }
+  
+  .winner-panel {
+    width: 100%;
+    margin-bottom: 16px;
+    .tit {
+      width: 100%;
+      height: 40px;
+      line-height: 40px;
+      background-color: @light_green;
+      color: #fff;
+      text-indent: 20px;
+      .borderRadius;
     }
   }
 </style>

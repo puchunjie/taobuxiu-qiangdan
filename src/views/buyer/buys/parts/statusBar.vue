@@ -57,7 +57,7 @@
         }
         .service-num {
             position: absolute;
-            right: 10px;
+            right: 20px;
             top: 23px;
             font-size: 12px;
             color: @light_blue;

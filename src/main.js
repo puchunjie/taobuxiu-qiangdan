@@ -16,12 +16,13 @@ Object.keys(filters).forEach(key => {
     Vue.filter(key, filters[key])
 })
 
-import { Modal, Button, Message, Page, iCircle, Spin } from 'iview';
+import { Modal, Button, Message, Page, iCircle, Spin, Poptip } from 'iview';
 
 Vue.component(Modal.name, Modal);
 Vue.component(Button.name, Button);
 Vue.component(Page.name, Page);
 Vue.component('i-circle', iCircle);
+Vue.component(Poptip.name, Poptip);
 Vue.prototype.$Modal = Modal;
 Vue.prototype.$Message = Message;
 Vue.component(Spin.name, Spin);

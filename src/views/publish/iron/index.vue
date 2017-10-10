@@ -142,10 +142,10 @@
           cursor: pointer;
         }
         .icon-bianji {
-          color: #6CBF0D;
+          color: @light_green;
         }
         .icon-fuzhi {
-          color: #FFCB30;
+          color: @light_yellow;
         }
         .icon-shanchu {
           color: @dark_red;
@@ -210,7 +210,7 @@
     font-size: 14px;
     .iconfont {
       font-size: 75px;
-      color: #6cbf0d;
+      color: @light_green;
     }
     p{
       color: @f_dark;
@@ -514,7 +514,7 @@
       },
       // 跳转到其他页面
       jumpTo(){
-        this.$router.push({name:'buys',params:{isToday: 1}})
+        this.$router.push({name:'Bbuys',params:{isToday: 1}})
       }
     },
     created() {

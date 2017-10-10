@@ -82,3 +82,23 @@ export const getIronBuys = '/demands/ironBuy/queryIronBuyInfoPage'
  * @params ironBuyId
  */
 export const getOfferList = '/demands/ironBuy/queryIronSellInfoPage'
+
+/**
+ * 点击中标
+ * @params ironBuyId ironSellId
+ */
+export const bidOffer = '/demands/ironBuy/getIronSell'
+
+
+// =================================卖家报价管理=================================
+
+/**
+ * 卖家报价求购列表
+ */
+export const sellerQueryIrons = '/demands/ironBuy/queryIronSellerInfoPage'
+
+/**
+ * 报价
+ * @params   flag: 1报价0忽略
+ */
+export const doOffer = '/demands/ironBuy/saveIronSellInfo'

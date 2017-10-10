@@ -15,8 +15,8 @@ const router = new Router({
                 name: 'buyer',
                 component: resolve => require(['@/views/buyer/index'], resolve),
                 children: [{
-                    path: 'buys-:isToday',
-                    name: 'buys',
+                    path: 'Bbuys-:isToday',
+                    name: 'Bbuys',
                     component: resolve => require(['@/views/buyer/buys/index'], resolve)
                 }, {
                     path: 'BuserInfo',
@@ -29,6 +29,10 @@ const router = new Router({
                 name: 'seller',
                 component: resolve => require(['@/views/seller/index'], resolve),
                 children: [{
+                    path: 'Sbuys-:isToday',
+                    name: 'Sbuys',
+                    component: resolve => require(['@/views/seller/buys/index'], resolve)
+                }, {
                     path: 'SuserInfo',
                     name: 'SuserInfo',
                     component: resolve => require(['@/views/seller/personalInfo/index'], resolve)
