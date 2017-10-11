@@ -48,7 +48,9 @@
                         },
                         {
                             name: '经营范围',
-                            router: {}
+                            router: {
+                                name: 'scope'
+                            }
                         },
                         {
                             name: '权益说明',

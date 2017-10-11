@@ -36,6 +36,10 @@ const router = new Router({
                     path: 'SuserInfo',
                     name: 'SuserInfo',
                     component: resolve => require(['@/views/seller/personalInfo/index'], resolve)
+                }, {
+                    path: 'scope',
+                    name: 'scope',
+                    component: resolve => require(['@/views/seller/scope/index'], resolve)
                 }]
             },
             {

@@ -102,3 +102,16 @@ export const sellerQueryIrons = '/demands/ironBuy/queryIronSellerInfoPage'
  * @params   flag: 1报价0忽略
  */
 export const doOffer = '/demands/ironBuy/saveIronSellInfo'
+
+
+// =================================卖家经营范围=================================
+
+/**
+ * 查询用户经营范围
+ */
+export const userScope = '/demands/query/findBusinessScope'
+
+/**
+ * 用户保存经营范围
+ */
+export const saveScope = '/sys/businessScope/saveBusinessScope';

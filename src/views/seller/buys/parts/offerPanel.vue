@@ -212,8 +212,8 @@
                         min-width: 90px;
                     }
                     &.remark {
-                        width: 43%;
-                        min-width: 370px;
+                        width: 30%;
+                        min-width: 300px;
                     }
                 }
             }

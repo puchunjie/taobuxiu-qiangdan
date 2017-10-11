@@ -1,6 +1,6 @@
 <template>
     <div class="offer-group">
-        <span v-show="item.hasNewOffer == 1 && item.offerStatus == 1" class="iconfont icon-newjiaobiao"></span>
+        <span v-show="item.hasNewOffer == 1 && item.offerStatus == 1" class="iconfont icon-ziyuan1"></span>
         <div class="list-row" v-if="item.offerStatus != 4">
             <div class="item date">{{ item.createTime | dateformat('hh:mm') }}</div>
             <div class="item price">&yen;{{ item.offerPerPrice }}/{{ item.baseUnit }}</div>
@@ -147,11 +147,11 @@
         padding-top: 10px;
         padding-bottom: 6px;
         border-bottom: @b_d1;
-        .icon-newjiaobiao {
+        .icon-ziyuan1 {
             position: absolute;
             left: 0;
-            top: -3px;
-            font-size: 40px;
+            top: -2px;
+            font-size: 30px;
             color: @dark_red;
         }
         .list-row {
