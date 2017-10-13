@@ -20,9 +20,9 @@
         props: {
             menus: Array
         },
-        data(){
-            return{
-                documentHeight:800
+        data() {
+            return {
+                documentHeight: 800
             }
         },
         methods: {
@@ -61,10 +61,11 @@
             }
         },
         created() {
-            let winHeight = document.body.clientHeight;
-            let docHeight = document.body.scrollHeight;
-            // console.log(document.body.offsetHeight)
-            this.documentHeight = docHeight >= winHeight ? docHeight : winHeight;
+            // this.$nextTick(function() {
+            //     let winHeight = document.body.clientHeight;
+            //     let rh = document.getElementsByClassName('right-content')[0].clientHeight + 128;
+            //     this.documentHeight = rh >= winHeight ? rh : winHeight;
+            // })
             this.setHighLight();
         }
     }
@@ -73,7 +74,7 @@
 
 <style lang="less" scoped>
     .left-menu {
-        position: fixed;
+        position: absolute;
         width: 160px;
         height: 100%;
         top: 0;

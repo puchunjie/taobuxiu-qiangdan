@@ -5,30 +5,32 @@ import App from './App'
 import '../static/css/reset.css'
 import '../static/css/iview.css';
 import router from './router'
+import store from './store/store'
 import axios from './http'
 import * as api from './api'
 import clickoutside from './directives/clickoutside'
 import _ from 'lodash'
 import * as filters from './filters/index' //过滤器
 import VueLocalStorage from 'vue-ls';
-
+Vue.use(VueLocalStorage);
 Object.keys(filters).forEach(key => {
     Vue.filter(key, filters[key])
 })
 
-import { Modal, Button, Message, Page, iCircle, Spin, Poptip } from 'iview';
+import { Modal, Button, Message, Page, iCircle, Spin, Poptip, Notice } from 'iview';
 
 Vue.component(Modal.name, Modal);
+Vue.prototype.$Modal = Modal;
+Vue.prototype.$Notice = Notice;
 Vue.component(Button.name, Button);
 Vue.component(Page.name, Page);
 Vue.component('i-circle', iCircle);
 Vue.component(Poptip.name, Poptip);
-Vue.prototype.$Modal = Modal;
 Vue.prototype.$Message = Message;
 Vue.component(Spin.name, Spin);
 Vue.prototype.$Spin = Spin;
 
-Vue.use(VueLocalStorage);
+
 Vue.prototype.$api = api; //所有接口列表挂载
 Vue.prototype.$http = axios;
 Vue.prototype.$clearData = (data) => {
@@ -41,6 +43,7 @@ Vue.config.productionTip = false;
 new Vue({
     el: '#app',
     router,
+    store,
     template: '<App/>',
     components: { App }
 })

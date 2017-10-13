@@ -7,6 +7,7 @@
     <div class="info-list">
       <div class="winner-panel" v-if="activeItem.buyStatus == 2">
         <div class="tit">中标商家</div>
+        <offerItem :item="selectBusiness" v-if="selectBusiness"></offerItem>
       </div>
       <Info :item="activeItem"></Info>
       <offerList :offerList="offerList" @on-bidDone="bidDone"></offerList>
@@ -32,6 +33,7 @@
   import Info from './parts/info.vue';
   import offerList from './parts/offerList.vue';
   import editItem from './parts/editItem.vue';
+  import offerItem from './parts/offerItem.vue';
   
   export default {
     components: {
@@ -40,7 +42,8 @@
       tabList,
       Info,
       offerList,
-      editItem
+      editItem,
+      offerItem
     },
     data() {
       return {
@@ -87,6 +90,10 @@
       },
       isToday() {
         return this.$route.params.isToday
+      },
+      // 中标商户
+      selectBusiness(){
+        return this.offerList.length > 0 ? this.offerList[0] : false
       }
     },
     methods: {
@@ -398,7 +405,10 @@
   
   .winner-panel {
     width: 100%;
+    background-color: #fff;
     margin-bottom: 16px;
+    overflow: hidden;
+    .borderRadius;
     .tit {
       width: 100%;
       height: 40px;
@@ -406,7 +416,6 @@
       background-color: @light_green;
       color: #fff;
       text-indent: 20px;
-      .borderRadius;
     }
   }
 </style>

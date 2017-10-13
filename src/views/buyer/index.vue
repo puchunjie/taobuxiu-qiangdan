@@ -58,13 +58,3 @@
 </script>
 
 
-<style lang="less">
-    .container {
-        width: 100%;
-        .right-content {
-            margin: 15px 0 0 175px;
-            padding-right: 15px;
-        }
-    }
-</style>
-

@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="main-container">
-     <div class="main-bar">
+    <div class="main-bar">
       <a class="back">返回主站</a>
       <a class="link">联系我们：400-800-1234</a>
       <a class="back fr">登录注册</a>
@@ -13,8 +13,11 @@
 
 <script>
   import PublicHead from '@/components/publicHead'
+  import push from '@/utils/push.js'
+  import leftMenu from '@/components/leftMenu.vue'
   export default {
     name: 'app',
+    mixins: [push],
     components: {
       PublicHead
     }
@@ -23,10 +26,10 @@
 
 <style lang="less">
   @import "./assets/base.less";
-  body{
+  body {
     background-color: @bg_color;
   }
-
+  
   .main-container {
     width: 100%;
     min-width: 1360px;
@@ -112,14 +115,24 @@
         &.bl {
           border-left: 1px solid #fff;
         }
-        &.active{
+        &.active {
           background-color: #fff;
           color: @dark_blue;
         }
       }
     }
   }
-  
+
+    .container {
+        width: 100%;
+        background-color: #303653;
+        .right-content {
+            margin: 15px 0 0 160px;
+            padding: 0 15px;
+            background-color: @bg_color;
+        }
+    }
+
   .inner-container {
     width: 1320px;
     margin: 0 auto;

@@ -99,7 +99,7 @@
       color: @mask_blue;
       border: 1px dashed @mask_blue;
       .borderRadius;
-      &:hover{
+      &:hover {
         background-color: @goast_blue;
         color: @mask_blue;
       }
@@ -166,41 +166,13 @@
         }
       }
     }
-    .history{
+    .history {
       text-align: right;
-      height:30px;
+      height: 30px;
       line-height: 30px;
       padding: 0 10px;
-      a{
-        color:@light_blue;
-      }
-    }
-
-    .history-container{
-      .content{
-        width:938px;
-        height: 354px;
-        background-color: #fff;
-        margin: 10% auto 0;
-      }
-      .title{
-        position: relative;
-        width: 100%;
-        height: 40px;
-        line-height: 40px;
-        padding: 0 20px;
-        background-color: @mask_blue;
-        color: #fff;
-        .iconfont{
-          position: absolute;
-          font-size: 20px;
-          color: #fff;
-          right: 10px;
-          cursor: pointer;
-        }
-      }
-      .list{
-        width: 100%;
+      a {
+        color: @light_blue;
       }
     }
   }
@@ -212,7 +184,7 @@
       font-size: 75px;
       color: @light_green;
     }
-    p{
+    p {
       color: @f_dark;
     }
   }
@@ -221,7 +193,7 @@
 <template>
   <div class="punlish-container inner-container">
     <div class="history">
-      <a @click="historyShow = true">从历史求购中选择>></a>
+      <a @click="showHistory">从历史求购中选择>></a>
     </div>
     <div class="list-content">
       <ul class="row head clearfix" v-show="headShow">
@@ -272,30 +244,22 @@
       <a class="btn" style="width: 110px" @click="publishSome">发布{{ checkItems.length > 0 ? `(${checkItems.length})` : '' }}</a>
     </div>
   
+    <history v-model="historyShow" :list="historyList" @on-click="pickHistory" :can="isMax"></history>
+  
     <Modal v-model="successShow" width="400px" ok-text="前往" cancel-text="留在此页" :mask-closable="false" @on-ok="jumpTo">
       <div class="success-content">
         <span class="iconfont icon-CombinedShape"></span>
         <p>发布成功，是否跳转到我的求购？</p>
       </div>
     </Modal>
-
-    <div class="history-container" v-if="historyShow">
-      <div class="ivu-modal-mask"></div>
-      <div class="ivu-modal-wrap">
-        <div class="content">
-          <div class="title">
-              求购历史(最近6条)
-              <span class="iconfont icon-close" @click="historyShow = false"></span>
-          </div>
-          <div class="list"></div>
-        </div>
-      </div>
-    </div>
+  
+  
   </div>
 </template>
 
 <script>
   import editItem from './pareParts/editItem.vue'
+  import history from './pareParts/history.vue'
   const initialItem = {
     check: false,
     save: false,
@@ -330,11 +294,13 @@
   }
   export default {
     components: {
-      editItem
+      editItem,
+      history
     },
     data() {
       return {
         historyShow: false,
+        historyList: [],
         successShow: false,
         activeIndex: 0,
         list: []
@@ -342,7 +308,7 @@
     },
     computed: {
       // 是否是点击复制后跳转过来？
-      isCopy(){
+      isCopy() {
         return this.$route.params.isCopy == 1
       },
       // 是否显示表头,list中有保存的数据时才有
@@ -385,6 +351,26 @@
       }
     },
     methods: {
+      // 显示历史
+      showHistory() {
+        this.$http.post(this.$api.publishHistory).then(res => {
+          if (res.code === 1000) {
+            this.historyList = res.data;
+            this.historyShow = true;
+          }
+        })
+      },
+      // 选择历史
+      pickHistory(item) {
+        let newItem = {
+          check: false,
+          data: item,
+          edit: false,
+          save: true,
+        }
+        this.copyItem(newItem);
+        this.historyShow = false;
+      },
       // 保存
       itemSave(item) {
         this.activeItem.data = item;
@@ -513,25 +499,30 @@
         this.$ls.set('publishList', willSave);
       },
       // 跳转到其他页面
-      jumpTo(){
-        this.$router.push({name:'Bbuys',params:{isToday: 1}})
+      jumpTo() {
+        this.$router.push({
+          name: 'Bbuys',
+          params: {
+            isToday: 1
+          }
+        })
       }
     },
     created() {
       this.list = this.$ls.get('publishList') != null ? this.$ls.get('publishList') : [];
       if (this.list.length == 0)
         this.addNew();
-
-      if(this.isCopy){
+  
+      if (this.isCopy) {
         let copyData = this.$ls.get('copyData');
-        if(this.isEditShow){
+        if (this.isEditShow) {
           this.list[0].data = copyData;
-        }else{
+        } else {
           this.addNew();
-          this.list[this.list.length-1].data = copyData;
+          this.list[this.list.length - 1].data = copyData;
         }
       }
-        
+  
     }
   }
 </script>

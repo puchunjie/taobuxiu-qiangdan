@@ -1,3 +1,5 @@
+export const ws = 'ws://192.168.0.132:8080/websocket/'
+
 // =================================发布求购页面=================================
 /**
  * 查询地区信息
@@ -69,6 +71,11 @@ export const publish_one = '/demands/ironBuy/saveAndUpdateIronBuy'
  */
 export const publishSome = '/demands/ironBuy/saveIronBuyList'
 
+/**
+ * 发布历史
+ */
+export const publishHistory = '/demands/ironBuy/queryIronBuyInfo'
+
 
 // =================================买家求购管理=================================
 /**
@@ -114,4 +121,4 @@ export const userScope = '/demands/query/findBusinessScope'
 /**
  * 用户保存经营范围
  */
-export const saveScope = '/sys/businessScope/saveBusinessScope';
+export const saveScope = '/demands/businessScope/saveBusinessScope';

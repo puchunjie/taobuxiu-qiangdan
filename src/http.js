@@ -1,16 +1,27 @@
 import axios from 'axios'
 import Qs from 'qs'
+import store from './store/store'
+import * as types from './store/types'
 
 // axios 配置
 axios.defaults.timeout = 10000;
-// axios.defaults.baseURL = 'http://192.168.0.251'; //配置接口地址
+axios.defaults.baseURL = 'http://192.168.0.251'; //配置接口地址
 axios.defaults.baseURL = 'http://192.168.0.132:8080'; //配置接口地址
 // axios.defaults.baseURL = 'http://192.168.0.138:8080'; //配置接口地址
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'; //配置请求头
 axios.defaults.withCredentials = true;
 
+
+// 获取用户token
+let loginId = store.state.loginId;
+let authorization = store.state.authorization;
+
 // http request 拦截器
 axios.interceptors.request.use(config => {
+    // if (store.state.authorization || store.state.authorization != null) {
+    //     config.headers.common['authorization'] = store.state.authorization;
+    //     config.headers.common['loginId'] = store.state.loginId;
+    // }
     config.data = Qs.stringify(config.data);
     return config;
 }, err => {

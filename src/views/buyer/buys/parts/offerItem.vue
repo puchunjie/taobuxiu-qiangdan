@@ -1,6 +1,6 @@
 <template>
     <div class="offer-group">
-        <span v-show="item.hasNewOffer == 1 && item.offerStatus == 1" class="iconfont icon-ziyuan1"></span>
+        <span v-show="showNew" class="iconfont icon-ziyuan1"></span>
         <div class="list-row" v-if="item.offerStatus != 4">
             <div class="item date">{{ item.createTime | dateformat('hh:mm') }}</div>
             <div class="item price">&yen;{{ item.offerPerPrice }}/{{ item.baseUnit }}</div>
@@ -71,6 +71,11 @@
     export default {
         props: {
             item: Object
+        },
+        computed: {
+          showNew(){
+              return  this.item.hasNewOffer ? this.item.hasNewOffer == 1 && this.item.offerStatus == 1 : false
+          }  
         },
         methods: {
             //显示历史报价
