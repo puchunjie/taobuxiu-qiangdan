@@ -3,7 +3,7 @@
         <ul class="menu-list">
             <li class="menu-item" v-for="(item,index) in menus" :key="index">
                 <div class="item-title">
-                    <span class="iconfont icon-CombinedShape"></span> {{ item.title }}
+                    <span class="iconfont" :class="item.icon"></span> {{ item.title }}
                 </div>
                 <ul class="sub-menu-list">
                     <li v-for="(sub,i) in item.subs" :class="{'active':sub.active}" :key="i" @click="routerGo(sub)">

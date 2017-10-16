@@ -15,11 +15,23 @@
   import PublicHead from '@/components/publicHead'
   import push from '@/utils/push.js'
   import leftMenu from '@/components/leftMenu.vue'
+  import * as types from '@/store/types'
   export default {
     name: 'app',
     mixins: [push],
     components: {
       PublicHead
+    },
+    methods: {
+      getUserInfo(){
+        this.$http.post(this.$api.getUser).then(res => {
+          if(res.code === 1000)
+            this.$store.commit(types.SET_USER_INFO, res.data.buserInfo);
+        })
+      }
+    },
+    created () {
+      this.getUserInfo();
     }
   }
 </script>

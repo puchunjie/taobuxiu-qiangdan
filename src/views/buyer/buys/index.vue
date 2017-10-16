@@ -7,7 +7,7 @@
     <div class="info-list">
       <div class="winner-panel" v-if="activeItem.buyStatus == 2">
         <div class="tit">中标商家</div>
-        <offerItem :item="selectBusiness" v-if="selectBusiness"></offerItem>
+        <offerItem :item="selectBusiness" v-if="selectBusiness" :isDone="false" style="border-bottom:0"></offerItem>
       </div>
       <Info :item="activeItem"></Info>
       <offerList :offerList="offerList" @on-bidDone="bidDone"></offerList>
@@ -408,6 +408,7 @@
     background-color: #fff;
     margin-bottom: 16px;
     overflow: hidden;
+    border:@b_d1;
     .borderRadius;
     .tit {
       width: 100%;

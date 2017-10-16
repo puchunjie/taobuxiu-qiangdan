@@ -21,7 +21,7 @@ export default {
             let _this = this;
             let rand = this.$ls.get('rand') != null ? this.$ls.get('rand') : this.MathRand();
             // 建立WebSocket链接
-            let ws = new WebSocket(this.$api.ws + 'iron?' + this.$store.state.loginId + rand);
+            let ws = new WebSocket('ws://' + window.location.host + ':8080/websocket/iron?' + this.$store.state.loginId + rand);
             ws.onopen = function(evt) {
                 console.log("Connection open ...");
             };
@@ -36,11 +36,14 @@ export default {
             ws.onclose = function(evt) {
                 console.log("Connection closed.");
             };
+
+            if (window.Notification)
+                Notification.requestPermission();
         },
         notify(msg) {
-            if (Notification && Notification.permission == 'granted') {
-                let notification = new Notification("新消息", {
-                    body: msg
+            if (window.Notification && Notification.permission == 'granted') {
+                let notif = new Notification("新消息", {
+                    body: msg //通知的具体内容
                 });
                 this.isNotice = true;
             } else {
@@ -78,6 +81,7 @@ export default {
 
             }
         });
-        this.initScoket();
+        if (window.location.hostname != 'localhost')
+            this.initScoket();
     }
 }

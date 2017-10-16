@@ -417,11 +417,19 @@
       // 复制
       copyItem(item) {
         // 如果有编辑或者添加，或者超过条数上限，不处理
-        if (this.isEditShow || !this.isMax) {
+        if (!this.isMax) {
           this.$Message.warning('最多同时存在6条求购！')
           return false
         }
         let copyItem = _.cloneDeep(item);
+        copyItem.save = false;
+        if(this.isEditShow){
+          this.list.pop();
+          this.$nextTick(()=> {
+            this.list.push(copyItem)
+          })
+          return false
+        }
         this.addNew(copyItem);
       },
       // 删除

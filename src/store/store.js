@@ -14,7 +14,10 @@ export default new Vuex.Store({
     getters: {
         roleId: state => {
             //写死的超管id,后期修改为从state user中获取
-            return '402800815e74a92e015e74a99ca50000'
+            return state.loginId
+        },
+        user: state => {
+            return state.user
         }
     },
     mutations: {
@@ -29,6 +32,9 @@ export default new Vuex.Store({
             Vue.ls.remove('loginId');
             state.authorization = undefined;
             state.loginId = undefined;
+        },
+        [types.SET_USER_INFO]: (state, payload) => {
+            state.user = payload;
         }
     }
 })

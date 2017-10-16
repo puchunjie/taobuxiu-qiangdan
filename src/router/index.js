@@ -40,7 +40,16 @@ const router = new Router({
                     path: 'scope',
                     name: 'scope',
                     component: resolve => require(['@/views/seller/scope/index'], resolve)
+                }, {
+                    path: 'discount',
+                    name: 'discount',
+                    component: resolve => require(['@/views/seller/discount/index'], resolve)
                 }]
+            },
+            {
+                path: '/userInfo',
+                name: 'userInfo',
+                component: resolve => require(['@/views/user/index.vue'], resolve),
             },
             {
                 path: '*',

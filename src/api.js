@@ -1,4 +1,10 @@
-export const ws = 'ws://192.168.0.132:8080/websocket/'
+// export const ws = 'ws://192.168.0.132:8080/websocket/'
+
+/**
+ * 获取用户信息
+ */
+export const getUser = '/api/user/findCurrentUser';
+
 
 // =================================发布求购页面=================================
 /**
@@ -122,3 +128,35 @@ export const userScope = '/demands/query/findBusinessScope'
  * 用户保存经营范围
  */
 export const saveScope = '/demands/businessScope/saveBusinessScope';
+
+
+/**
+ * 获取优惠信息模板
+ */
+export const getDiscount = '/demands/query/findAllPro'
+
+/**
+ * 发布优惠信息
+ */
+export const saveDiscount = '/demands/bInfo/updateBuserProInfo'
+
+// =================================用户基本信息=================================
+/**
+ * 查询仓库数据
+ */
+export const getStores = '/demands/query/findStoreHouse'
+
+/**
+ * 查询所有地址信息
+ */
+export const getArea = '/demands/query/findAllArea'
+
+/**
+ * 修改商户信息
+ */
+export const updateBuserInfo = '/demands/bInfo/updateBInfo'
+
+/**
+ * 修改密码
+ */
+export const updatePsd = '/demands/baseUsers/updateBaseUsersSafeInfo'

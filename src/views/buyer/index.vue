@@ -17,7 +17,7 @@
             return {
                 menus: [{
                     title: '现货求购管理',
-                    icon: '',
+                    icon: 'icon-menu',
                     subs: [{
                         name: '今日',
                         count: 300,
@@ -39,7 +39,7 @@
                     }]
                 }, {
                     title: '我的买家档案',
-                    icon: '',
+                    icon: 'icon-weibiaoti1',
                     subs: [{
                             name: '基本信息',
                             router: {
