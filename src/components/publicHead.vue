@@ -2,7 +2,7 @@
     <div class="main-header">
         <img class="logo" src="../assets/logo.png">
         <ul class="menu">
-            <li>首页</li>
+            <router-link :class="{'active':$route.name == 'index'}" :to="{name:'index'}" tag="li">首页</router-link>
             <router-link :class="{'active':$route.name == 'publishIron'}" :to="{name:'publishIron',params:{isCopy: 0}}" tag="li">发布求购</router-link>
         </ul>
         <div class="account-group">

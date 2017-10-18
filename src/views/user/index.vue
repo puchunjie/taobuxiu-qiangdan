@@ -58,10 +58,13 @@
             <!-- 基本信息 -->
             <i-form class="form" :model="userData" :rules="userDataRule" :label-width="90" v-show="active == 0" ref="userInfo">
                 <form-item label="用户名">
-                    {{ user.contact }}
+                    {{ base.mobile }}
                 </form-item>
                 <form-item label="公司名称">
                     {{ user.companyName }}
+                </form-item>
+                <form-item label="联系人" prop="contact">
+                    <i-input placeholder="请输入" v-model="userData.contact" class="form-input"></i-input>
                 </form-item>
                 <form-item label="联系电话" prop="contactNum">
                     <i-input placeholder="请输入联系电话" v-model="userData.contactNum" class="form-input"></i-input>
@@ -132,6 +135,11 @@
                     address: ''
                 },
                 userDataRule: {
+                    contact: [{
+                        required: true,
+                        message: '联系人不能为空',
+                        trigger: 'blur'
+                    }],
                     contactNum: [{
                         required: true,
                         message: '联系电话不能为空',
@@ -201,7 +209,7 @@
             }
         },
         computed: {
-            ...mapGetters(['user']),
+            ...mapGetters(['user','base']),
             // 是否有新版本的地址信息？
             isNewAdress() {
                 return this.user.provinceId != ''

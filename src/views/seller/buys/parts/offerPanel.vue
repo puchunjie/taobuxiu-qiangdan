@@ -19,22 +19,6 @@
             width: 100%;
             .p20;
             .input-item-warp {
-                position: relative;
-                display: block;
-                float: left;
-                height: 36px;
-                color: @f_dark;
-                line-height: 36px;
-                padding: 0 10px;
-                margin-right: 29px;
-                margin-bottom: 24px;
-                background-color: #fff;
-                border: @b_d1;
-                .borderRadius;
-                label {
-                    margin-right: 12px;
-                    color: @f_goast;
-                }
                 .unit-content {
                     position: absolute;
                     width: 56px;
@@ -54,80 +38,6 @@
                                 color: @dark_blue;
                             }
                         }
-                    }
-                }
-                .err {
-                    position: absolute;
-                    display: none;
-                    font-size: 12px;
-                    right: 0;
-                    bottom: -28px;
-                    color: @dark_red;
-                }
-                &.on-err {
-                    border-color: @dark_red!important;
-                    .err {
-                        display: block;
-                    }
-                }
-                &:hover {
-                    border-color: @mask_blue;
-                    .unit-content {
-                        border-color: @mask_blue;
-                    }
-                }
-                &.disabel {
-                    background-color: #eee;
-                    color: @f_ligth;
-                    .noselect;
-                }
-                &.disabel:hover {
-                    border-color: #d1d1d1;
-                }
-                &.no-margin {
-                    margin-right: 0;
-                }
-                &.wid-112 {
-                    width: 112px;
-                }
-                &.wid-140 {
-                    width: 140px;
-                    .level1 {
-                        width: 70px;
-                    }
-                }
-                &.wid-180 {
-                    width: 180px;
-                    .level1 {
-                        width: 60px;
-                    }
-                }
-                &.wid-200 {
-                    width: 200px;
-                    .level1 {
-                        width: 130px;
-                    }
-                }
-                &.wid-240 {
-                    width: 240px;
-                    .level1 {
-                        width: 170px;
-                    }
-                }
-                &.wid-550 {
-                    width: 550px;
-                    .level1 {
-                        width: 445px;
-                    }
-                }
-                .goast-input {
-                    display: inline-block;
-                    width: 100%;
-                    border: 0;
-                    background: none;
-                    .ellipsis;
-                    &:focus {
-                        outline: 0;
                     }
                 }
             }
@@ -275,14 +185,13 @@
         </div>
         <div class="action-btns">
             <template v-if="item.offerStatus == 0">
-                <a class="btn goast">忽略</a>
-                <a class="btn" @click="offer">立即报价</a>
-            </template>
+                            <a class="btn goast" @click="ignore">忽略</a>
+                            <a class="btn" @click="offer">立即报价</a>
+</template>
 
-            <template v-else-if="item.offerStatus == 1">
-                <a v-if="item.ironSell.length < 6" class="btn" @click="offer">修改报价</a>
-                
-            </template>
+<template v-else-if="item.offerStatus == 1">
+    <a v-if="item.ironSell.length < 6" class="btn" @click="offer">修改报价</a>
+</template>
         </div>
         <div class="offers-warp" v-show="offerHistory">
             <p style="margin-bottom:10px">报价历史</p>
@@ -478,11 +387,11 @@
                     this.setErr(this.$refs[ref]);
                 }
             },
-            offerAjax(params) {
+            offerAjax(params, isIgon = false) {
                 this.$http.post(this.$api.doOffer, params).then(res => {
                     if (res.code === 1000) {
-                        this.$Message.success('报价成功');
-                        this.$emit('on-ajax', this.offerApi.flag);
+                        this.$Message.success(isIgon ? '已忽略' : '报价成功');
+                        this.$emit('on-ajax', isIgon);
                         this.clearApi();
                     }
                 })
@@ -500,9 +409,15 @@
             },
             // 忽略
             ignore() {
-                this.offerAjax({
-                    ironBuyId: this.ironBuyId,
-                    flag: 0
+                this.$Modal.confirm({
+                    title: '是否要忽略？',
+                    content: '忽略后将无法再次进行报价，是否继续？',
+                    onOk: () => {
+                        this.offerAjax({
+                            ironBuyId: this.ironBuyId,
+                            flag: 0
+                        },true);
+                    }
                 });
             },
             // 清除参数

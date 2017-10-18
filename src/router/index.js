@@ -6,6 +6,10 @@ const router = new Router({
         mode: 'history',
         base: '/qd/',
         routes: [{
+                path: '/index',
+                name: 'index',
+                component: resolve => require(['@/views/index/index'], resolve),
+            }, {
                 path: '/publishIron-:isCopy',
                 name: 'publishIron',
                 component: resolve => require(['@/views/publish/iron/index'], resolve),

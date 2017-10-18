@@ -2,8 +2,9 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
-import '../static/css/reset.css'
+import '../static/css/reset.css';
 import '../static/css/iview.css';
+import '../static/swiper/css/swiper.min.css';
 import router from './router'
 import store from './store/store'
 import axios from './http'
@@ -12,6 +13,8 @@ import clickoutside from './directives/clickoutside'
 import _ from 'lodash'
 import * as filters from './filters/index' //过滤器
 import VueLocalStorage from 'vue-ls';
+import Swiper from '../static/swiper/js/swiper.min'
+
 Vue.use(VueLocalStorage);
 Object.keys(filters).forEach(key => {
     Vue.filter(key, filters[key])
@@ -31,7 +34,8 @@ import {
     iInput,
     Cascader,
     iSelect,
-    iOption
+    iOption,
+    DatePicker
 } from 'iview';
 
 Vue.component(Modal.name, Modal);
@@ -39,6 +43,7 @@ Vue.prototype.$Modal = Modal;
 Vue.prototype.$Notice = Notice;
 Vue.component(Button.name, Button);
 Vue.component(Page.name, Page);
+Vue.component('DatePicker', DatePicker);
 Vue.component('i-circle', iCircle);
 Vue.component('i-form', iForm);
 Vue.component('form-item', FormItem);

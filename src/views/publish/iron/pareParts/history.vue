@@ -8,6 +8,7 @@
                     <span class="iconfont icon-close" @click="visible = false"></span>
                 </div>
                 <div class="list">
+                    <p v-if="list.length == 0" style="text-align:center">暂无求购历史</p>
                     <div class="item clearfix" v-for="(item,index) in list" :key="index">
                         <a class="date">{{ item.createTime | dateformat }}</a>
                         <div class="info">

@@ -1,6 +1,6 @@
 <template>
     <div class="discount-container">
-        <p class="active-discount">当前优惠：</p>
+        <p class="active-discount">当前优惠：{{ user.proInfo }}</p>
         <div class="text-area">
             <textarea class="publish-area" v-model="proInfo"></textarea>
             <a class="publish" @click="saveDiscount">发布</a>
@@ -18,6 +18,7 @@
     import {
         mapGetters
     } from 'vuex'
+    import * as types from '@/store/types'
     export default {
         data() {
             return {
@@ -36,6 +37,8 @@
                     }).then(res => {
                         if (res.code === 1000) {
                             this.$Message.success('发布成功!');
+                            // 更新优惠信息
+                            this.$store.commit(types.UPDATE_PRO_INFO, this.proInfo);
                             this.proInfo = '';
                         }
                     })

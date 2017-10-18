@@ -9,135 +9,6 @@
         }
     }
     
-    .input-item-warp {
-        position: relative;
-        display: block;
-        float: left;
-        height: 36px;
-        color: @f_dark;
-        line-height: 36px;
-        padding: 0 10px;
-        margin-right: 29px;
-        margin-bottom: 24px;
-        background-color: #fff;
-        border: @b_d1;
-        .borderRadius;
-        label {
-            margin-right: 12px;
-            color: @f_goast;
-        }
-        .err {
-            position: absolute;
-            display: none;
-            font-size: 12px;
-            right: 0;
-            bottom: -28px;
-            color: @dark_red;
-        }
-        &.on-err {
-            border-color: @dark_red!important;
-            .err {
-                display: block;
-            }
-        }
-        &:hover {
-            border-color: @mask_blue;
-        }
-        &.disabel {
-            background-color: #eee;
-            color: @f_ligth;
-            .noselect;
-        }
-        &.disabel:hover {
-            border-color: #d1d1d1;
-        }
-        &.no-margin {
-            margin-right: 0;
-        }
-        &.wid-112 {
-            width: 112px;
-        }
-        &.wid-140 {
-            width: 140px;
-            .level1 {
-                width: 70px;
-            }
-        }
-        &.wid-180 {
-            width: 180px;
-            .level1 {
-                width: 70px;
-            }
-        }
-        &.wid-200 {
-            width: 200px;
-            .level1 {
-                width: 130px;
-            }
-        }
-        &.wid-240 {
-            width: 240px;
-            .level1 {
-                width: 170px;
-            }
-        }
-        &.wid-550 {
-            width: 550px;
-            .level1 {
-                width: 445px;
-            }
-        }
-        .goast-input {
-            display: inline-block;
-            width: 100%;
-            border: 0;
-            background: none;
-            .ellipsis;
-            &:focus {
-                outline: 0;
-            }
-        }
-        .inline {
-            position: absolute;
-            right: 10px;
-            top: 0;
-        }
-        .inside-group {
-            float: left;
-            color: @f_goast;
-            input {
-                width: 45px;
-                text-align: right;
-            }
-        }
-        .relation-content {
-            position: absolute;
-            width: 240px;
-            left: 0;
-            background-color: #fff;
-            z-index: 100;
-            border: @b_d1;
-            .borderRadius;
-            .tag {
-                width: 100%;
-                height: 30px;
-                line-height: 30px;
-                padding: 0 10px;
-                cursor: pointer;
-                border-bottom: @b_d1;
-                color: @f_dark;
-                .ellipsis;
-                &.no-b {
-                    border-bottom: 0;
-                }
-                &:hover {
-                    background-color: @dark_blue;
-                    color: #fff;
-                }
-            }
-        }
-    }
-    
     .footer-bar {
         width: 100%;
         height: 30px;
@@ -371,13 +242,15 @@
                 let elemet = document.getElementById(inputId)
                 let actualLeft = elemet.offsetLeft;　　
                 let actualTop = elemet.offsetTop;　　
+                console.log(actualLeft)
+                console.log(actualTop)
                 let current = elemet.offsetParent;　
-                while (current !== null) {　　　　　　
+                while (current != null) {　　　　　　
                     actualLeft += current.offsetLeft;
                     actualTop += current.offsetTop;　　　　　　
-                    current = current.offsetParent;　　　　
+                    current = current.offsetParent;　
                 }　
-                this.fuzzy.x = actualLeft - 20 + 'px';
+                this.fuzzy.x = actualLeft + 'px';
                 this.fuzzy.y = actualTop + 36 + 'px';
                 this.fuzzy.selectApi = this.api;
                 this.fuzzy.oldVal = event.target.value;

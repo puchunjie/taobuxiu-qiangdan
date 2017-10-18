@@ -23,14 +23,14 @@
       PublicHead
     },
     methods: {
-      getUserInfo(){
+      getUserInfo() {
         this.$http.post(this.$api.getUser).then(res => {
-          if(res.code === 1000)
-            this.$store.commit(types.SET_USER_INFO, res.data.buserInfo);
+          if (res.code === 1000)
+            this.$store.commit(types.SET_USER_INFO, res.data);
         })
       }
     },
-    created () {
+    created() {
       this.getUserInfo();
     }
   }
@@ -38,6 +38,7 @@
 
 <style lang="less">
   @import "./assets/base.less";
+  @import "./assets/common.less";
   body {
     background-color: @bg_color;
   }
@@ -134,20 +135,34 @@
       }
     }
   }
-
-    .container {
-        width: 100%;
-        background-color: #303653;
-        .right-content {
-            margin: 15px 0 0 160px;
-            padding: 0 15px;
-            background-color: @bg_color;
-        }
+  
+  .container {
+    width: 100%;
+    background-color: #303653;
+    .right-content {
+      margin: 15px 0 0 160px;
+      padding: 0 15px;
+      background-color: @bg_color;
     }
-
+  }
+  
   .inner-container {
     width: 1320px;
+    height: 100%;
     margin: 0 auto;
+    .inner-title {
+      width: 100%;
+      height: 70px;
+      line-height: 70px;
+      font-size: 20px;
+      font-weight: bold;
+      color: @f_dark;
+      span {
+        font-size: 16px;
+        color: #3A3A3A;
+        font-weight: normal;
+      }
+    }
   }
 </style>
 

@@ -115,9 +115,8 @@
                 })
             },
             // 完成报价，完成忽略后
-            afterOffer(flag){
-                let isOffer = flag == 1;
-                if(isOffer){
+            afterOffer(isIgon){
+                if(!isIgon){
                     this.$refs.statusBar.activeIndex = 1;
                     this.filterStatus(1);
                 }else{

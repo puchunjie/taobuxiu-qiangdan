@@ -8,6 +8,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         user: {},
+        base: {},
         authorization: Vue.ls.get('authorization'),
         loginId: Vue.ls.get('loginId')
     },
@@ -18,7 +19,10 @@ export default new Vuex.Store({
         },
         user: state => {
             return state.user
-        }
+        },
+        base: state => {
+            return state.base
+        },
     },
     mutations: {
         [types.LOGIN]: (state, payload) => {
@@ -34,7 +38,12 @@ export default new Vuex.Store({
             state.loginId = undefined;
         },
         [types.SET_USER_INFO]: (state, payload) => {
-            state.user = payload;
+            state.user = payload.buserInfo;
+            delete payload.buserInfo;
+            state.base = payload;
+        },
+        [types.UPDATE_PRO_INFO]: (state, payload) => {
+            state.user.proInfo = payload;
         }
     }
 })

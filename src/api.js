@@ -160,3 +160,30 @@ export const updateBuserInfo = '/demands/bInfo/updateBInfo'
  * 修改密码
  */
 export const updatePsd = '/demands/baseUsers/updateBaseUsersSafeInfo'
+
+
+// =================================首页=================================
+/**
+ * 卖家排行榜
+ */
+export const sellerRanking = '/api/main/countSellActive'
+
+/**
+ * 最新求购信息
+ */
+export const newIronList = '/api/main/queryIronInfo'
+
+/**
+ * 板卷市价
+ */
+export const ironNew = '/api/main/queryIronNew'
+
+/**
+ * lem数据
+ */
+export const lme = '/api/main/photoLME'
+
+/**
+ * 申请质检
+ */
+export const applyQuality = '/api/main/applyQualityControl'
