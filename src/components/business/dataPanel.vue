@@ -1,5 +1,5 @@
 <template>
-    <div class="data-panel">
+    <div class="data-panel" :class="color">
         <div class="title">
             {{ title }}
             <div class="btn-group" v-show="filter.length > 1">
@@ -26,14 +26,18 @@
         props: {
             title: String,
             tit: String,
-            filter:Array,
-            strokeColor:{
-                type:String,
-                default:'#60AAF3'
+            filter: Array,
+            strokeColor: {
+                type: String,
+                default: '#60AAF3'
             },
-            trailColor:{
-                type:String,
-                default:'#E8F3FD'
+            trailColor: {
+                type: String,
+                default: '#E8F3FD'
+            },
+            color: {
+                type: String,
+                default: 'blue'
             }
         },
         data() {
@@ -69,7 +73,6 @@
                 position: absolute;
                 right: 20px;
                 top: 0;
-                border: 1px solid @mask_blue;
                 font-weight: normal;
                 .borderRadius;
                 .btn {
@@ -79,13 +82,8 @@
                     height: 32px;
                     line-height: 32px;
                     text-align: center;
-                    color: @mask_blue;
                     &.active {
                         color: #fff;
-                        background-color: @mask_blue;
-                    }
-                    &:not(:last-child) {
-                        border-right: 1px solid @mask_blue;
                     }
                 }
             }
@@ -122,18 +120,63 @@
                         width: 10px;
                         height: 10px;
                         .borderRadius(10px);
-                        &.dark {
-                            background-color: @mask_blue;
-                        }
-                        &.light {
-                            background-color: @goast_blue;
-                        }
                     }
                 }
                 h3 {
                     font-size: 20px;
                     color: @f_dark;
                     margin-top: 10px;
+                }
+            }
+        }
+
+        &.blue {
+            .btn-group {
+                border: 1px solid @mask_blue;
+                .btn {
+                    color: @mask_blue;
+                    &.active {
+                        background-color: @mask_blue;
+                    }
+                    &:not(:last-child) {
+                        border-right: 1px solid @mask_blue;
+                    }
+                }
+            }
+            .foot {
+                .note {
+                    &.dark {
+                        background-color: @mask_blue;
+                    }
+                    &.light {
+                        background-color: @goast_blue;
+                    }
+                }
+            }
+        }
+
+
+        &.red {
+            .btn-group {
+                border: 1px solid @light_red;
+                .btn {
+                    color: @light_red;
+                    &.active {
+                        background-color: @light_red;
+                    }
+                    &:not(:last-child) {
+                        border-right: 1px solid @light_red;
+                    }
+                }
+            }
+            .foot {
+                .note {
+                    &.dark {
+                        background-color: @light_red;
+                    }
+                    &.light {
+                        background-color: @goast_red;
+                    }
                 }
             }
         }

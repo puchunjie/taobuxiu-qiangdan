@@ -28,6 +28,7 @@
       float: left;
     }
     .quality-unit {
+      position: relative;
       width: 310px;
       height: 422px;
       border: @b_d1;
@@ -92,7 +93,6 @@
     <div class="full-group floor2">
       <div class="inner-container">
         <dynamic></dynamic>
-
         <div class="clearfix">
           <lem class="lem-container"></lem>
           <ranking class="ranking-container"></ranking>

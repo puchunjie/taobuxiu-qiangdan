@@ -15,7 +15,7 @@
                             <span class="count">{{ item.sellNum }}个报价</span>
                             <div class="status" :class="'st'+item.buyStatus">
                                 <span></span>
-                                进行中
+                                {{ item.buyStatus | statusStr }}
                             </div>
                         </div>
                     </div>
@@ -62,6 +62,25 @@
                 this.swiper.startAutoplay();
             }
         },
+        filters: {
+            statusStr(val){
+                val = val * 1;
+                switch (val) {
+                    case 1:
+                        return '进行中'
+                        break;
+                    case 2:
+                        return '已成交'
+                        break;
+                    case 3:
+                        return '已失效'
+                        break;
+                    default:
+                        return '状态未知'
+                        break;
+                }
+            }
+        },
         created() {
             this.getIron();
         },
@@ -98,7 +117,6 @@
                 margin-right: 0;
             }
             h3 {
-                width: 220px;
                 line-height: 22px;
                 font-weight: 500;
                 .ellipsis;

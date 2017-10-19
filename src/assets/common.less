@@ -103,6 +103,33 @@
             width: 445px;
         }
     }
+
+    .relation-content {
+           position: absolute;
+           width: 100%;
+           left: 0;
+           background-color: #fff;
+           z-index: 100;
+           border: @b_d1;
+           .borderRadius;
+           .tag {
+               width: 100%;
+               height: 30px;
+               line-height: 30px;
+               padding: 0 10px;
+               cursor: pointer;
+               border-bottom: @b_d1;
+               color: @f_dark;
+               .ellipsis;
+               &.no-b {
+                   border-bottom: 0;
+               }
+               &:hover {
+                   background-color: @dark_blue;
+                   color: #fff;
+               }
+           }
+       }
   }
 
 
@@ -117,3 +144,14 @@
       }
     }
   }
+
+  .ivu-btn-primary{
+    background-color: @dark_blue;
+    border-color: @dark_blue;
+  }
+
+  .ivu-btn:hover {
+    color: #fff;
+    background-color: @hover_blue;
+    border-color: @hover_blue;
+}

@@ -3,7 +3,7 @@
         <PInfo></PInfo>
         <div class="contnet">
             <dataPanel class="panel" :filter="bgData" title="今日报价量" tit="报价量"></dataPanel>
-            <dataPanel class="panel" :filter="qgData" title="求购数据" tit="求购成交率"></dataPanel>
+            <dataPanel class="panel" :filter="qgData"  strokeColor="#FF7A7A" trailColor="#FADBDB" color="red" title="求购数据" tit="求购成交率"></dataPanel>
         </div>
     </div>
 </template>
