@@ -13,8 +13,8 @@
         <div class="company-info">
             <div class="item space">
                 <template v-if="item.offerStatus == 4">
-                        {{ item.createTime | dateformat('hh:mm') }}
-                </template>
+                            {{ item.createTime | dateformat('hh:mm') }}
+</template>
             </div>
             <div class="item left name">
                 {{ item.companyName }}
@@ -23,65 +23,66 @@
                 <span data-msg="备注" class="iconfont icon-pai-one" style="color:#D67829"></span>
             </div>
             <div class="item right">
-                <span class="iconfont icon-hui" style="color:#FF5555"></span> 过年大促销，机不可失时不再来
+                <span class="iconfont icon-hui" style="color:#FF5555"></span> {{ item.proInfo != '' ? item.proInfo : '暂无优惠信息' }}
             </div>
         </div>
         <div class="company-info">
             <div class="item space"></div>
             <div class="item left">
                 {{ item.contact }} {{ item.contactNum }} 
-                <a v-show="item.QQ != ''" :href="'tencent://message/?uin='+item.QQ+'&amp;Site=有事Q我&amp;Menu=yes'"><span class="iconfont icon-qq" style="color:#2E71F0"></span></a>
+                <a v-show="item.QQ != ''" :href="'tencent://message/?uin='+item.QQ+'&Site=&Menu=yes'"><span class="iconfont icon-qq" style="color:#2E71F0"></span></a>
             </div>
-            <div v-show="item.address != ''" class="item right"><span class="iconfont icon-dingwei" style="color:#FF5555"></span>{{ item.address }}</div>
+            <div v-show="item.address != ''" class="item right"><span class="iconfont icon-dingwei" style="color:#FF5555"></span>{{ item.storeHouseName != '' ? item.storeHouseName : '暂无仓库信息' }}</div>
         </div>
     
         <div class="miss" v-if="item.offerStatus == 4">
             <span class="iconfont icon-cray"></span>没有库存
         </div>
     
-        <template v-if="isDone">
-            <!-- 报价了才会显示按钮 -->
-            <a class="get-deal" v-if="item.offerStatus == 1" @click="bidOffer">选他中标</a>
-        
-            <!-- 报价超过2条才会显示历史 -->
-            <div class="show-offer-history" @click="showHistory(item)" v-if="item.offerStatus != 4 && item.ironSell.length > 1">
-                {{ item.historyShow ? '收起历史报价' : '展开历史报价' }}
-                <span class="iconfont" :class=" item.historyShow ? 'icon-iconjiaobiaoxiangshang':'icon-iconjiaobiaoxiangxia'"></span>
+<template v-if="isDone">
+    <!-- 报价了才会显示按钮 -->
+    <a class="get-deal" v-if="item.offerStatus == 1 && buyStatus == 1" @click="bidOffer">选他中标</a>
+    
+    <!-- 报价超过2条才会显示历史 -->
+    <div class="show-offer-history" @click="showHistory(item)" v-if="item.offerStatus != 4 && item.ironSell.length > 1">
+        {{ item.historyShow ? '收起历史报价' : '展开历史报价' }}
+        <span class="iconfont" :class=" item.historyShow ? 'icon-iconjiaobiaoxiangshang':'icon-iconjiaobiaoxiangxia'"></span>
+    </div>
+    <!-- 历史报价 -->
+    <div class="offer-history-list" v-show="item.historyShow">
+        <div class="offer-item" v-for="(sub,i) in item.ironSell" :key="i">
+            <div class="item date">{{ sub.createTime | dateformat('MM-dd hh:mm') }}</div>
+            <div class="item time-line">
+                <span class="note"></span>
+                <span class="line top" v-if="i>0"></span>
+                <span class="line bottom" v-if="i < item.ironSell.length - 1"></span>
             </div>
-            <!-- 历史报价 -->
-            <div class="offer-history-list" v-show="item.historyShow">
-                <div class="offer-item" v-for="(sub,i) in item.ironSell" :key="i">
-                    <div class="item date">{{ sub.createTime | dateformat('MM-dd hh:mm') }}</div>
-                    <div class="item time-line">
-                        <span class="note"></span>
-                        <span class="line top" v-if="i>0"></span>
-                        <span class="line bottom" v-if="i < item.ironSell.length - 1"></span>
-                    </div>
-                    <div class="item price">&yen;{{ sub.offerPerPrice }}/{{ sub.baseUnit }}</div>
-                    <div class="item tolerance">{{ sub.tolerance }}</div>
-                    <div class="item proPlace">{{ sub.offerPlaces }}</div>
-                    <div class="item totlePrice">&yen;{{ sub.offerPrice }}</div>
-                    <div class="item remark">{{ sub.offerRemark }}</div>
-                </div>
-            </div>
-            <!-- 历史报价 -->
-        </template>
+            <div class="item price">&yen;{{ sub.offerPerPrice }}/{{ sub.baseUnit }}</div>
+            <div class="item tolerance">{{ sub.tolerance }}</div>
+            <div class="item proPlace">{{ sub.offerPlaces }}</div>
+            <div class="item totlePrice">&yen;{{ sub.offerPrice }}</div>
+            <div class="item remark">{{ sub.offerRemark }}</div>
+        </div>
+    </div>
+    <!-- 历史报价 -->
+</template>
     </div>
 </template>
 
 <script>
     export default {
         props: {
+            buyStatus:String,
             item: Object,
-            isDone:{
-                type:Boolean,
-                default:true
+            isDone: {
+                type: Boolean,
+                default: true
             }
         },
         computed: {
-          showNew(){
-              return  this.item.hasNewOffer ? this.item.hasNewOffer == 1 && this.item.offerStatus == 1 : false
-          }  
+            showNew() {
+                return this.item.hasNewOffer ? this.item.hasNewOffer == 0 && this.item.offerStatus == 1 : false
+            }
         },
         methods: {
             //显示历史报价
@@ -99,12 +100,12 @@
                     }
                 });
             },
-            bidAjax(){
-                this.$http.post(this.$api.bidOffer,{
+            bidAjax() {
+                this.$http.post(this.$api.bidOffer, {
                     ironBuyId: this.item.ironBuyId,
                     ironSellId: this.item.ironSellId
                 }).then(res => {
-                    if(res.code === 1000){
+                    if (res.code === 1000) {
                         this.$Message.success('报价成功');
                         this.$emit('on-bidDone');
                     }

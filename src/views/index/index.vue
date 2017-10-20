@@ -47,6 +47,11 @@
         height: 114px;
         border-right: @b_d1;
         border-bottom: @b_d1;
+        img{
+          display: block;
+          width: 100%;
+          height: 100%;
+        }
       }
     }
     
@@ -85,7 +90,9 @@
         <div>
           <div class="inner-title">推荐卖家</div>
           <div class="seller-items">
-            <a class="seller-img" v-for="el in 10" :key="el"></a>
+            <a class="seller-img" v-for="el in 10" :key="el">
+              <img src="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/2017/10/20/20171020110002049449.png">
+            </a>
           </div>
         </div>
       </div>

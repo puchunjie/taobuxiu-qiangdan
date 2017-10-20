@@ -3,7 +3,7 @@
     <div class="main-bar">
       <a class="back">返回主站</a>
       <a class="link">联系我们：400-800-1234</a>
-      <a class="back fr">登录注册</a>
+      <router-link class="back fr" :to="{name: 'login'}">登录</router-link>
       <a class="back fr">旧版入口</a>
     </div>
     <PublicHead></PublicHead>
@@ -27,10 +27,19 @@
           if (res.code === 1000)
             this.$store.commit(types.SET_USER_INFO, res.data);
         })
+      },
+      // 获取求购报价统计
+      getNumbers(){
+        this.$http.get(this.$api.getNums).then(res => {
+          if(res.code === 1000){
+            this.$store.commit(types.SET_NUMS, res.data);
+          }
+        })
       }
     },
     created() {
       this.getUserInfo();
+      this.getNumbers();
     }
   }
 </script>

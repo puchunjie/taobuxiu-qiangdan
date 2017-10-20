@@ -54,6 +54,7 @@
                         return '未中标'
                         break;
                     default:
+                        return '已失效'
                         break;
                 }
             }
@@ -184,7 +185,7 @@
                 border-color: @light_green;
             }
         }
-        &.status3 {
+        &.status3,&.status5 {
             background-color: @f_goast;
             &:hover {
                 .content {
@@ -192,7 +193,7 @@
                 }
             }
         }
-        &.status3.active {
+        &.status3.active,&.status5.active {
             &:before {
                 border-left: 10px solid @f_goast;
             }

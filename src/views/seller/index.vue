@@ -8,10 +8,16 @@
 </template>
 
 <script>
+    import {
+        mapGetters
+    } from 'vuex'
     import leftMenu from '@/components/leftMenu.vue'
     export default {
         components: {
             leftMenu
+        },
+        computed: {
+            ...mapGetters(['nums'])
         },
         data() {
             return {
@@ -65,6 +71,16 @@
                     ]
                 }]
             }
+        },
+        watch: {
+          nums(val){
+              this.menus[0].subs[0].count = val.todaySell;
+            this.menus[0].subs[1].count = val.historySell;
+          }  
+        },
+        mounted () {
+            this.menus[0].subs[0].count = this.nums.todaySell;
+            this.menus[0].subs[1].count = this.nums.historySell;
         }
     }
 </script>

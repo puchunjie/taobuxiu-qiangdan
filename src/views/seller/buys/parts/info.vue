@@ -3,7 +3,7 @@
         <div class="tit">
             求购详情
             <div class="seller-hyue">
-               买家活跃度
+                <crown tit="买家活跃度" :level='item.level'></crown>
             </div>
         </div>
         <div class="table table-head">
@@ -35,9 +35,13 @@
 </template>
 
 <script>
+    import crown from '@/components/basics/crown/index.vue'
     export default {
-        props:{
-            item:Object
+        components: {
+            crown
+        },
+        props: {
+            item: Object
         }
     }
 </script>
@@ -67,7 +71,7 @@
             border-bottom: @b_d1;
             border-right: @b_d1;
             .p20;
-            .seller-hyue{
+            .seller-hyue {
                 float: right;
             }
         }

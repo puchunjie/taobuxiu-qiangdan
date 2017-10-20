@@ -5,7 +5,6 @@
         -webkit-text-fill-color: #555
     }
     
-
     .inner-1200 {
         width: 1200px;
         height: 100%;
@@ -23,12 +22,12 @@
         line-height: 30px;
         top: 60px;
         color: #fff;
-        font-size: 16px;
+        font-size: 12px;
         font-weight: 500;
         background-color: @dark_red;
         .borderRadius(2px);
         .iconfont {
-            margin: 0 12px;
+            margin: 0 10px 0 12px;
             font-size: 16px;
         }
     }
@@ -148,7 +147,7 @@
                     }
                     .iconfont {
                         color: #fff;
-                        font-size: 20px;   
+                        font-size: 20px;
                     }
                 }
                 .link {
@@ -164,8 +163,7 @@
                 }
             }
         }
-
-        .footer{
+        .footer {
             width: 100%;
             height: 80px;
         }
@@ -189,7 +187,7 @@
                         <div class="form">
                             <div class="input-item-warp wid100">
                                 <label><span class="iconfont icon-yonghuming"></span></label>
-                                <input class="goast-input level1" v-model="api.name" @blur="check(api.name,'用户名')">
+                                <input class="goast-input level1" v-model="api.mobile" @blur="check(api.mobile,'用户名')">
                             </div>
                             <input type="hidden">
                             <div class="input-item-warp wid100">
@@ -202,9 +200,7 @@
                             <a class="l" @click="savePSD = !savePSD">记住密码</a>
                             <a class="r">忘记密码</a>
                         </div>
-                        <a class="btn" @click="login">
-                            登录
-                        </a>
+                        <a class="btn" @click="login">登录</a>
                         <a class="link">没有账户？去注册</a>
                         <a class="link go" target="_blank" href="http://www.itaobuxiu.com">前往淘不锈&gt;&gt;</a>
     
@@ -221,6 +217,7 @@
 </template>
 
 <script>
+    import * as types from '@/store/types'
     export default {
         data() {
             return {
@@ -228,24 +225,47 @@
                 isErr: false,
                 errInfo: '',
                 loading: false,
-                api:{
-                    name:'',
-                    password: ''
+                api: {
+                    mobile: '',
+                    password: '',
                 }
             }
         },
         methods: {
-            check(val,key){
-                if(val == ''){
+            check(val, key) {
+                if (val == '') {
                     this.isErr = true;
                     this.errInfo = key + '不能为空'
-                }else{
+                } else {
                     this.isErr = false;
-                    this.errInfo ='';
+                    this.errInfo = '';
                 }
             },
+            setUser(data) {
+                this.$store.commit(types.LOGIN, data);
+                let redirect = decodeURIComponent(this.$route.query.redirect || '/buyer/BuserInfo');
+                this.$router.push({
+                    path: redirect
+                })
+            },
             login() {
-                
+                this.$http.post(this.$api.login, this.api).then(res => {
+                    if (res.code === 1000) {
+                        this.setUser({
+                            authorization: res.data.authorization,
+                            loginId: res.data.loginId
+                        });
+                        this.$Notice.success({
+                            title: '登录成功！',
+                            desc: '恭喜您已经成功通过验证，天选之人，尽情发挥你的宇宙之力吧！'
+                        })
+                    } else {
+                        this.$Notice.error({
+                            title: '登录错误！',
+                            desc: '请输入正确的账号密码！'
+                        })
+                    }
+                })
             }
         }
     }

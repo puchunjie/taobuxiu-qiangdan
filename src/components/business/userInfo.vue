@@ -1,7 +1,7 @@
 <template>
     <div class="user-info">
         <h3 class="name">{{ user.companyName }}</h3>
-        <p>求购活跃度：</p>
+        <p><crown tit="求购活跃度：" :level='level'></crown></p>
         <p>
             <span class="iconfont icon-user"></span>{{ user.contact }}
             <span class="iconfont icon-phone"></span>{{ user.contactNum }}
@@ -15,7 +15,17 @@
     import {
         mapGetters
     } from 'vuex'
+    import crown from '@/components/basics/crown/index.vue'
     export default {
+        props:{
+            level:{
+                type:String,
+                default:'1-1'
+            }
+        },
+        components: {
+            crown
+        },
         computed: {
             ...mapGetters(['user'])
         }

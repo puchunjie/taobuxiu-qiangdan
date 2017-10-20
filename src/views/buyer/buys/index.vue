@@ -1,28 +1,30 @@
 <template>
   <div class="buy-index">
     <statusBar ref="statusBar" @on-filter-status="filterStatus" :status="statusData"></statusBar>
-    <tabList @on-page-change="pageChange" :total="totalCount" ref="tabList">
-      <tabCard v-for="(item,index) in list" @click.native="selectItem(index)" :class="{ 'active':activeIndex == index }" :key="index" :item="item" :index="index" @on-edit="itemEdit" @on-del="deleteItem" @on-copy="copy(index)"></tabCard>
-    </tabList>
-    <div class="info-list">
-      <div class="winner-panel" v-if="activeItem.buyStatus == 2">
-        <div class="tit">中标商家</div>
-        <offerItem :item="selectBusiness" v-if="selectBusiness" :isDone="false" style="border-bottom:0"></offerItem>
-      </div>
-      <Info :item="activeItem"></Info>
-      <offerList :offerList="offerList" @on-bidDone="bidDone"></offerList>
-    </div>
-    <!-- 编辑面板 -->
-    <div class="edit-container" v-if="editShow">
-      <div class="inner-content">
-        <div class="head">
-          编辑求购
-          <span class="iconfont icon-close" @click="editShow = false"></span>
+    <template v-if="listEmpty">
+      <tabList @on-page-change="pageChange" :total="totalCount" ref="tabList">
+        <tabCard v-for="(item,index) in list" @click.native="selectItem(index)" :class="{ 'active':activeIndex == index }" :key="index" :item="item" :index="index" @on-edit="itemEdit" @on-del="deleteItem" @on-copy="copy(index)"></tabCard>
+      </tabList>
+      <div class="info-list">
+        <div class="winner-panel" v-if="activeItem.buyStatus == 2">
+          <div class="tit">中标商家</div>
+          <offerItem :item="selectBusiness" v-if="selectBusiness" :isDone="false" style="border-bottom:0"></offerItem>
         </div>
-        <editItem :data="activeItem" @on-close="editShow = false" @on-save="doEdit"></editItem>
+        <Info :item="activeItem"></Info>
+        <offerList :offerList="offerList" :buyStatus="activeItem.buyStatus" @on-bidDone="bidDone"></offerList>
       </div>
-    </div>
-  
+      <!-- 编辑面板 -->
+      <div class="edit-container" v-if="editShow">
+        <div class="inner-content">
+          <div class="head">
+            编辑求购
+            <span class="iconfont icon-close" @click="editShow = false"></span>
+          </div>
+          <editItem :data="activeItem" @on-close="editShow = false" @on-save="doEdit"></editItem>
+        </div>
+      </div>
+    </template>
+    <img class="no-list" src="../../../assets/no-list.png" v-else>
   </div>
 </template>
 
@@ -82,6 +84,10 @@
       }
     },
     computed: {
+      // 是否没有数据
+      listEmpty(){
+        return this.list.length > 0
+      },
       activeItem() {
         return this.list.length > 0 ? this.list[this.activeIndex] : {}
       },
@@ -233,6 +239,11 @@
   
   .buy-index {
     position: relative;
+    .no-list{
+      display: block;
+      width: 230px;
+      margin: 200px auto 0;
+    }
   }
   
   .edit-container {

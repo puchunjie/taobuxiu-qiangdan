@@ -5,6 +5,22 @@
  */
 export const getUser = '/api/user/findCurrentUser';
 
+/**
+ * 获取求购报价数量统计
+ */
+export const getNums = '/demands/ironBuy/queryIronBuyInfoNum'
+
+/**
+ * 登录
+ * path: /login/userLogin
+ * method: POST
+ * params: {
+ *      mobile: String
+ *      password: String
+ * }
+ */
+export const login = '/login/userLogin';
+
 
 // =================================发布求购页面=================================
 /**
@@ -85,6 +101,11 @@ export const publishHistory = '/demands/ironBuy/queryIronBuyInfo'
 
 // =================================买家求购管理=================================
 /**
+ * 买家基本信息
+ */
+export const userBuyInfo = '/demands/userIronInfo/userBuyInfo'
+
+/**
  * 求购列表
  * @params currentPage,pageSize,buyStatus(选填)
  */
@@ -104,6 +125,11 @@ export const bidOffer = '/demands/ironBuy/getIronSell'
 
 
 // =================================卖家报价管理=================================
+
+/**
+ * 卖家基本信息
+ */
+export const userSellerInfo = '/demands/userIronInfo/userSellInfo';
 
 /**
  * 卖家报价求购列表

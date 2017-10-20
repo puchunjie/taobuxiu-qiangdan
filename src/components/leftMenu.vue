@@ -28,7 +28,6 @@
         methods: {
             routerGo(item) {
                 this.$router.push(item.router);
-                this.setHighLight();
             },
             // 设置高亮
             setHighLight() {
@@ -60,12 +59,12 @@
                 });
             }
         },
+        watch: {
+            $route(){
+                this.setHighLight();
+            }
+        },
         created() {
-            // this.$nextTick(function() {
-            //     let winHeight = document.body.clientHeight;
-            //     let rh = document.getElementsByClassName('right-content')[0].clientHeight + 128;
-            //     this.documentHeight = rh >= winHeight ? rh : winHeight;
-            // })
             this.setHighLight();
         }
     }

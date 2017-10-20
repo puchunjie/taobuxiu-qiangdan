@@ -12,7 +12,7 @@
         </div>
         <div class="offers-scorll-warp">
             <p v-if="list.length == 0" class="no-data">暂无报价，请耐心等待。</p>
-            <offerItem v-for="(item,index) in list" :key="index" :item="item" @on-bidDone="spread"></offerItem>
+            <offerItem :buyStatus="buyStatus" v-for="(item,index) in list" :key="index" :item="item" @on-bidDone="spread"></offerItem>
         </div>
     </div>
 </template>
@@ -25,6 +25,7 @@
             offerItem
         },
         props: {
+            buyStatus: String,
             offerList: Array
         },
         data() {

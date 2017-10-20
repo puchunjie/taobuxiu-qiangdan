@@ -140,13 +140,6 @@
                     el.className = elClassName + ' ' + 'on-err';
                 }
             }
-        },
-        created() {
-            if (this.user.companyName) {
-                this.apiData.company = this.user.companyName;
-                this.apiData.contactName = this.user.contact;
-                this.apiData.contactPhone = this.user.contactNum;
-            }
         }
     }
 </script>

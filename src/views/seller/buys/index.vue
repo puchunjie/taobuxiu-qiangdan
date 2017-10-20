@@ -1,14 +1,17 @@
 <template>
     <div class="seller-index">
         <statusBar @on-filter-status="filterStatus" ref="statusBar" :status="statusData"></statusBar>
-        <tabList @on-page-change="pageChange" :total="totalCount" ref="tabList">
-            <tabCard v-for="(item,index) in list" @click.native="selectItem(index)" :class="{ 'active':activeIndex == index }" :key="index" :item="item"></tabCard>
-        </tabList>
-        <div class="info-list">
-            <tipBar :item="activeItem"></tipBar>
-            <Info :item="activeItem"></Info>
-            <offerPanel :item="activeItem" :ironBuyId="activeItemId" @on-ajax="afterOffer"></offerPanel>
-        </div>
+        <template v-if="listEmpty">
+                <tabList @on-page-change="pageChange" :total="totalCount" ref="tabList">
+                    <tabCard v-for="(item,index) in list" @click.native="selectItem(index)" :class="{ 'active':activeIndex == index }" :key="index" :item="item"></tabCard>
+                </tabList>
+                <div class="info-list">
+                    <tipBar :item="activeItem"></tipBar>
+                    <Info :item="activeItem"></Info>
+                    <offerPanel :item="activeItem" :ironBuyId="activeItemId" @on-ajax="afterOffer"></offerPanel>
+                </div>
+        </template>
+        <img class="no-list" src="../../../assets/no-list.png" v-else>
     </div>
 </template>
 
@@ -67,6 +70,10 @@
             }
         },
         computed: {
+            // 是否没有数据
+            listEmpty() {
+                return this.list.length > 0
+            },
             activeItem() {
                 return this.list.length > 0 ? this.list[this.activeIndex] : {}
             },
@@ -86,7 +93,8 @@
             filterStatus(status) {
                 this.getListApi.offerStatus = status;
                 this.getListApi.currentPage = 1;
-                this.$refs.tabList.pageInit();
+                if(this.$refs.tabList)
+                    this.$refs.tabList.pageInit();
                 this.activeIndex = 0;
                 this.getironList();
             },
@@ -115,11 +123,11 @@
                 })
             },
             // 完成报价，完成忽略后
-            afterOffer(isIgon){
-                if(!isIgon){
+            afterOffer(isIgon) {
+                if (!isIgon) {
                     this.$refs.statusBar.activeIndex = 1;
                     this.filterStatus(1);
-                }else{
+                } else {
                     this.getironList();
                 }
             }
@@ -148,8 +156,13 @@
         margin: 16px 0 0 330px;
     }
     
-    .buy-index {
+    .seller-index {
         position: relative;
+        .no-list {
+            display: block;
+            width: 230px;
+            margin: 200px auto 0;
+        }
     }
 </style>
 

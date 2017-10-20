@@ -4,28 +4,28 @@
             <p>{{ st.name }}</p>
             <p>（{{ st.count }}）</p>
         </div>
-        <a class="service-num">服务专员：1383746359</a>
+        <a class="service-num">服务专员：{{ base.sellManName }}-{{ base.sellManTel }}</a>
     </div>
 </template>
 
 <script>
+    import { mapGetters } from 'vuex'
     export default {
-        props:{
-            status:Array
+        props: {
+            status: Array
         },
         data() {
             return {
                 activeIndex: 0
             }
         },
+        computed: {
+            ...mapGetters(['base'])
+        },
         methods: {
             filterSatatus(st, index) {
-                if (st.count > 0) {
-                    this.activeIndex = index;
-                    this.$emit('on-filter-status', st.status)
-                }else{
-                    return false
-                }
+                this.activeIndex = index;
+                this.$emit('on-filter-status', st.status)
             }
         }
     }

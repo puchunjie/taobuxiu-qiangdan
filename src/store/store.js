@@ -10,7 +10,13 @@ export default new Vuex.Store({
         user: {},
         base: {},
         authorization: Vue.ls.get('authorization'),
-        loginId: Vue.ls.get('loginId')
+        loginId: Vue.ls.get('loginId'),
+        nums: {
+            historyBuy: 0,
+            historySell: 0,
+            todayBuy: 0,
+            todaySell: 0,
+        }
     },
     getters: {
         roleId: state => {
@@ -23,6 +29,9 @@ export default new Vuex.Store({
         base: state => {
             return state.base
         },
+        nums: state => {
+            return state.nums
+        }
     },
     mutations: {
         [types.LOGIN]: (state, payload) => {
@@ -44,6 +53,9 @@ export default new Vuex.Store({
         },
         [types.UPDATE_PRO_INFO]: (state, payload) => {
             state.user.proInfo = payload;
+        },
+        [types.SET_NUMS]: (state, payload) => {
+            state.nums = payload;
         }
     }
 })
