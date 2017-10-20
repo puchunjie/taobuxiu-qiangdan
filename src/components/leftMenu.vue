@@ -16,6 +16,7 @@
 </template>
 
 <script>
+    import * as types from '@/store/types'
     export default {
         props: {
             menus: Array
@@ -57,15 +58,24 @@
                         this.$set(el, 'active', false);
                     })
                 });
+            },
+            // 获取求购报价统计
+            getNumbers() {
+                this.$http.get(this.$api.getNums).then(res => {
+                    if (res.code === 1000) {
+                        this.$store.commit(types.SET_NUMS, res.data);
+                    }
+                })
             }
         },
         watch: {
-            $route(){
+            $route() {
                 this.setHighLight();
             }
         },
         created() {
             this.setHighLight();
+            this.getNumbers();
         }
     }
 </script>

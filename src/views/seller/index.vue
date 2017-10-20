@@ -60,7 +60,9 @@
                         },
                         {
                             name: '权益说明',
-                            router: {}
+                            router: {
+                                name: 'Sright'
+                            }
                         },
                         {
                             name: '发布优惠',

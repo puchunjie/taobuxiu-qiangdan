@@ -6,8 +6,8 @@ import * as types from './store/types'
 
 // axios 配置
 axios.defaults.timeout = 10000;
-// axios.defaults.baseURL = 'http://192.168.0.251'; //配置接口地址
-// axios.defaults.baseURL = 'http://192.168.0.132:8080'; //配置接口地址
+axios.defaults.baseURL = 'http://192.168.0.251'; //配置接口地址
+axios.defaults.baseURL = 'http://192.168.0.132:8080'; //配置接口地址
 // axios.defaults.baseURL = 'http://192.168.0.122:8080'; //配置接口地址
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'; //配置请求头
 axios.defaults.withCredentials = true;

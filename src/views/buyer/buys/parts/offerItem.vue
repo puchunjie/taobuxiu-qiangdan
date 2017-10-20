@@ -13,14 +13,14 @@
         <div class="company-info">
             <div class="item space">
                 <template v-if="item.offerStatus == 4">
-                            {{ item.createTime | dateformat('hh:mm') }}
-</template>
+                    {{ item.createTime | dateformat('hh:mm') }}
+                </template>
             </div>
             <div class="item left name">
                 {{ item.companyName }}
-                <span data-msg="备注" class="iconfont icon-cheng" style="color:#F5A623"></span>
-                <span data-msg="备注" class="iconfont icon-bao" style="color:#C16BD6"></span>
-                <span data-msg="备注" class="iconfont icon-pai-one" style="color:#D67829"></span>
+                <span data-msg="企业信用程度高、经营管理水平优，社会反响、品牌、信誉度高。" class="iconfont icon-cheng" style="color:#F5A623"></span>
+                <span data-msg="企业资金实力强，需方验收货物后淘不锈与供方结算。依据淘不锈平台担保商户入驻条款评选得出。" class="iconfont icon-bao" style="color:#C16BD6"></span>
+                <crown :level='item.level'></crown>
             </div>
             <div class="item right">
                 <span class="iconfont icon-hui" style="color:#FF5555"></span> {{ item.proInfo != '' ? item.proInfo : '暂无优惠信息' }}
@@ -39,7 +39,7 @@
             <span class="iconfont icon-cray"></span>没有库存
         </div>
     
-<template v-if="isDone">
+    <template v-if="isDone">
     <!-- 报价了才会显示按钮 -->
     <a class="get-deal" v-if="item.offerStatus == 1 && buyStatus == 1" @click="bidOffer">选他中标</a>
     
@@ -65,11 +65,12 @@
         </div>
     </div>
     <!-- 历史报价 -->
-</template>
+    </template>
     </div>
 </template>
 
 <script>
+    import crown from '@/components/basics/crown/index.vue'
     export default {
         props: {
             buyStatus:String,
@@ -78,6 +79,9 @@
                 type: Boolean,
                 default: true
             }
+        },
+        components: {
+            crown
         },
         computed: {
             showNew() {

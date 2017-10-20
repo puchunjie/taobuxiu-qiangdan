@@ -27,19 +27,10 @@
           if (res.code === 1000)
             this.$store.commit(types.SET_USER_INFO, res.data);
         })
-      },
-      // 获取求购报价统计
-      getNumbers(){
-        this.$http.get(this.$api.getNums).then(res => {
-          if(res.code === 1000){
-            this.$store.commit(types.SET_NUMS, res.data);
-          }
-        })
       }
     },
     created() {
       this.getUserInfo();
-      this.getNumbers();
     }
   }
 </script>

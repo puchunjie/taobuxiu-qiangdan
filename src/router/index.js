@@ -37,36 +37,48 @@ const router = new Router({
                     name: 'buyer',
                     component: resolve => require(['@/views/buyer/index'], resolve),
                     children: [{
-                        path: 'Bbuys-:isToday',
-                        name: 'Bbuys',
-                        component: resolve => require(['@/views/buyer/buys/index'], resolve)
-                    }, {
-                        path: 'BuserInfo',
-                        name: 'BuserInfo',
-                        component: resolve => require(['@/views/buyer/personalInfo/index'], resolve)
-                    }]
+                            path: 'Bbuys-:isToday',
+                            name: 'Bbuys',
+                            component: resolve => require(['@/views/buyer/buys/index'], resolve)
+                        }, {
+                            path: 'BuserInfo',
+                            name: 'BuserInfo',
+                            component: resolve => require(['@/views/buyer/personalInfo/index'], resolve)
+                        },
+                        {
+                            path: 'Bright',
+                            name: 'Bright',
+                            component: resolve => require(['@/views/rights/index'], resolve)
+                        }
+                    ]
                 },
                 {
                     path: '/seller',
                     name: 'seller',
                     component: resolve => require(['@/views/seller/index'], resolve),
                     children: [{
-                        path: 'Sbuys-:isToday',
-                        name: 'Sbuys',
-                        component: resolve => require(['@/views/seller/buys/index'], resolve)
-                    }, {
-                        path: 'SuserInfo',
-                        name: 'SuserInfo',
-                        component: resolve => require(['@/views/seller/personalInfo/index'], resolve)
-                    }, {
-                        path: 'scope',
-                        name: 'scope',
-                        component: resolve => require(['@/views/seller/scope/index'], resolve)
-                    }, {
-                        path: 'discount',
-                        name: 'discount',
-                        component: resolve => require(['@/views/seller/discount/index'], resolve)
-                    }]
+                            path: 'Sbuys-:isToday',
+                            name: 'Sbuys',
+                            component: resolve => require(['@/views/seller/buys/index'], resolve)
+                        }, {
+                            path: 'SuserInfo',
+                            name: 'SuserInfo',
+                            component: resolve => require(['@/views/seller/personalInfo/index'], resolve)
+                        }, {
+                            path: 'scope',
+                            name: 'scope',
+                            component: resolve => require(['@/views/seller/scope/index'], resolve)
+                        }, {
+                            path: 'discount',
+                            name: 'discount',
+                            component: resolve => require(['@/views/seller/discount/index'], resolve)
+                        },
+                        {
+                            path: 'Sright',
+                            name: 'Sright',
+                            component: resolve => require(['@/views/rights/index'], resolve)
+                        }
+                    ]
                 },
                 {
                     path: '/userInfo',

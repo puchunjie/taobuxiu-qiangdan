@@ -157,7 +157,6 @@
     }
     
     .seller-index {
-        position: relative;
         .no-list {
             display: block;
             width: 230px;

@@ -33,15 +33,16 @@
     .crown-container {
         display: inline-block;
         vertical-align: top;
-        height: 18px;
+        height: 16px;
+        text-indent: 0!important;
         label{
             position: relative;
             top: -4px;
         }
         span {
             display: inline-block;
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
             margin-right: 2px;
             background-repeat: no-repeat;
             background-position: center;

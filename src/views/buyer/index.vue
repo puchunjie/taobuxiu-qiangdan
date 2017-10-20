@@ -54,7 +54,9 @@ import {
                         },
                         {
                             name: '权益说明',
-                            router: {}
+                            router: {
+                                name: 'Bright'
+                            }
                         }
                     ]
                 }]
