@@ -7,7 +7,7 @@
                 </div>
                 <ul class="sub-menu-list">
                     <li v-for="(sub,i) in item.subs" :class="{'active':sub.active}" :key="i" @click="routerGo(sub)">
-                        {{ sub.name }}{{ sub.count ? `(${sub.count})`: '' }}
+                        {{ sub.name }}{{ sub.count != undefined ? `(${sub.count})`: '' }}
                     </li>
                 </ul>
             </li>

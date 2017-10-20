@@ -2,8 +2,8 @@
     <div>
         <PInfo :level="level"></PInfo>
         <div class="contnet">
-            <dataPanel class="panel" :filter="bgData" title="买家响应" tit="报价率"></dataPanel>
-            <dataPanel class="panel" :filter="qgData"  strokeColor="#FF7A7A" trailColor="#FADBDB" color="red" title="卖家成交" tit="报价率"></dataPanel>
+            <dataPanel class="panel" :filter="bgData" title="卖家响应" tit="报价率"></dataPanel>
+            <dataPanel class="panel" :filter="qgData"  strokeColor="#FF7A7A" trailColor="#FADBDB" color="red" title="卖家成交" tit="成功率"></dataPanel>
         </div>
     </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
     <div class="ranking-panel">
-        <div class="title">合作商排行榜</div>
+        <div class="title">合作商排行榜 <span data-msg="对于买家，合作商排行指数即为“近30天以内，平台卖方商户针对此买家发起的求购所提供的有效响应（有效报价+选择放弃报价）的累积次数”" class="iconfont icon-wenhao"></span></div>
         <div class="contnet">
             <div class="item" v-for="(item,i) in list" :key="i">
                 <a class="icon" :class="'win'+ i">{{ i + 1 }}</a>
@@ -35,6 +35,26 @@
             line-height: 32px;
             margin-bottom: 30px;
             font-weight: bold;
+            .iconfont {
+                position: relative;
+                color: @f_ligth;
+                cursor: pointer;
+                &:hover:after {
+                    content: attr(data-msg);
+                    position: absolute;
+                    font-size: 12px;
+                    line-height: 30px;
+                    text-align: center;
+                    top: -32px;
+                    left: -10px;
+                    color: #fff;
+                    text-indent: 0;
+                    padding: 0 10px;
+                    background-color: rgba(70, 76, 91, .9);
+                    white-space: nowrap;
+                    .borderRadius;
+                }
+            }
         }
         .contnet {
             width: 100%;

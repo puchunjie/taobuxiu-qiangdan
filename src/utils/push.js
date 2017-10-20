@@ -22,6 +22,7 @@ export default {
             let rand = this.$ls.get('rand') != null ? this.$ls.get('rand') : this.MathRand();
             // 建立WebSocket链接
             let ws = new WebSocket('ws://' + window.location.host + ':8080/websocket/iron?' + this.$store.state.loginId + rand);
+
             ws.onopen = function(evt) {
                 console.log("Connection open ...");
             };
@@ -41,16 +42,18 @@ export default {
                 Notification.requestPermission();
         },
         notify(msg) {
+            let title = msg.split("/")[0];
+            let body = msg.split("/")[1];
             if (window.Notification && Notification.permission == 'granted') {
-                let notif = new Notification("新消息", {
-                    body: msg //通知的具体内容
+                let notif = new Notification(title, {
+                    body: body //通知的具体内容
                 });
                 this.isNotice = true;
             } else {
                 if (this.isFocus) {
                     this.$Notice.success({
-                        title: '您有一条新通知',
-                        desc: msg
+                        title: title,
+                        desc: body
                     });
                     this.isNotice = true;
                 } else {
