@@ -187,12 +187,12 @@
                         <div class="form">
                             <div class="input-item-warp wid100">
                                 <label><span class="iconfont icon-yonghuming"></span></label>
-                                <input class="goast-input level1" v-model="api.mobile" @blur="check(api.mobile,'用户名')">
+                                <input class="goast-input level1" placeholder="用户名" v-model="api.mobile" @blur="check(api.mobile,'用户名')">
                             </div>
                             <input type="hidden">
                             <div class="input-item-warp wid100">
                                 <label><span class="iconfont icon-mima"></span></label>
-                                <input class="goast-input level1" type="password" v-model="api.password" @blur="check(api.password,'密码')">
+                                <input class="goast-input level1" placeholder="密码" type="password" v-model="api.password" @blur="check(api.password,'密码')">
                             </div>
                         </div>
                         <div class="bar">
