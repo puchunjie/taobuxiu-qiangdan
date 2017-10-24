@@ -1,7 +1,12 @@
 <template>
     <div class="tip-bar" :class="'status'+item.offerStatus">
         <div class="tit" v-if="item.offerStatus == 0 || item.offerStatus == 1">
-            {{ item.offerStatus == 0 ? `已有${item.sellNum}家公司在和您竞争，快去报价吧` : '已报价，请等待买家回应' }}
+            <template v-if="item.offerStatus == 0">
+                已有 <b class="b-red">{{ item.sellNum }}</b> 家公司在和您竞争，快去报价吧
+            </template>
+            <template v-else>
+                已报价，请等待买家回应
+            </template>
             <div class="cout-down">
                 剩余时间：
                 <countDown :endTime="item.updateTime + item.timeLimit"></countDown>
@@ -51,6 +56,9 @@
             position: relative;
             padding: 0 20px;
             line-height: 40px;
+            .b-red{
+                color:@dark_red;
+            }
             .cout-down {
                 position: absolute;
                 top: 0;

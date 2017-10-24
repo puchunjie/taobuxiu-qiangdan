@@ -116,7 +116,7 @@
                     margin-right: 8px;
                 }
                 &.goast {
-                    color: #bdbdbd;
+                    color: @f_goast;
                 }
             }
         }
@@ -166,6 +166,7 @@
             &:hover {
                 .content {
                     border-color: @light_yellow;
+                    background-color: #fff3d1;
                 }
             }
         }
@@ -175,6 +176,7 @@
             }
             .content {
                 border-color: @light_yellow;
+                background-color: #fff3d1;
             }
         }
         &.status2 {
@@ -182,6 +184,7 @@
             &:hover {
                 .content {
                     border-color: @light_green;
+                    background-color: #f3ffe5;
                 }
             }
         }
@@ -191,6 +194,7 @@
             }
             .content {
                 border-color: @light_green;
+                background-color: #f3ffe5;
             }
         }
         &.status3 {
@@ -198,6 +202,7 @@
             &:hover {
                 .content {
                     border-color: @f_goast;
+                    background-color: #d1d1d1;
                 }
             }
         }
@@ -207,6 +212,7 @@
             }
             .content {
                 border-color: @f_goast;
+                background-color: #d1d1d1;
             }
         }
         &+.tab-card {

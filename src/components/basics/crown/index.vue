@@ -2,28 +2,34 @@
     <div class="crown-container">
         <label>{{ tit }}</label>
         <span v-for="el in num" :key="el" :class="'crown'+pic"></span>
+    
+        <div class="tip">{{ tip }}</div>
     </div>
 </template>
 
 <script>
     export default {
         props: {
-            tit:{
-                type:String,
-                default:''
+            tit: {
+                type: String,
+                default: ''
             },
             level: {
                 type: String,
                 default: '1-1'
+            },
+            tip: {
+                type: String,
+                default: ''
             }
         },
         computed: {
-          num(){
-              return this.level!='' ? this.level.split('-')[1] * 1 : 1;
-          },
-          pic(){
-              return this.level!='' ? this.level.split('-')[0] : 1;
-          }
+            num() {
+                return this.level != '' ? this.level.split('-')[1] * 1 : 1;
+            },
+            pic() {
+                return this.level != '' ? this.level.split('-')[0] : 1;
+            }
         }
     }
 </script>
@@ -31,11 +37,12 @@
 <style lang="less" scoped>
     @import '../../../assets/base.less';
     .crown-container {
+        position: relative;
         display: inline-block;
         vertical-align: top;
         height: 16px;
         text-indent: 0!important;
-        label{
+        label {
             position: relative;
             top: -4px;
         }
@@ -54,6 +61,34 @@
             }
             &.crown3 {
                 background-image: url('../../../assets/crown/3.png')
+            }
+        }
+        .tip {
+            position: absolute;
+            display: none;
+            font-size: 12px;
+            line-height: 30px;
+            text-align: center;
+            color: #fff;
+            text-indent: 0;
+            padding: 0 10px;
+            background-color: rgba(70, 76, 91, .9);
+            white-space: nowrap;
+            z-index: 10;
+            top: 0;
+            left: 20px;
+            .borderRadius;
+        }
+        &.tip-left {
+            .tip {
+                top: 9px;
+                right: 20px;
+                left: auto;
+            }
+        }
+        &:hover {
+            .tip {
+                display: block;
             }
         }
     }

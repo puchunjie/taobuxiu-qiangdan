@@ -209,6 +209,8 @@ export const ironNew = '/api/main/queryIronNew'
  */
 export const lme = '/api/main/photoLME'
 
+export const threeMonth = '/api/main/threeMonthLME'
+
 /**
  * 申请质检
  */

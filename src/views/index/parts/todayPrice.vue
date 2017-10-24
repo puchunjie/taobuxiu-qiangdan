@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="inner-title">今日市价<span>(最后更新  09:13)</span></div>
+        <div class="inner-title">今日市价<span>(最后更新  {{ lastTime | dateformat }})</span></div>
         <div class="item-group">
             <div class="item" :class="[{'no-mr':(i+1)%4 == 0},'type' + item.gains]" v-for="(item,i) in list" :key="item.id">
                 <h3>&yen;{{ item.price }}<span>{{ item.proPlace }}</span></h3>
@@ -16,7 +16,8 @@
     export default {
         data () {
             return {
-                list:[]    
+                list:[],
+                lastTime:''    
             }
         },
         methods: {
@@ -24,6 +25,7 @@
                 this.$http.post(this.$api.ironNew).then(res => {
                     if(res.code === 1000){
                         this.list = res.data;
+                        this.lastTime = res.data[0].createTime;
                     }
                 })
             }

@@ -2,15 +2,15 @@
     <div class="seller-index">
         <statusBar @on-filter-status="filterStatus" ref="statusBar" :status="statusData"></statusBar>
         <template v-if="listEmpty">
-                <tabList @on-page-change="pageChange" :total="totalCount" ref="tabList">
-                    <tabCard v-for="(item,index) in list" @click.native="selectItem(index)" :class="{ 'active':activeIndex == index }" :key="index" :item="item"></tabCard>
-                </tabList>
-                <div class="info-list">
-                    <tipBar :item="activeItem"></tipBar>
-                    <Info :item="activeItem"></Info>
-                    <offerPanel :item="activeItem" :ironBuyId="activeItemId" @on-ajax="afterOffer"></offerPanel>
-                </div>
-        </template>
+                                <tabList @on-page-change="pageChange" :total="totalCount" ref="tabList">
+                                    <tabCard v-for="(item,index) in list" @click.native="selectItem(index)" :class="{ 'active':activeIndex == index }" :key="index" :item="item"></tabCard>
+                                </tabList>
+                                <div class="info-list">
+                                    <tipBar :item="activeItem"></tipBar>
+                                    <Info :item="activeItem"></Info>
+                                    <offerPanel :item="activeItem" :ironBuyId="activeItemId" @on-ajax="afterOffer"></offerPanel>
+                                </div>
+</template>
         <img class="no-list" src="../../../assets/no-list.png" v-else>
     </div>
 </template>
@@ -93,7 +93,7 @@
             filterStatus(status) {
                 this.getListApi.offerStatus = status;
                 this.getListApi.currentPage = 1;
-                if(this.$refs.tabList)
+                if (this.$refs.tabList)
                     this.$refs.tabList.pageInit();
                 this.activeIndex = 0;
                 this.getironList();
@@ -128,6 +128,12 @@
                     this.$refs.statusBar.activeIndex = 1;
                     this.filterStatus(1);
                 } else {
+                    // 如果删除这条之后分页中海油数据，就直接请求当前页数据
+                    if (this.list.length <= 1)
+                        this.getListApi.currentPage = this.getListApi.currentPage - 1;
+                    if (this.$refs.tabList)
+                        this.$refs.tabList.pageInit(this.getListApi.currentPage);
+                    this.activeIndex = 0;
                     this.getironList();
                 }
             }

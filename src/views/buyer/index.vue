@@ -23,7 +23,7 @@ import {
             return {
                 menus: [{
                     title: '现货求购管理',
-                    icon: 'icon-menu',
+                    icon: 'icon-guanli',
                     subs: [{
                         name: '今日',
                         count: 300,

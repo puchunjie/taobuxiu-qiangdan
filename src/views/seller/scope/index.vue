@@ -36,13 +36,13 @@
                 position: relative;
                 width: 100%;
                 height: 18px;
-                a{
-                   position: absolute;
+                a {
+                    position: absolute;
                     right: 0;
                     color: @mask_blue;
-                    cursor: pointer; 
+                    cursor: pointer;
                 }
-                .iconfont{
+                .iconfont {
                     margin-right: 5px;
                 }
             }
@@ -116,12 +116,12 @@
                     api: this.$api.G_getTypes
                 }, {
                     title: '材质',
-                    key: 'surface',
+                    key: 'material',
                     arr: [],
                     api: this.$api.G_getMaterials
                 }, {
                     title: '表面',
-                    key: 'material',
+                    key: 'surface',
                     arr: [],
                     api: this.$api.G_getSurFace
                 }, {
@@ -132,19 +132,19 @@
                 }],
                 apiData: {
                     ironType: [],
-                    surface: [],
                     material: [],
+                    surface: [],
                     proPlace: []
                 }
             }
         },
         computed: {
-            checkAll(){
+            checkAll() {
                 let arr = []
                 this.list.forEach(el => {
                     let check = true;
                     el.arr.forEach(sub => {
-                        if(!sub.isCheck){
+                        if (!sub.isCheck) {
                             check = false;
                             return false
                         }
@@ -184,16 +184,16 @@
                         if (res.data == '') {
                             this.apiData = {
                                 ironType: list[0].data,
-                                surface: list[1].data,
-                                material: list[2].data,
+                                material: list[1].data,
+                                surface: list[2].data,
                                 proPlace: list[3].data
                             };
                         } else {
                             this.apiData = {
-                                ironType: res.data.ironType,
-                                surface: res.data.surface,
-                                material: res.data.material,
-                                proPlace: res.data.proPlace
+                                ironType: res.data.ironType != '' ? res.data.ironType : [],
+                                surface: res.data.surface != '' ? res.data.surface : [],
+                                material: res.data.material != '' ? res.data.material : [],
+                                proPlace: res.data.proPlace != '' ? res.data.proPlace : []
                             };
                         }
                         this.setClass();
@@ -202,22 +202,25 @@
             },
             // 选择操作
             selectItem(item, sub, i) {
-                if(sub.isCheck){
-                    this.apiData[item.key].splice(i, 1);
-                }else{
+                console.log(item)
+                if (sub.isCheck) {
+                    _.remove(this.apiData[item.key], n => {
+                        return n.id == item.arr[i].id;
+                    });
+                } else {
                     this.apiData[item.key].push(sub);
                 }
                 sub.isCheck = !sub.isCheck;
             },
             // 全选
-            setCheckAll(i){
+            setCheckAll(i) {
                 let isCheck = this.checkAll[i];
-                if(isCheck){
+                if (isCheck) {
                     this.apiData[this.list[i].key] = [];
                     this.list[i].arr.forEach(el => {
                         el.isCheck = false;
                     })
-                }else{
+                } else {
                     this.apiData[this.list[i].key] = [];
                     let data = _.cloneDeep(this.list[i].arr);
                     data.forEach(el => {
@@ -232,14 +235,14 @@
             // 设置高亮
             setClass() {
                 this.list.forEach(el => {
-                    el.arr.forEach( subEl => {
-                        this.apiData[el.key].forEach( inEl => {
-                            if(subEl.id == inEl.id){
+                    el.arr.forEach(subEl => {
+                        this.apiData[el.key].forEach(inEl => {
+                            if (subEl.id == inEl.id) {
                                 subEl.isCheck = true;
                             }
                         })
                     })
-                }); 
+                });
             },
             // 保存经营范围
             saveScope() {

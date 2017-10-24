@@ -10,18 +10,21 @@ export default {
     },
     methods: {
         MathRand() {
-            var Num = "";
-            for (var i = 0; i < 6; i++) {
-                Num += Math.floor(Math.random() * 10);
+            if (this.$ls.get('rand') != null) {
+                let Num = "";
+                for (var i = 0; i < 6; i++) {
+                    Num += Math.floor(Math.random() * 10);
+                }
+                this.$ls.set('rand', Num);
+                return Num
             }
-            this.$ls.set('rand', Num);
-            return Num
         },
         initScoket() {
             let _this = this;
-            let rand = this.$ls.get('rand') != null ? this.$ls.get('rand') : this.MathRand();
+            let rand = this.$ls.get('rand');
             // 建立WebSocket链接
-            let ws = new WebSocket('ws://' + window.location.host + ':8080/websocket/iron?' + this.$store.state.loginId + rand);
+            let host = window.location.host != 'localhost:9090' ? window.location.host : '192.168.0.251';
+            let ws = new WebSocket('ws://' + host + ':8080/websocket/iron?' + this.$store.state.loginId + rand);
 
             ws.onopen = function(evt) {
                 console.log("Connection open ...");
@@ -46,7 +49,9 @@ export default {
             let body = msg.split("/")[1];
             if (window.Notification && Notification.permission == 'granted') {
                 let notif = new Notification(title, {
-                    body: body //通知的具体内容
+                    body: body, //通知的具体内容
+                    icon: 'http://blog.gdfengshuo.com/images/avatar.jpg',
+                    requireInteraction: true
                 });
                 this.isNotice = true;
             } else {
@@ -70,6 +75,7 @@ export default {
         }
     },
     created() {
+        this.MathRand();
         document.addEventListener('visibilitychange', () => {
             let isHidden = document.hidden;
             if (isHidden) {
@@ -84,7 +90,7 @@ export default {
 
             }
         });
-        if (window.location.hostname != 'localhost')
+        if (this.$store.state.loginId != null)
             this.initScoket();
     }
 }

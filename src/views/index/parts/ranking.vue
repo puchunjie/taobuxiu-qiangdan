@@ -36,7 +36,7 @@
             return {
                 list: [],
                 active: 0,
-                filter:['今日','所有']
+                filter:['昨日','所有']
             }
         },
         methods: {
@@ -102,16 +102,17 @@
         }
         .no-list{
             display: block;
+            width: 250px;
             margin: 60px auto 0;
         }
         .item-group {
-            font-size: 20px;
+            font-size: 16px;
         }
         .item {
             display: block;
             float: left;
-            height: 54px;
-            line-height: 54px;
+            height: 42px;
+            line-height: 42px;
             margin-left: 30px;
             text-align: center;
             &.no-mr {

@@ -52,6 +52,7 @@
                 line-height: 80px;
                 text-align: center;
                 font-size: 16px;
+                font-weight: 500;
                 color: #fff;
                 cursor: pointer;
                 &.active,
@@ -69,6 +70,7 @@
             margin: 20px 10px 0 0;
             line-height: 36px;
             overflow: hidden;
+            font-weight: 500;
             .borderRadius(40px);
             a {
                 display: block;

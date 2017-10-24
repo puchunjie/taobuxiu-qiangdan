@@ -137,7 +137,7 @@
         <div class="offer-from clearfix" v-if="offerDone">
             <div class="input-item-warp wid-180" ref="offerPerPrice">
                 <label>单价</label>
-                <input class="goast-input level1 textRight" type="text" @blur="validItem('offerPerPrice')" @keyup="validItem('offerPerPrice')" v-model="offerApi.offerPerPrice">
+                <input class="goast-input level1 textRight" style="width:60px" type="text" @blur="validItem('offerPerPrice')" @keyup="validItem('offerPerPrice')" v-model="offerApi.offerPerPrice">
                 <Poptip v-if="units.length > 1" trigger="hover" class="unit-content" placement="bottom">
                     元/{{ unit.name }}<span v-show="units.length > 1" class="iconfont icon-iconjiaobiaoxiangxia"></span>
                     <div class="units" slot="content">
@@ -163,7 +163,7 @@
             </div>
             <div class="input-item-warp wid-550 no-margin">
                 <label>备注(选填)</label>
-                <input class="goast-input level1" type="text" v-model="offerApi.offerRemark" placeholder="请填写您的交货期等其他要求，最多35字">
+                <input class="goast-input level1" maxlength="35" type="text" v-model="offerApi.offerRemark" placeholder="请填写您的交货期等其他要求，最多35字">
             </div>
         </div>
         <div class="offer-table clearfix" v-else>

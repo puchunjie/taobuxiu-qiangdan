@@ -3,7 +3,7 @@
         <div class="tit">
             求购详情
             <div class="seller-hyue">
-                <crown tit="买家活跃度" :level='item.level'></crown>
+                <crown :tip="`总报价：${item.buyAllNum}次,中标：${item.buyGetNum}次`" class="tip-left" tit="买家活跃度" :level='item.level'></crown>
             </div>
         </div>
         <div class="table table-head">

@@ -7,6 +7,9 @@
 </template>
 
 <script>
+  import {
+    mapGetters
+  } from 'vuex'
   import longBar from '@/components/loginBar'
   import PublicHead from '@/components/publicHead'
   import push from '@/utils/push.js'
@@ -17,6 +20,9 @@
     components: {
       PublicHead,
       longBar
+    },
+    computed: {
+      ...mapGetters(['user','base'])
     },
     methods: {
       getUserInfo() {

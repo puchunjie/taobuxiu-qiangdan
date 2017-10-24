@@ -95,6 +95,7 @@
         width: 100%;
         color: #fff;
         font-size: 14px;
+        font-weight: 500;
         .menu-item {
             width: 100%;
             .item-title {

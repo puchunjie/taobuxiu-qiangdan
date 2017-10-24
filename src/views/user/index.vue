@@ -107,6 +107,7 @@
 </template>
 
 <script>
+    import * as types from '@/store/types'
     import ajaxSelect from '@/components/basics/ajaxSelect/index'
     import citySelect from '@/components/basics/citySelect/index'
     import {
@@ -209,7 +210,7 @@
             }
         },
         computed: {
-            ...mapGetters(['user','base']),
+            ...mapGetters(['user', 'base']),
             // 是否有新版本的地址信息？
             isNewAdress() {
                 return this.user.provinceId != ''
@@ -235,21 +236,21 @@
                 this.userData.districtName = data.districtName;
             },
             // 初始化userData
-            resetUserData() {
+            resetUserData(val) {
                 this.userData = {
-                    id: this.user.id,
-                    contact: this.user.contact,
-                    contactNum: this.user.contactNum,
-                    qq: this.user.qq,
-                    provinceId: this.user.provinceId,
-                    provinceName: this.user.provinceName,
-                    cityId: this.user.cityId,
-                    cityName: this.user.cityName,
-                    districtId: this.user.districtId,
-                    districtName: this.user.districtName,
-                    storeHouseId: this.user.storeHouseId,
-                    storeHouseName: this.user.storeHouseName,
-                    address: this.user.address
+                    id: val.id,
+                    contact: val.contact,
+                    contactNum: val.contactNum,
+                    qq: val.qq,
+                    provinceId: val.provinceId,
+                    provinceName: val.provinceName,
+                    cityId: val.cityId,
+                    cityName: val.cityName,
+                    districtId: val.districtId,
+                    districtName: val.districtName,
+                    storeHouseId: val.storeHouseId,
+                    storeHouseName: val.storeHouseName,
+                    address: val.address
                 }
             },
             // 保存修改
@@ -257,9 +258,9 @@
                 this.$refs.userInfo.validate((valid) => {
                     if (valid) {
                         let params = this.$clearData(this.userData);
-                        console.log(params)
                         this.$http.post(this.$api.updateBuserInfo, params).then(res => {
-                            if(res.code === 1000){
+                            if (res.code === 1000) {
+                                this.$store.commit(types.UPDATE_USER_INFO, res.data);
                                 this.$Message.success('修改成功!');
                             }
                         })
@@ -269,7 +270,7 @@
                 })
             },
             //返回
-            backLink(){
+            backLink() {
                 this.$router.go(-1)
             },
             // 修改密码
@@ -278,7 +279,7 @@
                     if (valid) {
                         let params = this.$clearData(this.passWord);
                         this.$http.post(this.$api.updatePsd, params).then(res => {
-                            if(res.code === 1000){
+                            if (res.code === 1000) {
                                 this.$Message.success('修改成功!');
                             }
                         })
@@ -289,7 +290,12 @@
             }
         },
         created() {
-            this.resetUserData();
+            this.resetUserData(this.user);
+        },
+        watch: {
+            user(val){
+                this.resetUserData(val)
+            }
         }
     }
 </script>

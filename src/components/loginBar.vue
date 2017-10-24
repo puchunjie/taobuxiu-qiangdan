@@ -46,8 +46,10 @@
       },
       loginOut(){
         this.$store.commit(types.LOGOUT);
-        this.$router.push({name:'index'});
-        this.panelShow = !this.panelShow;
+        // 使用原生跳转，强制页面刷新，断开scoket
+        window.location.href = '/qd/index';
+        // this.$router.push({name:'index'});
+        // this.panelShow = !this.panelShow;
       }
     }
   }
@@ -59,7 +61,7 @@
   .main-bar {
     position: relative;
     width: 100%;
-    height: 28px;
+    height: 29px;
     line-height: 28px;
     padding: 0 10px;
     font-size: 12px;

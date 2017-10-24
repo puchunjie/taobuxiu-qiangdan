@@ -85,19 +85,22 @@
             <div class="input-item-warp wid-112 no-margin disabel">
                 <label>时间</label> 24小时
             </div>
-            <div class="input-item-warp wid-180">
+            <div class="input-item-warp wid-180" v-if="isJB">
                 <label>公差</label>
                 <input class="goast-input level1" style="width:110px;text-align:right" type="text" v-model="item.tolerance">
+            </div>
+            <div class="input-item-warp wid-180 disabel" v-else>
+                <label>公差</label>
             </div>
             <div class="input-item-warp wid-240" :class="{'on-err':unitTip}">
                 <label>单位</label>
                 <div class="inline">
                     <div class="inside-group">
-                        <input class="goast-input" @blur="isUnitErr" style="width:75px" type="text" v-model="item.weights">
+                        <input class="goast-input" @blur="isUnitErr" style="width:75px" type="number" v-model="item.weights">
                         <span>{{ item.weightUnit == '' ? 'x' : item.weightUnit }}</span>
                     </div>
                     <div class="inside-group">
-                        <input class="goast-input" @blur="isUnitErr" style="width:75px" type="text" v-model="item.numbers">
+                        <input class="goast-input"  @blur="isUnitErr" style="width:75px" type="number" v-model="item.numbers">
                         <span>{{ item.numberUnit == '' ? 'x' : item.numberUnit }}</span>
                     </div>
                 </div>
@@ -110,7 +113,7 @@
             </div>
             <div class="input-item-warp wid-550 no-margin">
                 <label>备注(选填)</label>
-                <input class="goast-input level1" type="text" v-model="item.remark" placeholder="请填写您的交货期等其他要求，最多35字">
+                <input class="goast-input level1" maxlength="35" type="text" v-model="item.remark" placeholder="请填写您的交货期等其他要求，最多35字">
             </div>
         </div>
         <div class="footer-bar">
@@ -180,15 +183,18 @@
                 return selectApi
             },
             isOK() {
+                // 规格
                 let GuigeOK = this.item.height != '' && this.item.width != '' && this.item.length != '' || this.item.specifications != '';
-                let unitOk = this.item.numbers != '' || this.item.weights != ''
+                // 单位
+                let unitOk = this.item.numbers != '' || this.item.weights != '';
+                // 公差
+                let toleranceOk = this.isJB ? this.item.tolerance != '' : true;
                 return document.getElementsByClassName('on-err').length == 0 &&
-                    GuigeOK && unitOk &&
+                    GuigeOK && unitOk && toleranceOk &&
                     this.item.ironTypeName != '' &&
                     this.item.locationName != '' &&
                     this.item.materialName != '' &&
                     this.item.surfaceName != '' &&
-                    this.item.tolerance != '' &&
                     this.item.timeLimit != '';
             },
             // 是卷或板

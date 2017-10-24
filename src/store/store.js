@@ -7,8 +7,8 @@ Vue.use(VueLocalStorage);
 Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
-        user: {},
-        base: {},
+        user: "",
+        base: "",
         authorization: Vue.ls.get('authorization'),
         loginId: Vue.ls.get('loginId'),
         nums: {
@@ -52,6 +52,9 @@ export default new Vuex.Store({
             state.user = payload.buserInfo;
             delete payload.buserInfo;
             state.base = payload;
+        },
+        [types.UPDATE_USER_INFO]: (state, payload) => {
+            state.user = payload;
         },
         [types.UPDATE_PRO_INFO]: (state, payload) => {
             state.user.proInfo = payload;

@@ -18,8 +18,8 @@
             pageChange(current){
                 this.$emit('on-page-change',current)
             },
-            pageInit(){
-                this.$refs.page.currentPage = 1;
+            pageInit(page = 1){
+                this.$refs.page.currentPage = page;
             }
         }
     }

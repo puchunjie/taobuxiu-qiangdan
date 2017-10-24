@@ -146,7 +146,8 @@
       filterStatus(status) {
         this.getListApi.buyStatus = status;
         this.getListApi.currentPage = 1;
-        this.$refs.tabList.pageInit();
+        if(this.$refs.tabList)
+          this.$refs.tabList.pageInit();
         this.activeIndex = 0;
         this.getIronBuys();
       },
@@ -167,10 +168,11 @@
       },
       // 删除求购
       deleteItem(item) {
-        let params = this.$clearData(item);
+        let params = _.cloneDeep(item);
         params.status = 0;
         this.$http.post(this.$api.publish_one, params).then(res => {
           if (res.code === 1000) {
+            this.activeIndex = 0;
             this.getIronBuys();
             this.$Message.success('已删除！')
           }
