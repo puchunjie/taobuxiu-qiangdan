@@ -8,7 +8,7 @@
           {{ user.companyName }}
           <span class="iconfont" :class="panelShow ? 'icon-iconjiaobiaoxiangshang': 'icon-iconjiaobiaoxiangxia'"></span>
         </a>
-      <router-link v-else :to="{name: 'login'}">您好，请登录</router-link>
+      <router-link v-else :to="{name:'login',query: { redirect: $router.currentRoute.fullPath }}">您好，请登录</router-link>
       <a class="back">注册</a>
     </div>
     <div class="action-panel" v-show="panelShow">

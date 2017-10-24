@@ -42,7 +42,7 @@
             <Button type="primary" @click="commit" :loading="loading" long>提交申请</Button>
         </div>
         <div v-if="!isLogin" class="disable-mask">
-            <router-link class="login-btn" :to="{name:'login'}">去登录</router-link>
+            <router-link class="login-btn" :to="{name:'login',query: { redirect: $router.currentRoute.fullPath }}">去登录</router-link>
         </div>
     </div>
 </template>

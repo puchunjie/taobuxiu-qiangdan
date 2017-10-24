@@ -2,7 +2,7 @@
     <div class="discount-container">
         <p class="active-discount">当前优惠：{{ user.proInfo }}</p>
         <div class="text-area">
-            <textarea class="publish-area" v-model="proInfo"></textarea>
+            <textarea class="publish-area" maxlength="25" v-model="proInfo"></textarea>
             <a class="publish" @click="saveDiscount">发布</a>
         </div>
         <div class="hot">

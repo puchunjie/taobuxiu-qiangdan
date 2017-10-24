@@ -12,7 +12,7 @@
         <div class="company-info">
             <div class="item space">
                 <template v-if="item.offerStatus == 4">
-                        {{ item.createTime | dateformat('hh:mm') }}
+                            {{ item.createTime | dateformat('hh:mm') }}
 </template>
             </div>
             <div class="item left name">
@@ -29,7 +29,9 @@
             <div class="item space"></div>
             <div class="item left">
                 {{ item.contact }} {{ item.contactNum }} 
-                <a v-show="item.QQ != ''" :href="'tencent://message/?uin='+item.QQ+'&Site=&Menu=yes'"><span class="iconfont icon-qq" style="color:#2E71F0"></span></a>
+                <a class="tencent-qq" v-show="item.QQ != ''" :href="'tencent://message/?uin='+item.QQ+'&Site=&Menu=yes'">
+                    <img src="../../../../assets/icon_qq.png">
+                </a>
             </div>
             <div v-show="item.address != ''" class="item right"><span class="iconfont icon-dingwei" style="color:#FF5555"></span>{{ item.storeHouseName != '' ? item.storeHouseName : '暂无仓库信息' }}</div>
         </div>
@@ -41,6 +43,8 @@
 <template v-if="isDone">
     <!-- 报价了才会显示按钮 -->
     <a class="get-deal" v-if="item.offerStatus == 1 && buyStatus == 1" @click="bidOffer">选他中标</a>
+
+    <a class="has-deal">中标商户</a>
     
     <!-- 报价超过2条才会显示历史 -->
     <div class="show-offer-history" @click="showHistory(item)" v-if="item.offerStatus != 4 && item.ironSell.length > 1">
@@ -196,6 +200,11 @@
                 &.left {
                     min-width: 300px;
                     width: 36.39%;
+                    .tencent-qq img {
+                        display: inline-block;
+                        width: 16px;
+                        vertical-align: top;
+                    }
                 }
                 &.right {
                     min-width: 410px;
@@ -251,6 +260,23 @@
             color: #fff;
             background-color: @dark_blue;
             .borderRadius(2px);
+        }
+        .has-deal{
+            position: absolute;
+            display: none;
+            right: 16px;
+            top: 35px;
+            height: 28px;
+            line-height: 24px;
+            padding: 0 14px;
+            color: @dark_red;
+            background-color: #fff;
+            border: 2px solid @dark_red;
+            .borderRadius(2px);
+        }
+
+        &.show-zhongbiao .has-deal{
+            display: block;
         }
         .show-offer-history {
             position: absolute;

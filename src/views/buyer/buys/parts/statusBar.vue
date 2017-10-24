@@ -52,6 +52,7 @@
             line-height: 20px;
             margin: 10px 38px 0 0;
             &.active {
+                color: @dark_blue;
                 border-color: @dark_blue;
             }
         }

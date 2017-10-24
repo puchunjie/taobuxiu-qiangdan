@@ -36,8 +36,9 @@
   import offerList from './parts/offerList.vue';
   import editItem from './parts/editItem.vue';
   import offerItem from './parts/offerItem.vue';
-  
+  import pushAsync from '@/utils/pushAsync.js'
   export default {
+    mixins: [pushAsync],
     components: {
       statusBar,
       tabCard,
@@ -112,10 +113,10 @@
         this.getListApi.currentPage = current;
         // 每次翻页，重置选中为第一个
         this.activeIndex = 0;
-        this.getIronBuys();
+        this.getDataList();
       },
       // 获取求购列表
-      getIronBuys() {
+      getDataList() {
         let params = this.$clearData(this.getListApi);
         params.today = this.isToday;
         this.$http.post(this.$api.getIronBuys, params).then(res => {
@@ -127,8 +128,8 @@
               this.statusData[1].count = res.data.get;
               this.statusData[2].count = res.data.end;
               this.statusData[3].count = res.data.all;
+              this.getOfferList();
             }
-  
           }
         })
       },
@@ -149,7 +150,7 @@
         if(this.$refs.tabList)
           this.$refs.tabList.pageInit();
         this.activeIndex = 0;
-        this.getIronBuys();
+        this.getDataList();
       },
       // 打开编辑
       itemEdit(i) {
@@ -160,7 +161,7 @@
       doEdit(item) {
         this.$http.post(this.$api.publish_one, item).then(res => {
           if (res.code === 1000) {
-            this.getIronBuys();
+            this.getDataList();
             this.editShow = false;
             this.$Message.success('修改成功！')
           }
@@ -173,7 +174,7 @@
         this.$http.post(this.$api.publish_one, params).then(res => {
           if (res.code === 1000) {
             this.activeIndex = 0;
-            this.getIronBuys();
+            this.getDataList();
             this.$Message.success('已删除！')
           }
         })
@@ -223,11 +224,11 @@
         this.getListApi.currentPage = 1;
         this.getListApi.buyStatus = 1;
         this.$refs.statusBar.activeIndex = 0;
-        this.getIronBuys();
+        this.getDataList();
       }
     },
     created() {
-      this.getIronBuys();
+      this.getDataList();
     }
   }
 </script>

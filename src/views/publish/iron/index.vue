@@ -239,7 +239,7 @@
     </div>
     <div class="add-row" @click="addNew()" v-show="!isEditShow && isMax">新增一条</div>
     <div class="action-bar" v-show="!isEditShow">
-      <a class="btn goast" @click="checkAll">全选</a>
+      <a class="btn goast" @click="checkAll">{{ checkValue }}</a>
       <a class="btn goast" @click="removeSome">批量删除</a>
       <a class="btn" style="width: 110px" @click="publishSome">发布{{ checkItems.length > 0 ? `(${checkItems.length})` : '' }}</a>
     </div>
@@ -303,7 +303,8 @@
         historyList: [],
         successShow: false,
         activeIndex: 0,
-        list: []
+        list: [],
+        checkValue: '全选' //是否全选中了
       }
     },
     computed: {
@@ -423,9 +424,9 @@
         }
         let copyItem = _.cloneDeep(item);
         copyItem.save = false;
-        if(this.isEditShow){
+        if (this.isEditShow) {
           this.list.pop();
-          this.$nextTick(()=> {
+          this.$nextTick(() => {
             this.list.push(copyItem)
           })
           return false
@@ -462,9 +463,23 @@
       },
       // 全选
       checkAll() {
-        this.list.map(item => {
-          item.check = true;
+        let isCheckAll = true;
+        this.list.forEach(el => {
+          if (!el.check) {
+            isCheckAll = false;
+          }
         })
+        if (isCheckAll) {
+          this.list.map(item => {
+            item.check = false;
+            this.checkValue = '全选';
+          })
+        } else {
+          this.list.map(item => {
+            item.check = true;
+            this.checkValue = '全不选';
+          })
+        }
       },
       //批量删除
       removeSome() {

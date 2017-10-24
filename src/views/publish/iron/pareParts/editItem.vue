@@ -96,15 +96,15 @@
                 <label>单位</label>
                 <div class="inline">
                     <div class="inside-group">
-                        <input class="goast-input" @blur="isUnitErr" style="width:75px" type="number" v-model="item.weights">
+                        <input class="goast-input" min="0" @blur="isUnitErr" style="width:75px" type="number" v-model="item.weights">
                         <span>{{ item.weightUnit == '' ? 'x' : item.weightUnit }}</span>
                     </div>
                     <div class="inside-group">
-                        <input class="goast-input"  @blur="isUnitErr" style="width:75px" type="number" v-model="item.numbers">
+                        <input class="goast-input" min="0" @blur="isUnitErr" style="width:75px" type="number" v-model="item.numbers">
                         <span>{{ item.numberUnit == '' ? 'x' : item.numberUnit }}</span>
                     </div>
                 </div>
-                <p class="err">至少填写一个单位！</p>
+                <p class="err">至少填写一个单位且单位大于0！</p>
             </div>
             <div class="input-item-warp wid-200">
                 <label>生产商</label>
@@ -248,8 +248,6 @@
                 let elemet = document.getElementById(inputId)
                 let actualLeft = elemet.offsetLeft;　　
                 let actualTop = elemet.offsetTop;　　
-                console.log(actualLeft)
-                console.log(actualTop)
                 let current = elemet.offsetParent;　
                 while (current != null) {　　　　　　
                     actualLeft += current.offsetLeft;
@@ -277,6 +275,10 @@
             // 判断单位是否填写至少一个
             isUnitErr() {
                 if (this.item.weights == '' && this.item.numbers == '') {
+                    this.unitTip = true
+                } else if (this.item.weights != '' && this.item.weights <= 0) {
+                    this.unitTip = true
+                } else if (this.item.numbers != '' && this.item.numbers <= 0) {
                     this.unitTip = true
                 } else {
                     this.unitTip = false

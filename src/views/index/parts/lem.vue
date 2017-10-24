@@ -173,7 +173,7 @@
                 let _this = this;
                 let rand = this.$ls.get('rand');
                 // // 建立WebSocket链接
-                let host = window.location.host != 'localhost:9090' ? window.location.host : '192.168.0.132';
+                let host = window.location.host != 'localhost:9090' ? window.location.host : '192.168.0.251';
                 let ws = new WebSocket('ws://' + host + ':8080/websocket/ni?pg' + rand);
     
                 ws.onopen = function(evt) {

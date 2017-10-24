@@ -16,7 +16,8 @@ export default new Vuex.Store({
             historySell: 0,
             todayBuy: 0,
             todaySell: 0,
-        }
+        },
+        pushData: ''
     },
     getters: {
         roleId: state => {
@@ -31,6 +32,9 @@ export default new Vuex.Store({
         },
         nums: state => {
             return state.nums
+        },
+        pushData: state => {
+            return state.pushData
         }
     },
     mutations: {
@@ -61,6 +65,10 @@ export default new Vuex.Store({
         },
         [types.SET_NUMS]: (state, payload) => {
             state.nums = payload;
+        },
+        // 消息推送commit
+        [types.UPDATE_PUSH_MSG]: (state, payload) => {
+            state.pushData = payload;
         }
     }
 })

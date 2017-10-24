@@ -137,7 +137,7 @@
         <div class="offer-from clearfix" v-if="offerDone">
             <div class="input-item-warp wid-180" ref="offerPerPrice">
                 <label>单价</label>
-                <input class="goast-input level1 textRight" style="width:60px" type="text" @blur="validItem('offerPerPrice')" @keyup="validItem('offerPerPrice')" v-model="offerApi.offerPerPrice">
+                <input class="goast-input level1 textRight" style="width:60px"  min="0" type="number" @blur="validItem('offerPerPrice')" @keyup="validItem('offerPerPrice')" v-model="offerApi.offerPerPrice">
                 <Poptip v-if="units.length > 1" trigger="hover" class="unit-content" placement="bottom">
                     元/{{ unit.name }}<span v-show="units.length > 1" class="iconfont icon-iconjiaobiaoxiangxia"></span>
                     <div class="units" slot="content">
@@ -185,9 +185,9 @@
         </div>
         <div class="action-btns">
             <template v-if="item.offerStatus == 0">
-                            <a class="btn goast" @click="ignore">忽略</a>
-                            <a class="btn" @click="offer">立即报价</a>
-</template>
+                <a class="btn goast" @click="ignore">无计划或无货</a>
+                <a class="btn" @click="offer">立即报价</a>
+            </template>
 
 <template v-else-if="item.offerStatus == 1">
     <a v-if="item.ironSell.length < 6" class="btn" @click="offer">修改报价</a>
@@ -295,7 +295,7 @@
             },
             //单价验证
             offerPerPriceOk() {
-                return this.offerApi.offerPerPrice != '' && !isNaN(this.offerApi.offerPerPrice * 1)
+                return this.offerApi.offerPerPrice != '' && !isNaN(this.offerApi.offerPerPrice * 1) && this.offerApi.offerPerPrice * 1 > 0
             },
             toleranceOk() {
                 return this.offerApi.tolerance != ''
@@ -410,8 +410,8 @@
             // 忽略
             ignore() {
                 this.$Modal.confirm({
-                    title: '是否要忽略？',
-                    content: '忽略后将无法再次进行报价，是否继续？',
+                    title: '是否要放弃报价？',
+                    content: '放弃报价后将无法再次进行报价，是否继续？',
                     onOk: () => {
                         this.offerAjax({
                             ironBuyId: this.ironBuyId,

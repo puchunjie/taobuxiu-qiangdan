@@ -2,16 +2,18 @@
     <div class="seller-index">
         <statusBar @on-filter-status="filterStatus" ref="statusBar" :status="statusData"></statusBar>
         <template v-if="listEmpty">
-                                <tabList @on-page-change="pageChange" :total="totalCount" ref="tabList">
-                                    <tabCard v-for="(item,index) in list" @click.native="selectItem(index)" :class="{ 'active':activeIndex == index }" :key="index" :item="item"></tabCard>
-                                </tabList>
-                                <div class="info-list">
-                                    <tipBar :item="activeItem"></tipBar>
-                                    <Info :item="activeItem"></Info>
-                                    <offerPanel :item="activeItem" :ironBuyId="activeItemId" @on-ajax="afterOffer"></offerPanel>
-                                </div>
-</template>
-        <img class="no-list" src="../../../assets/no-list.png" v-else>
+                <tabList @on-page-change="pageChange" :total="totalCount" ref="tabList">
+                    <p v-show="isWait" class="offer-tips">求购单需按顺序进行操作</p>
+                    <tabCard v-for="(item,index) in list" @click.native="selectItem(index)" :class="{ 'active':activeIndex == index }" :key="index" :item="item"></tabCard>
+                    <div v-show="isWait" class="page-mask"></div>
+                </tabList>
+                <div class="info-list">
+                    <tipBar :item="activeItem"></tipBar>
+                    <Info :item="activeItem"></Info>
+                    <offerPanel :item="activeItem" :ironBuyId="activeItemId" @on-ajax="afterOffer"></offerPanel>
+                </div>
+        </template>
+        <img v-else class="no-list" src="../../../assets/no-list.png">
     </div>
 </template>
 
@@ -22,7 +24,9 @@
     import Info from './parts/info.vue';
     import tabCard from './parts/tabCard.vue';
     import offerPanel from './parts/offerPanel.vue'
+    import pushAsync from '@/utils/pushAsync.js'
     export default {
+        mixins: [pushAsync],
         components: {
             statusBar,
             tabList,
@@ -53,11 +57,11 @@
                         status: 3,
                         count: 0
                     },
-                    {
-                        name: '所有',
-                        status: "",
-                        count: 0
-                    }
+                    // {
+                    //     name: '所有',
+                    //     status: "",
+                    //     count: 0
+                    // }
                 ],
                 getListApi: {
                     currentPage: 1,
@@ -82,11 +86,18 @@
             },
             isToday() {
                 return this.$route.params.isToday
+            },
+            // 是否为待报价列表
+            isWait() {
+                return this.getListApi.offerStatus == 0
             }
         },
         methods: {
             // 切换Item
             selectItem(index) {
+                // 如果是待报价列表，不能选择tabCard
+                if (this.isWait)
+                    return false
                 this.activeIndex = index;
             },
             // 切换状态
@@ -96,16 +107,16 @@
                 if (this.$refs.tabList)
                     this.$refs.tabList.pageInit();
                 this.activeIndex = 0;
-                this.getironList();
+                this.getDataList();
             },
             // 分页点击
             pageChange(current) {
                 this.getListApi.currentPage = current;
                 // 每次翻页，重置选中为第一个
                 this.activeIndex = 0;
-                this.getironList();
+                this.getDataList();
             },
-            getironList() {
+            getDataList() {
                 let params = this.$clearData(this.getListApi);
                 params.today = this.isToday;
                 this.$http.post(this.$api.sellerQueryIrons, params).then(res => {
@@ -117,7 +128,7 @@
                             this.statusData[1].count = res.data.offer;
                             this.statusData[2].count = res.data.deal;
                             this.statusData[3].count = res.data.miss;
-                            this.statusData[4].count = res.data.all;
+                            // this.statusData[4].count = res.data.all;
                         }
                     }
                 })
@@ -125,8 +136,7 @@
             // 完成报价，完成忽略后
             afterOffer(isIgon) {
                 if (!isIgon) {
-                    this.$refs.statusBar.activeIndex = 1;
-                    this.filterStatus(1);
+                    this.getDataList();
                 } else {
                     // 如果删除这条之后分页中海油数据，就直接请求当前页数据
                     if (this.list.length <= 1)
@@ -134,24 +144,21 @@
                     if (this.$refs.tabList)
                         this.$refs.tabList.pageInit(this.getListApi.currentPage);
                     this.activeIndex = 0;
-                    this.getironList();
+                    this.getDataList();
                 }
             }
         },
         watch: {
-            activeItemId() {
-                // this.getOfferList();
-            },
             isToday() {
                 // 当日和所有切换的时候，初始化所有参数
                 this.getListApi.currentPage = 1;
                 this.getListApi.offerStatus = 0;
                 this.$refs.statusBar.activeIndex = 0;
-                this.getironList();
+                this.getDataList();
             }
         },
         created() {
-            this.getironList();
+            this.getDataList();
         }
     }
 </script>
@@ -167,6 +174,19 @@
             display: block;
             width: 230px;
             margin: 200px auto 0;
+        }
+        .offer-tips {
+            text-indent: 10px;
+            margin-bottom: 10px;
+            color: @dark_red;
+        }
+        .page-mask {
+            position: absolute;
+            width: 320px;
+            height: 30px;
+            bottom: 0;
+            z-index: 10;
+            cursor: not-allowed;
         }
     }
 </style>
