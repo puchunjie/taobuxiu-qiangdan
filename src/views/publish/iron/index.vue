@@ -504,12 +504,14 @@
           this.$http.post(this.$api.publishSome, {
             ironBuyInfos: JSON.stringify(this.checkItems)
           }).then(res => {
-            let listData = this.$clearData(this.list);
-            this.list = _.filter(listData, function(el) {
-              return !el.check
-            });
-            this.updateStorge();
-            this.successShow = true;
+            if (res.code === 1000) {
+              let listData = this.$clearData(this.list);
+              this.list = _.filter(listData, function(el) {
+                return !el.check
+              });
+              this.updateStorge();
+              this.successShow = true;
+            }
           })
         }
       },

@@ -173,6 +173,10 @@
         params.status = 0;
         this.$http.post(this.$api.publish_one, params).then(res => {
           if (res.code === 1000) {
+            // 如果这也删完了，且不是第一页，就往后退一页
+            if(this.list.length <= 1 && this.getListApi.currentPage > 1)
+              this.getListApi.currentPage--
+              
             this.activeIndex = 0;
             this.getDataList();
             this.$Message.success('已删除！')

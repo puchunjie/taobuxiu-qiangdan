@@ -117,7 +117,7 @@ router.beforeEach((to, from, next) => {
             next();
         } else {
             Modal.error({
-                content: '登录过期，请重新登录。',
+                content: '您还没有登录，请登录',
                 onOk() {
                     next({
                         path: '/login',
@@ -128,9 +128,5 @@ router.beforeEach((to, from, next) => {
         }
     }
 })
-
-// router.afterEach((to, from, next) => {
-
-// });
 
 export default router;
