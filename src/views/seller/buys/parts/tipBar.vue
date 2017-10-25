@@ -16,7 +16,10 @@
             <span class="iconfont icon-jiangzhang"></span>
             <h3>恭喜您，本单中标！</h3>
             <p>
-                联系买主进行进一步洽谈吧，{{ item.contact }}，{{ item.contactNum }}。
+                联系买家：{{ item.companyName }}，{{ item.contact }}，{{ item.contactNum }}。
+                <a class="tencent-qq" v-show="item.QQ != ''" :href="'tencent://message/?uin='+item.QQ+'&Site=&Menu=yes'">
+                    <img src="../../../../assets/icon_qq.png">
+                </a>
                 <span>中标时间：{{ item.updateTime | dateformat }}</span>
             </p>
         </div>

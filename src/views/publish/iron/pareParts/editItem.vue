@@ -204,7 +204,6 @@
         },
         methods: {
             initItem() {
-                console.log(this.data.ironTypeId)
                 this.item = this.$clearData(this.data);
             },
             // 填充数据

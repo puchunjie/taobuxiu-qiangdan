@@ -28,7 +28,8 @@
         data() {
             return {
                 content: '',
-                timer: ''
+                timer: '',
+                now:this.nowTime
             }
         },
         props: {
@@ -55,6 +56,9 @@
                 default:false
             }
         },
+        created () {
+            this.content = this.normal ? '00:00:00' : '<span>00</span>:<span>00</span>:<span>00</span>';
+        },
         mounted() {
             this.countdowm(this.endTime)
         },
@@ -63,11 +67,11 @@
                 let normal = this.normal;
                 clearInterval(this.timer);
                 let self = this;
-                let intervalTime = 0;
                 this.timer = setInterval(function() {
-                    intervalTime = 1000;
+                    self.now+=1000;
+                    let nowTime = new Date()
                     let endTime = new Date(timestamp);
-                    let t = endTime.getTime() - self.nowTime;
+                    let t = endTime.getTime() - self.now;
                     if (t > 0) {
                         let day = Math.floor(t / 86400000);
                         let hour = Math.floor((t / 3600000) % 24);
@@ -83,7 +87,7 @@
                         self.content = self.endText;
                         self._callback();
                     }
-                }, intervalTime);
+                }, 1000);
             },
             _callback() {
                 if (this.callback && this.callback instanceof Function) {

@@ -200,11 +200,6 @@
                 &.left {
                     min-width: 300px;
                     width: 36.39%;
-                    .tencent-qq img {
-                        display: inline-block;
-                        width: 16px;
-                        vertical-align: top;
-                    }
                 }
                 &.right {
                     min-width: 410px;
