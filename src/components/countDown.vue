@@ -36,6 +36,10 @@
                 type: [String, Number],
                 default: 0
             },
+            nowTime: {
+                type: [String, Number],
+                default: 0
+            },
             endText: {
                 type: String,
                 default: '已结束'
@@ -62,9 +66,8 @@
                 let intervalTime = 0;
                 this.timer = setInterval(function() {
                     intervalTime = 1000;
-                    let nowTime = new Date();
                     let endTime = new Date(timestamp);
-                    let t = endTime.getTime() - nowTime.getTime();
+                    let t = endTime.getTime() - self.nowTime;
                     if (t > 0) {
                         let day = Math.floor(t / 86400000);
                         let hour = Math.floor((t / 3600000) % 24);

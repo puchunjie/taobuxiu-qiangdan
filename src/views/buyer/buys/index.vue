@@ -24,7 +24,7 @@
         </div>
       </div>
     </template>
-    <img class="no-list" src="../../../assets/no-list.png" v-else>
+    <img v-else class="no-list" src="../../../assets/no-list.png">
   </div>
 </template>
 

@@ -4,7 +4,7 @@
             求购详情
             <div class="count-down">
                 <template v-if="item.buyStatus == 1">
-                    剩余时间：<countDown :endTime="item.updateTime + item.timeLimit"></countDown>
+                    剩余时间：<countDown :endTime="item.updateTime + item.timeLimit" :nowTime="item.serveTime"></countDown>
                 </template>
                 <template v-else-if="item.buyStatus == 2">
                     成交时间：{{ item.updateTime | dateformat }}

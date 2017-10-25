@@ -401,8 +401,11 @@
           this.deleteItem(this.activeIndex);
         } else {
           //发布之后把数据重置为添加状态
-          this.list[0] = _.cloneDeep(initialItem);
-          this.$refs.ei[0].initItem();
+          this.list = [];
+          this.list.push(_.cloneDeep(initialItem));
+          setTimeout(() => {
+            this.$refs.ei[0].initItem();
+          }, 300);
         }
         this.updateStorge();
         this.successShow = true;

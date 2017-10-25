@@ -15,7 +15,6 @@ export default {
     watch: {
         pushData(val) {
             this.getDataList();
-            console.log(val);
             // 如果是新增求购
             if (val.code == 1) {
                 this.$store.commit(types.SET_NUMS, val.result.data);

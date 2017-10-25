@@ -228,29 +228,29 @@
             // 填充数据
             fillItem(id, item) {
                 let typeOfSelect = id.split('-')[1];
-                switch (typeOfSelect) {
+                 switch (typeOfSelect) {
                     case 'city':
-                        if (this.item.locationName == item.name || this.item.locationName == item.shortName) return false
+                        if (this.item.locationName == item.name || this.item.locationName == item.shortName &&this.item.locationId == item.id) return false
                         this.item.locationName = item.shortName;
                         this.item.locationId = item.id;
                         break;
                     case 'type':
-                        if (this.item.ironTypeName == item.name) return false
+                        if (this.item.ironTypeName == item.name && this.item.ironTypeId == item.id) return false
                         this.item.ironTypeName = item.name;
                         this.item.ironTypeId = item.id;
                         break;
                     case 'material':
-                        if (this.item.materialName == item.name) return false
+                        if (this.item.materialName == item.name && this.item.materialId == item.id) return false
                         this.item.materialName = item.name;
                         this.item.materialId = item.id;
                         break;
                     case 'surface':
-                        if (this.item.surfaceName == item.name) return false
+                        if (this.item.surfaceName == item.name && this.item.surfaceId == item.id) return false
                         this.item.surfaceName = item.name;
                         this.item.surfaceId = item.id;
                         break;
                     case 'proPlace':
-                        if (this.item.proPlacesName == item.name) return false
+                        if (this.item.proPlacesName == item.name && this.item.proPlacesId == item.id) return false
                         this.item.proPlacesName = item.name;
                         this.item.proPlacesId = item.id;
                         break;

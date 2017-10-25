@@ -9,7 +9,7 @@
             </template>
             <div class="cout-down">
                 剩余时间：
-                <countDown :endTime="item.updateTime + item.timeLimit"></countDown>
+                <countDown :endTime="item.updateTime + item.timeLimit" :nowTime="item.serveTime"></countDown>
             </div>
         </div>
         <div class="win clearfix" v-if="item.offerStatus == 2">

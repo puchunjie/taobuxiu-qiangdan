@@ -139,8 +139,8 @@
                     this.getDataList();
                 } else {
                     // 如果删除这条之后分页中海油数据，就直接请求当前页数据
-                    if (this.list.length <= 1)
-                        this.getListApi.currentPage = this.getListApi.currentPage - 1;
+                    if (this.list.length <= 1 && this.getListApi.currentPage > 1)
+                        this.getListApi.currentPage--;
                     if (this.$refs.tabList)
                         this.$refs.tabList.pageInit(this.getListApi.currentPage);
                     this.activeIndex = 0;
