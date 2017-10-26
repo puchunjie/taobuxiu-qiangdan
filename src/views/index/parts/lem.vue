@@ -37,13 +37,18 @@
                 };
                 if (this.active == 0) {
                     this.list[this.active].forEach(el => {
-                        data.x.push(dateformat(el.time * 1000,'hh:mm'));
+                        data.x.push(dateformat(el.time * 1000, 'hh:mm'));
                         data.y.push(el.buyPrice * 1);
                     })
                 } else {
                     this.list[this.active].forEach(el => {
                         data.x.push(dateformat(el.logTime));
-                        data.y.push(el.endPrice * 1);
+                        data.y.push({
+                            value: el.endPrice * 1,
+                            start: el.startPrice * 1,
+                            min: el.minPrice * 1,
+                            max: el.maxPrice * 1
+                        });
                     })
                 }
                 return data
@@ -67,10 +72,6 @@
                         padding: 14,
                         textStyle: {
                             color: '#609EE9'
-                        },
-                        formatter: function(params) {
-                            params = params[0];
-                            return params.name + ' : ￥' + params.value;
                         },
                         axisPointer: {
                             animation: false
@@ -119,11 +120,6 @@
                                 color: '#fff'
                             }
                         },
-                        label: {
-                            normal: {
-                                show: false
-                            }
-                        },
                         areaStyle: {
                             normal: {
                                 color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
@@ -144,10 +140,34 @@
             },
             // 绘制图标
             draw() {
+                let isDay = this.active == 0;
+                console.log(isDay)
                 let data = this.$clearData(this.activeData)
                 this.myChart.setOption({
                     xAxis: {
                         data: data.x
+                    },
+                    tooltip: {
+                        formatter: function(params) {
+                            params = params[0];
+                            let showStr = '';
+                            if (isDay) {
+                                showStr = [
+                                    '时间：' + params.name + '<br/>',
+                                    '价格：￥' + params.value + '<br/>'
+                                ].join('');
+                            } else {
+                                showStr = [
+                                    params.name + '<br/>',
+                                    '当前: ￥' + params.value + '<br/>',
+                                    '开盘: ￥' + params.data.start + '<br/>',
+                                    '最高: ￥' + params.data.max + '<br/>',
+                                    '最低: ￥' + params.data.min + '<br/>',
+                                    '收盘: ￥' + params.data.value + '<br/>'
+                                ].join('');
+                            }
+                            return showStr
+                        }
                     },
                     series: [{
                         name: '成交',

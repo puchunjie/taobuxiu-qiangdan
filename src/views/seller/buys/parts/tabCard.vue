@@ -12,13 +12,13 @@
                 <span>{{ item.tolerance }}</span>
             </p>
             <p>{{ item.remark }}</p>
-            <p class="goast">{{ item.updateTime | dateformat }}</p>
+            <p class="goast">{{ item.createTime | dateformat }}</p>
         </div>
         <div class="count-action">
             <div class="count">
                 <template v-if="item.offerStatus == 0">
                     <span class="iconfont icon-ziyuan"></span>
-                    <countDown style="color:#fff" :normal="true" :endTime="item.updateTime + item.timeLimit" :nowTime="item.serveTime"></countDown>
+                    <countDown style="color:#fff" :normal="true" :endTime="item.createTime + item.timeLimit" :nowTime="item.serveTime"></countDown>
                 </template>
                 <template v-else>
                     <h3>{{ item.sellNum }}</h3>
