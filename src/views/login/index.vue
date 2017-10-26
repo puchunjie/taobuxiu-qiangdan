@@ -175,7 +175,7 @@
         <input type="password" style="position:absolute;top:-999px" />
         <div class="header">
             <div class="inner-1200">
-                <span class="logo iconfont icon-ziyuan4"></span>
+                <router-link :to="{name:'index'}"><span class="logo iconfont icon-ziyuan4"></span></router-link>
                 <h3>欢迎登陆</h3>
             </div>
         </div>

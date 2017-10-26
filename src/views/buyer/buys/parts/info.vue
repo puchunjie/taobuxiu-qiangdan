@@ -4,7 +4,7 @@
             求购详情
             <div class="count-down">
                 <template v-if="item.buyStatus == 1">
-                    剩余时间：<countDown :endTime="item.updateTime + item.timeLimit" :nowTime="item.serveTime"></countDown>
+                    剩余时间：<countDown :endTime="item.createTime + item.timeLimit" :nowTime="item.serveTime"></countDown>
                 </template>
                 <template v-else-if="item.buyStatus == 2">
                     成交时间：{{ item.updateTime | dateformat }}
@@ -23,7 +23,7 @@
             <div class="item tolerance">公差</div>
             <div class="item number">数量</div>
             <div class="item weight">重量</div>
-            <div class="item proPlaces">生产商</div>
+            <div class="item proPlaces">产地</div>
         </div>
         <div class="table">
             <div class="item location">{{ item.locationName }}</div>
@@ -31,7 +31,7 @@
             <div class="item material">{{ item.materialName }}</div>
             <div class="item surface">{{ item.surfaceName }}</div>
             <div class="item specifications">{{ item.specifications!= '' ? item.specifications : `${ item.height }*${ item.width }*${ item.length }` }}</div>
-            <div class="item tolerance">{{ item.tolerance }}</div>
+            <div class="item tolerance">{{ item.tolerance != "" ? item.tolerance : '—' }}</div>
             <div class="item number">{{ item.numbers ? `${ item.numbers }${ item.numberUnit }`: '—' }}</div>
             <div class="item weight">{{ item.weights ? `${ item.weights }${ item.weightUnit }`: '—' }}</div>
             <div class="item proPlaces">{{ item.proPlacesName }}</div>

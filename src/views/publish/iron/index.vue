@@ -206,7 +206,7 @@
         <li class="tolerance">公差</li>
         <li class="quantity">数量</li>
         <li class="quantity">重量</li>
-        <li class="manufacturer">生产商</li>
+        <li class="manufacturer">产地</li>
         <li class="desc">备注</li>
       </ul>
       <div class="list-body">
@@ -222,7 +222,7 @@
             <li class="material">{{ item.data.materialName }}</li>
             <li class="surface">{{ item.data.surfaceName }}</li>
             <li class="specifica">{{ item.data.specifications != '' ? item.data.specifications : `${item.data.height}*${item.data.width}*${item.data.length}`}}</li>
-            <li class="tolerance">{{ item.data.tolerance }}</li>
+            <li class="tolerance">{{ item.data.tolerance != '' ? item.data.tolerance : '—' }}</li>
             <li class="quantity">{{ item.data.numbers != '' ? `${item.data.numbers}${item.data.numberUnit}`: '—'}}</li>
             <li class="quantity">{{ item.data.weights != '' ? `${item.data.weights}${item.data.weightUnit}`: '—'}}</li>
             <li class="manufacturer">{{ item.data.proPlacesName }}</li>
@@ -239,7 +239,7 @@
     </div>
     <div class="add-row" @click="addNew()" v-show="!isEditShow && isMax">新增一条</div>
     <div class="action-bar" v-show="!isEditShow">
-      <a class="btn goast" @click="checkAll">{{ checkValue }}</a>
+      <a class="btn goast" @click="checkAll">{{ checkItems.length == list.length ? '全不选' :'全选' }}</a>
       <a class="btn goast" @click="removeSome">批量删除</a>
       <a class="btn" style="width: 110px" @click="publishSome">发布{{ checkItems.length > 0 ? `(${checkItems.length})` : '' }}</a>
     </div>
@@ -303,8 +303,7 @@
         historyList: [],
         successShow: false,
         activeIndex: 0,
-        list: [],
-        checkValue: '全选' //是否全选中了
+        list: []
       }
     },
     computed: {
@@ -475,12 +474,10 @@
         if (isCheckAll) {
           this.list.map(item => {
             item.check = false;
-            this.checkValue = '全选';
           })
         } else {
           this.list.map(item => {
             item.check = true;
-            this.checkValue = '全不选';
           })
         }
       },

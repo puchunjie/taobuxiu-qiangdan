@@ -4,7 +4,7 @@
             <p>{{ st.name }}</p>
             <p>（{{ st.count }}）</p>
         </div>
-        <a class="service-num">您的服务专员：{{ base.sellManName }}-{{ base.sellManTel }}</a>
+        <a class="service-num">为您服务的专员：{{ base.sellManName }}-{{ base.sellManTel }}</a>
     </div>
 </template>
 

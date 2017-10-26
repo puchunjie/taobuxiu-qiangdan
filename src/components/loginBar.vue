@@ -11,7 +11,7 @@
       <router-link v-else :to="{name:'login',query: { redirect: $router.currentRoute.fullPath }}">您好，请登录</router-link>
       <a class="back">注册</a>
     </div>
-    <div class="action-panel" v-show="panelShow">
+    <div class="action-panel" v-if="panelShow" v-clickoutside="togglePShow">
       <div class="item" @click="go('BuserInfo')">个人中心</div>
       <div class="item" @click="go('userInfo')">账号管理</div>
       <div class="item" @click="loginOut">退出登录</div>
@@ -34,9 +34,17 @@
     data() {
       return {
         panelShow: false,
+        count: 0
       }
     },
     methods: {
+      togglePShow(){
+        this.count++
+        if(this.count>1){
+          this.panelShow = false
+          this.count = 0
+        }
+      },
       showP(){
         this.panelShow = !this.panelShow;
       },

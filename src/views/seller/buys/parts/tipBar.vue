@@ -9,17 +9,18 @@
             </template>
             <div class="cout-down">
                 剩余时间：
-                <countDown :endTime="item.updateTime + item.timeLimit" :nowTime="item.serveTime"></countDown>
+                <countDown :endTime="item.createTime + item.timeLimit" :nowTime="item.serveTime"></countDown>
             </div>
         </div>
         <div class="win clearfix" v-if="item.offerStatus == 2">
             <span class="iconfont icon-jiangzhang"></span>
-            <h3>恭喜您，本单中标！</h3>
+            <h3>恭喜您，本单中标！
+                <a class="tencent-qq" v-show="item.QQ != ''" :href="'tencent://message/?uin='+item.QQ+'&Site=&Menu=yes'">
+                    <img style="width:20px" src="../../../../assets/icon_qq.png">
+                </a>
+            </h3>
             <p>
                 联系买家：{{ item.companyName }}，{{ item.contact }}，{{ item.contactNum }}。
-                <a class="tencent-qq" v-show="item.QQ != ''" :href="'tencent://message/?uin='+item.QQ+'&Site=&Menu=yes'">
-                    <img src="../../../../assets/icon_qq.png">
-                </a>
                 <span>中标时间：{{ item.updateTime | dateformat }}</span>
             </p>
         </div>

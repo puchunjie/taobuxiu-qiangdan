@@ -1,6 +1,6 @@
 <template>
     <div class="main-header">
-        <span class="logo iconfont icon-ziyuan4"></span>
+        <router-link :to="{name:'index'}"><span class="logo iconfont icon-ziyuan4"></span></router-link>
         <ul class="menu">
             <router-link :class="{'active':$route.name == 'index'}" :to="{name:'index'}" tag="li">首页</router-link>
             <router-link :class="{'active':$route.name == 'publishIron'}" :to="{name:'publishIron',params:{isCopy: 0}}" tag="li">发布求购</router-link>

@@ -12,8 +12,8 @@
         <div class="company-info">
             <div class="item space">
                 <template v-if="item.offerStatus == 4">
-                            {{ item.createTime | dateformat('hh:mm') }}
-</template>
+                    {{ item.createTime | dateformat('hh:mm') }}
+                </template>
             </div>
             <div class="item left name">
                 {{ item.companyName }}
@@ -33,42 +33,42 @@
                     <img src="../../../../assets/icon_qq.png">
                 </a>
             </div>
-            <div v-show="item.address != ''" class="item right"><span class="iconfont icon-dingwei" style="color:#FF5555"></span>{{ item.storeHouseName != '' ? item.storeHouseName : '暂无仓库信息' }}</div>
+            <div v-show="item.address != ''" class="item right"><span class="iconfont icon-dingwei" style="color:#FF5555"></span>{{ item.storeHouseName != '' ? `${item.storeHouseName}(${item.storeHousePlace})` : '暂无仓库信息' }}</div>
         </div>
     
         <div class="miss" v-if="item.offerStatus == 4">
             <span class="iconfont icon-cray"></span>没有库存
         </div>
     
-<template v-if="isDone">
-    <!-- 报价了才会显示按钮 -->
-    <a class="get-deal" v-if="item.offerStatus == 1 && buyStatus == 1" @click="bidOffer">选他中标</a>
+        <template v-if="isDone">
+            <!-- 报价了才会显示按钮 -->
+            <a class="get-deal" v-if="item.offerStatus == 1 && buyStatus == 1" @click="bidOffer">选他中标</a>
 
-    <a class="has-deal">中标商户</a>
-    
-    <!-- 报价超过2条才会显示历史 -->
-    <div class="show-offer-history" @click="showHistory(item)" v-if="item.offerStatus != 4 && item.ironSell.length > 1">
-        {{ item.historyShow ? '收起历史报价' : '展开历史报价' }}
-        <span class="iconfont" :class=" item.historyShow ? 'icon-iconjiaobiaoxiangshang':'icon-iconjiaobiaoxiangxia'"></span>
-    </div>
-    <!-- 历史报价 -->
-    <div class="offer-history-list" v-show="item.historyShow">
-        <div class="offer-item" v-for="(sub,i) in item.ironSell" :key="i">
-            <div class="item date">{{ sub.createTime | dateformat('MM-dd hh:mm') }}</div>
-            <div class="item time-line">
-                <span class="note"></span>
-                <span class="line top" v-if="i>0"></span>
-                <span class="line bottom" v-if="i < item.ironSell.length - 1"></span>
+            <a class="has-deal">中标商户</a>
+            
+            <!-- 报价超过2条才会显示历史 -->
+            <div class="show-offer-history" @click="showHistory(item)" v-if="item.offerStatus != 4 && item.ironSell.length > 1">
+                {{ item.historyShow ? '收起历史报价' : '展开历史报价' }}
+                <span class="iconfont" :class=" item.historyShow ? 'icon-iconjiaobiaoxiangshang':'icon-iconjiaobiaoxiangxia'"></span>
             </div>
-            <div class="item price">&yen;{{ sub.offerPerPrice }}/{{ sub.baseUnit }}</div>
-            <div class="item tolerance">{{ sub.tolerance }}</div>
-            <div class="item proPlace">{{ sub.offerPlaces }}</div>
-            <div class="item totlePrice">&yen;{{ sub.offerPrice }}</div>
-            <div class="item remark">{{ sub.offerRemark }}</div>
-        </div>
-    </div>
-    <!-- 历史报价 -->
-</template>
+            <!-- 历史报价 -->
+            <div class="offer-history-list" v-show="item.historyShow">
+                <div class="offer-item" v-for="(sub,i) in item.ironSell" :key="i">
+                    <div class="item date">{{ sub.createTime | dateformat('MM-dd hh:mm') }}</div>
+                    <div class="item time-line">
+                        <span class="note"></span>
+                        <span class="line top" v-if="i>0"></span>
+                        <span class="line bottom" v-if="i < item.ironSell.length - 1"></span>
+                    </div>
+                    <div class="item price">&yen;{{ sub.offerPerPrice }}/{{ sub.baseUnit }}</div>
+                    <div class="item tolerance">{{ sub.tolerance }}</div>
+                    <div class="item proPlace">{{ sub.offerPlaces }}</div>
+                    <div class="item totlePrice">&yen;{{ sub.offerPrice }}</div>
+                    <div class="item remark">{{ sub.offerRemark }}</div>
+                </div>
+            </div>
+            <!-- 历史报价 -->
+        </template>
     </div>
 </template>
 

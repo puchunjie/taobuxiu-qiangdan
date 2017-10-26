@@ -105,7 +105,7 @@
             </div>
             <div class="warp-warp">
                 <div class="input-item-warp wid-200">
-                    <label>生产商</label>
+                    <label>产地</label>
                     <input class="goast-input level1" style="width:120px" :ref="item.id+'-proPlace'" :id="item.id+'-proPlace'" type="text" @focus="showFuzzy" v-model="item.proPlacesName" @keyup="setInput">
                     <p class="err">{{ item.ironTypeName == '' ? '请选择' : '无效内容' }}</p>
                 </div>

@@ -147,15 +147,15 @@
                 <div class="unit-content" v-else>元/{{ unit.name }}</div>
                 <p class="err">{{ offerApi.offerPerPrice == '' ? '请填写单价' : '无效内容' }}</p>
             </div>
-            <div class="input-item-warp wid-180" ref="tolerance">
+            <div class="input-item-warp wid-180" ref="tolerance" v-show="needTo">
                 <label>公差</label>
                 <input class="goast-input level1 textRight" @blur="validItem('tolerance')" @keyup="validItem('tolerance')" v-model="offerApi.tolerance" style="width:110px;" type="text">
                 <p class="err">{{ offerApi.tolerance == '' ? '请填写公差' : '无效内容' }}</p>
             </div>
             <div class="input-item-warp wid-200" ref="place">
-                <label>生产商</label>
+                <label>产地</label>
                 <input class="goast-input level1" style="width:120px" type="text" ref="-proPlace" id="-proPlace" v-model="offerApi.offerPlaces" @focus="showFuzzy" @keyup="setInput">
-                <p class="err">{{ offerApi.offerPlaces == '' ? '请选择生产商' : '无效内容' }}</p>
+                <p class="err">{{ offerApi.offerPlaces == '' ? '请选择产地' : '无效内容' }}</p>
             </div>
             <div class="input-item-warp wid-180 disabel">
                 <label>总价</label>
@@ -249,6 +249,10 @@
             }
         },
         computed: {
+            // 是否需要填写公差
+            needTo(){
+                return this.item.ironTypeName == '不锈钢卷' || this.item.ironTypeName == '不锈钢板'
+            },
             units() {
                 let arr = [];
                 if (this.item.numbers != '')
@@ -298,7 +302,7 @@
                 return this.offerApi.offerPerPrice != '' && !isNaN(this.offerApi.offerPerPrice * 1) && this.offerApi.offerPerPrice * 1 > 0
             },
             toleranceOk() {
-                return this.offerApi.tolerance != ''
+                return this.needTo ?  this.offerApi.tolerance != '' : true 
             },
             offerPlacesOk() {
                 return this.offerApi.offerPlaces != ''

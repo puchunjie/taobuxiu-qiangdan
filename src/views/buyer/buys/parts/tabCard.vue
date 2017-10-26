@@ -12,7 +12,7 @@
                 <span>{{ item.tolerance }}</span>
             </p>
             <p>{{ item.remark }}</p>
-            <p class="goast">{{ item.updateTime | dateformat }}</p>
+            <p class="goast">{{ item.createTime | dateformat }}</p>
         </div>
         <div class="count-action">
             <div class="count">

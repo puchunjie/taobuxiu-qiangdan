@@ -113,7 +113,11 @@
         <swiperBottom class="swiper-bottom"></swiperBottom>
       </div>
     </div>
-    <div class="full-group floor4"></div>
+    <div class="full-group floor4">
+      <div class="inner-container">
+        <publicFooter></publicFooter>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -125,6 +129,7 @@
   import ranking from './parts/ranking.vue'
   import todayPrice from './parts/todayPrice.vue'
   import swiperBottom from './parts/swiperBottom.vue'
+  import publicFooter from '@/components/publicFooter.vue'
   export default {
     components: {
       swiperBanner,
@@ -133,7 +138,8 @@
       lem,
       ranking,
       todayPrice,
-      swiperBottom
+      swiperBottom,
+      publicFooter
     }
   }
 </script>
