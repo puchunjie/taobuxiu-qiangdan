@@ -4,7 +4,7 @@
         <div class="list-row" v-if="item.offerStatus != 4">
             <div class="item date">{{ item.createTime | dateformat('hh:mm') }}</div>
             <div class="item price">&yen;{{ item.offerPerPrice }}/{{ item.baseUnit }}</div>
-            <div class="item tolerance">{{ item.tolerance }}</div>
+            <div class="item tolerance">{{ item.tolerance | emptyHlod }}</div>
             <div class="item proPlaces">{{ item.offerPlaces }}</div>
             <div class="item totlePrice">&yen;{{ item.offerPrice }}</div>
             <div class="item remark">{{ item.offerRemark }}</div>
@@ -12,13 +12,13 @@
         <div class="company-info">
             <div class="item space">
                 <template v-if="item.offerStatus == 4">
-                    {{ item.createTime | dateformat('hh:mm') }}
-                </template>
+                        {{ item.createTime | dateformat('hh:mm') }}
+</template>
             </div>
             <div class="item left name">
                 {{ item.companyName }}
-                <span data-msg="企业信用程度高、经营管理水平优，社会反响、品牌、信誉度高。" class="iconfont icon-cheng right" style="color:#F5A623"></span>
-                <span data-msg="企业资金实力强，需方验收货物后淘不锈与供方结算。依据淘不锈平台担保商户入驻条款评选得出。" class="iconfont icon-bao right" style="color:#C16BD6"></span>
+                <span v-show="item.isFaithUser == '1'" data-msg="企业信用程度高、经营管理水平优，社会反响、品牌、信誉度高。" class="iconfont icon-cheng right" style="color:#F5A623"></span>
+                <span v-show="item.isGuaranteeUser == '1'" data-msg="企业资金实力强，需方验收货物后淘不锈与供方结算。依据淘不锈平台担保商户入驻条款评选得出。" class="iconfont icon-bao right" style="color:#C16BD6"></span>
                 <crown :tip="`总报价：${item.sellAllNum}次,中标：${item.sellGetNum}次`" :level='item.level'></crown>
             </div>
             <div class="item right">
@@ -40,35 +40,36 @@
             <span class="iconfont icon-cray"></span>没有库存
         </div>
     
-        <template v-if="isDone">
-            <!-- 报价了才会显示按钮 -->
-            <a class="get-deal" v-if="item.offerStatus == 1 && buyStatus == 1" @click="bidOffer">选他中标</a>
-
-            <a class="has-deal">中标商户</a>
-            
-            <!-- 报价超过2条才会显示历史 -->
-            <div class="show-offer-history" @click="showHistory(item)" v-if="item.offerStatus != 4 && item.ironSell.length > 1">
-                {{ item.historyShow ? '收起历史报价' : '展开历史报价' }}
-                <span class="iconfont" :class=" item.historyShow ? 'icon-iconjiaobiaoxiangshang':'icon-iconjiaobiaoxiangxia'"></span>
+<template v-if="isDone">
+    <!-- 报价了才会显示按钮 -->
+    <a class="get-deal" v-if="item.offerStatus == 1 && buyStatus == 1" @click="bidOffer">选他中标</a>
+    
+    <a class="has-deal"><span class="iconfont icon-guanggaolanyouhua02"></span>中标</a>
+    
+    <!-- 报价超过2条才会显示历史 -->
+    <div class="show-offer-history" @click="showHistory(item)" v-if="item.offerStatus != 4 && item.ironSell.length > 1">
+        {{ item.historyShow ? '收起历史报价' : '展开历史报价' }}
+        <span class="iconfont" :class=" item.historyShow ? 'icon-iconjiaobiaoxiangshang':'icon-iconjiaobiaoxiangxia'"></span>
+    </div>
+    <!-- 历史报价 -->
+    <div class="offer-history-list" v-show="item.historyShow">
+        <div class="offer-item" v-for="(sub,i) in item.ironSell" :key="i" :class="{'first':i == 0}">
+            <span class="iconfont icon-circularframeshijian" v-if="i == 0"></span>
+            <div class="item date">{{ sub.createTime | dateformat('MM-dd hh:mm') }}</div>
+            <div class="item time-line">
+                <span class="note"></span>
+                <span class="line top" v-if="i>0"></span>
+                <span class="line bottom" v-if="i < item.ironSell.length - 1"></span>
             </div>
-            <!-- 历史报价 -->
-            <div class="offer-history-list" v-show="item.historyShow">
-                <div class="offer-item" v-for="(sub,i) in item.ironSell" :key="i">
-                    <div class="item date">{{ sub.createTime | dateformat('MM-dd hh:mm') }}</div>
-                    <div class="item time-line">
-                        <span class="note"></span>
-                        <span class="line top" v-if="i>0"></span>
-                        <span class="line bottom" v-if="i < item.ironSell.length - 1"></span>
-                    </div>
-                    <div class="item price">&yen;{{ sub.offerPerPrice }}/{{ sub.baseUnit }}</div>
-                    <div class="item tolerance">{{ sub.tolerance }}</div>
-                    <div class="item proPlace">{{ sub.offerPlaces }}</div>
-                    <div class="item totlePrice">&yen;{{ sub.offerPrice }}</div>
-                    <div class="item remark">{{ sub.offerRemark }}</div>
-                </div>
-            </div>
-            <!-- 历史报价 -->
-        </template>
+            <div class="item price">&yen;{{ sub.offerPerPrice }}/{{ sub.baseUnit }}</div>
+            <div class="item tolerance">{{ sub.tolerance }}</div>
+            <div class="item proPlace">{{ sub.offerPlaces }}</div>
+            <div class="item totlePrice">&yen;{{ sub.offerPrice }}</div>
+            <div class="item remark">{{ sub.offerRemark }}</div>
+        </div>
+    </div>
+    <!-- 历史报价 -->
+</template>
     </div>
 </template>
 
@@ -129,6 +130,7 @@
             float: left;
             height: 100%;
             text-indent: 20px;
+            .ellipsis;
             &.date {
                 min-width: 60px;
                 width: 7.28%;
@@ -256,7 +258,7 @@
             background-color: @dark_blue;
             .borderRadius(2px);
         }
-        .has-deal{
+        .has-deal {
             position: absolute;
             display: none;
             right: 16px;
@@ -269,8 +271,7 @@
             border: 2px solid @dark_red;
             .borderRadius(2px);
         }
-
-        &.show-zhongbiao .has-deal{
+        &.show-zhongbiao .has-deal {
             display: block;
         }
         .show-offer-history {
@@ -291,6 +292,7 @@
             padding: 10px 0;
             border-top: 1px dashed #d1d1d1;
             .offer-item {
+                position: relative;
                 height: 32px;
                 line-height: 32px;
                 color: @f_goast;
@@ -348,6 +350,16 @@
                     &.remark {
                         min-width: 70px;
                     }
+                }
+
+                &.first{
+                    color: @light_blue;
+                }
+                .icon-circularframeshijian{
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    color:@light_blue;
                 }
             }
         }

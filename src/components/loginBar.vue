@@ -1,15 +1,14 @@
 <template>
   <div class="main-bar">
-    <a class="back">返回主站</a>
-    <a class="link">联系我们：400-800-1234</a>
+    <a class="back" href="http://www.itaobuxiu.com" target="_blank">淘不锈首页</a>
+    <a class="link"><span class="iconfont icon-ziyuan7"></span>0510-81812186</a>
     <div class="fr group">
-      <a class="back">旧版入口</a>
       <a v-if="isLogin" @click="showP">
           {{ user.companyName }}
           <span class="iconfont" :class="panelShow ? 'icon-iconjiaobiaoxiangshang': 'icon-iconjiaobiaoxiangxia'"></span>
         </a>
       <router-link v-else :to="{name:'login',query: { redirect: $router.currentRoute.fullPath }}">您好，请登录</router-link>
-      <a class="back">注册</a>
+      <a class="back" v-show="!isLogin" href="http://www.itaobuxiu.com/html/view/common/register.html" target="_blank">注册</a>
     </div>
     <div class="action-panel" v-if="panelShow" v-clickoutside="togglePShow">
       <div class="item" @click="go('BuserInfo')">个人中心</div>
@@ -99,8 +98,12 @@
       color: @f_dark;
     }
     .link {
-      margin-left: 20px;
+      margin-left: 10px;
       color: @light_blue;
+      .iconfont{
+        margin-right:5px;
+        font-size: 14px;
+      }
     }
     .fr {
       float: right;

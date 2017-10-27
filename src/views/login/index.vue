@@ -196,12 +196,13 @@
                             </div>
                         </div>
                         <div class="bar">
-                            <span class="iconfont" :class="savePSD?'icon-check-box':'icon-check_box_unselecte'" @click="savePSD = !savePSD"></span>
-                            <a class="l" @click="savePSD = !savePSD">记住密码</a>
-                            <a class="r">忘记密码</a>
+                            <!-- <span class="iconfont" :class="savePSD?'icon-check-box':'icon-check_box_unselecte'" @click="savePSD = !savePSD"></span>
+                            <a class="l" @click="savePSD = !savePSD">记住密码</a> -->
+                            <a class="l" href="http://www.itaobuxiu.com/html/view/common/register.html" target="_blank">没有账户？去注册</a>
+                            <a class="r" href="http://www.itaobuxiu.com/html/view/common/login.html">忘记密码</a>
                         </div>
                         <a class="btn" @click="login">登录</a>
-                        <a class="link">没有账户？去注册</a>
+                        
                         <a class="link go" target="_blank" href="http://www.itaobuxiu.com">前往淘不锈&gt;&gt;</a>
     
                         <!-- 错误提示框 -->
@@ -257,7 +258,7 @@
                         });
                         this.$Notice.success({
                             title: '登录成功！',
-                            desc: '恭喜您已经成功通过验证，天选之人，尽情发挥你的宇宙之力吧！'
+                            desc: '恭喜你成功登录接单吧，快来体验吧！'
                         })
                     } else {
                         this.$Notice.error({

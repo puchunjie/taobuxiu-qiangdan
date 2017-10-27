@@ -13,13 +13,14 @@
             <div class="swiper-slide">
                 <img src="../../../assets/banner/banner4.png">
             </div>
-            <div class="swiper-slide">
-                <img src="../../../assets/banner/banner5.png">
-            </div>
         </div>
         <div class="swiper-pagination"></div>
-        <!-- <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div> -->
+        <div class="swiper-button-prev over-write">
+            <span class="iconfont icon-fanyejiantou-copy"></span>
+        </div>
+        <div class="swiper-button-next over-write">
+            <span class="iconfont icon-fanyejiantou"></span>
+        </div>
     </div>
 </template>
 
@@ -37,8 +38,8 @@
                     loop: true,
                     autoplay: 3000,
                     pagination: '.swiper-pagination',
-                    // prevButton: '.swiper-button-prev',
-                    // nextButton: '.swiper-button-next'
+                    prevButton: '.swiper-button-prev',
+                    nextButton: '.swiper-button-next'
                 })
             }
         },
@@ -55,6 +56,16 @@
     #banner img {
         width: 100%;
         height: 100%;
+    }
+
+    .over-write{
+        background: none;
+        width: 40px;
+        text-align: center;
+        .iconfont{
+            color: #fff;
+            font-size: 40px;
+        }
     }
 </style>
 

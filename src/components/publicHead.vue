@@ -6,8 +6,8 @@
             <router-link :class="{'active':$route.name == 'publishIron'}" :to="{name:'publishIron',params:{isCopy: 0}}" tag="li">发布求购</router-link>
         </ul>
         <div class="account-group">
-            <router-link :to="{name:'BuserInfo'}" class="br" :class="{'active':isBuyer}">买家中心</router-link>
-            <router-link :to="{name:'SuserInfo'}" class="bl" :class="{'active':isSeller}">卖家中心</router-link>
+            <router-link :to="{name:'Bbuys',params:{isToday:1}}" class="br" :class="{'active':isBuyer}">买家中心</router-link>
+            <router-link :to="{name:'Sbuys',params:{isToday:1}}" class="bl" :class="{'active':isSeller}">卖家中心</router-link>
         </div>
     </div>
 </template>

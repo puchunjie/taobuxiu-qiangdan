@@ -1,4 +1,5 @@
 import * as types from '@/store/types'
+import { MathRand } from '@/utils/tools.js'
 export default {
     data() {
         return {
@@ -10,19 +11,13 @@ export default {
         }
     },
     methods: {
-        MathRand() {
-            if (this.$ls.get('rand') != null) {
-                let Num = "";
-                for (var i = 0; i < 6; i++) {
-                    Num += Math.floor(Math.random() * 10);
-                }
-                this.$ls.set('rand', Num);
-                return Num
-            }
-        },
         initScoket() {
             let _this = this;
             let rand = this.$ls.get('rand');
+            if (rand == null) {
+                rand = MathRand();
+                this.$ls.set('rand', rand);
+            }
             // 建立WebSocket链接
             let host = window.location.host != 'localhost:9090' ? window.location.host : '192.168.0.251';
             let ws = new WebSocket('ws://' + host + ':8080/websocket/iron?' + this.$store.state.loginId + rand);

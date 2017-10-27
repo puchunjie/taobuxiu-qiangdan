@@ -193,7 +193,7 @@
 <template>
   <div class="punlish-container inner-container">
     <div class="history">
-      <a @click="showHistory">从历史求购中选择>></a>
+      <a @click="showHistory"><span class="iconfont icon-circularframeshijian"></span>从历史求购中选择>></a>
     </div>
     <div class="list-content">
       <ul class="row head clearfix" v-show="headShow">
@@ -222,11 +222,11 @@
             <li class="material">{{ item.data.materialName }}</li>
             <li class="surface">{{ item.data.surfaceName }}</li>
             <li class="specifica">{{ item.data.specifications != '' ? item.data.specifications : `${item.data.height}*${item.data.width}*${item.data.length}`}}</li>
-            <li class="tolerance">{{ item.data.tolerance != '' ? item.data.tolerance : '—' }}</li>
+            <li class="tolerance">{{ item.data.tolerance | emptyHlod }}</li>
             <li class="quantity">{{ item.data.numbers != '' ? `${item.data.numbers}${item.data.numberUnit}`: '—'}}</li>
             <li class="quantity">{{ item.data.weights != '' ? `${item.data.weights}${item.data.weightUnit}`: '—'}}</li>
             <li class="manufacturer">{{ item.data.proPlacesName }}</li>
-            <li class="desc">{{ item.data.remark == '' ? '—' : item.data.remark }}</li>
+            <li class="desc">{{ item.data.remark | emptyHlod }}</li>
           </ul>
           <div class="right-btn">
             <span class="iconfont icon-bianji" @click="editItem(item,index)"></span>
@@ -388,7 +388,7 @@
           if (this.needException) {
             this.deleteItem(this.activeIndex);
           } else {
-            return false
+            this.$router.push({name:'Bbuys',params:{isToday:1}});
           }
         }
       },
@@ -513,6 +513,8 @@
               this.successShow = true;
             }
           })
+        }else{
+          this.$Message.error('请勾选您想发布的求购');
         }
       },
       // 保存数据到本地

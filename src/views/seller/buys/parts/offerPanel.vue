@@ -21,7 +21,7 @@
             .input-item-warp {
                 .unit-content {
                     position: absolute;
-                    width: 56px;
+                    width: 70px;
                     height: 100%;
                     right: 0;
                     top: 0;
@@ -137,7 +137,7 @@
         <div class="offer-from clearfix" v-if="offerDone">
             <div class="input-item-warp wid-180" ref="offerPerPrice">
                 <label>单价</label>
-                <input class="goast-input level1 textRight" style="width:60px"  min="0" type="number" @blur="validItem('offerPerPrice')" @keyup="validItem('offerPerPrice')" v-model="offerApi.offerPerPrice">
+                <input class="goast-input level1 textRight" style="width:53px"  min="0" type="number" @blur="validItem('offerPerPrice')" @keyup="validItem('offerPerPrice')" v-model="offerApi.offerPerPrice">
                 <Poptip v-if="units.length > 1" trigger="hover" class="unit-content" placement="bottom">
                     元/{{ unit.name }}<span v-show="units.length > 1" class="iconfont icon-iconjiaobiaoxiangxia"></span>
                     <div class="units" slot="content">
@@ -174,7 +174,7 @@
                 <div class="totleprice">总价</div>
             </div>
             <div class="tr">
-                <div class="price">{{ finalOffer.offerPerPrice }}元</div>
+                <div class="price">{{ finalOffer.offerPerPrice }}元/{{ finalOffer.baseUnit }}</div>
                 <div class="tolerance">{{ finalOffer.tolerance }}</div>
                 <div class="place">{{ finalOffer.offerPlaces }}</div>
                 <div class="totleprice">{{ finalOffer.offerPrice }}元</div>

@@ -7,7 +7,7 @@ import * as types from './store/types'
 
 // axios 配置
 axios.defaults.timeout = 10000;
-// axios.defaults.baseURL = 'http://192.168.0.251'; //配置接口地址
+axios.defaults.baseURL = 'http://192.168.0.251'; //配置接口地址
 // axios.defaults.baseURL = 'http://192.168.0.132:8080'; //配置接口地址
 // axios.defaults.baseURL = 'http://192.168.0.122:8080'; //配置接口地址
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'; //配置请求头
@@ -35,7 +35,7 @@ axios.interceptors.response.use(response => {
     LoadingBar.finish();
     if (response.data.code === 403) {
         if (router.currentRoute.name != 'index') {
-            Modal.error({
+            Modal.confirm({
                 content: '登录过期，请重新登录。',
                 onOk() {
                     //清除token信息并跳转到登录页面
@@ -44,14 +44,24 @@ axios.interceptors.response.use(response => {
                         path: '/login',
                         query: { redirect: router.currentRoute.fullPath }
                     })
+                },
+                onCancel() {
+                    router.replace({
+                        path: '/'
+                    })
                 }
             })
         }
 
     } else if (response.data.code === 1002) {
-        Modal.error({
+        Modal.confirm({
             content: '操作权限不够，请充值！',
             onOk() {
+                router.replace({
+                    path: '/'
+                })
+            },
+            onCancel() {
                 router.replace({
                     path: '/'
                 })
@@ -107,12 +117,12 @@ axios.interceptors.response.use(response => {
                 error.message = 'HTTP版本不受支持'
                 break
             default:
-                error.message = '服务器收到宇宙能量的干扰，已经变异成机甲！'
+                error.message = '服务器线路异常'
         }
     }
     Notice.error({
         title: error.message,
-        desc: '服务器收到宇宙能量的干扰，已经变异成机甲，并向你抛出了一个异常！给技术部的小伙伴发红包可以解决问题。'
+        desc: '网络或服务器正消极罢工，请刷新重试或联系客服人员报备解决，谢谢！'
     })
     return Promise.reject(error)
 });

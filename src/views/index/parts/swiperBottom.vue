@@ -17,7 +17,12 @@
                 <img src="../../../assets/bottom/5.png">
             </div>
         </div>
-    
+        <div class="swiper-button-prev over-write">
+            <span class="iconfont icon-lunbo-copy"></span>
+        </div>
+        <div class="swiper-button-next over-write">
+            <span class="iconfont icon-lunbo"></span>
+        </div>
         <div class="tips">
             <div class="tip-item" :class="{'hight-light':index <= step -1}" v-for="(el,index) in steps" :key="index">
                 <div class="icon-count">{{ index+1 }}</div>
@@ -44,7 +49,9 @@
                     autoplay: 2000,
                     onSlideChangeStart: function(swiper) {
                         _this.step = swiper.activeIndex <= 5 ? swiper.activeIndex : 1;
-                    }
+                    },
+                    prevButton: '.swiper-button-prev',
+                    nextButton: '.swiper-button-next'
                 })
             }
         },
@@ -111,6 +118,17 @@
             &:first-child:after {
                 content: none;
             }
+        }
+    }
+
+    .over-write{
+        background: none;
+        width: 100px;
+        text-align: center;
+        .opacity(.5);
+        .iconfont{
+            color: #fff;
+            font-size: 80px;
         }
     }
 </style>

@@ -58,23 +58,24 @@
                 <input class="goast-input level1" :ref="item.id+'-surface'" :id="item.id+'-surface'" type="text" @focus="showFuzzy" v-model="item.surfaceName" @keyup="setInput">
                 <p class="err">{{ item.surfaceName == '' ? '请选择' : '无效内容' }}</p>
             </div>
-            <div class="input-item-warp wid-240">
+            <div class="input-item-warp wid-240" :class="{'on-err':guigeTip}">
                 <label>规格</label>
                 <div class="inline" v-if="isJB">
                     <div class="inside-group">
-                        <input class="goast-input" stay="ok" @focus="showRelation(true)" @keyup="showRelation(true)" type="text" v-model="item.height">
+                        <input class="goast-input" stay="ok" @focus="showRelation(true)" @keyup="showRelation(true)" type="text" @blur="isGuigeErr" v-model="item.height">
                         <span>厚</span>
                     </div>
                     <div class="inside-group">
-                        <input class="goast-input" stay="ok" @focus="showRelation(false)" @keyup="showRelation(false)" type="text" v-model="item.width">
+                        <input class="goast-input" stay="ok" @focus="showRelation(false)" @keyup="showRelation(false)" @blur="isGuigeErr" type="text" v-model="item.width">
                         <span>宽</span>
                     </div>
                     <div class="inside-group">
-                        <input class="goast-input" stay="ok" @focus="showRelation(false)" @keyup="showRelation(false)" type="text" v-model="item.length">
+                        <input class="goast-input" stay="ok" @focus="showRelation(false)" @keyup="showRelation(false)" @blur="isGuigeErr" type="text" v-model="item.length">
                         <span>长</span>
                     </div>
                 </div>
-                <input v-else class="goast-input level1" type="text" v-model="item.specifications">
+                <input v-else class="goast-input level1" type="text" @blur="isGuigeErr" v-model="item.specifications">
+                <p class="err">请输入规格！</p>
     
                 <div class="relation-content" v-show="tags.length > 0" v-clickoutside="clearTags">
                     <div class="tag" v-for="(tag,index) in tags" :key="index" @click="autoFillGG(tag)" :class="{'no-b':index === tags.length -1}">
@@ -150,6 +151,7 @@
                 item: JSON.parse(JSON.stringify(this.data)),
                 tags: [], //关联数据列表,
                 unitTip: false, //  单位选填提示
+                guigeTip: false //规格提示
             }
         },
         computed: {
@@ -282,6 +284,14 @@
                     this.unitTip = true
                 } else {
                     this.unitTip = false
+                }
+            },
+            isGuigeErr(){
+                if(this.item.ironTypeName == '不锈钢卷' || this.item.ironTypeName == '不锈钢板'){
+                    this.guigeTip = this.item.height == '' || this.item.length == '' || this.item.width == ''
+                }else{
+                    console.log(this.item.specifications == '')
+                    this.guigeTip = this.item.specifications == ''
                 }
             },
             // 保存求购，暂时不做存入localstage处理

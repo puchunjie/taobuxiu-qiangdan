@@ -116,12 +116,17 @@ router.beforeEach((to, from, next) => {
         if (store.state.authorization) {
             next();
         } else {
-            Modal.error({
+            Modal.confirm({
                 content: '您还没有登录，请登录',
                 onOk() {
                     next({
                         path: '/login',
                         query: { redirect: to.fullPath }
+                    })
+                },
+                onCancel() {
+                    router.replace({
+                        path: '/'
                     })
                 }
             })

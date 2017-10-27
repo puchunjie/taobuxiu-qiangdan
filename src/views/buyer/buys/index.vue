@@ -2,28 +2,37 @@
   <div class="buy-index">
     <statusBar ref="statusBar" @on-filter-status="filterStatus" :status="statusData"></statusBar>
     <template v-if="listEmpty">
-      <tabList @on-page-change="pageChange" :total="totalCount" ref="tabList">
-        <tabCard v-for="(item,index) in list" @click.native="selectItem(index)" :class="{ 'active':activeIndex == index }" :key="index" :item="item" :index="index" @on-edit="itemEdit" @on-del="deleteItem" @on-copy="copy(index)"></tabCard>
-      </tabList>
-      <div class="info-list">
-        <div class="winner-panel" v-if="activeItem.buyStatus == 2">
-          <div class="tit">中标商家</div>
-          <offerItem :item="selectBusiness" v-if="selectBusiness" :isDone="false" style="border-bottom:0"></offerItem>
-        </div>
-        <Info :item="activeItem"></Info>
-        <offerList :offerList="offerList" :buyStatus="activeItem.buyStatus" @on-bidDone="bidDone"></offerList>
-      </div>
-      <!-- 编辑面板 -->
-      <div class="edit-container" v-if="editShow">
-        <div class="inner-content">
-          <div class="head">
-            编辑求购
-            <span class="iconfont icon-close" @click="editShow = false"></span>
+        <tabList @on-page-change="pageChange" :total="totalCount" ref="tabList">
+          <tabCard v-for="(item,index) in list" @click.native="selectItem(index)" :class="{ 'active':activeIndex == index }" :key="index" :item="item" :index="index" @on-edit="itemEdit" @on-del="deleteItem" @on-copy="copy(index)"></tabCard>
+        </tabList>
+        <div class="info-list">
+          <div class="winner-panel" v-if="activeItem.buyStatus == 2">
+            <div class="tit">中标商家</div>
+            <div class="list-row list-head">
+              <div class="item date">时间</div> 
+              <div class="item price">单价</div> 
+              <div class="item tolerance">公差</div> 
+              <div class="item proPlaces">产地</div> 
+              <div class="item totlePrice">总价</div> 
+              <div class="item remark">备注</div> 
+              <div class="item action"></div>
+            </div>
+            <offerItem :item="selectBusiness" v-if="selectBusiness" :isDone="false" style="border-bottom:0"></offerItem>
           </div>
-          <editItem :data="activeItem" @on-close="editShow = false" @on-save="doEdit"></editItem>
+          <Info :item="activeItem"></Info>
+          <offerList :offerList="offerList" :buyStatus="activeItem.buyStatus" @on-bidDone="bidDone"></offerList>
         </div>
-      </div>
-    </template>
+        <!-- 编辑面板 -->
+        <div class="edit-container" v-if="editShow">
+          <div class="inner-content">
+            <div class="head">
+              编辑求购
+              <span class="iconfont icon-close" @click="editShow = false"></span>
+            </div>
+            <editItem :data="activeItem" @on-close="editShow = false" @on-save="doEdit"></editItem>
+          </div>
+        </div>
+</template>
     <img v-else class="no-list" src="../../../assets/no-list.png">
   </div>
 </template>
@@ -60,7 +69,10 @@
         list: [],
         totalCount: 0,
         activeIndex: 0,
-        offerList: [],
+        offerList: {
+          missSell: [],
+          validSell: []
+        },
         statusData: [{
             name: '进行中',
             status: 1,
@@ -86,7 +98,7 @@
     },
     computed: {
       // 是否没有数据
-      listEmpty(){
+      listEmpty() {
         return this.list.length > 0
       },
       activeItem() {
@@ -99,8 +111,8 @@
         return this.$route.params.isToday
       },
       // 中标商户
-      selectBusiness(){
-        return this.offerList.length > 0 ? this.offerList[0] : false
+      selectBusiness() {
+        return this.offerList.validSell.length > 0 ? this.offerList.validSell[0] : false
       }
     },
     methods: {
@@ -147,7 +159,7 @@
       filterStatus(status) {
         this.getListApi.buyStatus = status;
         this.getListApi.currentPage = 1;
-        if(this.$refs.tabList)
+        if (this.$refs.tabList)
           this.$refs.tabList.pageInit();
         this.activeIndex = 0;
         this.getDataList();
@@ -174,10 +186,10 @@
         this.$http.post(this.$api.publish_one, params).then(res => {
           if (res.code === 1000) {
             // 如果这也删完了，且不是第一页，就往后退一页
-            if(this.list.length <= 1 && this.getListApi.currentPage > 1)
+            if (this.list.length <= 1 && this.getListApi.currentPage > 1)
               this.getListApi.currentPage--
-              
-            this.activeIndex = 0;
+  
+              this.activeIndex = 0;
             this.getDataList();
             this.$Message.success('已删除！')
           }
@@ -190,7 +202,7 @@
         if (saveList.length < 6) {
           this.$Modal.confirm({
             title: '复制成功！',
-            content: '求购信息已复制，是否千万发布页面进行发布？',
+            content: '求购信息已复制，是否前往发布页面进行发布？',
             okText: '前往',
             cancelText: '留在此页',
             onOk: () => {
@@ -246,7 +258,7 @@
   
   .buy-index {
     position: relative;
-    .no-list{
+    .no-list {
       display: block;
       width: 230px;
       margin: 200px auto 0;
@@ -298,7 +310,7 @@
     background-color: #fff;
     margin-bottom: 16px;
     overflow: hidden;
-    border:@b_d1;
+    border: @b_d1;
     .borderRadius;
     .tit {
       width: 100%;
@@ -307,6 +319,43 @@
       background-color: @light_green;
       color: #fff;
       text-indent: 20px;
+    }
+    .list-row {
+      height: 40px;
+      line-height: 40px;
+      color: @f_dark;
+      border-bottom: @b_d1;
+      .item {
+        float: left;
+        height: 100%;
+        text-indent: 20px;
+        .ellipsis;
+        &.date {
+          min-width: 60px;
+          width: 7.28%;
+        }
+        &.price {
+          min-width: 100px;
+          width: 12.13%;
+        }
+        &.tolerance {
+          min-width: 100px;
+          width: 12.13%;
+        }
+        &.proPlaces {
+          min-width: 100px;
+          width: 12.13%;
+        }
+        &.totlePrice {
+          min-width: 100px;
+          width: 12.13%;
+        }
+        &.remark {
+          min-width: 210px;
+          width: 25.5%;
+          .ellipsis;
+        }
+      }
     }
   }
 </style>

@@ -17,6 +17,7 @@
     // 引入提示框和标题组件
     require('echarts/lib/component/tooltip');
     require('echarts/lib/component/title');
+    import { MathRand } from '@/utils/tools.js';
     import {
         dateformat
     } from '@/filters'
@@ -141,7 +142,6 @@
             // 绘制图标
             draw() {
                 let isDay = this.active == 0;
-                console.log(isDay)
                 let data = this.$clearData(this.activeData)
                 this.myChart.setOption({
                     xAxis: {
@@ -192,6 +192,10 @@
             scoketInit() {
                 let _this = this;
                 let rand = this.$ls.get('rand');
+                if (rand == null) {
+                    rand = MathRand();
+                    this.$ls.set('rand', rand);
+                }
                 // // 建立WebSocket链接
                 let host = window.location.host != 'localhost:9090' ? window.location.host : '192.168.0.251';
                 let ws = new WebSocket('ws://' + host + ':8080/websocket/ni?pg' + rand);

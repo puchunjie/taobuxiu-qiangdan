@@ -26,7 +26,7 @@
         },
         props: {
             buyStatus: String,
-            offerList: Array
+            offerList: Object
         },
         data() {
             return {
@@ -35,7 +35,8 @@
         },
         methods: {
             init() {
-                let list = this.$clearData(this.offerList);
+                let clearOffer = this.$clearData(this.offerList);
+                let list = [...clearOffer.validSell,...clearOffer.missSell];
                 list.map(el => {
                     el.historyShow = false;
                 });
