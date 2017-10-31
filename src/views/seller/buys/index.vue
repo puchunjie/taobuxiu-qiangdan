@@ -13,7 +13,7 @@
                     <offerPanel :item="activeItem" :ironBuyId="activeItemId" @on-ajax="afterOffer"></offerPanel>
                 </div>
         </template>
-        <img v-else class="no-list" src="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/static/assets/no-list.png">
+        <img v-else class="no-list" src="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/assets/no-list.png">
     </div>
 </template>
 

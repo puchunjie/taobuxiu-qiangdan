@@ -2,19 +2,19 @@
     <div class="swiper-container" id="bottom">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
-                <img src="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/static/assets/bottom/1.png">
+                <img src="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/assets/bottom/1.png">
             </div>
             <div class="swiper-slide">
-                <img src="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/static/assets/bottom/2.png">
+                <img src="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/assets/bottom/2.png">
             </div>
             <div class="swiper-slide">
-                <img src="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/static/assets/bottom/3.png">
+                <img src="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/assets/bottom/3.png">
             </div>
             <div class="swiper-slide">
-                <img src="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/static/assets/bottom/4.png">
+                <img src="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/assets/bottom/4.png">
             </div>
             <div class="swiper-slide">
-                <img src="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/static/assets/bottom/5.png">
+                <img src="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/assets/bottom/5.png">
             </div>
         </div>
         <div class="swiper-button-prev over-write">

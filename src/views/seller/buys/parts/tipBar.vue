@@ -16,7 +16,7 @@
             <span class="iconfont icon-jiangzhang"></span>
             <h3>恭喜您，本单中标！
                 <a class="tencent-qq" v-show="item.QQ != ''" :href="'tencent://message/?uin='+item.QQ+'&Site=&Menu=yes'">
-                    <img style="width:20px" src="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/static/assets/icon_qq.png">
+                    <img style="width:20px" src="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/assets/icon_qq.png">
                 </a>
             </h3>
             <p>

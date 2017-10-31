@@ -2,16 +2,16 @@
     <div class="swiper-container" id="banner">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
-                <img src="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/static/assets/banner/banner1.png">
+                <img src="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/assets/banner/banner1.png">
             </div>
             <div class="swiper-slide">
-                <img src="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/static/assets/banner/banner2.png">
+                <img src="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/assets/banner/banner2.png">
             </div>
             <div class="swiper-slide">
-                <img src="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/static/assets/banner/banner3.png">
+                <img src="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/assets/banner/banner3.png">
             </div>
             <div class="swiper-slide">
-                <img src="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/static/assets/banner/banner4.png">
+                <img src="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/assets/banner/banner4.png">
             </div>
         </div>
         <div class="swiper-pagination"></div>

@@ -51,13 +51,13 @@
             background-repeat: no-repeat;
             background-position: center;
             &.crown1 {
-                background-image: url('http://tbxoss.oss-cn-hangzhou.aliyuncs.com/static/assets/crown/1.png')
+                background-image: url('http://tbxoss.oss-cn-hangzhou.aliyuncs.com/assets/crown/1.png')
             }
             &.crown2 {
-                background-image: url('http://tbxoss.oss-cn-hangzhou.aliyuncs.com/static/assets/crown/2.png')
+                background-image: url('http://tbxoss.oss-cn-hangzhou.aliyuncs.com/assets/crown/2.png')
             }
             &.crown3 {
-                background-image: url('http://tbxoss.oss-cn-hangzhou.aliyuncs.com/static/assets/crown/3.png')
+                background-image: url('http://tbxoss.oss-cn-hangzhou.aliyuncs.com/assets/crown/3.png')
             }
         }
         .tip {

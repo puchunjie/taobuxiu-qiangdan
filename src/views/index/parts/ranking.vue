@@ -7,7 +7,7 @@
             </div>
         </div>
         <div class="rank-list">
-            <img class="no-list" src="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/static/assets/no-rank.png" v-show="list[active]&&list[active].length == 0">
+            <img class="no-list" src="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/assets/no-rank.png" v-show="list[active]&&list[active].length == 0">
             <div class="head clearfix" v-show="list[active]&&list[active].length > 0">
                 <div class="item company" style="margin-left: 56px;">公司</div>
                 <div class="item level">资质等级</div>

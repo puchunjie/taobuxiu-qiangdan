@@ -18,7 +18,7 @@
                                     <span></span> {{ item.buyStatus | statusStr }}
                                 </div>
                             </template>
-                            <img v-else class="hold-img" src="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/static/assets/no-day.png">
+                            <img v-else class="hold-img" src="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/assets/no-day.png">
                         </div>
                     </div>
                 </div>
@@ -53,13 +53,12 @@
             getIron() {
                 this.$http.post(this.$api.newIronList).then(res => {
                     if (res.code === 1000) {
-                        this.list = res.data;
+                        this.list = res.data != '' ? res.data : [];
                         let num = res.data.length;
                         let arr = [];
                         if (num < 16) {
                             let less = 16 - num;
                             for (let i = 0; i < less; i++) {
-                                console.log(i)
                                 arr.push('');
                             }
                         }
