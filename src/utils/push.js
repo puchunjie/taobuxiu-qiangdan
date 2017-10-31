@@ -44,6 +44,7 @@ export default {
                 Notification.requestPermission();
         },
         notify(msg) {
+            let _this = this;
             let title = msg.title;
             let body = msg.body;
             let icon = 'http://tbxoss.oss-cn-hangzhou.aliyuncs.com/2017/10/24/jdb_' + msg.code + '.png';
@@ -65,9 +66,9 @@ export default {
                     this.stl = setInterval(function() {
                         let title = document.title;
                         if (/新/.test(title) == false) {
-                            document.title = '【你有新消息】' + document.title;
+                            document.title = '【你有新消息】' + _this.titleInit;
                         } else {
-                            document.title = '【　　　　　】';
+                            document.title = '【　　　　　】' + _this.titleInit;
                         }
                     }, 500);
                 }

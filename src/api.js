@@ -1,4 +1,5 @@
-export const ws = 'ws://120.55.63.70:8080/websocket'
+// export const ws = 'ws://120.55.63.70:8080/websocket';
+export const ws = 'ws://192.168.0.251:8080/websocket'
 
 /**
  * 获取用户信息

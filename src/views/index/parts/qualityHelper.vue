@@ -4,7 +4,7 @@
         <div class="form">
             <div class="input-item-warp wid-quality" ref="inDoorTime">
                 <label style="float:left">时间</label>
-                <DatePicker placement="bottom-end" v-model="apiData.inDoorTime" class="goast-picker level1" type="datetime"></DatePicker>
+                <DatePicker placement="bottom-end" :options="dataOptions" v-model="apiData.inDoorTime" class="goast-picker level1" type="datetime"></DatePicker>
             </div>
             <div class="input-item-warp wid-quality" ref="place">
                 <label>地点</label>
@@ -67,7 +67,12 @@
                 loading: false,
                 autoCompany: false,
                 autoContactName: false,
-                autoContactPhone: false
+                autoContactPhone: false,
+                dataOptions: {
+                    disabledDate (date) {
+                        return date && date.valueOf() < Date.now() - 86400000;
+                    }
+                }
             }
         },
         computed: {
