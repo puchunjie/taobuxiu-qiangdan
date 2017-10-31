@@ -388,7 +388,12 @@
           if (this.needException) {
             this.deleteItem(this.activeIndex);
           } else {
-            this.$router.push({name:'Bbuys',params:{isToday:1}});
+            this.$router.push({
+              name: 'Bbuys',
+              params: {
+                isToday: 1
+              }
+            });
           }
         }
       },
@@ -501,9 +506,11 @@
       // 批量发布
       publishSome() {
         if (this.checkItems.length > 0) {
+          this.spinToggle(true);
           this.$http.post(this.$api.publishSome, {
             ironBuyInfos: JSON.stringify(this.checkItems)
           }).then(res => {
+            this.spinToggle(false);
             if (res.code === 1000) {
               let listData = this.$clearData(this.list);
               this.list = _.filter(listData, function(el) {
@@ -511,9 +518,11 @@
               });
               this.updateStorge();
               this.successShow = true;
+            }else{
+              this.$Message.error(res.message)
             }
           })
-        }else{
+        } else {
           this.$Message.error('请勾选您想发布的求购');
         }
       },
@@ -533,6 +542,21 @@
             isToday: 1
           }
         })
+      },
+      spinToggle(show) {
+        if (show) {
+          this.$Spin.show({
+            render: (h) => {
+              return h('div', [
+                h('div', {
+                  'class': 'ajax-spin-img',
+                })
+              ])
+            }
+          });
+        } else {
+          this.$Spin.hide();
+        }
       }
     },
     created() {

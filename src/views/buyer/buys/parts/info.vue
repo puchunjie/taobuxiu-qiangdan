@@ -95,7 +95,7 @@
             .item {
                 float: left;
                 height: 100%;
-                text-indent: 20px;
+                text-indent: 10px;
                 border-right: @b_d1;
                 border-bottom: @b_d1;
                 .ellipsis;

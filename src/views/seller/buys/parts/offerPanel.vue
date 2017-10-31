@@ -92,6 +92,7 @@
             width: 100%;
             padding: 0 20px 10px;
             .offer-group {
+                position: relative;
                 color: @f_goast;
                 height: 30px;
                 line-height: 30px;
@@ -100,6 +101,7 @@
                     &.index {
                         width: 3.5%;
                         min-width: 30px;
+                        text-indent: 20px;
                     }
                     &.date {
                         width: 11%;
@@ -125,6 +127,15 @@
                         width: 30%;
                         min-width: 300px;
                     }
+                }
+                &.first{
+                    color: @light_blue;
+                }
+                .icon-circularframeshijian{
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    color:@light_blue;
                 }
             }
         }
@@ -195,7 +206,8 @@
         </div>
         <div class="offers-warp" v-show="offerHistory">
             <p style="margin-bottom:10px">报价历史</p>
-            <div class="offer-group clearfix" v-for="(offer,index) in item.ironSell" :key="index">
+            <div class="offer-group clearfix" v-for="(offer,index) in item.ironSell" :key="index" :class="{'first':index == 0}">
+                <span class="iconfont icon-circularframeshijian" v-if="index == 0"></span>
                 <div class="index">{{ index + 1 }}.</div>
                 <div class="date">{{ offer.createTime | dateformat('MM.dd hh:mm') }}</div>
                 <div class="price">{{ offer.offerPerPrice }}/{{ offer.baseUnit }}</div>

@@ -3,7 +3,6 @@
     .item-group {
         width: 100%;
         padding: 30px;
-        overflow: hidden;
         &.exception-bg {
             background-color: @goast_blue;
         }
@@ -40,22 +39,22 @@
         <div class="contnet clearfix">
             <div class="input-item-warp wid-180">
                 <label>货源所在地</label>
-                <input class="goast-input level1" :ref="item.id+'-city'" :id="item.id+'-city'" type="text" @focus="showFuzzy" v-model="item.locationName" @keyup="setInput">
+                <input class="goast-input level1" :ref="item.id+'-city'" :id="item.id+'-city'" type="text" @focus="showFuzzy($event,item.locationId)" v-model="item.locationName" @keyup="setInput">
                 <p class="err">{{ item.locationName == '' ? '请选择' : '无效内容' }}</p>
             </div>
             <div class="input-item-warp wid-240">
                 <label>品名</label>
-                <input class="goast-input level1" :ref="item.id+'-type'" :id="item.id+'-type'" type="text" @focus="showFuzzy" v-model="item.ironTypeName" @keyup="setInput">
+                <input class="goast-input level1" :ref="item.id+'-type'" :id="item.id+'-type'" type="text" @focus="showFuzzy($event,item.ironTypeId)" v-model="item.ironTypeName" @keyup="setInput">
                 <p class="err">{{ item.ironTypeName == '' ? '请选择' : '无效内容' }}</p>
             </div>
             <div class="input-item-warp wid-200">
                 <label>材质</label>
-                <input class="goast-input level1" :ref="item.id+'-material'" :id="item.id+'-material'" type="text" @focus="showFuzzy" v-model="item.materialName" @keyup="setInput">
+                <input class="goast-input level1" :ref="item.id+'-material'" :id="item.id+'-material'" type="text" @focus="showFuzzy($event,item.materialId)" v-model="item.materialName" @keyup="setInput">
                 <p class="err">{{ item.materialName == '' ? '请选择' : '无效内容' }}</p>
             </div>
             <div class="input-item-warp wid-140">
                 <label>表面</label>
-                <input class="goast-input level1" :ref="item.id+'-surface'" :id="item.id+'-surface'" type="text" @focus="showFuzzy" v-model="item.surfaceName" @keyup="setInput">
+                <input class="goast-input level1" :ref="item.id+'-surface'" :id="item.id+'-surface'" type="text" @focus="showFuzzy($event,item.surfaceId)" v-model="item.surfaceName" @keyup="setInput">
                 <p class="err">{{ item.surfaceName == '' ? '请选择' : '无效内容' }}</p>
             </div>
             <div class="input-item-warp wid-240" :class="{'on-err':guigeTip}">
@@ -109,7 +108,7 @@
             </div>
             <div class="input-item-warp wid-200">
                 <label>产地</label>
-                <input class="goast-input level1" style="width:120px" :ref="item.id+'-proPlace'" :id="item.id+'-proPlace'" type="text" @focus="showFuzzy" v-model="item.proPlacesName" @keyup="setInput">
+                <input class="goast-input level1" style="width:120px" :ref="item.id+'-proPlace'" :id="item.id+'-proPlace'" type="text" @focus="showFuzzy($event,item.proPlacesId)" v-model="item.proPlacesName" @keyup="setInput">
                 <p class="err">{{ item.ironTypeName == '' ? '请选择' : '无效内容' }}</p>
             </div>
             <div class="input-item-warp wid-550 no-margin">
@@ -156,7 +155,9 @@
         },
         computed: {
             pureData() {
-                return JSON.parse(JSON.stringify(this.item))
+                let data = _.cloneDeep(this.item);
+                data.tolerance = this.isJB ? data.tolerance : '';
+                return JSON.parse(JSON.stringify(data))
             },
             typeOfSelect() {
                 return this.activeTargetRef.split("-")[1]
@@ -197,6 +198,7 @@
                     this.item.locationName != '' &&
                     this.item.materialName != '' &&
                     this.item.surfaceName != '' &&
+                    this.item.proPlacesName != '' &&
                     this.item.timeLimit != '';
             },
             // 是卷或板
@@ -213,7 +215,7 @@
                 let typeOfSelect = id.split('-')[1];
                 switch (typeOfSelect) {
                     case 'city':
-                        if (this.item.locationName == item.name || this.item.locationName == item.shortName &&this.item.locationId == item.id) return false
+                        if (this.item.locationName == item.name || this.item.locationName == item.shortName && this.item.locationId == item.id) return false
                         this.item.locationName = item.shortName;
                         this.item.locationId = item.id;
                         break;
@@ -244,7 +246,7 @@
                 this.fuzzy.queryStr = e.target.value;
             },
             // 显示弹框
-            showFuzzy(event) {
+            showFuzzy(event, id) {
                 let inputId = event.target.getAttribute('id');
                 this.activeTargetRef = inputId;
                 let elemet = document.getElementById(inputId)
@@ -259,7 +261,7 @@
                 this.fuzzy.x = actualLeft + 'px';
                 this.fuzzy.y = actualTop + 36 + 'px';
                 this.fuzzy.selectApi = this.api;
-                this.fuzzy.oldVal = event.target.value;
+                this.fuzzy.oldVal = event.target.value + '-' + id;
                 this.fuzzy.isCity = inputId.indexOf('city') >= 0;
     
                 this.fuzzy.show = false;
@@ -286,13 +288,14 @@
                     this.unitTip = false
                 }
             },
-            isGuigeErr(){
-                if(this.item.ironTypeName == '不锈钢卷' || this.item.ironTypeName == '不锈钢板'){
-                    this.guigeTip = this.item.height == '' || this.item.length == '' || this.item.width == ''
-                }else{
-                    console.log(this.item.specifications == '')
-                    this.guigeTip = this.item.specifications == ''
-                }
+            isGuigeErr() {
+                setTimeout(() => {
+                    if (this.item.ironTypeName == '不锈钢卷' || this.item.ironTypeName == '不锈钢板') {
+                        this.guigeTip = this.item.height == '' || this.item.length == '' || this.item.width == ''
+                    } else {
+                        this.guigeTip = this.item.specifications == ''
+                    }
+                }, 300);
             },
             // 保存求购，暂时不做存入localstage处理
             save() {
@@ -309,9 +312,21 @@
             // 单个发布
             publish() {
                 if (this.isOK) {
+                    this.$Spin.show({
+                        render: (h) => {
+                            return h('div', [
+                                h('div', {
+                                    'class': 'ajax-spin-img',
+                                })
+                            ])
+                        }
+                    });
                     this.$http.post(this.$api.publish_one, this.$clearData(this.item)).then(res => {
+                        this.$Spin.hide();
                         if (res.code === 1000) {
                             this.$emit('on-publish');
+                        } else {
+                            this.$Message.error(res.message)
                         }
                     })
                 } else {

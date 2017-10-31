@@ -1,11 +1,16 @@
 <template>
     <div class="user-info">
         <h3 class="name">{{ user.companyName }}</h3>
-        <p><crown tit="求购活跃度：" :level='level'></crown></p>
+        <p class="inline">
+            <crown tit="求购活跃度：" :level='level'></crown>
+        </p>
+        <p class="inline" style="margin-left:80px">
+            资质认证：<span v-show="user.isFaithUser == '1'" class="iconfont icon-cheng right" style="color:#F5A623"></span>
+            <span v-show="user.isGuaranteeUser == '1'" class="iconfont icon-bao right" style="color:#C16BD6"></span></p>
         <p>
-            <span class="iconfont icon-user"></span>{{ user.contact }}
-            <span class="iconfont icon-phone"></span>{{ user.contactNum }}
-            <span class="iconfont icon-qq"></span>{{ user.qq }}
+            <span class="tit-ico iconfont icon-user"></span>{{ user.contact }}
+            <span class="tit-ico iconfont icon-phone"></span>{{ user.contactNum }}
+            <span class="tit-ico iconfont icon-qq"></span>{{ user.qq }}
         </p>
         <router-link class="btn" :to="{name:'userInfo'}">修改资料</router-link>
     </div>
@@ -17,10 +22,10 @@
     } from 'vuex'
     import crown from '@/components/basics/crown/index.vue'
     export default {
-        props:{
-            level:{
-                type:String,
-                default:'1-1'
+        props: {
+            level: {
+                type: String,
+                default: '1-1'
             }
         },
         components: {
@@ -53,11 +58,15 @@
             margin-top: 10px;
             line-height: 20px;
             color: @f_goast;
-            .iconfont {
+            .tit-ico {
                 margin-right: 10px;
-                &+.iconfont {
+                &+.tit-ico {
                     margin-left: 80px;
                 }
+            }
+
+            &.inline{
+                display: inline-block;
             }
         }
         .btn {

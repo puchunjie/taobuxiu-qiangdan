@@ -3,7 +3,7 @@
         <div class="tit">
             求购详情
             <div class="seller-hyue">
-                <crown :tip="`总求购：${item.buyAllNum}次,总成交：${item.buyGetNum}次`" class="tip-left" tit="买家活跃度" :level='item.level'></crown>
+                <crown :tip="`总求购：${item.buyAllNum}次,总成交：${item.buyGetNum}次`" class="tip-left" tit="买家活跃度" :level='item.day'></crown>
             </div>
         </div>
         <div class="table table-head">
@@ -83,7 +83,7 @@
             .item {
                 float: left;
                 height: 100%;
-                text-indent: 20px;
+                text-indent: 10px;
                 border-right: @b_d1;
                 border-bottom: @b_d1;
                 .ellipsis;

@@ -197,14 +197,14 @@
                     this.$ls.set('rand', rand);
                 }
                 // // 建立WebSocket链接
-                let host = window.location.host != 'localhost:9090' ? window.location.host : '192.168.0.251';
-                let ws = new WebSocket('ws://' + host + ':8080/websocket/ni?pg' + rand);
+                let ws = new WebSocket(this.$api.ws + '/ni?pg' + rand);
     
                 ws.onopen = function(evt) {
                     console.log("lem链接成功 ...");
                 };
     
                 ws.onmessage = function(evt) {
+                    // console.log(JSON.parse(evt.data))
                     _this.list[0].push(JSON.parse(evt.data));
                     _this.draw();
                 };

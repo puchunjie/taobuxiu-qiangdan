@@ -262,6 +262,8 @@
                             if (res.code === 1000) {
                                 this.$store.commit(types.UPDATE_USER_INFO, res.data);
                                 this.$Message.success('修改成功!');
+                            }else{
+                                this.$Message.error(res.message);
                             }
                         })
                     } else {
@@ -281,6 +283,8 @@
                         this.$http.post(this.$api.updatePsd, params).then(res => {
                             if (res.code === 1000) {
                                 this.$Message.success('修改成功!');
+                            }else{
+                                this.$Message.error(res.message);
                             }
                         })
                     } else {

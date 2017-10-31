@@ -5,18 +5,20 @@
             <div class="swiper-wrapper">
                 <div class="swiper-slide" v-for="(page,index) in pages" :key="index">
                     <div class="item-group">
-                        <div class="item" :class="{'no-mr':(i+1)%4 == 0}" v-for="(item,i) in page" :key="item.id">
-                            <h3>
-                                {{ item.ironTypeName }}
-                                <span>{{ item.specifications!= '' ? item.specifications : `${ item.height }*${ item.width }*${ item.length }` }}</span>
-                            </h3>
-                            <p>{{ item.weights != '' ? `${item.weights}${item.weightUnit}`: '' }}&nbsp;&nbsp;{{ item.numbers != '' ? `${item.numbers}${item.numberUnit}`: '' }}</p>
-                            <p class="gray">发布时间 {{ item.updateTime | dateformat('MM-dd hh:mm') }}</p>
-                            <span class="count">{{ item.sellNum }}个报价</span>
-                            <div class="status" :class="'st'+item.buyStatus">
-                                <span></span>
-                                {{ item.buyStatus | statusStr }}
-                            </div>
+                        <div class="item" :class="{'no-mr':(i+1)%4 == 0}" v-for="(item,i) in page" :key="i">
+                            <template v-if="item != ''">
+                                <h3>
+                                    {{ item.ironTypeName }} {{ item.materialName }} {{ item.surfaceName }} {{ item.proPlacesName }}
+                                    <span>{{ item.specifications!= '' ? item.specifications : `${ item.height }*${ item.width }*${ item.length }` }}</span>
+                                </h3>
+                                <p>{{ item.weights != '' ? `${item.weights}${item.weightUnit}`: '' }}&nbsp;&nbsp;{{ item.numbers != '' ? `${item.numbers}${item.numberUnit}`: '' }}</p>
+                                <p class="gray">发布时间 {{ item.updateTime | dateformat('MM-dd hh:mm') }}</p>
+                                <span class="count">{{ item.sellNum }}个报价</span>
+                                <div class="status" :class="'st'+item.buyStatus">
+                                    <span></span> {{ item.buyStatus | statusStr }}
+                                </div>
+                            </template>
+                            <img v-else class="hold-img" src="../../../assets/no-day.png">
                         </div>
                     </div>
                 </div>
@@ -52,6 +54,16 @@
                 this.$http.post(this.$api.newIronList).then(res => {
                     if (res.code === 1000) {
                         this.list = res.data;
+                        let num = res.data.length;
+                        let arr = [];
+                        if (num < 16) {
+                            let less = 16 - num;
+                            for (let i = 0; i < less; i++) {
+                                console.log(i)
+                                arr.push('');
+                            }
+                        }
+                        this.list.push(...arr);
                     }
                 })
             },
@@ -63,7 +75,7 @@
             }
         },
         filters: {
-            statusStr(val){
+            statusStr(val) {
                 val = val * 1;
                 switch (val) {
                     case 1:
@@ -144,42 +156,47 @@
                 right: 20px;
                 bottom: 15px;
             }
-            
-            .status{
+            .status {
                 position: absolute;
                 right: 20px;
                 bottom: 50px;
                 font-size: 14px;
-                span{
+                span {
                     display: inline-block;
                     width: 8px;
                     height: 8px;
                     .borderRadius(4px);
-                    background-color: #ddd; 
+                    background-color: #ddd;
                 }
-
-                &.st1{
+                &.st1 {
                     color: @light_yellow;
-                    span{
+                    span {
                         background-color: @light_yellow;
                     }
                 }
-                &.st2{
+                &.st2 {
                     color: @light_green;
-                    span{
+                    span {
                         background-color: @light_green;
                     }
                 }
-                &.st3{
+                &.st3 {
                     color: @f_goast;
-                    span{
+                    span {
                         background-color: @f_goast;
                     }
                 }
             }
-            
             &:hover {
                 border: 1px solid @dark_blue;
+            }
+
+            .hold-img{
+                position: absolute;
+                display: block;
+                width: 312px;
+                left: -1px;
+                top: -1px;
             }
         }
     }

@@ -2,7 +2,6 @@
     <div class="crown-container">
         <label>{{ tit }}</label>
         <span v-for="el in num" :key="el" :class="'crown'+pic"></span>
-    
         <div class="tip">{{ tip }}</div>
     </div>
 </template>
@@ -42,11 +41,9 @@
         vertical-align: top;
         height: 16px;
         text-indent: 0!important;
-        label {
-            position: relative;
-            top: -4px;
-        }
         span {
+            position: relative;
+            top: 2px;
             display: inline-block;
             width: 16px;
             height: 16px;

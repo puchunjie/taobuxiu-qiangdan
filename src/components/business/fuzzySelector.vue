@@ -249,8 +249,8 @@
             let isValide = this.oldVal != '' || this.activeItem != null || isTinking;
     
             let item = this.activeItem != null ? JSON.parse(JSON.stringify(this.activeItem)) : isTinking ? JSON.parse(JSON.stringify(this.thinkingList[0])) : {
-                name: this.oldVal,
-                id: ''
+                name: this.oldVal.split("-")[0],
+                id: this.oldVal.split("-")[1]
             };
    
             this.$emit("on-destroy", {

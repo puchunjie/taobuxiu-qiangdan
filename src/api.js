@@ -1,4 +1,4 @@
-// export const ws = 'ws://192.168.0.132:8080/websocket/'
+export const ws = 'ws://120.55.63.70:8080/websocket'
 
 /**
  * 获取用户信息
@@ -27,59 +27,59 @@ export const login = '/login/userLogin';
  * 查询地区信息
  * @params name - 可选
  */
-export const G_getArea = '/demands/query/findArea'
+export const G_getArea = '/api/query/findArea'
 
 /**
  * 查询省信息
  */
-export const G_getProvince = '/demands/query/findProvince'
+export const G_getProvince = '/api/query/findProvince'
 
 /**
  * 查询市信息 
  */
-export const G_getCity = '/demands/query/findCity'
+export const G_getCity = '/api/query/findCity'
 
 /**
  * 查询品类信息
  * @params name - 可选
  */
-export const G_getTypes = '/demands/query/findIronTypes'
+export const G_getTypes = '/api/query/findIronTypes'
 
 /**
  * 查询材质信息
  * @params name - 可选
  */
-export const G_getMaterials = '/demands/query/findMaterials'
+export const G_getMaterials = '/api/query/findMaterials'
 
 /**
  * 查询表面信息
  * @params name - 可选
  */
-export const G_getSurFace = '/demands/query/findSurFace'
+export const G_getSurFace = '/api/query/findSurFace'
 
 /**
  * 查询产地信息
  * @params name - 可选
  */
-export const G_getProPlaces = '/demands/query/findProPlaces'
+export const G_getProPlaces = '/api/query/findProPlaces'
 
 /**
  * 查询品类计量单位信息
  * @params ironId
  */
-export const findUnitById = '/demands/query/findIronAndUnitByIronId'
+export const findUnitById = '/api/query/findIronAndUnitByIronId'
 
 /**
  * 查询关联规格
  * @params surface ironType
  */
-export const G_queryGG = '/demands/query/findIronAndSurfaceAndSpecificationlist'
+export const G_queryGG = '/api/query/findIronAndSurfaceAndSpecificationlist'
 
 /**
  * 查询关联宽长
  * @params surface ironType
  */
-export const G_queryWL = '/demands/query/findIronAndSurfaceAndSpecificationHeightAndLength'
+export const G_queryWL = '/api/query/findIronAndSurfaceAndSpecificationHeightAndLength'
 
 
 /**
@@ -148,7 +148,7 @@ export const doOffer = '/demands/ironBuy/saveIronSellInfo'
 /**
  * 查询用户经营范围
  */
-export const userScope = '/demands/query/findBusinessScope'
+export const userScope = '/demands/businessScope/findBusinessScope'
 
 /**
  * 用户保存经营范围
@@ -175,7 +175,7 @@ export const getStores = '/demands/query/findStoreHouse'
 /**
  * 查询所有地址信息
  */
-export const getArea = '/demands/query/findAllArea'
+export const getArea = '/api/query/findAllArea'
 
 /**
  * 修改商户信息

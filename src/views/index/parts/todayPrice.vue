@@ -3,9 +3,13 @@
         <div class="inner-title">今日市价<span>(最后更新  {{ lastTime | dateformat }})</span></div>
         <div class="item-group">
             <div class="item" :class="[{'no-mr':(i+1)%4 == 0},'type' + item.gains]" v-for="(item,i) in list" :key="item.id">
-                <h3>&yen;{{ item.price }}<span>{{ item.proPlace }}</span></h3>
-                <p>{{ `${item.material}/${item.surface}   ${item.width}   ${item.tranStatus}   ${item.height}   ${item.ironType}` }}</p>
-                <span class="type iconfont" :class="'icon-hq'+ item.gains"></span>
+                <h3>&yen;{{ item.price }}
+                    <span class="type iconfont" :class="'icon-hq'+ item.gains"></span>
+                    <span class="place">{{ item.proPlace }}</span></h3>
+                <p>
+                    {{ `${item.material}/${item.surface} ${item.width} ${item.tranStatus} ${item.height} ${item.ironType}` }}
+                    <span class="market">{{ item.area }}</span>
+                </p>
             </div>
         </div>
     </div>
@@ -14,23 +18,23 @@
 
 <script>
     export default {
-        data () {
+        data() {
             return {
-                list:[],
-                lastTime:''    
+                list: [],
+                lastTime: ''
             }
         },
         methods: {
             getData() {
                 this.$http.post(this.$api.ironNew).then(res => {
-                    if(res.code === 1000){
+                    if (res.code === 1000) {
                         this.list = res.data;
                         this.lastTime = res.data[0].createTime;
                     }
                 })
             }
         },
-        created () {
+        created() {
             this.getData()
         }
     }
@@ -55,49 +59,48 @@
             &.no-mr {
                 margin-right: 0;
             }
-
-            h3{
+            h3 {
                 font-size: 36px;
-                span{
+                .place {
                     font-size: 16px;
-                    margin-left: 10px;
                     color: @f_dark;
+                    margin-top: 10px;
+                    float: right;
                 }
             }
-            p{
+            p {
                 margin-top: 20px;
+                .market {
+                    float: right;
+                    color: @f_goast;
+                }
             }
-
-            .type{
-                position: absolute;
-                right: 20px;
-                top: 30px;
-                font-size: 60px;
+            .type {
+                position: relative;
+                top: 0;
+                font-size: 36px;
             }
-
-             &.type0{
-                h3{
+            &.type0 {
+                h3 {
                     color: @light_green;
                 }
-                .type{
+                .type {
                     color: @light_green;
                 }
             }
-
-             &.type1{
-                h3{
+            &.type1 {
+                h3 {
                     color: @light_yellow;
                 }
-                .type{
+                .type {
                     color: @light_yellow;
                 }
             }
-
-            &.type2{
-                h3{
+            &.type2 {
+                h3 {
                     color: @dark_red;
                 }
-                .type{
+                .type {
                     color: @dark_red;
                 }
             }

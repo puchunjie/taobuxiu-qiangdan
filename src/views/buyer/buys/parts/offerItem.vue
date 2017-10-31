@@ -53,8 +53,7 @@
     </div>
     <!-- 历史报价 -->
     <div class="offer-history-list" v-show="item.historyShow">
-        <div class="offer-item" v-for="(sub,i) in item.ironSell" :key="i" :class="{'first':i == 0}">
-            <span class="iconfont icon-circularframeshijian" v-if="i == 0"></span>
+        <div class="offer-item" v-for="(sub,i) in item.ironSell" :key="i">
             <div class="item date">{{ sub.createTime | dateformat('MM-dd hh:mm') }}</div>
             <div class="item time-line">
                 <span class="note"></span>
@@ -114,7 +113,7 @@
                     ironSellId: this.item.ironSellId
                 }).then(res => {
                     if (res.code === 1000) {
-                        this.$Message.success('报价成功');
+                        this.$Message.success('恭喜您，已成交！');
                         this.$emit('on-bidDone');
                     }
                 })
@@ -350,16 +349,6 @@
                     &.remark {
                         min-width: 70px;
                     }
-                }
-
-                &.first{
-                    color: @light_blue;
-                }
-                .icon-circularframeshijian{
-                    position: absolute;
-                    left: 0;
-                    top: 0;
-                    color:@light_blue;
                 }
             }
         }

@@ -19,8 +19,7 @@ export default {
                 this.$ls.set('rand', rand);
             }
             // 建立WebSocket链接
-            let host = window.location.host != 'localhost:9090' ? window.location.host : '192.168.0.251';
-            let ws = new WebSocket('ws://' + host + ':8080/websocket/iron?' + this.$store.state.loginId + rand);
+            let ws = new WebSocket(this.$api.ws + '/iron?' + this.$store.state.loginId + rand);
 
             ws.onopen = function(evt) {
                 console.log("消息推送链接成功");
@@ -63,7 +62,7 @@ export default {
                     this.stl = setInterval(function() {
                         let title = document.title;
                         if (/新/.test(title) == false) {
-                            document.title = '【你有新消息】';
+                            document.title = '【你有新消息】' + document.title;
                         } else {
                             document.title = '【　　　　　】';
                         }

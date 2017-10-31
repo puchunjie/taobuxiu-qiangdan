@@ -3,7 +3,6 @@
     .item-group {
         width: 100%;
         padding: 30px;
-        overflow: hidden;
         &.exception-bg {
             background-color: @goast_blue;
         }
@@ -46,49 +45,50 @@
             <div class="warp-warp">
                 <div class="input-item-warp wid-180">
                     <label>货源所在地</label>
-                    <input class="goast-input level1" :ref="item.id+'-city'" :id="item.id+'-city'" type="text" @focus="showFuzzy" v-model="item.locationName" @keyup="setInput">
+                    <input class="goast-input level1" :ref="item.id+'-city'" :id="item.id+'-city'" type="text" @focus="showFuzzy($event,item.locationId)" v-model="item.locationName" @keyup="setInput">
                     <p class="err">{{ item.locationName == '' ? '请选择' : '无效内容' }}</p>
                 </div>
             </div>
             <div class="warp-warp">
                 <div class="input-item-warp wid-240">
                     <label>品名</label>
-                    <input class="goast-input level1" :ref="item.id+'-type'" :id="item.id+'-type'" type="text" @focus="showFuzzy" v-model="item.ironTypeName" @keyup="setInput">
+                    <input class="goast-input level1" :ref="item.id+'-type'" :id="item.id+'-type'" type="text" @focus="showFuzzy($event,item.ironTypeId)" v-model="item.ironTypeName" @keyup="setInput">
                     <p class="err">{{ item.ironTypeName == '' ? '请选择' : '无效内容' }}</p>
                 </div>
             </div>
             <div class="warp-warp">
                 <div class="input-item-warp wid-200  no-margin">
                     <label>材质</label>
-                    <input class="goast-input level1" :ref="item.id+'-material'" :id="item.id+'-material'" type="text" @focus="showFuzzy" v-model="item.materialName" @keyup="setInput">
+                    <input class="goast-input level1" :ref="item.id+'-material'" :id="item.id+'-material'" type="text" @focus="showFuzzy($event,item.materialId)" v-model="item.materialName" @keyup="setInput">
                     <p class="err">{{ item.materialName == '' ? '请选择' : '无效内容' }}</p>
                 </div>
             </div>
             <div class="warp-warp">
                 <div class="input-item-warp wid-140">
                     <label>表面</label>
-                    <input class="goast-input level1" :ref="item.id+'-surface'" :id="item.id+'-surface'" type="text" @focus="showFuzzy" v-model="item.surfaceName" @keyup="setInput">
+                    <input class="goast-input level1" :ref="item.id+'-surface'" :id="item.id+'-surface'" type="text" @focus="showFuzzy($event,item.surfaceId)" v-model="item.surfaceName" @keyup="setInput">
                     <p class="err">{{ item.surfaceName == '' ? '请选择' : '无效内容' }}</p>
                 </div>
             </div>
             <div class="warp-warp">
-                <div class="input-item-warp wid-240">
+                <div class="input-item-warp wid-240" :class="{'on-err':guigeTip}">
                     <label>规格</label>
                     <div class="inline" v-if="isJB">
                         <div class="inside-group">
-                            <input class="goast-input" stay="ok" @focus="showRelation(true)" @keyup="showRelation(true)" type="text" v-model="item.height">
+                            <input class="goast-input" stay="ok" @focus="showRelation(true)" @keyup="showRelation(true)" type="text" @blur="isGuigeErr" v-model="item.height">
                             <span>厚</span>
                         </div>
                         <div class="inside-group">
-                            <input class="goast-input" stay="ok" @focus="showRelation(false)" @keyup="showRelation(false)" type="text" v-model="item.width">
+                            <input class="goast-input" stay="ok" @focus="showRelation(false)" @keyup="showRelation(false)" @blur="isGuigeErr" type="text" v-model="item.width">
                             <span>宽</span>
                         </div>
                         <div class="inside-group">
-                            <input class="goast-input" stay="ok" @focus="showRelation(false)" @keyup="showRelation(false)" type="text" v-model="item.length">
+                            <input class="goast-input" stay="ok" @focus="showRelation(false)" @keyup="showRelation(false)" @blur="isGuigeErr" type="text" v-model="item.length">
                             <span>长</span>
                         </div>
                     </div>
-                    <input v-else class="goast-input level1" type="text" v-model="item.specifications">
+                    <input v-else class="goast-input level1" type="text" @blur="isGuigeErr" v-model="item.specifications">
+                    <p class="err">请输入规格！</p>
     
                     <div class="relation-content" v-show="tags.length > 0" v-clickoutside="clearTags">
                         <div class="tag" v-for="(tag,index) in tags" :key="index" @click="autoFillGG(tag)" :class="{'no-b':index === tags.length -1}">
@@ -97,16 +97,21 @@
                     </div>
                 </div>
             </div>
-            <div class="warp-warp">
-                <div class="input-item-warp wid-180  no-margin">
+            <div class="warp-warp" v-if="isJB">
+                <div class="input-item-warp wid-180 no-margin">
                     <label>公差</label>
                     <input class="goast-input level1" style="width:110px;text-align:right" type="text" v-model="item.tolerance">
+                </div>
+            </div>
+            <div class="warp-warp" v-else>
+                <div class="input-item-warp wid-180 no-margin disabel">
+                    <label>公差</label>
                 </div>
             </div>
             <div class="warp-warp">
                 <div class="input-item-warp wid-200">
                     <label>产地</label>
-                    <input class="goast-input level1" style="width:120px" :ref="item.id+'-proPlace'" :id="item.id+'-proPlace'" type="text" @focus="showFuzzy" v-model="item.proPlacesName" @keyup="setInput">
+                    <input class="goast-input level1" style="width:120px" :ref="item.id+'-proPlace'" :id="item.id+'-proPlace'" type="text" @focus="showFuzzy($event,item.proPlacesId)" v-model="item.proPlacesName" @keyup="setInput">
                     <p class="err">{{ item.ironTypeName == '' ? '请选择' : '无效内容' }}</p>
                 </div>
             </div>
@@ -115,18 +120,18 @@
                     <label>单位</label>
                     <div class="inline">
                         <div class="inside-group">
-                            <input class="goast-input" @blur="isUnitErr" style="width:75px" type="text" v-model="item.weights">
+                            <input class="goast-input" min="0" @blur="isUnitErr" style="width:75px" type="number" v-model="item.weights">
                             <span>{{ item.weightUnit == '' ? 'x' : item.weightUnit }}</span>
                         </div>
                         <div class="inside-group">
-                            <input class="goast-input" @blur="isUnitErr" style="width:75px" type="text" v-model="item.numbers">
+                            <input class="goast-input" min="0" @blur="isUnitErr" style="width:75px" type="number" v-model="item.numbers">
                             <span>{{ item.numberUnit == '' ? 'x' : item.numberUnit }}</span>
                         </div>
                     </div>
-                    <p class="err">至少填写一个单位！</p>
+                    <p class="err">至少填写一个单位且单位大于0！</p>
                 </div>
             </div>
-            
+    
             <div class="warp-warp">
                 <div class="input-item-warp wid-112 no-margin disabel">
                     <label>时间</label> 24小时
@@ -172,11 +177,14 @@
                 item: JSON.parse(JSON.stringify(this.data)),
                 tags: [], //关联数据列表,
                 unitTip: false, //  单位选填提示
+                guigeTip: false //规格提示
             }
         },
         computed: {
             pureData() {
-                return JSON.parse(JSON.stringify(this.item))
+                let data = _.cloneDeep(this.item);
+                data.tolerance = this.isJB ? data.tolerance : '';
+                return JSON.parse(JSON.stringify(data))
             },
             typeOfSelect() {
                 return this.activeTargetRef.split("-")[1]
@@ -207,13 +215,15 @@
             isOK() {
                 let GuigeOK = this.item.height != '' && this.item.width != '' && this.item.length != '' || this.item.specifications != '';
                 let unitOk = this.item.numbers != '' || this.item.weights != ''
+                // 公差
+                let toleranceOk = this.isJB ? this.item.tolerance != '' : true;
                 return document.getElementsByClassName('on-err').length == 0 &&
-                    GuigeOK && unitOk &&
+                    GuigeOK && unitOk && toleranceOk &&
                     this.item.ironTypeName != '' &&
                     this.item.locationName != '' &&
                     this.item.materialName != '' &&
                     this.item.surfaceName != '' &&
-                    this.item.tolerance != '' &&
+                    this.item.proPlacesName != '' &&
                     this.item.timeLimit != '';
             },
             // 是卷或板
@@ -228,9 +238,9 @@
             // 填充数据
             fillItem(id, item) {
                 let typeOfSelect = id.split('-')[1];
-                 switch (typeOfSelect) {
+                switch (typeOfSelect) {
                     case 'city':
-                        if (this.item.locationName == item.name || this.item.locationName == item.shortName &&this.item.locationId == item.id) return false
+                        if (this.item.locationName == item.name || this.item.locationName == item.shortName && this.item.locationId == item.id) return false
                         this.item.locationName = item.shortName;
                         this.item.locationId = item.id;
                         break;
@@ -261,7 +271,7 @@
                 this.fuzzy.queryStr = e.target.value;
             },
             // 显示弹框
-            showFuzzy(event) {
+            showFuzzy(event, id) {
                 let inputId = event.target.getAttribute('id');
                 this.activeTargetRef = inputId;
                 let elemet = document.getElementById(inputId)
@@ -276,7 +286,7 @@
                 this.fuzzy.x = actualLeft - 20 + 'px';
                 this.fuzzy.y = actualTop + 36 + 'px';
                 this.fuzzy.selectApi = this.api;
-                this.fuzzy.oldVal = event.target.value;
+                this.fuzzy.oldVal = event.target.value + '-' + id;
                 this.fuzzy.isCity = inputId.indexOf('city') >= 0;
     
                 this.fuzzy.show = false;
@@ -295,9 +305,22 @@
             isUnitErr() {
                 if (this.item.weights == '' && this.item.numbers == '') {
                     this.unitTip = true
+                } else if (this.item.weights != '' && this.item.weights <= 0) {
+                    this.unitTip = true
+                } else if (this.item.numbers != '' && this.item.numbers <= 0) {
+                    this.unitTip = true
                 } else {
                     this.unitTip = false
                 }
+            },
+            isGuigeErr() {
+                setTimeout(() => {
+                    if (this.item.ironTypeName == '不锈钢卷' || this.item.ironTypeName == '不锈钢板') {
+                        this.guigeTip = this.item.height == '' || this.item.length == '' || this.item.width == ''
+                    } else {
+                        this.guigeTip = this.item.specifications == ''
+                    }
+                }, 300);
             },
             // 保存求购，暂时不做存入localstage处理
             save() {
@@ -321,7 +344,7 @@
                 } else {
                     this.setErr(this.$refs[data.id].parentElement)
                 }
-                
+    
             },
             // 设置输入错误提示
             setErr(el) {
@@ -408,7 +431,6 @@
             //清除数据列表
             clearTags(e) {
                 if (e.target.getAttribute("stay") == 'ok') return false
-    
                 this.tags = [];
             }
         },
