@@ -250,9 +250,13 @@
                 _.forEach(params, (n, key) => {
                     params[key] = JSON.stringify(n);
                 })
+                this.$spinToggle(true);
                 this.$http.post(this.$api.saveScope, params).then(res => {
+                    this.$spinToggle(false);
                     if (res.code === 1000) {
                         this.$Message.success('已保存！');
+                    } else {
+                        this.$Message.error(res.message)
                     }
                 })
             }

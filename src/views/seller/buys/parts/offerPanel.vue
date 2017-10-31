@@ -128,14 +128,14 @@
                         min-width: 300px;
                     }
                 }
-                &.first{
+                &.first {
                     color: @light_blue;
                 }
-                .icon-circularframeshijian{
+                .icon-circularframeshijian {
                     position: absolute;
                     left: 0;
                     top: 0;
-                    color:@light_blue;
+                    color: @light_blue;
                 }
             }
         }
@@ -148,7 +148,7 @@
         <div class="offer-from clearfix" v-if="offerDone">
             <div class="input-item-warp wid-180" ref="offerPerPrice">
                 <label>单价</label>
-                <input class="goast-input level1 textRight" style="width:53px"  min="0" type="number" @blur="validItem('offerPerPrice')" @keyup="validItem('offerPerPrice')" v-model="offerApi.offerPerPrice">
+                <input class="goast-input level1 textRight" style="width:53px" min="0" type="number" @blur="validItem('offerPerPrice')" @keyup="validItem('offerPerPrice')" v-model="offerApi.offerPerPrice">
                 <Poptip v-if="units.length > 1" trigger="hover" class="unit-content" placement="bottom">
                     元/{{ unit.name }}<span v-show="units.length > 1" class="iconfont icon-iconjiaobiaoxiangxia"></span>
                     <div class="units" slot="content">
@@ -196,9 +196,9 @@
         </div>
         <div class="action-btns">
             <template v-if="item.offerStatus == 0">
-                <a class="btn goast" @click="ignore">无计划或无货</a>
-                <a class="btn" @click="offer">立即报价</a>
-            </template>
+                    <a class="btn goast" @click="ignore">无计划或无货</a>
+                    <a class="btn" @click="offer">立即报价</a>
+</template>
 
 <template v-else-if="item.offerStatus == 1">
     <a v-if="item.ironSell.length < 6" class="btn" @click="offer">修改报价</a>
@@ -262,7 +262,7 @@
         },
         computed: {
             // 是否需要填写公差
-            needTo(){
+            needTo() {
                 return this.item.ironTypeName == '不锈钢卷' || this.item.ironTypeName == '不锈钢板'
             },
             units() {
@@ -314,7 +314,7 @@
                 return this.offerApi.offerPerPrice != '' && !isNaN(this.offerApi.offerPerPrice * 1) && this.offerApi.offerPerPrice * 1 > 0
             },
             toleranceOk() {
-                return this.needTo ?  this.offerApi.tolerance != '' : true 
+                return this.needTo ? this.offerApi.tolerance != '' : true
             },
             offerPlacesOk() {
                 return this.offerApi.offerPlaces != ''
@@ -404,11 +404,15 @@
                 }
             },
             offerAjax(params, isIgon = false) {
+                this.$spinToggle(true);
                 this.$http.post(this.$api.doOffer, params).then(res => {
+                    this.$spinToggle(false);
                     if (res.code === 1000) {
                         this.$Message.success(isIgon ? '已忽略' : '报价成功');
                         this.$emit('on-ajax', isIgon);
                         this.clearApi();
+                    } else {
+                        this.$Message.error(res.message)
                     }
                 })
             },
@@ -432,7 +436,7 @@
                         this.offerAjax({
                             ironBuyId: this.ironBuyId,
                             flag: 0
-                        },true);
+                        }, true);
                     }
                 });
             },

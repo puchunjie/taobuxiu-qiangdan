@@ -2,38 +2,38 @@
   <div class="buy-index">
     <statusBar ref="statusBar" @on-filter-status="filterStatus" :status="statusData"></statusBar>
     <template v-if="listEmpty">
-        <tabList @on-page-change="pageChange" :total="totalCount" ref="tabList">
-          <tabCard v-for="(item,index) in list" @click.native="selectItem(index)" :class="{ 'active':activeIndex == index }" :key="index" :item="item" :index="index" @on-edit="itemEdit" @on-del="deleteItem" @on-copy="copy(index)"></tabCard>
-        </tabList>
-        <div class="info-list">
-          <div class="winner-panel" v-if="activeItem.buyStatus == 2">
-            <div class="tit">中标商家</div>
-            <div class="list-row list-head">
-              <div class="item date">时间</div> 
-              <div class="item price">单价</div> 
-              <div class="item tolerance">公差</div> 
-              <div class="item proPlaces">产地</div> 
-              <div class="item totlePrice">总价</div> 
-              <div class="item remark">备注</div> 
-              <div class="item action"></div>
+          <tabList @on-page-change="pageChange" :total="totalCount" ref="tabList">
+            <tabCard v-for="(item,index) in list" @click.native="selectItem(index)" :class="{ 'active':activeIndex == index }" :key="index" :item="item" :index="index" @on-edit="itemEdit" @on-del="deleteItem" @on-copy="copy(index)"></tabCard>
+          </tabList>
+          <div class="info-list">
+            <div class="winner-panel" v-if="activeItem.buyStatus == 2">
+              <div class="tit">中标商家</div>
+              <div class="list-row list-head">
+                <div class="item date">时间</div> 
+                <div class="item price">单价</div> 
+                <div class="item tolerance">公差</div> 
+                <div class="item proPlaces">产地</div> 
+                <div class="item totlePrice">总价</div> 
+                <div class="item remark">备注</div> 
+                <div class="item action"></div>
+              </div>
+              <offerItem :item="selectBusiness" v-if="selectBusiness" :isDone="false" style="border-bottom:0"></offerItem>
             </div>
-            <offerItem :item="selectBusiness" v-if="selectBusiness" :isDone="false" style="border-bottom:0"></offerItem>
+            <Info :item="activeItem"></Info>
+            <offerList :offerList="offerList" :buyStatus="activeItem.buyStatus" @on-bidDone="bidDone"></offerList>
           </div>
-          <Info :item="activeItem"></Info>
-          <offerList :offerList="offerList" :buyStatus="activeItem.buyStatus" @on-bidDone="bidDone"></offerList>
-        </div>
-        <!-- 编辑面板 -->
-        <div class="edit-container" v-if="editShow">
-          <div class="inner-content">
-            <div class="head">
-              编辑求购
-              <span class="iconfont icon-close" @click="editShow = false"></span>
+          <!-- 编辑面板 -->
+          <div class="edit-container" v-if="editShow">
+            <div class="inner-content">
+              <div class="head">
+                编辑求购
+                <span class="iconfont icon-close" @click="editShow = false"></span>
+              </div>
+              <editItem :data="activeItem" @on-close="editShow = false" @on-save="doEdit"></editItem>
             </div>
-            <editItem :data="activeItem" @on-close="editShow = false" @on-save="doEdit"></editItem>
           </div>
-        </div>
 </template>
-    <img v-else class="no-list" src="../../../assets/no-list.png">
+    <img v-else class="no-list" src="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/static/assets/no-list.png">
   </div>
 </template>
 
@@ -171,11 +171,15 @@
       },
       // 确认修改
       doEdit(item) {
+        this.$spinToggle(true);
         this.$http.post(this.$api.publish_one, item).then(res => {
+          this.$spinToggle(false);
           if (res.code === 1000) {
             this.getDataList();
             this.editShow = false;
             this.$Message.success('修改成功！')
+          } else {
+            this.$Message.error(res.message)
           }
         })
       },

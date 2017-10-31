@@ -30,7 +30,7 @@
             <div class="item left">
                 {{ item.contact }} {{ item.contactNum }} 
                 <a class="tencent-qq" v-show="item.QQ != ''" :href="'tencent://message/?uin='+item.QQ+'&Site=&Menu=yes'">
-                    <img src="../../../../assets/icon_qq.png">
+                    <img src="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/static/assets/icon_qq.png">
                 </a>
             </div>
             <div v-show="item.address != ''" class="item right"><span class="iconfont icon-dingwei" style="color:#FF5555"></span>{{ item.storeHouseName != '' ? `${item.storeHouseName}(${item.storeHousePlace})` : '暂无仓库信息' }}</div>

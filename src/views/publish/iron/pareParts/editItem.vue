@@ -312,17 +312,9 @@
             // 单个发布
             publish() {
                 if (this.isOK) {
-                    this.$Spin.show({
-                        render: (h) => {
-                            return h('div', [
-                                h('div', {
-                                    'class': 'ajax-spin-img',
-                                })
-                            ])
-                        }
-                    });
+                    this.$spinToggle(true);
                     this.$http.post(this.$api.publish_one, this.$clearData(this.item)).then(res => {
-                        this.$Spin.hide();
+                        this.$spinToggle(false);
                         if (res.code === 1000) {
                             this.$emit('on-publish');
                         } else {

@@ -14,6 +14,7 @@ import _ from 'lodash'
 import * as filters from './filters/index' //过滤器
 import VueLocalStorage from 'vue-ls';
 import Swiper from '../static/swiper/js/swiper.min'
+import { spinToggle } from './utils/spin'
 
 Vue.use(VueLocalStorage);
 Object.keys(filters).forEach(key => {
@@ -26,7 +27,6 @@ import {
     Message,
     Page,
     iCircle,
-    Spin,
     Poptip,
     Notice,
     iForm,
@@ -53,12 +53,11 @@ Vue.component('i-option', iOption);
 Vue.component(Poptip.name, Poptip);
 Vue.component(Cascader.name, Cascader);
 Vue.prototype.$Message = Message;
-Vue.component(Spin.name, Spin);
-Vue.prototype.$Spin = Spin;
 
 
 Vue.prototype.$api = api; //所有接口列表挂载
 Vue.prototype.$http = axios;
+Vue.prototype.$spinToggle = spinToggle;
 Vue.prototype.$clearData = (data) => {
     return JSON.parse(JSON.stringify(data))
 }

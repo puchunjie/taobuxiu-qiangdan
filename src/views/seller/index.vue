@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <leftMenu :menus="menus"></leftMenu>
+        <leftMenu :menus="asyncMenu"></leftMenu>
         <div class="right-content">
             <router-view></router-view>
         </div>
@@ -17,7 +17,12 @@
             leftMenu
         },
         computed: {
-            ...mapGetters(['nums'])
+            ...mapGetters(['nums']),
+            asyncMenu(){
+                this.menus[0].subs[0].count = this.nums.todaySell;
+                this.menus[0].subs[1].count = this.nums.historySell;
+                return this.menus
+            }
         },
         data() {
             return {
@@ -73,16 +78,6 @@
                     ]
                 }]
             }
-        },
-        watch: {
-          nums(val){
-              this.menus[0].subs[0].count = val.todaySell;
-            this.menus[0].subs[1].count = val.historySell;
-          }  
-        },
-        mounted () {
-            this.menus[0].subs[0].count = this.nums.todaySell;
-            this.menus[0].subs[1].count = this.nums.historySell;
         }
     }
 </script>

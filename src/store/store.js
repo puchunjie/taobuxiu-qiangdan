@@ -66,6 +66,10 @@ export default new Vuex.Store({
         [types.SET_NUMS]: (state, payload) => {
             state.nums = payload;
         },
+        [types.UPDATE_NUMS]: (state) => {
+            state.nums.historySell++;
+            state.nums.todaySell++;
+        },
         // 消息推送commit
         [types.UPDATE_PUSH_MSG]: (state, payload) => {
             state.pushData = payload;

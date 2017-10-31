@@ -57,7 +57,7 @@
         .content {
             width: 100%;
             height: 600px;
-            background-image: url('../../assets/longin-banner.jpg');
+            background-image: url('http://tbxoss.oss-cn-hangzhou.aliyuncs.com/static/assets/longin-banner.jpg');
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center;

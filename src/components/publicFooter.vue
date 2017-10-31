@@ -7,12 +7,12 @@
         <p class="left-p"><span class="iconfont icon-ziyuan8"></span>8:30~17:30（周一至周六）</p>
 
         <div class="qr">
-            <img src="../assets/qr2.png">
+            <img src="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/static/assets/qr2.png">
             <span>微信公众号</span>
         </div>
         
         <div class="qr er">
-            <img src="../assets/qr1.png">
+            <img src="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/static/assets/qr1.png">
             <span>掌上淘不锈</span>
         </div>
     </div>

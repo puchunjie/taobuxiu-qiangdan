@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <leftMenu :menus="menus"></leftMenu>
+        <leftMenu :menus="asyncMenu"></leftMenu>
         <div class="right-content">
             <router-view></router-view>
         </div>
@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import {
+    import {
         mapGetters
     } from 'vuex'
     import leftMenu from '@/components/leftMenu.vue'
@@ -17,7 +17,12 @@ import {
             leftMenu
         },
         computed: {
-            ...mapGetters(['nums'])
+            ...mapGetters(['nums','pushData']),
+            asyncMenu(){
+                this.menus[0].subs[0].count = this.nums.todayBuy;
+                this.menus[0].subs[1].count = this.nums.historyBuy;
+                return this.menus
+            }
         },
         data() {
             return {
@@ -61,16 +66,6 @@ import {
                     ]
                 }]
             }
-        },
-        watch: {
-            nums(val) {
-                this.menus[0].subs[0].count = val.todayBuy;
-                this.menus[0].subs[1].count = val.historyBuy;
-            }
-        },
-        mounted () {
-            this.menus[0].subs[0].count = this.nums.todayBuy;
-            this.menus[0].subs[1].count = this.nums.historyBuy;
         }
     }
 </script>

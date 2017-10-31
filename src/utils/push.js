@@ -31,6 +31,9 @@ export default {
                 _this.msg = data;
                 _this.notify(data);
                 _this.$store.commit(types.UPDATE_PUSH_MSG, data);
+                if (data.code == 1) {
+                    _this.$store.commit(types.UPDATE_NUMS);
+                }
             };
 
             ws.onclose = function(evt) {

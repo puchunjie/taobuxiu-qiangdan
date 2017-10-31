@@ -404,12 +404,7 @@
           // 直接发布，删除数据
           this.deleteItem(this.activeIndex);
         } else {
-          //发布之后把数据重置为添加状态
-          this.list = [];
-          this.list.push(_.cloneDeep(initialItem));
-          setTimeout(() => {
-            this.$refs.ei[0].initItem();
-          }, 300);
+          this.refalshList();
         }
         this.updateStorge();
         this.successShow = true;
@@ -506,11 +501,11 @@
       // 批量发布
       publishSome() {
         if (this.checkItems.length > 0) {
-          this.spinToggle(true);
+          this.$spinToggle(true);
           this.$http.post(this.$api.publishSome, {
             ironBuyInfos: JSON.stringify(this.checkItems)
           }).then(res => {
-            this.spinToggle(false);
+            this.$spinToggle(false);
             if (res.code === 1000) {
               let listData = this.$clearData(this.list);
               this.list = _.filter(listData, function(el) {
@@ -518,7 +513,9 @@
               });
               this.updateStorge();
               this.successShow = true;
-            }else{
+              if (this.list.length <= 0)
+                this.refalshList();
+            } else {
               this.$Message.error(res.message)
             }
           })
@@ -543,20 +540,14 @@
           }
         })
       },
-      spinToggle(show) {
-        if (show) {
-          this.$Spin.show({
-            render: (h) => {
-              return h('div', [
-                h('div', {
-                  'class': 'ajax-spin-img',
-                })
-              ])
-            }
-          });
-        } else {
-          this.$Spin.hide();
-        }
+      refalshList() {
+        //发布之后把数据重置为添加状态
+        this.activeIndex = 0;
+        this.list = [];
+        this.list.push(_.cloneDeep(initialItem));
+        setTimeout(() => {
+          this.$refs.ei[0].initItem();
+        }, 300);
       }
     },
     created() {
@@ -573,7 +564,6 @@
           this.list[this.list.length - 1].data = copyData;
         }
       }
-  
     }
   }
 </script>

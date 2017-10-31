@@ -18,7 +18,7 @@
                                     <span></span> {{ item.buyStatus | statusStr }}
                                 </div>
                             </template>
-                            <img v-else class="hold-img" src="../../../assets/no-day.png">
+                            <img v-else class="hold-img" src="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/static/assets/no-day.png">
                         </div>
                     </div>
                 </div>
