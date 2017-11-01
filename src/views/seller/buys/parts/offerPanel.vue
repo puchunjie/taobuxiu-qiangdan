@@ -146,9 +146,9 @@
     <div class="offer-container">
         <p class="tit">{{ offerDone ? '我的报价' : item.offerStatus == 2 ? '我的成交价' : '我的最终报价' }}</p>
         <div class="offer-from clearfix" v-if="offerDone">
-            <div class="input-item-warp wid-180" ref="offerPerPrice">
+            <div class="input-item-warp wid-200" ref="offerPerPrice">
                 <label>单价</label>
-                <input class="goast-input level1 textRight" style="width:53px" min="0" type="number" @blur="validItem('offerPerPrice')" @keyup="validItem('offerPerPrice')" v-model="offerApi.offerPerPrice">
+                <input class="goast-input level1 textRight" style="width:73px" min="0" type="number" @blur="validItem('offerPerPrice')" @keyup="validItem('offerPerPrice')" v-model="offerApi.offerPerPrice">
                 <Poptip v-if="units.length > 1" trigger="hover" class="unit-content" placement="bottom">
                     元/{{ unit.name }}<span v-show="units.length > 1" class="iconfont icon-iconjiaobiaoxiangxia"></span>
                     <div class="units" slot="content">

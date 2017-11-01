@@ -92,7 +92,6 @@
                 }
             },
             commit() {
-                // console.log(this.checkEmpty)
                 if (this.checkEmpty()) {
                     this.loading = true;
                     let params = this.$clearData(this.apiData);

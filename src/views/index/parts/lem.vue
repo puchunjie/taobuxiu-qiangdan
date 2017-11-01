@@ -200,17 +200,16 @@
                 let ws = new WebSocket(this.$api.ws + '/ni?pg' + rand);
     
                 ws.onopen = function(evt) {
-                    console.log("lem链接成功 ...");
+                    // console.log("lem链接成功 ...");
                 };
     
                 ws.onmessage = function(evt) {
-                    // console.log(JSON.parse(evt.data))
                     _this.list[0].push(JSON.parse(evt.data));
                     _this.draw();
                 };
     
                 ws.onclose = function(evt) {
-                    console.log("Connection closed.");
+                    // console.log("lem链接关闭！");
                 };
             },
             // 切换图表

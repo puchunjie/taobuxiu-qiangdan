@@ -181,28 +181,19 @@
                 this.$http.post(this.$api.userScope).then(res => {
                     if (res.code === 1000) {
                         // 用户没有设置过，默认所有都选择
-                        if (res.data == '') {
-                            this.apiData = {
-                                ironType: list[0].data,
-                                material: list[1].data,
-                                surface: list[2].data,
-                                proPlace: list[3].data
-                            };
-                        } else {
+                        if (!_.isEmpty(res.data))
                             this.apiData = {
                                 ironType: res.data.ironType != '' ? res.data.ironType : [],
                                 surface: res.data.surface != '' ? res.data.surface : [],
                                 material: res.data.material != '' ? res.data.material : [],
                                 proPlace: res.data.proPlace != '' ? res.data.proPlace : []
                             };
-                        }
                         this.setClass();
                     }
                 })
             },
             // 选择操作
             selectItem(item, sub, i) {
-                console.log(item)
                 if (sub.isCheck) {
                     _.remove(this.apiData[item.key], n => {
                         return n.id == item.arr[i].id;
