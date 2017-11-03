@@ -38,22 +38,22 @@
     <div class="item-group">
         <div class="contnet clearfix">
             <div class="input-item-warp wid-180">
-                <label>货源所在地</label>
+                <label :for="item.id+'-city'">货源所在地</label>
                 <input class="goast-input level1" :ref="item.id+'-city'" :id="item.id+'-city'" type="text" @focus="showFuzzy($event,item.locationId)" v-model="item.locationName" @keyup="setInput">
                 <p class="err">{{ item.locationName == '' ? '请选择' : '无效内容' }}</p>
             </div>
             <div class="input-item-warp wid-240">
-                <label>品名</label>
+                <label :for="item.id+'-type'">品名</label>
                 <input class="goast-input level1" :ref="item.id+'-type'" :id="item.id+'-type'" type="text" @focus="showFuzzy($event,item.ironTypeId)" v-model="item.ironTypeName" @keyup="setInput">
                 <p class="err">{{ item.ironTypeName == '' ? '请选择' : '无效内容' }}</p>
             </div>
             <div class="input-item-warp wid-200">
-                <label>材质</label>
+                <label :for="item.id+'-material'">材质</label>
                 <input class="goast-input level1" :ref="item.id+'-material'" :id="item.id+'-material'" type="text" @focus="showFuzzy($event,item.materialId)" v-model="item.materialName" @keyup="setInput">
                 <p class="err">{{ item.materialName == '' ? '请选择' : '无效内容' }}</p>
             </div>
             <div class="input-item-warp wid-140">
-                <label>表面</label>
+                <label :for="item.id+'-surface'">表面</label>
                 <input class="goast-input level1" :ref="item.id+'-surface'" :id="item.id+'-surface'" type="text" @focus="showFuzzy($event,item.surfaceId)" v-model="item.surfaceName" @keyup="setInput">
                 <p class="err">{{ item.surfaceName == '' ? '请选择' : '无效内容' }}</p>
             </div>
@@ -86,8 +86,8 @@
                 <label>时间</label> 24小时
             </div>
             <div class="input-item-warp wid-180" v-if="isJB">
-                <label>公差</label>
-                <input class="goast-input level1" style="width:110px;text-align:right" type="text" v-model="item.tolerance">
+                <label :for="item.id+'-tolerance'">公差</label>
+                <input :id="item.id+'-tolerance'" class="goast-input level1" style="width:110px;text-align:right" type="text" v-model="item.tolerance">
             </div>
             <div class="input-item-warp wid-180 disabel" v-else>
                 <label>公差</label>
@@ -107,13 +107,13 @@
                 <p class="err">至少填写一个单位且单位大于0！</p>
             </div>
             <div class="input-item-warp wid-200">
-                <label>产地</label>
+                <label :for="item.id+'-proPlace'">产地</label>
                 <input class="goast-input level1" style="width:120px" :ref="item.id+'-proPlace'" :id="item.id+'-proPlace'" type="text" @focus="showFuzzy($event,item.proPlacesId)" v-model="item.proPlacesName" @keyup="setInput">
                 <p class="err">{{ item.ironTypeName == '' ? '请选择' : '无效内容' }}</p>
             </div>
             <div class="input-item-warp wid-550 no-margin">
-                <label>备注(选填)</label>
-                <input class="goast-input level1" maxlength="35" type="text" v-model="item.remark" placeholder="请填写您的交货期等其他要求，最多35字">
+                <label :for="item.id+'-remark'">备注(选填)</label>
+                <input class="goast-input level1" :id="item.id+'-remark'" maxlength="35" type="text" v-model="item.remark" placeholder="请填写您的交货期等其他要求，最多35字">
             </div>
         </div>
         <div class="footer-bar">

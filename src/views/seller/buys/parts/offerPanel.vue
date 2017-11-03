@@ -147,8 +147,8 @@
         <p class="tit">{{ offerDone ? '我的报价' : item.offerStatus == 2 ? '我的成交价' : '我的最终报价' }}</p>
         <div class="offer-from clearfix" v-if="offerDone">
             <div class="input-item-warp wid-200" ref="offerPerPrice">
-                <label>单价</label>
-                <input class="goast-input level1 textRight" style="width:73px" min="0" type="number" @blur="validItem('offerPerPrice')" @keyup="validItem('offerPerPrice')" v-model="offerApi.offerPerPrice">
+                <label for="offerPerPrice">单价</label>
+                <input id="offerPerPrice" class="goast-input level1 textRight" style="width:73px" min="0" type="number" @blur="validItem('offerPerPrice')" @keyup="validItem('offerPerPrice')" v-model="offerApi.offerPerPrice">
                 <Poptip v-if="units.length > 1" trigger="hover" class="unit-content" placement="bottom">
                     元/{{ unit.name }}<span v-show="units.length > 1" class="iconfont icon-iconjiaobiaoxiangxia"></span>
                     <div class="units" slot="content">
@@ -159,12 +159,12 @@
                 <p class="err">{{ offerApi.offerPerPrice == '' ? '请填写单价' : '无效内容' }}</p>
             </div>
             <div class="input-item-warp wid-180" ref="tolerance" v-show="needTo">
-                <label>公差</label>
-                <input class="goast-input level1 textRight" @blur="validItem('tolerance')" @keyup="validItem('tolerance')" v-model="offerApi.tolerance" style="width:110px;" type="text">
+                <label for="tolerance">公差</label>
+                <input id="tolerance" class="goast-input level1 textRight" @blur="validItem('tolerance')" @keyup="validItem('tolerance')" v-model="offerApi.tolerance" style="width:110px;" type="text">
                 <p class="err">{{ offerApi.tolerance == '' ? '请填写公差' : '无效内容' }}</p>
             </div>
             <div class="input-item-warp wid-200" ref="place">
-                <label>产地</label>
+                <label for="-proPlace">产地</label>
                 <input class="goast-input level1" style="width:120px" type="text" ref="-proPlace" id="-proPlace" v-model="offerApi.offerPlaces" @focus="showFuzzy" @keyup="setInput">
                 <p class="err">{{ offerApi.offerPlaces == '' ? '请选择产地' : '无效内容' }}</p>
             </div>
@@ -173,8 +173,8 @@
                 <span style="float:right">{{ totlePrice }}元</span>
             </div>
             <div class="input-item-warp wid-550 no-margin">
-                <label>备注(选填)</label>
-                <input class="goast-input level1" maxlength="35" type="text" v-model="offerApi.offerRemark" placeholder="请填写您的交货期等其他要求，最多35字">
+                <label for="offerRemark">备注(选填)</label>
+                <input id="offerRemark" class="goast-input level1" maxlength="35" type="text" v-model="offerApi.offerRemark" placeholder="请填写您的交货期等其他要求，最多35字">
             </div>
         </div>
         <div class="offer-table clearfix" v-else>

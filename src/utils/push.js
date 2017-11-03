@@ -43,17 +43,21 @@ export default {
             if (window.Notification)
                 Notification.requestPermission();
         },
-        notify(msg) {
+        notify(data) {
             let _this = this;
-            let title = msg.title;
-            let body = msg.body;
-            let icon = 'http://tbxoss.oss-cn-hangzhou.aliyuncs.com/2017/10/24/jdb_' + msg.code + '.png';
-            if (window.Notification && Notification.permission == 'granted') {
+            let title = data.title;
+            let body = data.body;
+            let icon = 'http://tbxoss.oss-cn-hangzhou.aliyuncs.com/2017/10/24/jdb_' + data.code + '.png';
+            if (window.Notification && Notification.permission != 'granted') {
                 let notif = new Notification(title, {
                     body: body, //通知的具体内容
                     icon: icon,
                     requireInteraction: true
                 });
+                notif.onclick = () => {
+                    this.urlJump(data);
+                    notif.close();
+                }
                 this.isNotice = true;
             } else {
                 if (this.isFocus) {
@@ -72,6 +76,16 @@ export default {
                         }
                     }, 500);
                 }
+            }
+        },
+        urlJump(data) {
+            // 1 求购信息推送 2 报价消息推送 3 中标 4报价修正 5放弃报价
+            if (data.code == 2 || data.code == 4 || data.code == 5) {
+                // 跳转到卖家中心报价
+                this.$router.push('/seller/Sbuys-1')
+            } else {
+                // 跳转到买家中心求购
+                this.$router.push('/buyer/Bbuys-1')
             }
         }
     }
