@@ -48,7 +48,7 @@ export default {
             let title = data.title;
             let body = data.body;
             let icon = 'http://tbxoss.oss-cn-hangzhou.aliyuncs.com/2017/10/24/jdb_' + data.code + '.png';
-            if (window.Notification && Notification.permission != 'granted') {
+            if (window.Notification && Notification.permission == 'granted') {
                 let notif = new Notification(title, {
                     body: body, //通知的具体内容
                     icon: icon,
@@ -79,13 +79,14 @@ export default {
             }
         },
         urlJump(data) {
+            let winName = window.name;
             // 1 求购信息推送 2 报价消息推送 3 中标 4报价修正 5放弃报价
             if (data.code == 2 || data.code == 4 || data.code == 5) {
                 // 跳转到卖家中心报价
-                this.$router.push('/seller/Sbuys-1')
+                window.open('/qd/seller/Sbuys-1', winName)
             } else {
                 // 跳转到买家中心求购
-                this.$router.push('/buyer/Bbuys-1')
+                window.open('/qd/buyer/Bbuys-1', winName)
             }
         }
     }
