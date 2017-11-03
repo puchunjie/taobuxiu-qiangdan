@@ -5,10 +5,7 @@
 
 <script>
   export default {
-    name: 'app',
-    created () {
-      window.name = 'win' + new Date().getTime();
-    }
+    name: 'app'
   }
 </script>
 

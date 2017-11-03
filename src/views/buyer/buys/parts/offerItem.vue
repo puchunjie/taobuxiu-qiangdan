@@ -7,13 +7,17 @@
             <div class="item tolerance">{{ item.tolerance | emptyHlod }}</div>
             <div class="item proPlaces">{{ item.offerPlaces }}</div>
             <div class="item totlePrice">&yen;{{ item.offerPrice }}</div>
-            <div class="item remark">{{ item.offerRemark }}</div>
+            <div class="item remark">
+                <Poptip placement="bottom" trigger="hover" :content="item.offerRemark">
+                    {{item.offerRemark}}
+                </Poptip>
+            </div>
         </div>
         <div class="company-info">
             <div class="item space">
                 <template v-if="item.offerStatus == 4">
-                        {{ item.createTime | dateformat('hh:mm') }}
-</template>
+                    {{ item.createTime | dateformat('hh:mm') }}
+                </template>
             </div>
             <div class="item left name">
                 {{ item.companyName }}

@@ -166,6 +166,9 @@
         .footer {
             width: 100%;
             height: 80px;
+            line-height: 80px;
+            text-align: center;
+            font-size: 12px;
         }
     }
 </style>
@@ -213,7 +216,9 @@
                 </div>
             </div>
         </div>
-        <div class="footer"></div>
+        <div class="footer">
+            COPYRIGHT © 2017 jiedan8.cn 无锡淘不锈电子商务有限公司 版权所有  苏ICP备16036551号-2
+        </div>
     </div>
 </template>
 

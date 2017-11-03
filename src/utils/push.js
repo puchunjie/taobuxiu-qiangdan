@@ -55,7 +55,15 @@ export default {
                     requireInteraction: true
                 });
                 notif.onclick = () => {
-                    this.urlJump(data);
+                    // 1 求购信息推送 2 报价消息推送 3 中标 4报价修正 5放弃报价
+                    if (data.code == 2 || data.code == 4 || data.code == 5) {
+                        // 跳转到卖家中心报价
+                        this.$router.push('/buyer/Bbuys-1');
+                    } else {
+                        // 跳转到买家中心求购
+                        this.$router.push('/seller/Sbuys-1');
+                    }
+                    window.focus();
                     notif.close();
                 }
                 this.isNotice = true;
@@ -76,17 +84,6 @@ export default {
                         }
                     }, 500);
                 }
-            }
-        },
-        urlJump(data) {
-            let winName = window.name;
-            // 1 求购信息推送 2 报价消息推送 3 中标 4报价修正 5放弃报价
-            if (data.code == 2 || data.code == 4 || data.code == 5) {
-                // 跳转到卖家中心报价
-                window.open('/qd/seller/Sbuys-1', winName)
-            } else {
-                // 跳转到买家中心求购
-                window.open('/qd/buyer/Bbuys-1', winName)
             }
         }
     }
