@@ -5,7 +5,10 @@
         <p class="left-p" style="margin-top:18px"><span class="iconfont icon-ziyuan6"></span>江苏省无锡市新吴区纺城大道289号南方不锈钢市场1-107</p>
         <p class="left-p"><span class="iconfont icon-ziyuan7"></span>0510-81812186</p>
         <p class="left-p"><span class="iconfont icon-ziyuan8"></span>8:30~17:30（周一至周六）</p>
-        <p class="left-p">COPYRIGHT © 2017 jiedan8.cn 无锡淘不锈电子商务有限公司 版权所有 苏ICP备16036551号-2</p>
+        <p class="left-p">
+            COPYRIGHT © 2017 jiedan8.cn 无锡淘不锈电子商务有限公司 版权所有 
+            <a style="color:#ddd" href="http://www.miitbeian.gov.cn" target="_blank">苏ICP备16036551号-2</a>
+        </p>
     
         <div class="qr">
             <img src="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/assets/qr2.png">

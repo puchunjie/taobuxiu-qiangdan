@@ -217,7 +217,8 @@
             </div>
         </div>
         <div class="footer">
-            COPYRIGHT © 2017 jiedan8.cn 无锡淘不锈电子商务有限公司 版权所有  苏ICP备16036551号-2
+            COPYRIGHT © 2017 jiedan8.cn 无锡淘不锈电子商务有限公司 版权所有  
+            <a style="color:#000" href="http://www.miitbeian.gov.cn" target="_blank">苏ICP备16036551号-2</a>
         </div>
     </div>
 </template>
