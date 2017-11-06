@@ -11,7 +11,7 @@
                                     {{ item.ironTypeName }} {{ item.materialName }} {{ item.surfaceName }} {{ item.proPlacesName }}
                                     <span>{{ item.specifications!= '' ? item.specifications : `${ item.height }*${ item.width }*${ item.length }` }}</span>
                                 </h3>
-                                <p>{{ item.weights != '' ? `${item.weights}${item.weightUnit}`: '' }}&nbsp;&nbsp;{{ item.numbers != '' ? `${item.numbers}${item.numberUnit}`: '' }}</p>
+                                <p>{{ item.weights != '' ? `${item.weights}${item.weightUnit}&nbsp;&nbsp;`: '' }}{{ item.numbers != '' ? `${item.numbers}${item.numberUnit}`: '' }}</p>
                                 <p class="gray">发布时间 {{ item.updateTime | dateformat('MM-dd hh:mm') }}</p>
                                 <span class="count">{{ item.sellNum }}个报价</span>
                                 <div class="status" :class="'st'+item.buyStatus">
@@ -145,8 +145,8 @@
             .count {
                 position: absolute;
                 display: block;
-                width: 52px;
                 height: 20px;
+                padding: 0 5px;
                 line-height: 20px;
                 text-align: center;
                 border: 1px solid @dark_blue;

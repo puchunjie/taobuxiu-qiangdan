@@ -96,6 +96,14 @@ const router = new Router({
             component: resolve => require(['@/views/login/index'], resolve)
         },
         {
+            path: '/superAgent-:userId-:superId',
+            name: 'superAgent',
+            meta: {
+                requireAuth: true
+            },
+            component: resolve => require(['@/views/publish/super/index'], resolve)
+        },
+        {
             path: '*',
             name: 'notFound',
             component: resolve => require(['@/views/notFound/index'], resolve)

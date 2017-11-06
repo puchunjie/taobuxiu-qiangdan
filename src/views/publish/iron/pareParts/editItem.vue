@@ -131,7 +131,7 @@
     import fuzzySelector from '@/components/business/fuzzySelector.vue'
     
     export default {
-        props: ['data'],
+        props: ['data','publishApi'],
         components: {
             fuzzySelector
         },
@@ -313,7 +313,7 @@
             publish() {
                 if (this.isOK) {
                     this.$spinToggle(true);
-                    this.$http.post(this.$api.publish_one, this.$clearData(this.item)).then(res => {
+                    this.$http.post(this.publishApi, this.$clearData(this.item)).then(res => {
                         this.$spinToggle(false);
                         if (res.code === 1000) {
                             this.$emit('on-publish');

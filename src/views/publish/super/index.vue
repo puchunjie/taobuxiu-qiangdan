@@ -166,15 +166,6 @@
         }
       }
     }
-    .history {
-      text-align: right;
-      height: 30px;
-      line-height: 30px;
-      padding: 0 10px;
-      a {
-        color: @light_blue;
-      }
-    }
   }
   
   .success-content {
@@ -192,9 +183,6 @@
 
 <template>
   <div class="punlish-container inner-container">
-    <div class="history">
-      <a @click="showHistory"><span class="iconfont icon-circularframeshijian"></span>从历史求购中选择>></a>
-    </div>
     <div class="list-content">
       <ul class="row head clearfix" v-show="headShow">
         <li class="checkbox"></li>
@@ -243,23 +231,11 @@
       <a class="btn goast" @click="removeSome">批量删除</a>
       <a class="btn" style="width: 110px" @click="publishSome">发布{{ checkItems.length > 0 ? `(${checkItems.length})` : '' }}</a>
     </div>
-  
-    <history v-model="historyShow" :list="historyList" @on-click="pickHistory" :can="isMax"></history>
-  
-    <Modal v-model="successShow" width="400px" ok-text="前往" cancel-text="留在此页" :mask-closable="false" @on-ok="jumpTo">
-      <div class="success-content">
-        <span class="iconfont icon-CombinedShape"></span>
-        <p>发布成功，是否跳转到我的求购？</p>
-      </div>
-    </Modal>
-  
-  
   </div>
 </template>
 
 <script>
-  import editItem from './pareParts/editItem.vue'
-  import history from './pareParts/history.vue'
+  import editItem from '../iron/pareParts/editItem.vue'
   const initialItem = {
     check: false,
     save: false,
@@ -294,23 +270,21 @@
   }
   export default {
     components: {
-      editItem,
-      history
+      editItem
     },
     data() {
       return {
-        historyShow: false,
-        historyList: [],
-        successShow: false,
         activeIndex: 0,
         list: []
       }
     },
     computed: {
-      // 是否是点击复制后跳转过来？
-      isCopy() {
-        return this.$route.params.isCopy == 1
-      },
+        userId(){
+            return this.$route.params.userId
+        },
+        suprId(){
+            return this.$route.params.suprId
+        },
       // 是否显示表头,list中有保存的数据时才有
       headShow() {
         return this.list.find(el => {
@@ -351,26 +325,6 @@
       }
     },
     methods: {
-      // 显示历史
-      showHistory() {
-        this.$http.post(this.$api.publishHistory).then(res => {
-          if (res.code === 1000) {
-            this.historyList = res.data;
-            this.historyShow = true;
-          }
-        })
-      },
-      // 选择历史
-      pickHistory(item) {
-        let newItem = {
-          check: false,
-          data: item,
-          edit: false,
-          save: true,
-        }
-        this.copyItem(newItem);
-        this.historyShow = false;
-      },
       // 保存
       itemSave(item) {
         this.activeItem.data = item;
@@ -407,7 +361,7 @@
           this.refalshList();
         }
         this.updateStorge();
-        this.successShow = true;
+        // 发布成功提示
       },
       // 编辑
       editItem(item, index) {
@@ -512,11 +466,11 @@
                 return !el.check
               });
               this.updateStorge();
-              this.successShow = true;
+            // 发布成功提示
               if (this.list.length <= 0)
                 this.refalshList();
             } else {
-              this.$Message.error(res.message)
+              this.$Message.error(res.message);
             }
           })
         } else {
@@ -529,7 +483,7 @@
         let willSave = _.filter(listData, function(el) {
           return el.save;
         });
-        this.$ls.set('publishList', willSave);
+        this.$ls.set('super_publishList', willSave);
       },
       // 跳转到其他页面
       jumpTo() {
@@ -551,19 +505,9 @@
       }
     },
     created() {
-      this.list = this.$ls.get('publishList') != null ? this.$ls.get('publishList') : [];
+      this.list = this.$ls.get('super_publishList') != null ? this.$ls.get('super_publishList') : [];
       if (this.list.length == 0)
         this.addNew();
-  
-      if (this.isCopy) {
-        let copyData = this.$ls.get('copyData');
-        if (this.isEditShow) {
-          this.list[0].data = copyData;
-        } else {
-          this.addNew();
-          this.list[this.list.length - 1].data = copyData;
-        }
-      }
     }
   }
 </script>
