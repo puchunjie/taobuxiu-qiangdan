@@ -111,8 +111,8 @@
         .item {
             display: block;
             float: left;
-            height: 42px;
-            line-height: 42px;
+            height: 41px;
+            line-height: 41px;
             margin-left: 30px;
             text-align: center;
             &.no-mr {
