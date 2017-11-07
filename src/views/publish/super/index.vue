@@ -195,9 +195,10 @@
 <template>
   <div class="punlish-container inner-container">
     <div class="search-shop">
-      <input type="text" v-model="shopMobile"> <a class="btn" style="font-size:18px" @click="queryShop">查询</a>
+      <input type="text" v-model="shopMobile" placeholder="请输入商户账号查验"> <a class="btn" style="font-size:18px" @click="queryShop">查询</a>
       <span v-show="ajaxDone&&shopDone" class="iconfont icon-guanggaolanyouhua02" style="color:green"></span>
       <span v-show="ajaxDone&&!shopDone" class="iconfont icon-close" style="color:red"></span>
+      <span v-show="ajaxDone" style="font-size:18px;">({{ apiData.name }})</span>
     </div>
     <div class="list-content">
       <ul class="row head clearfix" v-show="headShow">
