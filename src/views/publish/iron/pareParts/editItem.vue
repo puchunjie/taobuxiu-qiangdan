@@ -131,7 +131,7 @@
     import fuzzySelector from '@/components/business/fuzzySelector.vue'
     
     export default {
-        props: ['data','publishApi'],
+        props: ['data'],
         components: {
             fuzzySelector
         },
@@ -312,15 +312,7 @@
             // 单个发布
             publish() {
                 if (this.isOK) {
-                    this.$spinToggle(true);
-                    this.$http.post(this.publishApi, this.$clearData(this.item)).then(res => {
-                        this.$spinToggle(false);
-                        if (res.code === 1000) {
-                            this.$emit('on-publish');
-                        } else {
-                            this.$Message.error(res.message)
-                        }
-                    })
+                    this.$emit('on-publish',this.$clearData(this.item));
                 } else {
                     this.$Message.error('请将信息正确填写完整！')
                 }

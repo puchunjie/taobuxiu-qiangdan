@@ -220,3 +220,21 @@ export const threeMonth = '/api/main/threeMonthLME'
  * 申请质检
  */
 export const applyQuality = '/api/main/applyQualityControl'
+
+
+
+// =================================超管代发页面=================================
+/**
+ * 超管查询商户信息（超管代法求购）
+ */
+export const isShop = '/api/ironBuySubstitute/findUserByLogin'
+
+/**
+ * 发布单条
+ */
+export const superPublishOne = '/api/ironBuySubstitute/ironBuySaveSimple'
+
+/**
+ * 发布多条
+ */
+export const superPublishAll = '/api/ironBuySubstitute/ironBuySaveList'

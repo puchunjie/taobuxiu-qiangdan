@@ -179,10 +179,26 @@
       color: @f_dark;
     }
   }
+  
+  .search-shop {
+    width: 100%;
+    height: 80px;
+    input {
+      margin-top: 10px;
+      outline: 0;
+      line-height: 40px;
+      font-size: 18px;
+    }
+  }
 </style>
 
 <template>
   <div class="punlish-container inner-container">
+    <div class="search-shop">
+      <input type="text" v-model="shopMobile"> <a class="btn" style="font-size:18px" @click="queryShop">查询</a>
+      <span v-show="ajaxDone&&shopDone" class="iconfont icon-guanggaolanyouhua02" style="color:green"></span>
+      <span v-show="ajaxDone&&!shopDone" class="iconfont icon-close" style="color:red"></span>
+    </div>
     <div class="list-content">
       <ul class="row head clearfix" v-show="headShow">
         <li class="checkbox"></li>
@@ -221,7 +237,7 @@
             <span class="iconfont icon-fuzhi" @click="copyItem(item)"></span>
             <span class="iconfont icon-shanchu" @click="confirmDel(index)"></span>
           </div>
-          <editItem ref="ei" :publishApi="$api.publish_one" :class="{'exception-bg':needException}" v-if="!item.save || item.edit" :data="item.data" @on-save="itemSave" @on-close="itemClose" @on-publish="itemPublish"></editItem>
+          <editItem ref="ei" :class="{'exception-bg':needException}" v-if="!item.save || item.edit" :data="item.data" @on-save="itemSave" @on-close="itemClose" @on-publish="itemPublish"></editItem>
         </div>
       </div>
     </div>
@@ -275,16 +291,24 @@
     data() {
       return {
         activeIndex: 0,
-        list: []
+        list: [],
+        shopMobile: '',
+        shopDone: false,
+        ajaxDone: false,
+        apiData: {
+          userId: '',
+          name: ''
+        }
       }
     },
     computed: {
-        userId(){
-            return this.$route.params.userId
-        },
-        suprId(){
-            return this.$route.params.suprId
-        },
+      loginId() {
+        return this.$route.params.loginId
+      },
+      //是否查询到商户
+      isShopOk() {
+        return this.apiData.userId != '' && this.apiData.name != '' && this.shopDone && this.ajaxDone
+      },
       // 是否显示表头,list中有保存的数据时才有
       headShow() {
         return this.list.find(el => {
@@ -325,6 +349,21 @@
       }
     },
     methods: {
+      //查询是否为商家
+      queryShop() {
+        this.$http.post(this.$api.isShop, {
+          mobile: this.shopMobile
+        }).then(res => {
+          this.ajaxDone = true;
+          if (res.code === 1000) {
+            this.shopDone = true;
+            this.apiData.userId = res.data.userId;
+            this.apiData.name = res.data.name;
+          } else {
+            this.shopDone = false;
+          }
+        })
+      },
       // 保存
       itemSave(item) {
         this.activeItem.data = item;
@@ -353,15 +392,29 @@
       },
       // 单个发布后回调
       itemPublish(item) {
-        // 如果有超过1条的数据，就是发布后列表中还有数据存在
-        if (this.needException) {
-          // 直接发布，删除数据
-          this.deleteItem(this.activeIndex);
+        if (this.isShopOk) {
+          item.userId = this.apiData.userId;
+          item.name = this.apiData.name;
+          item.bgId = this.loginId;
+          this.$spinToggle(true);
+          this.$http.post(this.$api.superPublishOne, item).then(res => {
+            this.$spinToggle(false);
+            if (res.code === 1000) {
+              // 如果有超过1条的数据，就是发布后列表中还有数据存在
+              if (this.needException) {
+                // 直接发布，删除数据
+                this.deleteItem(this.activeIndex);
+              } else {
+                this.refalshList();
+              }
+              this.updateStorge();
+            } else {
+              this.$Message.error(res.message)
+            }
+          })
         } else {
-          this.refalshList();
+          this.$Message.error('请确保商户账号存在！')
         }
-        this.updateStorge();
-        // 发布成功提示
       },
       // 编辑
       editItem(item, index) {
@@ -454,9 +507,12 @@
       },
       // 批量发布
       publishSome() {
-        if (this.checkItems.length > 0) {
+        if (this.checkItems.length > 0 && this.isShopOk) {
           this.$spinToggle(true);
-          this.$http.post(this.$api.publishSome, {
+          this.$http.post(this.$api.superPublishAll, {
+            userId: this.apiData.userId,
+            name: this.apiData.name,
+            bgId: this.loginId,
             ironBuyInfos: JSON.stringify(this.checkItems)
           }).then(res => {
             this.$spinToggle(false);
@@ -466,7 +522,7 @@
                 return !el.check
               });
               this.updateStorge();
-            // 发布成功提示
+              // 发布成功提示
               if (this.list.length <= 0)
                 this.refalshList();
             } else {
@@ -474,7 +530,7 @@
             }
           })
         } else {
-          this.$Message.error('请勾选您想发布的求购');
+          this.$Message.error('请勾选您想发布的求购,请确保商户账号存在!');
         }
       },
       // 保存数据到本地

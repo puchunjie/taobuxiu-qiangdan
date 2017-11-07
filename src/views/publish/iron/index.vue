@@ -233,7 +233,7 @@
             <span class="iconfont icon-fuzhi" @click="copyItem(item)"></span>
             <span class="iconfont icon-shanchu" @click="confirmDel(index)"></span>
           </div>
-          <editItem ref="ei" :publishApi="$api.publish_one" :class="{'exception-bg':needException}" v-if="!item.save || item.edit" :data="item.data" @on-save="itemSave" @on-close="itemClose" @on-publish="itemPublish"></editItem>
+          <editItem ref="ei" :class="{'exception-bg':needException}" v-if="!item.save || item.edit" :data="item.data" @on-save="itemSave" @on-close="itemClose" @on-publish="itemPublish"></editItem>
         </div>
       </div>
     </div>
@@ -399,15 +399,23 @@
       },
       // 单个发布后回调
       itemPublish(item) {
-        // 如果有超过1条的数据，就是发布后列表中还有数据存在
-        if (this.needException) {
-          // 直接发布，删除数据
-          this.deleteItem(this.activeIndex);
-        } else {
-          this.refalshList();
-        }
-        this.updateStorge();
-        this.successShow = true;
+        this.$spinToggle(true);
+        this.$http.post(this.$api.publish_one, item).then(res => {
+          this.$spinToggle(false);
+          if (res.code === 1000) {
+            // 如果有超过1条的数据，就是发布后列表中还有数据存在
+            if (this.needException) {
+              // 直接发布，删除数据
+              this.deleteItem(this.activeIndex);
+            } else {
+              this.refalshList();
+            }
+            this.updateStorge();
+            this.successShow = true;
+          } else {
+            this.$Message.error(res.message)
+          }
+        })
       },
       // 编辑
       editItem(item, index) {
