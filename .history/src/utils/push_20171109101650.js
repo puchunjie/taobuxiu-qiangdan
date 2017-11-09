@@ -22,7 +22,7 @@ export default {
             let ws = new WebSocket(this.$api.ws + '/iron?' + this.$store.state.loginId + rand);
 
             ws.onopen = function(evt) {
-                // console.log("消息推送链接成功");
+                console.log("消息推送链接成功");
             };
 
             ws.onmessage = function(evt) {
@@ -37,7 +37,7 @@ export default {
             };
 
             ws.onclose = function(evt) {
-                // console.log("Connection closed.");
+                console.log("Connection closed.");
                 setTimeout(() => {
                     _this.initScoket();
                 }, 10000)

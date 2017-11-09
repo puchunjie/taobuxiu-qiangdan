@@ -37,10 +37,7 @@ export default {
             };
 
             ws.onclose = function(evt) {
-                // console.log("Connection closed.");
-                setTimeout(() => {
-                    _this.initScoket();
-                }, 10000)
+                console.log("Connection closed.");
             };
 
             if (window.Notification)
