@@ -17,7 +17,9 @@
     // 引入提示框和标题组件
     require('echarts/lib/component/tooltip');
     require('echarts/lib/component/title');
-    import { MathRand } from '@/utils/tools.js';
+    import {
+        MathRand
+    } from '@/utils/tools.js';
     import {
         dateformat
     } from '@/filters'
@@ -210,6 +212,9 @@
     
                 ws.onclose = function(evt) {
                     // console.log("lem链接关闭！");
+                    setTimeout(() => {
+                        _this.initScoket();
+                    }, 10000)
                 };
             },
             // 切换图表
