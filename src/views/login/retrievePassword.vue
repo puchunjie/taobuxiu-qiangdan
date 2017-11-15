@@ -41,7 +41,7 @@
                                 </Tooltip>
                             </form-item>
                             <form-item class="btn-group">
-                                <a class="btn disabled" href="/qd/index">暂不修改</a>
+                                <a class="btn disabled" href="/qd/index">放弃找回</a>
                                 <a class="btn" @click="validateFirst('forPhone')">下一步</a>
                             </form-item>
                         </i-form>
