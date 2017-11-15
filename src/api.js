@@ -26,6 +26,26 @@ export const getNums = '/demands/ironBuy/queryIronBuyInfoNum'
  */
 export const login = '/login/userLogin';
 
+// 重置密码
+/**
+ * 图形验证码
+ */
+export const pic_code = '/login/picCode'
+
+/**
+ * 短信验证码
+ */
+export const msg_code = '/login/smsCode'
+
+/**
+ * 检验验证码
+ */
+export const validateFirst = '/login/validateFirst'
+
+/**
+ * 修改密码
+ */
+export const validateSecond = '/login/validateSecond'
 
 // =================================发布求购页面=================================
 /**

@@ -39,12 +39,15 @@
         .header {
             width: 100%;
             height: 100px;
-            .logo {
+            .warp-logo {
                 display: block;
                 float: left;
+                margin: 20px 30px 0 0;
+                cursor: pointer;
+            }
+            .logo {
                 font-size: 65px;
                 color: @dark_blue;
-                margin: 20px 30px 0 0;
             }
             h3 {
                 position: relative;
@@ -175,10 +178,11 @@
 
 <template>
     <div class="login-container">
+        <!-- 阻止浏览器自动填充表单，添加一个看不见的输入框 -->
         <input type="password" style="position:absolute;top:-999px" />
         <div class="header">
             <div class="inner-1200">
-                <router-link :to="{name:'index'}"><span class="logo iconfont icon-ziyuan4"></span></router-link>
+                <a class="warp-logo" href="/qd/index"><span class="logo iconfont icon-ziyuan4"></span></a>
                 <h3>欢迎登陆</h3>
             </div>
         </div>
@@ -200,12 +204,12 @@
                         </div>
                         <div class="bar">
                             <!-- <span class="iconfont" :class="savePSD?'icon-check-box':'icon-check_box_unselecte'" @click="savePSD = !savePSD"></span>
-                            <a class="l" @click="savePSD = !savePSD">记住密码</a> -->
+                                <a class="l" @click="savePSD = !savePSD">记住密码</a> -->
                             <a class="l" href="http://www.itaobuxiu.com/html/view/common/register.html" target="_blank">没有账户？去注册</a>
-                            <a class="r" href="http://www.itaobuxiu.com/html/view/common/login.html">忘记密码</a>
+                            <a class="r" href="/qd/retrieve">忘记密码</a>
                         </div>
                         <a class="btn" @click="login">登录</a>
-                        
+    
                         <a class="link go" target="_blank" href="http://www.itaobuxiu.com">前往淘不锈&gt;&gt;</a>
     
                         <!-- 错误提示框 -->
@@ -217,7 +221,7 @@
             </div>
         </div>
         <div class="footer">
-            COPYRIGHT © 2017 jiedan8.cn 无锡淘不锈电子商务有限公司 版权所有  
+            COPYRIGHT © 2017 jiedan8.cn 无锡淘不锈电子商务有限公司 版权所有
             <a style="color:#000" href="http://www.miitbeian.gov.cn" target="_blank">苏ICP备16036551号-2</a>
         </div>
     </div>

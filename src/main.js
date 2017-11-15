@@ -28,6 +28,7 @@ import {
     Page,
     iCircle,
     Poptip,
+    Tooltip,
     Notice,
     iForm,
     FormItem,
@@ -51,6 +52,7 @@ Vue.component('i-input', iInput);
 Vue.component('i-select', iSelect);
 Vue.component('i-option', iOption);
 Vue.component(Poptip.name, Poptip);
+Vue.component(Tooltip.name, Tooltip);
 Vue.component(Cascader.name, Cascader);
 Vue.prototype.$Message = Message;
 

@@ -96,6 +96,14 @@ const router = new Router({
             component: resolve => require(['@/views/login/index'], resolve)
         },
         {
+            path: '/retrieve',
+            name: 'retrieve',
+            meta: {
+                requireAuth: true
+            },
+            component: resolve => require(['@/views/login/retrievePassword'], resolve)
+        },
+        {
             path: '/superAgent-:loginId',
             name: 'superAgent',
             meta: {
