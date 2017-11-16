@@ -37,7 +37,7 @@
                     </div>
                 </div>
             </div>
-    
+
             <!-- <a class="btn" @click="commit">提交申请</a> -->
             <Button type="primary" @click="commit" :loading="loading" long>提交申请</Button>
         </div>
@@ -54,6 +54,7 @@
     import {
         dateformat
     } from '@/filters'
+    import forEach from 'lodash/forEach'
     export default {
         data() {
             return {
@@ -118,7 +119,7 @@
             // 检查是否为空
             checkEmpty() {
                 let isOk = true;
-                _.forEach(this.apiData, (val, key) => {
+                forEach(this.apiData, (val, key) => {
                     let tag = this.$refs[key]
                     if (val == '') {
                         this.setErr(tag);
@@ -160,7 +161,7 @@
         font-weight: bold;
         border-bottom: @b_d1;
     }
-    
+
     .form {
         width: 100%;
         padding: 20px 30px;
@@ -190,7 +191,7 @@
             .borderRadius;
         }
     }
-    
+
     .quality-container {
         .disable-mask {
             position: absolute;

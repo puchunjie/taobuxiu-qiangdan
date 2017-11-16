@@ -217,14 +217,15 @@
                 <div class="remark">{{ offer.offerRemark }}</div>
             </div>
         </div>
-    
-    
+
+
         <fuzzySelector v-if="fuzzy.show" :x="fuzzy.x" :y="fuzzy.y" :oldVal="fuzzy.oldVal" :selectApi="fuzzy.selectApi" :queryStr="fuzzy.queryStr" @on-item-click="fuzzy.show = false" @outside-click="hideFuzzy" :id="activeTargetRef" :isCity="fuzzy.isCity" @on-destroy="validate"></fuzzySelector>
     </div>
 </template>
 
 <script>
     import fuzzySelector from '@/components/business/fuzzySelector.vue'
+    import forEach from 'lodash/forEach'
     export default {
         props: {
             item: Object,
@@ -345,7 +346,7 @@
                 this.fuzzy.selectApi = this.$api.G_getProPlaces;
                 this.fuzzy.oldVal = event.target.value;
                 this.fuzzy.isCity = inputId.indexOf('city') >= 0;
-    
+
                 this.fuzzy.show = false;
                 setTimeout(() => {
                     this.fuzzy.show = true
@@ -442,7 +443,7 @@
             },
             // 清除参数
             clearApi() {
-                _.forEach(this.offerApi, (n, key) => {
+                forEach(this.offerApi, (n, key) => {
                     this.offerApi[key] = ''
                 })
             },

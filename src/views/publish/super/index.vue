@@ -167,7 +167,7 @@
       }
     }
   }
-  
+
   .success-content {
     text-align: center;
     font-size: 14px;
@@ -179,7 +179,7 @@
       color: @f_dark;
     }
   }
-  
+
   .search-shop {
     width: 100%;
     height: 80px;
@@ -253,6 +253,7 @@
 
 <script>
   import editItem from '../iron/pareParts/editItem.vue'
+  import filter from 'lodash/filter'
   const initialItem = {
     check: false,
     save: false,
@@ -333,7 +334,7 @@
       },
       // 选中数据
       checkItems() {
-        let checkItem = _.filter(this.list, 'check', true);
+        let checkItem = filter(this.list, 'check', true);
         let apiList = [];
         checkItem.forEach(item => {
           apiList.push(item.data);
@@ -421,7 +422,7 @@
       editItem(item, index) {
         // 如果其他东西在编辑或者在添加，不处理
         if (this.isEditShow) return false
-  
+
         this.activeIndex = index;
         item.edit = true;
       },
@@ -496,7 +497,7 @@
           content: '删除后将无法撤销，是否继续？',
           onOk: () => {
             let listData = this.$clearData(this.list);
-            this.list = _.filter(listData, function(el) {
+            this.list = filter(listData, function(el) {
               return !el.check
             });
             if (this.list.length == 0)
@@ -519,7 +520,7 @@
             this.$spinToggle(false);
             if (res.code === 1000) {
               let listData = this.$clearData(this.list);
-              this.list = _.filter(listData, function(el) {
+              this.list = filter(listData, function(el) {
                 return !el.check
               });
               this.updateStorge();
@@ -537,7 +538,7 @@
       // 保存数据到本地
       updateStorge() {
         let listData = this.$clearData(this.list);
-        let willSave = _.filter(listData, function(el) {
+        let willSave = filter(listData, function(el) {
           return el.save;
         });
         this.$ls.set('super_publishList', willSave);

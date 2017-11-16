@@ -106,6 +106,10 @@
 
 
 <script>
+    import map from 'lodash/map'
+    import isEmpty from 'lodash/isEmpty'
+    import remove from 'lodash/remove'
+    import forEach from 'lodash/forEach'
     export default {
         data() {
             return {
@@ -166,7 +170,7 @@
                     this.list.forEach((el, index) => {
                         let data = res[index].data;
                         if (res[index].code === 1000) {
-                            _.map(data, (n) => {
+                            map(data, (n) => {
                                 return n.isCheck = false
                             });
                             el.arr = data;
@@ -181,7 +185,7 @@
                 this.$http.post(this.$api.userScope).then(res => {
                     if (res.code === 1000) {
                         // 用户没有设置过，默认所有都选择
-                        if (!_.isEmpty(res.data))
+                        if (!isEmpty(res.data))
                             this.apiData = {
                                 ironType: res.data.ironType != '' ? res.data.ironType : [],
                                 surface: res.data.surface != '' ? res.data.surface : [],
@@ -195,7 +199,7 @@
             // 选择操作
             selectItem(item, sub, i) {
                 if (sub.isCheck) {
-                    _.remove(this.apiData[item.key], n => {
+                    remove(this.apiData[item.key], n => {
                         return n.id == item.arr[i].id;
                     });
                 } else {
@@ -238,7 +242,7 @@
             // 保存经营范围
             saveScope() {
                 let params = this.$clearData(this.apiData);
-                _.forEach(params, (n, key) => {
+                forEach(params, (n, key) => {
                     params[key] = JSON.stringify(n);
                 })
                 this.$spinToggle(true);
