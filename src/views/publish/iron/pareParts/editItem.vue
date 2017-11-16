@@ -155,7 +155,7 @@
         },
         computed: {
             pureData() {
-                let data = _.cloneDeep(this.item);
+                let data = this.$cloneDeep(this.item);
                 data.tolerance = this.isJB ? data.tolerance : '';
                 return JSON.parse(JSON.stringify(data))
             },

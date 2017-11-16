@@ -432,7 +432,7 @@
           this.$Message.warning('最多同时存在6条求购！')
           return false
         }
-        let copyItem = _.cloneDeep(item);
+        let copyItem = this.$cloneDeep(item);
         copyItem.save = false;
         if (this.isEditShow) {
           this.list.pop();
@@ -462,7 +462,7 @@
       // 新增一条
       addNew(item = initialItem) {
         if (this.isMax) {
-          let data = _.cloneDeep(item);
+          let data = this.$cloneDeep(item);
           // data.data.id = 'id' + new Date().getTime();
           data.save = false;
           data.edit = false;
@@ -555,7 +555,7 @@
         //发布之后把数据重置为添加状态
         this.activeIndex = 0;
         this.list = [];
-        this.list.push(_.cloneDeep(initialItem));
+        this.list.push(this.$cloneDeep(initialItem));
         setTimeout(() => {
           this.$refs.ei[0].initItem();
         }, 300);

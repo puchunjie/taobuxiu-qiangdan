@@ -260,6 +260,7 @@
 <script>
   import editItem from './pareParts/editItem.vue'
   import history from './pareParts/history.vue'
+  import filter from 'lodash/filter'
   const initialItem = {
     check: false,
     save: false,
@@ -334,7 +335,7 @@
       },
       // 选中数据
       checkItems() {
-        let checkItem = _.filter(this.list, 'check', true);
+        let checkItem = filter(this.list, 'check', true);
         let apiList = [];
         checkItem.forEach(item => {
           apiList.push(item.data);
@@ -432,7 +433,7 @@
           this.$Message.warning('最多同时存在6条求购！')
           return false
         }
-        let copyItem = _.cloneDeep(item);
+        let copyItem = this.$cloneDeep(item);
         copyItem.save = false;
         if (this.isEditShow) {
           this.list.pop();
@@ -462,7 +463,7 @@
       // 新增一条
       addNew(item = initialItem) {
         if (this.isMax) {
-          let data = _.cloneDeep(item);
+          let data = this.$cloneDeep(item);
           // data.data.id = 'id' + new Date().getTime();
           data.save = false;
           data.edit = false;
@@ -496,7 +497,7 @@
           content: '删除后将无法撤销，是否继续？',
           onOk: () => {
             let listData = this.$clearData(this.list);
-            this.list = _.filter(listData, function(el) {
+            this.list = filter(listData, function(el) {
               return !el.check
             });
             if (this.list.length == 0)
@@ -516,7 +517,7 @@
             this.$spinToggle(false);
             if (res.code === 1000) {
               let listData = this.$clearData(this.list);
-              this.list = _.filter(listData, function(el) {
+              this.list = filter(listData, function(el) {
                 return !el.check
               });
               this.updateStorge();
@@ -534,7 +535,7 @@
       // 保存数据到本地
       updateStorge() {
         let listData = this.$clearData(this.list);
-        let willSave = _.filter(listData, function(el) {
+        let willSave = filter(listData, function(el) {
           return el.save;
         });
         this.$ls.set('publishList', willSave);
@@ -552,7 +553,7 @@
         //发布之后把数据重置为添加状态
         this.activeIndex = 0;
         this.list = [];
-        this.list.push(_.cloneDeep(initialItem));
+        this.list.push(this.$cloneDeep(initialItem));
         setTimeout(() => {
           this.$refs.ei[0].initItem();
         }, 300);

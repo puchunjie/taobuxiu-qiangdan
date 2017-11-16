@@ -10,11 +10,11 @@ import store from './store/store'
 import axios from './http'
 import * as api from './api'
 import clickoutside from './directives/clickoutside'
-import _ from 'lodash'
 import * as filters from './filters/index' //过滤器
 import VueLocalStorage from 'vue-ls';
 import Swiper from '../static/swiper/js/swiper.min'
 import { spinToggle } from './utils/spin'
+import cloneDeep from 'lodash/cloneDeep'
 
 Vue.use(VueLocalStorage);
 Object.keys(filters).forEach(key => {
@@ -26,7 +26,7 @@ import {
     Button,
     Message,
     Page,
-    iCircle,
+    Circle,
     Poptip,
     Tooltip,
     Notice,
@@ -45,7 +45,7 @@ Vue.prototype.$Notice = Notice;
 Vue.component(Button.name, Button);
 Vue.component(Page.name, Page);
 Vue.component('DatePicker', DatePicker);
-Vue.component('i-circle', iCircle);
+Vue.component('i-circle', Circle);
 Vue.component('i-form', iForm);
 Vue.component('form-item', FormItem);
 Vue.component('i-input', iInput);
@@ -63,6 +63,7 @@ Vue.prototype.$spinToggle = spinToggle;
 Vue.prototype.$clearData = (data) => {
     return JSON.parse(JSON.stringify(data))
 }
+Vue.prototype.$cloneDeep = cloneDeep;
 Vue.directive('clickoutside', clickoutside)
 Vue.config.productionTip = false;
 

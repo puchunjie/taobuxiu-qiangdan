@@ -54,7 +54,7 @@
             },
             pushData(item) {
                 if (this.can) {
-                    let data = _.cloneDeep(item);
+                    let data = this.$cloneDeep(item);
                     data.id = '';
                     data.buyStatus = 1;
                     this.$emit('on-click', data)

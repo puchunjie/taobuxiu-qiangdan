@@ -177,7 +177,7 @@
             },
             // 获取用户设置的经营范围
             getUerScope(lists) {
-                let list = _.cloneDeep(lists);
+                let list = this.$cloneDeep(lists);
                 this.$http.post(this.$api.userScope).then(res => {
                     if (res.code === 1000) {
                         // 用户没有设置过，默认所有都选择
@@ -213,7 +213,7 @@
                     })
                 } else {
                     this.apiData[this.list[i].key] = [];
-                    let data = _.cloneDeep(this.list[i].arr);
+                    let data = this.$cloneDeep(this.list[i].arr);
                     data.forEach(el => {
                         this.apiData[this.list[i].key].push({
                             id: el.id,

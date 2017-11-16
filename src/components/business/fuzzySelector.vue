@@ -136,6 +136,7 @@
 </template>
 
 <script>
+    import debounce from 'lodash/debounce'
     export default {
         props: {
             x: [String, Number],
@@ -167,10 +168,10 @@
         },
         methods: {
             // 搜索词汇高亮
-            highLight(value){
+            highLight(value) {
                 let val = this.apiData;
                 let newVal = `<span class="hight--light">${val}</span>`;
-                let final = val != '' ? value.replace(new RegExp(val,'g'), newVal) : value;
+                let final = val != '' ? value.replace(new RegExp(val, 'g'), newVal) : value;
                 return final
             },
             ousideClick() {
@@ -187,7 +188,7 @@
                     this.listData = res.data;
                 })
             },
-            getData: _.debounce(function(params, fun) {
+            getData: debounce(function(params, fun) {
                 this.$http.post(this.actionApi, params).then(res => {
                     if (res.code === 1000) {
                         fun(res);
@@ -252,7 +253,7 @@
                 name: this.oldVal.split("-")[0],
                 id: this.oldVal.split("-")[1]
             };
-   
+    
             this.$emit("on-destroy", {
                 valide: isValide,
                 id: id,

@@ -185,7 +185,7 @@
       },
       // 删除求购
       deleteItem(item) {
-        let params = _.cloneDeep(item);
+        let params = this.$cloneDeep(item);
         params.status = 0;
         this.$http.post(this.$api.publish_one, params).then(res => {
           if (res.code === 1000) {
