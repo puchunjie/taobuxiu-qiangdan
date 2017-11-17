@@ -30,15 +30,15 @@ import {
     Poptip,
     Tooltip,
     Notice,
-    iForm,
+    Form,
     FormItem,
-    iInput,
+    Input,
     Cascader,
-    iSelect,
-    iOption,
+    Select,
+    Option,
     DatePicker
 } from 'iview';
-
+console.log(Input)
 Vue.component(Modal.name, Modal);
 Vue.prototype.$Modal = Modal;
 Vue.prototype.$Notice = Notice;
@@ -46,11 +46,11 @@ Vue.component(Button.name, Button);
 Vue.component(Page.name, Page);
 Vue.component('DatePicker', DatePicker);
 Vue.component('i-circle', Circle);
-Vue.component('i-form', iForm);
+Vue.component('i-form', Form);
 Vue.component('form-item', FormItem);
-Vue.component('i-input', iInput);
-Vue.component('i-select', iSelect);
-Vue.component('i-option', iOption);
+Vue.component('i-input', Input);
+Vue.component('i-select', Select);
+Vue.component('i-option', Option);
 Vue.component(Poptip.name, Poptip);
 Vue.component(Tooltip.name, Tooltip);
 Vue.component(Cascader.name, Cascader);
