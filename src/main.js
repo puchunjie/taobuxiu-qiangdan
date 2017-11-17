@@ -38,7 +38,7 @@ import {
     Option,
     DatePicker
 } from 'iview';
-console.log(Input)
+
 Vue.component(Modal.name, Modal);
 Vue.prototype.$Modal = Modal;
 Vue.prototype.$Notice = Notice;

@@ -112,6 +112,11 @@ const router = new Router({
             component: resolve => require(['@/views/publish/super/index'], resolve)
         },
         {
+            path: '/doc',
+            name: 'doc',
+            component: resolve => require(['@/views/doc/index'], resolve)
+        },
+        {
             path: '*',
             name: 'notFound',
             component: resolve => require(['@/views/notFound/index'], resolve)
