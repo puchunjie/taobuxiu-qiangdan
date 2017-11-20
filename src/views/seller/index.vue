@@ -48,7 +48,29 @@
                             }
                         }
                     }]
-                }, {
+                },{
+                    title: '现货资源管理',
+                    icon: 'icon-weibiaoti1',
+                    subs: [{
+                            name: '现货资源',
+                            router: {
+                                name: 'ironRes'
+                            }
+                        },
+                        {
+                            name: '定开计划',
+                            router: {
+                                name: 'plan'
+                            }
+                        },
+                        {
+                            name: '特价资源',
+                            router: {
+                                name: 'special'
+                            }
+                        }
+                    ]
+                },{
                     title: '我的卖家档案',
                     icon: 'icon-weibiaoti1',
                     subs: [{

@@ -77,6 +77,21 @@ const router = new Router({
                             path: 'Sright',
                             name: 'Sright',
                             component: resolve => require(['@/views/rights/index'], resolve)
+                        },
+                        {
+                            path: 'ironRes',
+                            name: 'ironRes',
+                            component: resolve => require(['@/views/seller/resources/ironRes/index'], resolve)
+                        },
+                        {
+                            path: 'plan',
+                            name: 'plan',
+                            component: resolve => require(['@/views/seller/resources/plan/index'], resolve)
+                        },
+                        {
+                            path: 'special',
+                            name: 'special',
+                            component: resolve => require(['@/views/seller/resources/special/index'], resolve)
                         }
                     ]
                 },
@@ -114,7 +129,10 @@ const router = new Router({
         {
             path: '/doc',
             name: 'doc',
-            component: resolve => require(['@/views/doc/index'], resolve)
+            component: resolve => require(['@/views/doc/index'], resolve),
+            meta: {
+                requireAuth: true
+            }
         },
         {
             path: '*',

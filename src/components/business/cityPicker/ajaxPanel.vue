@@ -145,79 +145,8 @@
 </script>
 
 <style lang="less" scoped>
-    @import url('../../../assets/base.less');
-    .tb-picker-panel {
-        position: absolute;
-        width: 420px;
-        overflow: auto;
-        margin: 5px 0;
-        padding: 10px;
-        background-color: #fff;
-        .borderRadius;
-        box-shadow: 0 1px 6px rgba(0, 0, 0, .2);
-        z-index: 900;
-        font-size: 12px;
-        &.search-mode {
-            width: 250px;
-            padding: 0;
-            .tinking-content {
-                .item {
-                    width: 100%;
-                    height: 30px;
-                    line-height: 30px;
-                    padding: 0 10px;
-                    cursor: pointer;
-                    color: @f_dark;
-                    .ellipsis;
-                    &:hover {
-                        background-color: @dark_blue;
-                        color: #fff;
-                    }
-                    &.err {
-                        color: @dark_red;
-                        background-color: @goast_red;
-                    }
-                }
-            }
-        }
-        .tips {
-            width: 100%;
-            height: 30px;
-            color: @f_goast;
-        }
-        .tb-picker-tab {
-            width: 100%;
-            height: 30px;
-            line-height: 30px;
-            .tab-item {
-                display: inline-block;
-                height: 30px;
-                border-bottom: 2px solid #fff;
-                margin-right: 10px;
-                color: @f_goast;
-                cursor: pointer;
-                &.active {
-                    color: @f_dark;
-                    border-color: @dark_blue;
-                }
-            }
-        }
-        .tb-picker-contnet {
-            border-top: @b_d1;
-            min-height: 30px;
-            .item {
-                display: inline-block;
-                width: 50px;
-                height: 20px;
-                line-height: 20px;
-                margin: 5px 0;
-                cursor: pointer;
-                color: @f_dark;
-                &:hover {
-                    color: #fff;
-                    background-color: @dark_blue;
-                }
-            }
-        }
+    @import url('../../../assets/picker.less');
+    .tb-picker-contnet .item{
+        width: 50px;
     }
 </style>

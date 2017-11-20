@@ -1,6 +1,6 @@
 <template>
-    <div class="tb-city-picker" v-clickoutside="ousideClick">
-        <div class="tb-city-picker-rel">
+    <div class="tb-picker" v-clickoutside="ousideClick">
+        <div class="tb-picker-rel">
             <input ref="input" class="tb-input" v-model="chech.name" @keyup="showPanel" @focus="saveValue" />
         </div>
         <ajaxPanel ref="panel" :search="chech.name" :options="option" :tip="option.searchTitle" @on-picker="saveData" v-if="panelShow"></ajaxPanel>
@@ -24,18 +24,18 @@
                 type: Object,
                 default: function() {
                     return {
-                        searchTitle: '标题',
+                        searchTitle: '支持中文/拼音/简拼输入',
                         selectData: [{
-                                tabName: 'xx',
-                                api: ''
+                                tabName: '省份',
+                                api: this.$api.G_getProvince
                             },
                             {
-                                tabName: 'xx',
-                                api: ''
+                                tabName: '市区',
+                                api: this.$api.G_getCity
                             }
                         ],
                         searchData: {
-                            api: ''
+                            api: this.$api.G_getArea
                         }
                     }
                 }
@@ -99,46 +99,15 @@
                 }
                 this.saveData(data);
             }
+        },
+        mounted () {
+            this.chech = this.value
         }
     }
 </script>
 
 
 <style lang="less" scoped>
-    @import url('../../../assets/base.less');
-    .tb-city-picker {
-        display: inline-block;
-        line-height: normal;
-    }
-    
-    .tb-city-picker-rel {
-        position: relative;
-    }
-    
-    .tb-input {
-        display: inline-block;
-        width: 100%;
-        height: 32px;
-        line-height: 1.5;
-        padding: 4px 7px;
-        font-size: 12px;
-        border: @b_d1;
-        .borderRadius;
-        color: #495060;
-        background-color: #fff;
-        background-image: none;
-        position: relative;
-        cursor: text;
-        transition: border .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
-        outline: 0;
-        &.on-err {
-            border-color: @dark_red !important;
-        }
-    }
-    
-    .tb-input:focus,
-    .tb-input:hover {
-        border-color: @hover_blue;
-    }
+    @import url('../../../assets/picker.less');
 </style>
 
