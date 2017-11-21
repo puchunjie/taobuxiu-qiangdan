@@ -139,3 +139,19 @@ legend {
 .ivu-tooltip-inner {
     max-width: 1000px!important;
 }
+
+.no-color {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.no-color .ivu-page-next,
+.no-color .ivu-page-prev,
+.no-color .ivu-page-item {
+    background: none;
+}
+
+.no-color .ivu-page-item-active a,
+.no-color .ivu-page-item-active:hover a {
+    color: #2d8cf0;
+}

@@ -258,3 +258,10 @@ export const superPublishOne = '/api/ironBuySubstitute/ironBuySaveSimple'
  * 发布多条
  */
 export const superPublishAll = '/api/ironBuySubstitute/ironBuySaveList'
+
+
+// =================================现货资源管理=================================
+/**
+ * 定开计划列表
+ */
+export const dingKaiList = '/demands/dingkai/findDingKaiList'

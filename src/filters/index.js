@@ -13,3 +13,17 @@ export const emptyHlod = (value, payload = '—') => {
         return payload
     }
 }
+
+// 计量方式转义
+export const measuringStr = (value) => {
+    switch (value) {
+        case 1:
+            return '过磅'
+            break;
+        case 2:
+            return '理计'
+            break;
+        default:
+            break;
+    }
+}
