@@ -1,12 +1,9 @@
 <template>
     <div class="table-wrap">
         <div class="head-bar">
-            <span class="iconfont" :class="checkNum == page.pageSize ? 'icon-check-box' : 'icon-check_box_unselecte'" @click="checkAll"></span>
+            <span class="iconfont" :class="checkNum == listNum ? 'icon-check-box' : 'icon-check_box_unselecte'" @click="checkAll"></span>
             <span class="count">全选（{{ checkNum }}条）</span>
-            <a class="action-btn" @click="action1">批量修改</a>
-            <a class="action-btn" @click="action2">批量刷新</a>
-            <a class="action-btn" @click="action3">批量调价</a>
-            <a class="action-btn" @click="action4">批量下架</a>
+            <slot name="btns"></slot>
             <Page class="no-color line-page" :total="page.totleCount" :current.sync="page.currentPage" :page-size="page.pageSize" size="small" show-total></Page>
         </div>
         <div class="slot-contnet">
@@ -36,6 +33,10 @@
             checkNum: {
                 type: [String, Number],
                 default: 0
+            },
+            listNum: {
+                type: [String, Number],
+                default: 0
             }
         },
         data() {
@@ -56,18 +57,6 @@
             }
         },
         methods: {
-            action1() {
-                this.$emit("on-action1");
-            },
-            action2() {
-                this.$emit("on-action2");
-            },
-            action3() {
-                this.$emit("on-action3");
-            },
-            action4() {
-                this.$emit("on-action4");
-            },
             checkAll(){
                 this.$emit("check-all")
             }
@@ -88,13 +77,13 @@
         border-right: @b_d1;
         border-bottom: @b_d1;
         background-color: #fff;
+        font-size: 12px;
         .head-bar {
             width: 100%;
             height: 44px;
             line-height: 44px;
             border-bottom: @b_d1;
             padding: 0 20px;
-            font-size: 12px;
             color: @f_dark;
             background-color: @bg_color;
             .noselect;
@@ -111,6 +100,11 @@
                     color: @light_blue;
                 }
             }
+
+            .btn-group{
+                display: inline-block;
+            }
+            
             .count,
             .action-btn {
                 display: inline-block;

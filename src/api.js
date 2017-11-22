@@ -265,3 +265,38 @@ export const superPublishAll = '/api/ironBuySubstitute/ironBuySaveList'
  * 定开计划列表
  */
 export const dingKaiList = '/demands/dingkai/findDingKaiList'
+
+/**
+ * 开平时间
+ */
+export const findAllKaiping = '/demands/query/findAllKaiping'
+
+/**
+ * 批量发布定开资源
+ */
+export const saveAndUpdateDingKaiList = '/demands/dingkai/saveAndUpdateDingKaiList'
+
+/**
+ * 刷新单个定开
+ */
+export const flushDingKaiSimple = '/demands/dingkai/flushDingKaiSimple'
+
+/**
+ * 批量刷新定开
+ */
+export const flushDingKai = '/demands/dingkai/flushDingKai'
+
+/**
+ * 下架单个定开
+ */
+export const downDingKaiSimple = '/demands/dingkai/downDingKaiSimple'
+
+/**
+ * 批量下架定开
+ */
+export const downDingKai = '/demands/dingkai/downDingKai'
+
+/**
+ * 单个删除
+ */
+export const deleteDingKaiSimple = '/demands/dingkai/deleteDingKaiSimple'

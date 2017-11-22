@@ -3,7 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import '../static/css/reset.css';
-import 'iview/dist/styles/iview.css';
+import '../static/css/iview.css';
 import '../static/swiper/css/swiper.min.css';
 import router from './router'
 import store from './store/store'
@@ -36,7 +36,8 @@ import {
     Cascader,
     Select,
     Option,
-    DatePicker
+    DatePicker,
+    Spin
 } from 'iview';
 
 Vue.component(Modal.name, Modal);
@@ -55,6 +56,7 @@ Vue.component(Poptip.name, Poptip);
 Vue.component(Tooltip.name, Tooltip);
 Vue.component(Cascader.name, Cascader);
 Vue.prototype.$Message = Message;
+Vue.prototype.$Spin = Spin;
 
 
 Vue.prototype.$api = api; //所有接口列表挂载

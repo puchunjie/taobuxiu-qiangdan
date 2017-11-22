@@ -5,6 +5,14 @@
             <tbInput v-model="inputValue"></tbInput>
         </div>
         <div class="group">
+            <p>选择框</p>
+            <tbSelect v-model="selectValue" :data='[{label:"理算",value:"1"},{label:"过磅",value:"2"}]'></tbSelect>
+        </div>
+        <div class="group">
+            <p>异步选择框</p>
+            <tbSelect v-model="selectValue1" :api="$api.findAllKaiping"></tbSelect>
+        </div>
+        <div class="group">
             <p>城市选择</p>
             <cityPicter v-model="city"></cityPicter>
         </div>
@@ -28,26 +36,23 @@
 
 <script>
     import tbInput from '@/components/business/tbInput/index'
+    import tbSelect from '@/components/business/tbSelect/index'
     import cityPicter from '@/components/business/cityPicker/index'
     import asyncPicker from '@/components/business/asyncPicker/index'
     import specPicker from '@/components/business/specPicker/index'
     export default {
         components: {
             tbInput,
+            tbSelect,
             cityPicter,
             asyncPicker,
             specPicker
         },
-        methods: {
-            viewCode(value) {
-                this.$Modal.info({
-                    content: '组件路径：' + this[value]
-                })
-            }
-        },
         data() {
             return {
                 inputValue: 'test',
+                selectValue:"",
+                selectValue1:"",
                 city: {
                     name: '唐山',
                     id: '130200'
@@ -89,7 +94,7 @@
         height: 100%;
         padding: 30px;
         .group {
-            width: 100%;
+            width: 200px;
             margin: 20px 0;
             p {
                 line-height: 40px;

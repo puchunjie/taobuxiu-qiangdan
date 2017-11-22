@@ -3,17 +3,18 @@
     display: inline-block;
     line-height: normal;
     font-size: 12px;
-    width: 80px;
+    min-width: 50px;
+    width: 100%;
 }
 
 .tb-picker-rel {
     position: relative;
 }
 
-.tb-input {
+.tb-input,.tb-select {
     display: inline-block;
     width: 100%;
-    height: 32px;
+    height: 30px;
     line-height: 1.5;
     padding: 4px 7px;
     font-size: 12px;
@@ -30,9 +31,19 @@
         border-color: @dark_red !important;
     }
 }
-
+.tb-select{
+    position: relative;
+    cursor: pointer;
+    line-height: 22px;
+    .iconfont{
+        position: absolute;
+        right: 5px;
+        top: 3px;
+        font-size: 20px;
+    }
+}
 .tb-input:focus,
-.tb-input:hover {
+.tb-input:hover,.tb-select:hover {
     border-color: @hover_blue;
 }
 
@@ -107,6 +118,30 @@
                 color: #fff;
                 background-color: @dark_blue;
             }
+        }
+    }
+}
+
+
+
+.select-content{
+    position: absolute;
+    width: 100%;
+    background-color: #fff;
+    overflow: auto;
+    padding: 10px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+    z-index: 900;
+    font-size: 12px;
+    .item{
+        width: 100%;
+        height: 30px;
+        line-height: 30px;
+        cursor: pointer;
+        &:hover{
+            color: @mask_blue;
         }
     }
 }

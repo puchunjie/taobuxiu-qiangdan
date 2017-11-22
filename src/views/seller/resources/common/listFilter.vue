@@ -65,11 +65,11 @@
                 }, {
                     name: "过期自动下架",
                     count: 0,
-                    state: 2
+                    state: 3
                 }, {
                     name: "管理员下架",
                     count: 0,
-                    state: 3
+                    state: 2
                 }],
                 iron: {
                     name: '',
