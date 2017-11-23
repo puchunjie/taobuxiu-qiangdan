@@ -279,7 +279,7 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, .3);
-    z-index: 2223;
+    z-index: 910;
     .inner-content {
       width: 860px;
       background-color: #fff;

@@ -123,6 +123,7 @@
             }
         }
         .slot-contnet {
+            min-height: 265px;
             .empty {
                 display: block;
                 width: 230px;

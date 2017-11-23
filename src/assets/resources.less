@@ -3,26 +3,22 @@
     padding-bottom: 20px;
 }
 .list-table-container{
+    position: relative;
     width: 100%;
-    .table-tr{
+    table{
         width: 100%;
-        height: 48px;
-        line-height: 48px;
-        border-bottom: @b_d1;
-        color: @f_dark;
-        &.table-head{
-            color: @f_ligth;
+        tr{
+            width: 100%;
+            height: 48px;
+            border-bottom: @b_d1;
         }
-        .padding-wrap{
-            padding: 0 20px;
-        }
-        .table-td{
-            display: inline-block;
-            height: 100%;
-            // text-align: center;
+        th,td{
+            padding-left: 10px;
             .ellipsis;
+            color: @f_dark;
             &.ckeck-box{
-                width: 18px;
+                width: 40px;
+                padding-left: 20px;
                 .iconfont{
                     color: @back_gray;
                     font-size: 18px;
@@ -37,38 +33,39 @@
                     }
                 }    
             }
-            &:last-child{
-                margin:0;
+            &.operation{
+                padding-right: 20px;
             }
+        }
+        th{
+            color: @f_ligth;
+        }
 
-            .action{
-                position: relative;
-                display: inline-block;
-                width: 30px;
-                height: 20px;
-                line-height: 0;
-                font-size: 30px;
-                top:5px;
-                cursor: pointer;
-            }
-
-            .action-btns{
-                .item{
-                    width: 100%;
-                    height: 30px;
-                    line-height: 30px;
-                    text-align: center;
-                    font-size: 14px;
-                    cursor: pointer;
-                    &:hover{
-                        color: @light_blue;
-                    }
-                }
-            }
+        .action{
+            position: relative;
+            display: inline-block;
+            width: 30px;
+            height: 20px;
+            line-height: 0;
+            font-size: 30px;
+            top:5px;
+            cursor: pointer;
         }
     }
 }
-
+.action-btns{
+    .item{
+        width: 100%;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        font-size: 14px;
+        cursor: pointer;
+        &:hover{
+            color: @light_blue;
+        }
+    }
+}
 
 .upload-container{
     position: fixed;
@@ -76,11 +73,12 @@
     height: 100%;
     left: 0;
     top: 0;
-    background-color: rgba(0,0,0,.5);
-    z-index: 1001;
+    background-color: rgba(0,0,0,.4);
+    z-index: 990;
     font-size: 12px;
     .inner-wrap{
         width: 1100px;
+        min-height: 270px;
         background-color: #fff;
         margin: 100px auto;
         padding-bottom: 20px;
@@ -161,6 +159,74 @@
                 color: @mask_blue;
                 margin-left: 20px;
             }
+        }
+    }
+}
+
+.modify-panel {
+    .inner-wrap {
+        width: 1000px;
+    }
+    .modify-table {
+        width: 100%;
+        padding: 40px 80px;
+        table {
+            width: 100%;
+            tr {
+                width: 100%;
+                height: 24px;
+            }
+            th {
+                color: @f_ligth;
+            }
+        }
+    }
+
+    .modify-statistics{
+        width: 100%;
+        height: 30px;
+        margin-bottom: 30px;
+        text-align: center;
+        font-size: 14px;
+        .modify-type{
+            width: 75px;
+        }
+    }
+}
+
+.excel-panel{
+    .inner-wrap {
+        width: 880px;
+    }
+
+    .excel-content{
+        width: 100%;
+        padding: 40px 70px 20px;
+    }
+
+    .type-select{
+        width: 100%;
+        height: 24px;
+        line-height: 24px;
+        margin-bottom: 30px;
+        font-size: 14px;
+        .riado-group{
+            display: inline-block;
+            cursor: pointer;
+            color:@f_dark;
+        }
+        .iconfont,label{
+            vertical-align: middle;
+            cursor: pointer;
+        }
+        label{
+            margin: 0 35px 0 5px;
+        }
+        .icon-radio{
+            color: @f_ligth;
+        }
+        .icon-radioacheck{
+            color:@light_blue;
         }
     }
 }

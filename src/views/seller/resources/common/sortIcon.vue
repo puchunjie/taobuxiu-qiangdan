@@ -45,7 +45,8 @@ export default {
         position: relative;
         vertical-align: middle;
         float: right;
-        top: 24px;
+        top: 7px;
+        right:5px;
         .up,
         .down {
             position: absolute;

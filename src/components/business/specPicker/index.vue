@@ -181,7 +181,6 @@
     @import url('../../../assets/picker.less');
     .spec-picker {
         width: 160px;
-        vertical-align: middle;
         &.on-err .tb-input,&.on-err .spce {
             border-color: @dark_red!important;
         }
@@ -205,7 +204,7 @@
         position: relative;
         float: left;
         width: 100%/3;
-        height: 32px;
+        height: 28px;
     }
     
     .spec-input {
@@ -228,7 +227,7 @@
         display: inline-block;
         width: 20px;
         height: 100%;
-        line-height: 32px;
+        line-height: 28px;
         text-align: center;
         left: 3px;
         top: 0;

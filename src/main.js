@@ -37,7 +37,8 @@ import {
     Select,
     Option,
     DatePicker,
-    Spin
+    Spin,
+    Radio
 } from 'iview';
 
 Vue.component(Modal.name, Modal);
@@ -57,6 +58,7 @@ Vue.component(Tooltip.name, Tooltip);
 Vue.component(Cascader.name, Cascader);
 Vue.prototype.$Message = Message;
 Vue.prototype.$Spin = Spin;
+Vue.component(Spin.name, Spin);
 
 
 Vue.prototype.$api = api; //所有接口列表挂载

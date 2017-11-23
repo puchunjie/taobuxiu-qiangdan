@@ -73,7 +73,7 @@
     padding: 0 10px;
     font-size: 12px;
     background-color: @bg_color;
-    z-index: 1001;
+    z-index: 900;
     .action-panel {
       position: absolute;
       width: 100px;

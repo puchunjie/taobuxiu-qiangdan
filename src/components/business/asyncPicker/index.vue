@@ -89,7 +89,8 @@
                     data.id = panel.searchList[0].id;
                     data.name = panel.searchList[0].name
                 } else {
-                    data.name = data.name == this.oldValue ? data.name : this.oldValue
+                    data.id = data.name == this.oldValue ? data.id : ""
+                    data.name = data.name == this.oldValue ? data.name : ""
                 }
                 this.saveData(data);
             }

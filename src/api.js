@@ -260,7 +260,7 @@ export const superPublishOne = '/api/ironBuySubstitute/ironBuySaveSimple'
 export const superPublishAll = '/api/ironBuySubstitute/ironBuySaveList'
 
 
-// =================================现货资源管理=================================
+// =================================定开资源管理=================================
 /**
  * 定开计划列表
  */
@@ -269,7 +269,7 @@ export const dingKaiList = '/demands/dingkai/findDingKaiList'
 /**
  * 开平时间
  */
-export const findAllKaiping = '/demands/query/findAllKaiping'
+export const findAllKaiping = '/api/query/findAllKaiping'
 
 /**
  * 批量发布定开资源
@@ -297,6 +297,82 @@ export const downDingKaiSimple = '/demands/dingkai/downDingKaiSimple'
 export const downDingKai = '/demands/dingkai/downDingKai'
 
 /**
- * 单个删除
+ * 单个删除定开
  */
 export const deleteDingKaiSimple = '/demands/dingkai/deleteDingKaiSimple'
+
+/**
+ * 批量删除定开
+ */
+export const deleteDingKai = '/demands/dingkai/deleteDingKai'
+
+/**
+ * 单个上架定开
+ */
+export const onDingKaiSimple = '/demands/dingkai/onDingKaiSimple'
+
+/**
+ * 批量上架定开
+ */
+export const onDingKai = '/demands/dingkai/onDingKai'
+
+/**
+ * 批量调价定开
+ */
+export const modifyDingKaiPrice = '/demands/dingkai/modifyDingKaiPrice'
+
+// =================================现货资源管理=================================
+/**
+ * 现货计划列表
+ */
+export const findSpotGoodsPage = '/demands/spotGoods/findSpotGoodsPage'
+
+/**
+ * 批量发布现货资源
+ */
+export const saveSpotGoods = '/demands/spotGoods/saveSpotGoods'
+
+/**
+ * 刷新单个现货
+ */
+export const refreshSingleSpotGoods = '/demands/spotGoods/refreshSingleSpotGoods'
+
+/**
+ * 批量刷新现货
+ */
+export const refreshSpotGoods = '/demands/spotGoods/refreshSpotGoods'
+
+/**
+ * 下架单个现货
+ */
+export const removeSingleSpotGoods = '/demands/spotGoods/removeSingleSpotGoods'
+
+/**
+ * 批量下架现货
+ */
+export const removeSpotGoods = '/demands/spotGoods/removeSpotGoods'
+
+/**
+ * 单个删除现货
+ */
+export const deleteSingleSpotGoods = '/demands/spotGoods/deleteSingleSpotGoods'
+
+/**
+ * 批量删除现货
+ */
+export const deleteSpotGoods = '/demands/spotGoods/deleteSpotGoods'
+
+/**
+ * 单个上架现货
+ */
+export const reOnSingleSpotGoods = '/demands/spotGoods/reOnSingleSpotGoods'
+
+/**
+ * 批量上架现货
+ */
+export const reOnSpotGoods = '/demands/spotGoods/reOnSpotGoods'
+
+/**
+ * 批量调价现货
+ */
+export const changePriceSpotGoods = '/demands/spotGoods/changePriceSpotGoods'

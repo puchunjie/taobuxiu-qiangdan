@@ -4,7 +4,7 @@
         position: absolute;
         width: 422px;
         background-color: #fff;
-        z-index: 999;
+        z-index: 900;
         padding: 10px;
         font-size: 12px;
         border: @b_d1;

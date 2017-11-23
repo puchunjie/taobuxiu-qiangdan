@@ -13,70 +13,76 @@
         <a class="action-btn" @click="batchShelves">批量上架</a>
         <a class="action-btn" @click="batchDelete">批量删除</a>
       </div>
+  
       <div class="list-table-container plan">
-        <div class="table-tr table-head">
-          <div class="padding-wrap">
-            <div class="table-td ckeck-box"></div>
-            <div class="table-td iron">品类</div>
-            <div class="table-td material">材质</div>
-            <div class="table-td surface">表面</div>
-            <div class="table-td proPlace">产地</div>
-            <div class="table-td spec">规格</div>
-            <div class="table-td tolerance">公差</div>
-            <div class="table-td metering">计量方式</div>
-            <div class="table-td price">
-              单价（元/吨）
-              <sortIcon v-model="sort.price" @on-sort="sort.time = ''"></sortIcon>
-            </div>
-            <div class="table-td location">所在地</div>
-            <div class="table-td warehouse">仓库</div>
-            <div class="table-td plan-time">计划开平时间</div>
-            <div class="table-td time">
-              更新时间
-              <sortIcon v-model="sort.time" @on-sort="sort.price = ''"></sortIcon>
-            </div>
-            <div class="table-td operation">操作</div>
-          </div>
-        </div>
-        <div class="table-tr" v-for="(item,i) in list" :key="item.id">
-          <div class="padding-wrap">
-            <div class="table-td ckeck-box">
-              <span class="iconfont" @click="checkItem(i)" :class="item.check ? 'icon-check-box':'icon-check_box_unselecte'"></span>
-            </div>
-            <div class="table-td iron">{{ item.ironTypeName }}</div>
-            <div class="table-td material">{{ item.materialName }}</div>
-            <div class="table-td surface">{{ item.surfaceName }}</div>
-            <div class="table-td proPlace">{{ item.proPlacesName }}</div>
-            <div class="table-td spec">{{ `${item.height}*${item.width}*${item.length}` }}</div>
-            <div class="table-td tolerance">{{ item.tolerance | emptyHlod }}</div>
-            <div class="table-td metering">{{ item.measuringType | measuringStr }}</div>
-            <div class="table-td price">{{ item.price }}</div>
-            <div class="table-td location">{{ item.locationName }}</div>
-            <div class="table-td warehouse">{{ item.storeHouseName }}</div>
-            <div class="table-td plan-time">{{ item.remark }}</div>
-            <div class="table-td time">{{ item.updateTime | dateformat('MM-dd hh:mm') }}</div>
-            <div class="table-td operation">
-              <Poptip v-model="item.tip" placement="left" trigger="hover" v-show="filterData.status == 1">
-                <span class="iconfont icon-caozuo action"></span>
-                <div slot="content" class="action-btns">
-                  <div class="item" @click="refresh(item)">刷新</div>
-                  <div class="item" @click="getOff(item)">下架</div>
-                  <div class="item">修改</div>
-                </div>
-              </Poptip>
-              <Poptip v-model="item.tip" placement="left" trigger="hover" v-show="filterData.status == 0">
-                <span class="iconfont icon-caozuo action"></span>
-                <div slot="content" class="action-btns">
-                  <div class="item" @click="shelves(item)">上架</div>
-                  <div class="item" @click="del(item)">删除</div>
-                </div>
-              </Poptip>
-            </div>
-          </div>
-        </div>
+        <Spin fix v-show="listLoad"></Spin>
+        <table>
+          <thead>
+            <tr>
+              <th class="ckeck-box"></th>
+              <th class="iron">品类</th>
+              <th class="material">材质</th>
+              <th class="surface">表面</th>
+              <th class="proPlace">产地</th>
+              <th class="spec">规格</th>
+              <th class="tolerance">公差</th>
+              <th class="metering">计量方式</th>
+              <th class="price">单价(元/吨)
+                <sortIcon v-model="sort.price" @on-sort="sort.time = ''"></sortIcon>
+              </th>
+              <th class="location">所在地</th>
+              <th class="warehouse">仓库</th>
+              <th class="plan-time">计划开平时间</th>
+              <th class="time">更新时间
+                <sortIcon v-model="sort.time" @on-sort="sort.price = ''"></sortIcon>
+              </th>
+              <th class="operation">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(item,i) in list" :key="item.id">
+              <td class="ckeck-box">
+                <span class="iconfont" @click="checkItem(i)" :class="item.check ? 'icon-check-box':'icon-check_box_unselecte'"></span>
+              </td>
+              <td>{{ item.ironTypeName }}</td>
+              <td>{{ item.materialName }}</td>
+              <td>{{ item.surfaceName }}</td>
+              <td>{{ item.proPlacesName }}</td>
+              <td>{{ `${item.height}*${item.width}*${item.length}` }}</td>
+              <td>{{ item.tolerance | emptyHlod }}</td>
+              <td>{{ item.measuringType | measuringStr }}</td>
+              <td>{{ item.price }}</td>
+              <td>{{ item.locationName }}</td>
+              <td>{{ item.storeHouseName }}</td>
+              <td>{{ item.remark }}</td>
+              <td>{{ item.updateTime | dateformat('MM-dd hh:mm') }}</td>
+              <td>
+                <Poptip v-model="item.tip" placement="left" trigger="hover" v-show="filterData.status == 1">
+                  <span class="iconfont icon-caozuo action"></span>
+                  <div slot="content" class="action-btns">
+                    <div class="item" @click="refresh(item)">刷新</div>
+                    <div class="item" @click="getOff(item)">下架</div>
+                    <div class="item" @click="edit(item)">修改</div>
+                  </div>
+                </Poptip>
+                <Poptip v-model="item.tip" placement="left" trigger="hover" v-show="filterData.status == 0">
+                  <span class="iconfont icon-caozuo action"></span>
+                  <div slot="content" class="action-btns">
+                    <div class="item" @click="shelves(item)">上架</div>
+                    <div class="item" @click="del(item)">删除</div>
+                  </div>
+                </Poptip>
+  
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
+  
     </tableWrap>
-    <upload v-model="uploadShow"></upload>
+    <upload v-model="uploadShow" :editList="editList" @on-ajax-success="getList"></upload>
+    <ModifyPrice v-model="modifyPriceShow" :batchIds="batchIds" :listData="editList" @on-ajax-success="getList"></ModifyPrice>
+    <uploadExcel v-model="excelShow"></uploadExcel>
   </div>
 </template>
 
@@ -87,21 +93,32 @@
   import tableWrap from '../common/tableWrap.vue'
   import sortIcon from '../common/sortIcon.vue'
   import upload from './parts/upload.vue'
+  import ModifyPrice from '../common/modifyPrice.vue'
+  import uploadExcel from '../common/uploadExcel.vue'
   import cloneDeep from 'lodash/cloneDeep'
   import debounce from 'lodash/debounce'
   import filter from 'lodash/filter'
+  import {
+    getuuId
+  } from '@/utils/tools.js'
   export default {
     components: {
       innerTitle,
       listFilter,
       tableWrap,
       sortIcon,
-      upload
+      upload,
+      ModifyPrice,
+      uploadExcel
     },
     data() {
       return {
         uploadShow: false, //上架弹窗
+        modifyPriceShow: false, //调价弹窗
+        excelShow:false, //上传excel弹窗
         list: [],
+        listLoad:false,
+        editList: [],
         filterData: {
           status: 1,
           ironTypeId: "",
@@ -147,22 +164,26 @@
         })
         return JSON.stringify(arr);
       },
+      batchLength() {
+        return this.checkedItem.length
+      },
       // 是否可以批量操作
       batchCan() {
-        return this.checkedItem.length > 0
+        return this.batchLength > 0
       }
     },
     watch: {
       'apiParams': {
         handler: debounce(function(val, oldVal) {
           this.getList();
-        }),
+        },500),
         deep: true
       }
     },
     methods: {
       // 获取列表
       getList() {
+        this.listLoad = true;
         this.$http.post(this.$api.dingKaiList, this.apiParams).then(res => {
           if (res.code === 1000) {
             let list = res.data.list;
@@ -178,6 +199,7 @@
               this.$refs.filter.states[2].count = res.data.aDown;
               this.$refs.filter.states[3].count = res.data.sDown;
             }
+            this.listLoad = false;
           }
         })
       },
@@ -201,122 +223,115 @@
       },
       // 单个刷新
       refresh(item) {
-        this.$http.post(this.$api.flushDingKaiSimple, {
-          id: item.id
-        }).then(res => {
-          if (res.code === 1000) {
-            item.tip = false;
-            this.getList();
-            this.$Message.success('已刷新');
-          }
-        })
+        this.doSimple(item, this.$api.flushDingKaiSimple, '刷新');
       },
       // 批量刷新
       batchRefresh() {
-        this.doBatch(() => {
-          this.$http.post(this.$api.flushDingKai, {
-            storeInfoIds: this.batchIds
-          }).then(res => {
-            if (res.code === 1000) {
-              this.getList();
-              this.$Spin.hide();
-              this.$Message.success('已刷新');
-            }
-          })
-        })
+        this.doBatch(this.$api.flushDingKai, '刷新');
       },
       // 单个下架
       getOff(item) {
-        this.$Modal.confirm({
-          title: "确认下架？",
-          content: "是否确认下架？",
-          onOk: () => {
-            this.$http.post(this.$api.downDingKaiSimple, {
-              id: item.id
-            }).then(res => {
-              if (res.code === 1000) {
-                item.tip = false;
-                this.getList();
-                this.$Message.success('已下架');
-              }
-            })
-          }
-        })
+        this.doSimple(item, this.$api.downDingKaiSimple, '下架');
       },
       // 批量下架
       batchGetoff() {
-        this.$Modal.confirm({
-          title: "确认下架？",
-          content: "是否确认下架？",
-          onOk: () => {
-            this.doBatch(() => {
-              this.$http.post(this.$api.downDingKai, {
+        this.doBatch(this.$api.downDingKai, '下架');
+      },
+      // 单个修改
+      edit(item) {
+        let itemFu = cloneDeep(item);
+        itemFu.uuId = getuuId();
+        itemFu.isOk = true;
+        delete itemFu.check
+        this.editList.push(itemFu);
+        item.tip = false;
+        this.uploadShow = true;
+      },
+      // 批量修改
+      batchEdit() {
+        let maxOk = this.batchLength <= 5;
+        if (this.batchCan && maxOk) {
+          this.mapUuid();
+          this.uploadShow = true;
+        } else {
+          this.$Message.warning('批量修改数据上限为5条！');
+        }
+      },
+      // 批量调价
+      batchModify() {
+        if (this.batchCan) {
+          this.mapUuid();
+          this.modifyPriceShow = true;
+        } else {
+          this.$Message.warning('请先选择要操作的数据!');
+        }
+      },
+      // 单个上架
+      shelves(item) {
+        this.doSimple(item, this.$api.onDingKaiSimple, '上架');
+      },
+      //批量上架
+      batchShelves() {
+        this.doBatch(this.$api.onDingKai, '上架');
+      },
+      // 单个删除
+      del(item) {
+        this.doSimple(item, this.$api.deleteDingKaiSimple, '删除');
+      },
+      //批量删除
+      batchDelete() {
+        this.doBatch(this.$api.deleteDingKai, '删除');
+      },
+      // 批量操作公共方法
+      doBatch(api, str) {
+        if (this.batchCan) {
+          this.$Modal.confirm({
+            title: str + "确认",
+            content: "是否确认" + str + "？",
+            onOk: () => {
+              this.$Spin.show()
+              this.$http.post(api, {
                 storeInfoIds: this.batchIds
               }).then(res => {
                 if (res.code === 1000) {
                   this.getList();
                   this.$Spin.hide();
-                  this.$Message.success('已下架');
+                  this.$Message.success('已' + str);
                 }
               })
-            })
-          }
-        })
+            }
+          })
+        } else {
+          this.$Message.warning('请先选择要操作的数据！');
+        }
       },
-      // 单个修改
-      edit() {},
-      // 批量修改
-      batchEdit() {},
-      // 批量调价
-      batchModify() {},
-      //批量上架
-      batchShelves() {
-        // this.$Modal.confirm({
-        //   title: "确认上架？",
-        //   content: "是否重新上架？",
-        //   onOk: () => {
-        //     this.doBatch(() => {
-        //       this.$http.post(this.$api.downDingKai, {
-        //         storeInfoIds: this.batchIds
-        //       }).then(res => {
-        //         if (res.code === 1000) {
-        //           this.getList();
-        //           this.$Spin.hide();
-        //           this.$Message.success('已下架');
-        //         }
-        //       })
-        //     })
-        //   }
-        // })
-      },
-      // 单个删除
-      del(item) {
+      // 单个操作公共方法
+      doSimple(item, api, str) {
         this.$Modal.confirm({
-          title: "删除确认",
-          content: "是否确认删除？",
+          title: str + "确认",
+          content: "是否确认" + str + "？",
           onOk: () => {
-            this.$http.post(this.$api.deleteDingKaiSimple, {
+            this.$http.post(api, {
               id: item.id
             }).then(res => {
               if (res.code === 1000) {
                 item.tip = false;
                 this.getList();
-                this.$Message.success('已删除');
+                this.$Message.success('已' + str);
               }
             })
           }
         })
       },
-      //批量删除
-      batchDelete() {},
-      // 批量操作判断
-      doBatch(callback) {
-        if (this.batchCan) {
-          this.$Spin.show()
-          callback();
-        } else {
-          this.$Message.warning('请先选择要操作的数据！');
-        }
+      // 给需要操作的数据添加uuId
+      mapUuid() {
+        let arr = cloneDeep(this.checkedItem);
+        arr.map(el => {
+          el.uuId = getuuId();
+          el.isOk = true;
+          delete el.check
+        })
+        this.editList = arr;
       }
     },
     created() {
@@ -329,47 +344,36 @@
 <style lang="less" scoped>
   @import url('../../../../assets/resources.less');
   .plan {
-    .table-td {
-      margin-right: 20px;
-    }
-    .iron {
-      width: 57px;
-    }
-    .material {
-      width: 69px;
-    }
-    .surface {
-      width: 45px;
-    }
-    .proPlace {
-      width: 57px;
+    .iron,
+    .material,
+    .surface,
+    .proPlace,
+    .tolerance {
+      width: 77px;
     }
     .spec {
-      width: 80px;
-    }
-    .tolerance {
-      width: 57px;
+      width: 100px;
     }
     .metering {
-      width: 62px;
+      width: 70px;
     }
     .price {
-      width: 90px;
+      width: 110px;
     }
     .location {
-      width: 60px;
+      width: 80px;
     }
     .warehouse {
-      width: 80px;
+      width: 70px;
     }
     .plan-time {
-      width: 80px;
+      width: 95px;
     }
     .time {
-      width: 80px;
+      width: 100px;
     }
     .operation {
-      width: 50px;
+      width: 35px;
     }
   }
 </style>

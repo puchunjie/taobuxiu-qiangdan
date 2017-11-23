@@ -32,7 +32,7 @@
         width: 100%;
         height: 80px;
         overflow: hidden;
-        z-index: 1000;
+        z-index: 900;
         background-color: @dark_blue;
         .logo {
             display: block;

@@ -22,8 +22,7 @@
                 default: false
             },
             value: {
-                type: [String, Number],
-                default: 1
+                type: [String, Number]
             },
             api: {
                 type: String,
@@ -37,14 +36,15 @@
             return {
                 activeIndex: 0,
                 list: [],
-                panelShow: false
+                panelShow: false,
+                isInit: false
             }
         },
         computed: {
             activeItem() {
                 return this.list.length > 0 ? this.list[this.activeIndex] : {
-                    label: "",
-                    value: ""
+                    label: undefined,
+                    value: undefined
                 }
             }
         },
@@ -57,7 +57,7 @@
                 this.panelShow = false;
             },
             getAjax() {
-                this.$http.post(this.api).then(res => {
+                return this.$http.post(this.api).then(res => {
                     if (res.code === 1000) {
                         res.data.forEach(el => {
                             this.list.push({
@@ -67,12 +67,19 @@
                         })
                     }
                 })
+            },
+            setActive() {
+                let inputActive = findIndex(this.list, el => {
+                    return el.value == this.value
+                })
+                this.activeIndex = inputActive >= 0 ? inputActive : 0
+                this.isInit = true;
             }
         },
         watch: {
             'activeItem': {
                 handler: function(val, oldVal) {
-                    this.$emit('input', val.value);
+                    this.$emit('input', this.isInit ? val.value : this.list[0].value);
                 },
                 deep: true
             }
@@ -80,17 +87,14 @@
         created() {
             if (this.data) {
                 this.list = this.data;
-            } else {
-                this.getAjax();
-            }
-        },
-        mounted() {
-            this.$nextTick(() => {
-                let inputActive = findIndex(this.list, el => {
-                    return el.value = this.value
+                this.$nextTick(() => {
+                    this.setActive()
                 })
-                this.activeIndex = inputActive >= 0 ? inputActive : 0
-            })
+            } else {
+                this.getAjax().then(()=> {
+                    this.setActive()
+                });
+            }
         }
     }
 </script>
