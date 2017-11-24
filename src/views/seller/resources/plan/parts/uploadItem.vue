@@ -1,7 +1,7 @@
 <template>
     <div class="table-tr">
         <div class="table-td iron">
-            <asyncPicker validate v-model="iron" :api="$api.G_getTypes"></asyncPicker>
+            <asyncPicker validate v-model="iron" :api="$api.G_getTypes" :exclude="['不锈钢板','不锈钢卷']"></asyncPicker>
         </div>
         <div class="table-td material">
             <asyncPicker validate v-model="material" :api="$api.G_getMaterials"></asyncPicker>

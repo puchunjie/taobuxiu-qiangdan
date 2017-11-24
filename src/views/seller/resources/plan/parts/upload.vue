@@ -1,7 +1,7 @@
 <template>
     <div class="upload-container upload-plan" v-if="visible">
         <div class="inner-wrap">
-            <div class="header">{{ isEdit? '批量修改':'新增录入' }}<span class="close iconfont icon-close" @click="close"></span></div>
+            <div class="header">{{ strs.title }}<span class="close iconfont icon-close" @click="close"></span></div>
             <div class="content">
                 <div class="table-tr tr-header">
                     <div class="table-td iron">品类</div>
@@ -20,7 +20,7 @@
                 <uploadItem @add="addItem" @copy="copyItem" @del="delItem" :index="i" v-for="(item,i) in list" :key="item.uuId" v-model="list[i]" :isEdit="isEdit"></uploadItem>
             </div>
             <div class="bottom-btns">
-                <a class="btn" @click="publish">{{ isEdit ? '确认修改' : '确认上架' }}</a>
+                <a class="btn" @click="publish">{{ strs.btn }}</a>
                 <a class="btn goast" @click="close">取消</a>
             </div>
         </div>
@@ -63,6 +63,15 @@
             uploadItem
         },
         props: {
+            strs: {
+                type: Object,
+                default: function(){
+                    return {
+                        title: '',
+                        btn: ''
+                    }
+                }
+            },
             value: {
                 type: Boolean,
                 default: false
@@ -161,12 +170,12 @@
                 this.visible = val
             },
             isEdit(val) {
-                if (val){
+                if (val) {
                     this.list = [];
-                    this.$nextTick(()=>{
+                    this.$nextTick(() => {
                         this.list.push(...cloneDeep(this.editList));
                     })
-                }      
+                }
             }
         },
         created() {

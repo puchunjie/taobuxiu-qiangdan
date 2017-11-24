@@ -22,7 +22,7 @@
                 default: false
             },
             value: {
-                type: [String, Number]
+                type: [String, Number,Object]
             },
             api: {
                 type: String,

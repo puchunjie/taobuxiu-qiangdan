@@ -38,7 +38,7 @@ import {
     Option,
     DatePicker,
     Spin,
-    Radio
+    Upload
 } from 'iview';
 
 Vue.component(Modal.name, Modal);
@@ -59,6 +59,7 @@ Vue.component(Cascader.name, Cascader);
 Vue.prototype.$Message = Message;
 Vue.prototype.$Spin = Spin;
 Vue.component(Spin.name, Spin);
+Vue.component(Upload.name, Upload);
 
 
 Vue.prototype.$api = api; //所有接口列表挂载

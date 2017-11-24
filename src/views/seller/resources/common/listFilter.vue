@@ -11,7 +11,7 @@
         <div class="picker-filter">
             <div class="group">
                 品类：
-                <asyncPicker class="input-item" v-model="iron" :api="$api.G_getTypes"></asyncPicker>
+                <asyncPicker class="input-item" v-model="iron" :exclude="['不锈钢板','不锈钢卷']" :api="$api.G_getTypes"></asyncPicker>
             </div>
             <div class="group">
                 材质：
@@ -103,6 +103,9 @@
         watch: {
             'filterData': {
                 handler: function(val, oldVal) {
+                    // 切换tab的时候，把currentPage重置为1
+                    if (val.status != oldVal.status)
+                        this.$parent.page.currentPage = 1;
                     this.$emit('input', val);
                 },
                 deep: true
@@ -112,20 +115,20 @@
             pickerState(i) {
                 this.activeState = i;
             },
-            clearFilter(){
+            clearFilter() {
                 this.clearItem("iron");
                 this.clearItem("material");
                 this.clearItem("surface");
                 this.clearItem("proPlace");
             },
-            clearItem(key){
+            clearItem(key) {
                 this[key].id = "";
                 this[key].name = "";
             },
-            publish(){
+            publish() {
                 this.$emit("on-publish");
             },
-            upload(){
+            upload() {
                 this.$emit("on-upload");
             }
         }

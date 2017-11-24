@@ -1,16 +1,16 @@
 <template>
   <div class="resource-container">
     <innerTitle>定开计划 </innerTitle>
-    <listFilter v-model="filterData" ref="filter" @on-publish="uploadShow = true"></listFilter>
+    <listFilter v-model="filterData" ref="filter" @on-publish="publish" @on-upload="excelShow = true"></listFilter>
     <tableWrap v-model="page" :checkNum="checkedItem.length" :listNum="list.length" @check-all="checkAll">
       <div class="btn-group" slot="btns" v-show="filterData.status == 1">
-        <a class="action-btn" @click="batchEdit">批量修改</a>
+        <a class="action-btn" @click="batchEdit('批量修改','确认修改')">批量修改</a>
         <a class="action-btn" @click="batchRefresh">批量刷新</a>
         <a class="action-btn" @click="batchModify">批量调价</a>
         <a class="action-btn" @click="batchGetoff">批量下架</a>
       </div>
       <div class="btn-group" slot="btns" v-show="filterData.status == 0">
-        <a class="action-btn" @click="batchShelves">批量上架</a>
+        <a class="action-btn" @click="batchEdit('批量上架','确认上架')">批量上架</a>
         <a class="action-btn" @click="batchDelete">批量删除</a>
       </div>
   
@@ -62,13 +62,13 @@
                   <div slot="content" class="action-btns">
                     <div class="item" @click="refresh(item)">刷新</div>
                     <div class="item" @click="getOff(item)">下架</div>
-                    <div class="item" @click="edit(item)">修改</div>
+                    <div class="item" @click="edit(item,'修改','确认修改')">修改</div>
                   </div>
                 </Poptip>
                 <Poptip v-model="item.tip" placement="left" trigger="hover" v-show="filterData.status == 0">
                   <span class="iconfont icon-caozuo action"></span>
                   <div slot="content" class="action-btns">
-                    <div class="item" @click="shelves(item)">上架</div>
+                    <div class="item" @click="edit(item,'上架','确认上架')">上架</div>
                     <div class="item" @click="del(item)">删除</div>
                   </div>
                 </Poptip>
@@ -80,9 +80,9 @@
       </div>
   
     </tableWrap>
-    <upload v-model="uploadShow" :editList="editList" @on-ajax-success="getList"></upload>
+    <upload v-model="uploadShow" :strs="uploadStr" :editList="editList" @on-ajax-success="getList"></upload>
     <ModifyPrice v-model="modifyPriceShow" :batchIds="batchIds" :listData="editList" @on-ajax-success="getList"></ModifyPrice>
-    <uploadExcel v-model="excelShow"></uploadExcel>
+    <uploadExcel v-model="excelShow" isDk></uploadExcel>
   </div>
 </template>
 
@@ -115,9 +115,13 @@
       return {
         uploadShow: false, //上架弹窗
         modifyPriceShow: false, //调价弹窗
-        excelShow:false, //上传excel弹窗
+        excelShow: false, //上传excel弹窗
+        uploadStr: {
+          title: '',
+          btn: ''
+        },
         list: [],
-        listLoad:false,
+        listLoad: false,
         editList: [],
         filterData: {
           status: 1,
@@ -176,7 +180,7 @@
       'apiParams': {
         handler: debounce(function(val, oldVal) {
           this.getList();
-        },500),
+        }, 800),
         deep: true
       }
     },
@@ -221,6 +225,12 @@
           item.check = b
         })
       },
+      // 发布资源
+      publish() {
+        this.uploadStr.title = '新增录入';
+        this.uploadStr.btn = '确认上架';
+        this.uploadShow = true;
+      },
       // 单个刷新
       refresh(item) {
         this.doSimple(item, this.$api.flushDingKaiSimple, '刷新');
@@ -237,8 +247,10 @@
       batchGetoff() {
         this.doBatch(this.$api.downDingKai, '下架');
       },
-      // 单个修改
-      edit(item) {
+      // 单个修改、上架
+      edit(item, t, b) {
+        this.uploadStr.title = t;
+        this.uploadStr.btn = b;
         let itemFu = cloneDeep(item);
         itemFu.uuId = getuuId();
         itemFu.isOk = true;
@@ -247,10 +259,12 @@
         item.tip = false;
         this.uploadShow = true;
       },
-      // 批量修改
-      batchEdit() {
+      // 批量修改、上架
+      batchEdit(t, b) {
         let maxOk = this.batchLength <= 5;
         if (this.batchCan && maxOk) {
+          this.uploadStr.title = t;
+          this.uploadStr.btn = b;
           this.mapUuid();
           this.uploadShow = true;
         } else {
@@ -265,14 +279,6 @@
         } else {
           this.$Message.warning('请先选择要操作的数据!');
         }
-      },
-      // 单个上架
-      shelves(item) {
-        this.doSimple(item, this.$api.onDingKaiSimple, '上架');
-      },
-      //批量上架
-      batchShelves() {
-        this.doBatch(this.$api.onDingKai, '上架');
       },
       // 单个删除
       del(item) {

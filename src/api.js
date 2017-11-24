@@ -1,9 +1,14 @@
 export let ws = '';
+let uploadHost = '';
 if (process.env.NODE_ENV == 'development') {
     ws = 'ws://192.168.0.251:8080/websocket';
+    uploadHost = 'http://192.168.0.132:8080'
 } else {
     ws = 'ws://120.55.63.70:8080/websocket';
+    uploadHost = ''
 }
+
+
 
 /**
  * 获取用户信息
@@ -320,6 +325,16 @@ export const onDingKai = '/demands/dingkai/onDingKai'
  * 批量调价定开
  */
 export const modifyDingKaiPrice = '/demands/dingkai/modifyDingKaiPrice'
+
+/**
+ * 查询定开上传记录
+ */
+export const queryDingKaiExcel = '/demands/dingkai/queryDingKaiExcel'
+
+/**
+ * 定开上传EXCEL路径
+ */
+export const saveDingKaiListByExcel = uploadHost + '/demands/dingkai/saveDingKaiListByExcel'
 
 // =================================现货资源管理=================================
 /**

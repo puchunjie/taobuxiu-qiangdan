@@ -196,6 +196,7 @@
 
 .excel-panel{
     .inner-wrap {
+        position:relative;
         width: 880px;
     }
 
@@ -229,4 +230,74 @@
             color:@light_blue;
         }
     }
+
+    .file-upload{
+        width: 100%;
+        height: 32px;
+        margin-bottom: 38px;
+        .file-show{
+            position: relative;
+            display: inline-block;
+            width: 480px;
+            height: 32px;
+            line-height:32px;
+            border: @b_d1;
+            padding: 0 20px;
+            .borderRadius(2px);
+            overflow: hidden;
+            vertical-align: middle;
+        }
+        .select,.btn{
+            position: absolute;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 14px;
+            color: @f_goast;
+            cursor: pointer;
+            right: 0;
+            background: rgba(79,79,79,0.26);
+        }
+        .btn{
+            position: inherit;
+            background-color: @dark_blue;
+            color: #fff;
+            vertical-align: middle;
+            margin-left: 20px;
+            .borderRadius(2px);
+        }
+        .goast{
+            display: inline-block;
+            margin-left: 10px;
+            font-size: 14px;
+        }
+    }
+    .tip{
+        line-height: 18px;
+        margin: 4px 0;
+        span{
+            color: @dark_red;
+        }
+    }
+
+    .upload-history{
+        width: 100%;
+        margin-top: 20px;
+        padding: 0 110px;
+        table{
+            width: 100%;
+        }
+
+        tr{
+            width: 100%;
+            height: 30px;
+            line-height: 30px;
+        }
+        thead{
+            color: @f_goast;
+        }
+    }
+
 }

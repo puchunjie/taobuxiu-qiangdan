@@ -3,7 +3,7 @@
         <div v-if="!isSearch">
             <p class="tips">{{ tip }}</p>
             <div class="tb-picker-contnet">
-                <a class="item" v-for="(item,i) in list" :key="i" @click="pickItem(item)">{{ item.name }}</a>
+                <a class="item" v-for="(item,i) in handleList" :key="i" v-show="!!exclude ? item.isLock : true" @click="pickItem(item)">{{ item.name }}</a>
             </div>
         </div>
         <div class="tinking-content" v-else>
@@ -16,6 +16,7 @@
 <script>
     import isArray from 'lodash/isArray'
     import debounce from 'lodash/debounce'
+    import findIndex from 'lodash/findIndex'
     export default {
         props: {
             search: {
@@ -34,6 +35,9 @@
                         api: ''
                     }
                 }
+            },
+            exclude: {
+                type: Array
             }
         },
         data() {
@@ -45,6 +49,26 @@
                     id: '',
                     name: ''
                 }
+            }
+        },
+        computed: {
+            handleList() {
+                if (!!this.exclude) {
+                    let list = this.$clearData(this.list);
+                    list.map(item => {
+                        if (!!this.exclude) {
+                            item.isLock = findIndex(this.exclude, el => {
+                                return el == item.name
+                            }) >= 0
+                        } else {
+                            item.isLock = false
+                        }
+                    })
+                    return list
+                } else {
+                    return this.list
+                }
+    
             }
         },
         watch: {
@@ -67,11 +91,13 @@
             getData(val) {
                 let apiUrl = this.options.api;
                 if (apiUrl != '') {
-                    this.$http.post(apiUrl, {name:val}).then(res => {
+                    this.$http.post(apiUrl, {
+                        name: val
+                    }).then(res => {
                         if (res.code === 1000) {
-                            if(!this.isSearch){
+                            if (!this.isSearch) {
                                 this.list = res.data
-                            }else{
+                            } else {
                                 this.searchList = res.data
                             }
                         }
@@ -103,7 +129,7 @@
 
 <style lang="less" scoped>
     @import url('../../../assets/picker.less');
-    .tb-picker-contnet .item{
+    .tb-picker-contnet .item {
         width: 100px;
     }
 </style>

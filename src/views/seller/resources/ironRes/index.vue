@@ -115,9 +115,9 @@
       return {
         uploadShow: false, //上架弹窗
         modifyPriceShow: false, //调价弹窗
-        excelShow:false, //上传excel弹窗
+        excelShow: false, //上传excel弹窗
         list: [],
-        listLoad:false,
+        listLoad: false,
         editList: [],
         filterData: {
           status: 1,
@@ -175,8 +175,12 @@
     watch: {
       'apiParams': {
         handler: debounce(function(val, oldVal) {
+          console.log(val.status +'--'+oldVal.status)
+          console.log(val.status != oldVal.status)
+          if (val.status != oldVal.status)
+            this.page.currentPage = 1
           this.getList();
-        },500),
+        }, 500),
         deep: true
       }
     },

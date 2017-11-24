@@ -35,7 +35,7 @@
                 </table>
             </div>
             <div class="modify-statistics">
-                共选中2条，
+                共选中{{ listData.length }}条，
                 <tbSelect class="modify-type" v-model="type" :data='[{label:"上涨",value:"2"},{label:"下调",value:"1"}]'></tbSelect>， 调整金额：
                 <tbInput class="modify-type" v-model="price"></tbInput>
             </div>
