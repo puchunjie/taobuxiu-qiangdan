@@ -1,5 +1,5 @@
 <template>
-    <div class="tb-picker">
+    <div class="tb-picker" ref="panel" v-clickoutside="ousideClick">
         <div class="tb-picker-rel">
             <p class="tb-select" @click="togglePanel">
                 {{ activeItem.label }}
@@ -74,6 +74,12 @@
                 })
                 this.activeIndex = inputActive >= 0 ? inputActive : 0
                 this.isInit = true;
+            },
+            // 点击外部
+            ousideClick() {
+                if (!this.$refs.panel)
+                    return false
+                this.panelShow = false
             }
         },
         watch: {
