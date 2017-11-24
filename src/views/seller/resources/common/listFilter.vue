@@ -11,7 +11,7 @@
         <div class="picker-filter">
             <div class="group">
                 品类：
-                <asyncPicker class="input-item" v-model="iron" :exclude="['不锈钢板','不锈钢卷']" :api="$api.G_getTypes"></asyncPicker>
+                <asyncPicker class="input-item" v-model="iron" :exclude="exclude" :api="$api.G_getTypes"></asyncPicker>
             </div>
             <div class="group">
                 材质：
@@ -46,6 +46,9 @@
                         proPlaceId: ""
                     }
                 }
+            },
+            exclude:{
+                type:Array
             }
         },
         components: {

@@ -1,7 +1,7 @@
 <template>
   <div class="resource-container">
     <innerTitle>定开计划 </innerTitle>
-    <listFilter v-model="filterData" ref="filter" @on-publish="publish" @on-upload="excelShow = true"></listFilter>
+    <listFilter v-model="filterData" :exclude="['不锈钢板','不锈钢卷']" ref="filter" @on-publish="publish" @on-upload="excelShow = true"></listFilter>
     <tableWrap v-model="page" :checkNum="checkedItem.length" :listNum="list.length" @check-all="checkAll">
       <div class="btn-group" slot="btns" v-show="filterData.status == 1">
         <a class="action-btn" @click="batchEdit('批量修改','确认修改')">批量修改</a>
@@ -81,8 +81,8 @@
   
     </tableWrap>
     <upload v-model="uploadShow" :strs="uploadStr" :editList="editList" @on-ajax-success="getList"></upload>
-    <ModifyPrice v-model="modifyPriceShow" :batchIds="batchIds" :listData="editList" @on-ajax-success="getList"></ModifyPrice>
-    <uploadExcel v-model="excelShow" isDk></uploadExcel>
+    <ModifyPrice v-model="modifyPriceShow" :apiUrl="$api.modifyDingKaiPrice" :batchIds="batchIds" :listData="editList" @on-ajax-success="getList"></ModifyPrice>
+    <uploadExcel v-model="excelShow" isDk :uploadApi="$api.saveDingKaiListByExcel" :historyApi="$api.queryDingKaiExcel"></uploadExcel>
   </div>
 </template>
 

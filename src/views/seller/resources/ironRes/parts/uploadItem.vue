@@ -30,9 +30,6 @@
         <div class="table-td warehouse">
             <asyncPicker validate v-model="warehouse" :api="$api.getStores"></asyncPicker>
         </div>
-        <div class="table-td remark">
-            <tbSelect v-model="other.remark" :api="$api.findAllKaiping"></tbSelect>
-        </div>
         <div class="table-td operation" v-show="!isEdit">
             <Poptip v-model="tip" placement="left" trigger="hover">
                 <span class="iconfont icon-caozuo action"></span>
@@ -90,7 +87,6 @@
                         locationName: "",
                         storeHouseId: "",
                         storeHouseName: "",
-                        remark: "",
                         appFlag: "1"
                     }
                 }
@@ -139,8 +135,7 @@
                 other: {
                     tolerance: "",
                     measuringType: "",
-                    price: "",
-                    remark: ""
+                    price: ""
                 }
             }
         },
@@ -168,7 +163,6 @@
                     locationName: this.location.name,
                     storeHouseId: this.warehouse.id,
                     storeHouseName: this.warehouse.name,
-                    remark: this.other.remark,
                     appFlag: "1"
                 }
             },
@@ -238,7 +232,6 @@
             this.other.tolerance = this.value.tolerance;
             this.other.measuringType = this.value.measuringType;
             this.other.price = this.value.price;
-            this.other.remark = this.value.remark;
         }
     }
 </script>

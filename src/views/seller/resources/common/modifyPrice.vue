@@ -72,7 +72,8 @@
                 type: Boolean,
                 default: false
             },
-            batchIds: String
+            batchIds: String,
+            apiUrl:String
         },
         data() {
             return {
@@ -129,7 +130,7 @@
                         content: "是否确认调价？",
                         onOk: () => {
                             this.$Spin.show()
-                            this.$http.post(this.$api.modifyDingKaiPrice, {
+                            this.$http.post(this.apiUrl, {
                                 storeInfoIds: this.batchIds,
                                 md: this.type,
                                 price: this.handlerPrice

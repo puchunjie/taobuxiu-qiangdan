@@ -18,11 +18,8 @@
                 </div>
                 <div class="file-upload">
                     <p class="file-show">{{ fileName }}</p>
-                    <Upload class="btn" ref="upload" :show-upload-list="false" :on-success="handleSuccess" :format="['xlsx']" :max-size="1024" 
-                    :on-format-error="handleFormatError" :on-exceeded-size="handleMaxSize"
-                    :before-upload="beforeUp"
-                    :on-error="ctryErr"
-                    :action="$api.saveDingKaiListByExcel">
+                    <Upload class="btn" ref="upload" :show-upload-list="false" :data="{type:type}" :on-success="handleSuccess" :format="['xlsx']" :max-size="1024" :on-format-error="handleFormatError" :on-exceeded-size="handleMaxSize" :before-upload="beforeUp" :on-error="ctryErr"
+                        :action="uploadApi">
                         上传
                     </Upload>
                     <a class="goast">下载模板</a>
@@ -67,7 +64,9 @@
             isDk: {
                 type: Boolean,
                 default: false
-            }
+            },
+            uploadApi: String,
+            historyApi: String
         },
         data() {
             return {
@@ -76,7 +75,7 @@
                 type: 1,
                 step: 1,
                 historyList: [],
-                uploadLoading:false
+                uploadLoading: false
             }
         },
         computed: {
@@ -101,15 +100,15 @@
             },
             // 获取历史记录
             getHistory() {
-                this.$http.post(this.$api.queryDingKaiExcel, {
+                this.$http.post(this.historyApi, {
                     type: this.type,
                     pageSize: 5
                 }).then(res => {
                     if (res.code === 1000) {
                         this.historyList = res.data;
-                        if(this.historyList.length > 0){
+                        if (this.historyList.length > 0) {
                             this.step = 2;
-                        }else{
+                        } else {
                             this.$Notice.warning({
                                 title: '提示！',
                                 desc: '您还没有上传过文件。'
@@ -118,19 +117,22 @@
                     }
                 })
             },
-            beforeUp(){
+            beforeUp() {
                 this.uploadLoading = true;
             },
             handleSuccess(res, file) {
-                if(res.code === 1000){
+                if (res.code === 1000) {
                     this.$Message.success('上传成功！');
                     this.fileName = res.data.fileName;
-                }else{
-                    this.$Message.error(res.data.message);
+                } else {
+                    this.$Notice.error({
+                        title: '上传异常!',
+                        desc: res.message
+                    });
                 }
                 this.uploadLoading = false;
             },
-            ctryErr(error){
+            ctryErr(error) {
                 this.$Notice.warning({
                     title: '上传异常!',
                     desc: error

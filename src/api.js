@@ -277,7 +277,7 @@ export const dingKaiList = '/demands/dingkai/findDingKaiList'
 export const findAllKaiping = '/api/query/findAllKaiping'
 
 /**
- * 批量发布定开资源
+ * 批量发布、修改、上架定开资源
  */
 export const saveAndUpdateDingKaiList = '/demands/dingkai/saveAndUpdateDingKaiList'
 
@@ -312,16 +312,6 @@ export const deleteDingKaiSimple = '/demands/dingkai/deleteDingKaiSimple'
 export const deleteDingKai = '/demands/dingkai/deleteDingKai'
 
 /**
- * 单个上架定开
- */
-export const onDingKaiSimple = '/demands/dingkai/onDingKaiSimple'
-
-/**
- * 批量上架定开
- */
-export const onDingKai = '/demands/dingkai/onDingKai'
-
-/**
  * 批量调价定开
  */
 export const modifyDingKaiPrice = '/demands/dingkai/modifyDingKaiPrice'
@@ -343,9 +333,9 @@ export const saveDingKaiListByExcel = uploadHost + '/demands/dingkai/saveDingKai
 export const findSpotGoodsPage = '/demands/spotGoods/findSpotGoodsPage'
 
 /**
- * 批量发布现货资源
+ * 批量发布、修改、上架现货资源
  */
-export const saveSpotGoods = '/demands/spotGoods/saveSpotGoods'
+export const saveAndUpdateSpotGoods = '/demands/spotGoods/saveAndUpdateSpotGoods'
 
 /**
  * 刷新单个现货
@@ -378,16 +368,11 @@ export const deleteSingleSpotGoods = '/demands/spotGoods/deleteSingleSpotGoods'
 export const deleteSpotGoods = '/demands/spotGoods/deleteSpotGoods'
 
 /**
- * 单个上架现货
- */
-export const reOnSingleSpotGoods = '/demands/spotGoods/reOnSingleSpotGoods'
-
-/**
- * 批量上架现货
- */
-export const reOnSpotGoods = '/demands/spotGoods/reOnSpotGoods'
-
-/**
  * 批量调价现货
  */
 export const changePriceSpotGoods = '/demands/spotGoods/changePriceSpotGoods'
+
+/**
+ * 现货上传EXCEL路径
+ */
+export const saveSpotGoodsByExcel = uploadHost + '/demands/spotGoods/saveSpotGoodsByExcel'
