@@ -1,6 +1,6 @@
 <template>
   <div class="resource-container">
-    <innerTitle>定开计划 </innerTitle>
+    <innerTitle>现货资源 </innerTitle>
     <listFilter v-model="filterData" ref="filter" @on-publish="publish" @on-upload="excelShow = true"></listFilter>
     <tableWrap v-model="page" :checkNum="checkedItem.length" :listNum="list.length" @check-all="checkAll">
       <div class="btn-group" slot="btns" v-show="filterData.status == 1">
@@ -80,7 +80,7 @@
     </tableWrap>
     <upload v-model="uploadShow" :strs="uploadStr" :editList="editList" @on-ajax-success="getList"></upload>
     <ModifyPrice v-model="modifyPriceShow" :apiUrl="$api.changePriceSpotGoods" :batchIds="batchIds" :listData="editList" @on-ajax-success="getList"></ModifyPrice>
-    <uploadExcel v-model="excelShow" :uploadApi="$api.saveSpotGoodsByExcel" :historyApi="''"></uploadExcel>
+    <uploadExcel v-model="excelShow" :storeType="1" :uploadApi="$api.saveSpotGoodsByExcel" :historyApi="$api.findSpotGoodsExcel"></uploadExcel>
   </div>
 </template>
 

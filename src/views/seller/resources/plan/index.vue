@@ -82,7 +82,7 @@
     </tableWrap>
     <upload v-model="uploadShow" :strs="uploadStr" :editList="editList" @on-ajax-success="getList"></upload>
     <ModifyPrice v-model="modifyPriceShow" :apiUrl="$api.modifyDingKaiPrice" :batchIds="batchIds" :listData="editList" @on-ajax-success="getList"></ModifyPrice>
-    <uploadExcel v-model="excelShow" isDk :uploadApi="$api.saveDingKaiListByExcel" :historyApi="$api.queryDingKaiExcel"></uploadExcel>
+    <uploadExcel v-model="excelShow" :storeType="2" isDk :uploadApi="$api.saveDingKaiListByExcel" :historyApi="$api.queryDingKaiExcel"></uploadExcel>
   </div>
 </template>
 

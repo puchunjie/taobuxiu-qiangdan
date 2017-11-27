@@ -22,7 +22,7 @@
                         :action="uploadApi">
                         上传
                     </Upload>
-                    <a class="goast">下载模板</a>
+                    <a class="goast" :href="excelUrl" download @click="countNum">下载模板</a>
                     <a class="goast" @click="getHistory">下载历史文件</a>
                 </div>
                 <p class="tip"><span>* </span>必须使用<a>《淘不锈接单版-资源标准模板》</a>，填好资源后上传。</p>
@@ -44,7 +44,7 @@
                             <td>{{ item.createTime | dateformat }}</td>
                             <td>
                                 <a>预览</a>
-                                <a>下载</a>
+                                <a :href="item.excelUrl" download>下载</a>
                             </td>
                         </tr>
                     </tbody>
@@ -66,7 +66,8 @@
                 default: false
             },
             uploadApi: String,
-            historyApi: String
+            historyApi: String,
+            storeType: [String,Number]
         },
         data() {
             return {
@@ -75,11 +76,18 @@
                 type: 1,
                 step: 1,
                 historyList: [],
-                uploadLoading: false
+                uploadLoading: false,
+                excelUrl: '',
+                excelName:''
             }
         },
         computed: {
-    
+            excelType(){
+                return {
+                    storeType: this.storeType,
+                    type: this.type
+                }
+            }
         },
         watch: {
             visible(val) {
@@ -87,6 +95,9 @@
             },
             value(val) {
                 this.visible = val
+            },
+            type(){
+                this.getExcelUrl();
             }
         },
         methods: {
@@ -150,10 +161,25 @@
                     title: '上传文件超出尺寸',
                     desc: '您上传的：  ' + file.name + ' 太大了, 不得超过1MB。'
                 });
+            },
+            // 获取EXCEL模板地址
+            getExcelUrl(){
+                this.$http.post(this.$api.selectExecleUrlByType,this.excelType).then(res => {
+                    if(res.code === 1000){
+                        this.excelUrl = res.data.modelUrl;
+                        this.excelName = res.data.modelUrl.split("/")[res.data.modelUrl.split("/").length-1].split(".")[0]
+                    }
+                })
+            },
+            countNum(){
+                let params = {fileName:this.excelName,url:this.excelUrl};
+                let fparams = Object.assign(params,this.excelType);
+                this.$http.post(this.$api.downloadExcel,fparams);
             }
         },
         mounted() {
-            this.visible = this.value
+            this.visible = this.value;
+            this.getExcelUrl()
         }
     }
 </script>

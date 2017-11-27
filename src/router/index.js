@@ -96,6 +96,17 @@ const router = new Router({
                     ]
                 },
                 {
+                    path: '/market',
+                    name: 'market',
+                    redirect: '/market/iron',
+                    component: resolve => require(['@/views/market/index'], resolve),
+                    children: [{
+                        path: 'iron',
+                        name: 'mIron',
+                        component: resolve => require(['@/views/market/iron/index'], resolve)
+                    }]
+                },
+                {
                     path: '/userInfo',
                     name: 'userInfo',
                     component: resolve => require(['@/views/user/index.vue'], resolve),

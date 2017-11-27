@@ -373,6 +373,74 @@ export const deleteSpotGoods = '/demands/spotGoods/deleteSpotGoods'
 export const changePriceSpotGoods = '/demands/spotGoods/changePriceSpotGoods'
 
 /**
+ * 查询定开上传记录
+ */
+export const findSpotGoodsExcel = '/demands/spotGoods/findSpotGoodsExcel'
+
+/**
  * 现货上传EXCEL路径
  */
 export const saveSpotGoodsByExcel = uploadHost + '/demands/spotGoods/saveSpotGoodsByExcel'
+
+// =================================特价资源管理=================================
+/**
+ * 特价计划列表
+ */
+export const findSpecialPricePage = '/demands/specialPrice/findSpecialPricePage'
+
+/**
+ * 批量发布、修改、上架特价资源
+ */
+export const saveAndUpdateSpecialPrice = '/demands/specialPrice/saveAndUpdateSpecialPrice'
+
+/**
+ * 刷新单个特价
+ */
+export const refreshSingleSpecialPrice = '/demands/specialPrice/refreshSingleSpecialPrice'
+
+/**
+ * 批量刷新特价
+ */
+export const refreshSpecialPrice = '/demands/specialPrice/refreshSpecialPrice'
+
+/**
+ * 下架单个特价
+ */
+export const removeSingleSpecialPrice = '/demands/specialPrice/removeSingleSpecialPrice'
+
+/**
+ * 批量下架特价
+ */
+export const removeSpecialPrice = '/demands/specialPrice/removeSpecialPrice'
+
+/**
+ * 单个删除特价
+ */
+export const deleteSingleSpecialPrice = '/demands/specialPrice/deleteSingleSpecialPrice'
+
+/**
+ * 批量删除特价
+ */
+export const deleteSpecialPrice = '/demands/specialPrice/deleteSpecialPrice'
+
+/**
+ * 批量调价特价
+ */
+export const changePriceSpecialPrice = '/demands/specialPrice/changePriceSpecialPrice'
+
+/**
+ * 查询定开上传记录
+ */
+export const findSpecialPriceExcel = '/demands/specialPrice/findSpecialPriceExcel'
+
+/**
+ * 特价上传EXCEL路径
+ */
+export const saveSpecialPriceByExcel = uploadHost + '/demands/specialPrice/saveSpecialPriceByExcel'
+
+
+// 获取EXCEL模板地址
+export const selectExecleUrlByType = '/demands/resourcedown/selectExecleUrlByType'
+
+// 下载Excel,并且保存数据
+export const downloadExcel = '/demands/resourcedown/downloadExcel'

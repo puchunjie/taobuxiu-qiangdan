@@ -1,0 +1,78 @@
+<template>
+    <div class="market-container">
+        <div class="router-tab">
+            <div class="inner-box">
+                <a class="tab-item"
+                :class="{'active':activeTab == i}" 
+                v-for="(tab,i) in routerTabs" :key="i">{{ tab.name }}</a>
+            </div>
+        </div>
+        <div class="router-page">
+            <div class="inner-box">
+                <router-view></router-view>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+    export default {
+        data () {
+            return {
+                routerTabs:[{
+                    name: '现货资源',
+                    path: ''
+                },
+                {
+                    name: '定开计划',
+                    path: ''
+                },
+                {
+                    name: '特价资源',
+                    path: ''
+                }],
+                activeTab:0
+            }
+        }
+    }
+</script>
+
+
+
+<style lang="less" scoped>
+    @import url('../../assets/base.less');
+    .market-container {
+        width: 100%;
+        .inner-box {
+            width: 1320px;
+            margin: 0 auto;
+        }
+        .router-tab {
+            width: 100%;
+            height: 50px;
+            background-color: #fff;
+            border-bottom: @b_d1;
+            font-size: 16px;
+            .tab-item {
+                display: inline-block;
+                width: 100px;
+                height: 49px;
+                line-height: 48px;
+                text-align: center;
+                margin: 0 10px;
+                color: @f_dark;
+                border-bottom: 3px solid #fff;
+                &.active {
+                    font-weight: bold;
+                    border-color: @dark_blue;
+                }
+            }
+        }
+
+        .router-page{
+            width: 100%;
+            margin-top: 10px;
+        }
+    }
+</style>
+
