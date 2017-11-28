@@ -8,7 +8,7 @@ if (process.env.NODE_ENV == 'development') {
     uploadHost = ''
 }
 
-
+export const excelDownloadUrl = 'http://tbxoss.oss-cn-hangzhou.aliyuncs.com/'
 
 /**
  * 获取用户信息
@@ -444,3 +444,20 @@ export const selectExecleUrlByType = '/demands/resourcedown/selectExecleUrlByTyp
 
 // 下载Excel,并且保存数据
 export const downloadExcel = '/demands/resourcedown/downloadExcel'
+
+
+// =================================现货市场=================================
+/**
+ * 现货资源商家查询
+ */
+export const findAllSpotGoodsPage = '/api/dingkai/findAllSpotGoodsPage'
+
+/**
+ * 特价资源商户查询
+ */
+export const findAllSpecialPricePage = '/api/dingkai/findAllSpecialPricePage'
+
+/**
+ * 定开商家查询
+ */
+export const findDingKaiAll = '/api/dingkai/findDingKaiAll'

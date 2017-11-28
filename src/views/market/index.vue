@@ -2,9 +2,7 @@
     <div class="market-container">
         <div class="router-tab">
             <div class="inner-box">
-                <a class="tab-item"
-                :class="{'active':activeTab == i}" 
-                v-for="(tab,i) in routerTabs" :key="i">{{ tab.name }}</a>
+                <a class="tab-item" :class="{'active':activeTab == i}" @click="routerGo(i)" v-for="(tab,i) in routerTabs" :key="i">{{ tab.name }}</a>
             </div>
         </div>
         <div class="router-page">
@@ -17,21 +15,50 @@
 
 <script>
     export default {
-        data () {
+        data() {
             return {
-                routerTabs:[{
-                    name: '现货资源',
-                    path: ''
-                },
-                {
-                    name: '定开计划',
-                    path: ''
-                },
-                {
-                    name: '特价资源',
-                    path: ''
-                }],
-                activeTab:0
+                routerTabs: [{
+                        name: '现货资源',
+                        pathName: 'mIron'
+                    },
+                    {
+                        name: '定开计划',
+                        pathName: 'mPlan'
+                    },
+                    {
+                        name: '特价资源',
+                        pathName: 'mSpecial'
+                    }
+                ],
+                activeTab: 0
+            }
+        },
+        computed: {
+            routerPath() {
+                return this.routerTabs[this.activeTab].pathName
+            }
+        },
+        created() {
+            switch (this.$route.name) {
+                case 'mIron':
+                    this.activeTab = 0
+                    break;
+                case 'mPlan':
+                    this.activeTab = 1
+                    break;
+                case 'mSpecial':
+                    this.activeTab = 2
+                    break;
+                default:
+                    break;
+            }
+        },
+        methods: {
+            routerGo(i) {
+                this.activeTab = i;
+                this.$router.push({
+                    name: this.routerPath
+                })
             }
         }
     }
@@ -68,8 +95,7 @@
                 }
             }
         }
-
-        .router-page{
+        .router-page {
             width: 100%;
             margin-top: 10px;
         }

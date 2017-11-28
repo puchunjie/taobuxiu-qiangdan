@@ -16,6 +16,8 @@
               <th class="tolerance">公差</th>
               <th class="metering">计量方式</th>
               <th class="price">单价(元/吨)</th>
+              <th class="tax">含税</th>
+              <th class="stock">库存(吨)</th>
               <th class="location">所在地</th>
               <th class="exponentia">实时指数
               </th>
@@ -25,7 +27,7 @@
           </thead>
           <tbody>
             <tr v-for="(item,i) in list" :key="item.id">
-              <td class="icon"><span class="iconfont icon-xian"></span></td>
+              <td class="icon"><span class="iconfont icon-te"></span></td>
               <td>{{ item.ironTypeName }}</td>
               <td>{{ item.materialName }}</td>
               <td>{{ item.surfaceName }}</td>
@@ -34,6 +36,8 @@
               <td>{{ item.tolerance | emptyHlod }}</td>
               <td>{{ item.measuringType | measuringStr }}</td>
               <td class="price">&yen;{{ item.price }}</td>
+              <td class="tax">{{ item.taxType | taxStr }}</td>
+              <td class="stock">{{ item.storeHouseCount }}</td>
               <td>{{ item.locationName }}</td>
               <td class="exponentia">
                 <exponentia :recommendPoint="item.recommendPoint" :updateTime="item.updateTime" :serveTime="item.serveTime"></exponentia>
@@ -82,7 +86,7 @@
       },
       getData() {
         this.listLoad = true;
-        this.$http.post(this.$api.findAllSpotGoodsPage,this.queryParams).then(res=>{
+        this.$http.post(this.$api.findAllSpecialPricePage,this.queryParams).then(res=>{
           if(res.code === 1000){
             this.page.totleCount = res.data.totalCount;
             this.list = res.data.list;

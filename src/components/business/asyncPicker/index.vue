@@ -3,7 +3,7 @@
         <div class="tb-picker-rel">
             <input ref="input" class="tb-input" v-model="chech.name" @keyup="showPanel" @focus="saveValue" />
         </div>
-        <ajaxPanel ref="panel" :search="chech.name" :options="{searchTitle: tip,api: api}" :tip="tip" @on-picker="saveData" v-if="panelShow" :exclude="exclude"></ajaxPanel>
+        <ajaxPanel ref="panel" :class="placement" :search="chech.name" :options="{searchTitle: tip,api: api}" :tip="tip" @on-picker="saveData" v-if="panelShow" :exclude="exclude"></ajaxPanel>
     </div>
 </template>
 
@@ -34,6 +34,10 @@
             },
             exclude:{
                 type:Array
+            },
+            placement:{
+                type:String,
+                default:'left'
             }
         },
         components: {

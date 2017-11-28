@@ -60,7 +60,7 @@
               <td>{{ item.updateTime | dateformat('MM-dd hh:mm') }}</td>
               <td>
                 <Poptip v-model="item.tip" placement="left" trigger="hover" v-show="filterData.status == 1">
-                  <span class="iconfont icon-caozuo action"></span>
+                  <span class="iconfont icon-ziyuan9 action"></span>
                   <div slot="content" class="action-btns">
                     <div class="item" @click="refresh(item)">刷新</div>
                     <div class="item" @click="getOff(item)">下架</div>
@@ -68,7 +68,7 @@
                   </div>
                 </Poptip>
                 <Poptip v-model="item.tip" placement="left" trigger="hover" v-show="filterData.status == 0">
-                  <span class="iconfont icon-caozuo action"></span>
+                  <span class="iconfont icon-ziyuan9 action"></span>
                   <div slot="content" class="action-btns">
                     <div class="item" @click="edit(item,'上架','确认上架')">上架</div>
                     <div class="item" @click="del(item)">删除</div>

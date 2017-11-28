@@ -44,6 +44,7 @@ export const taxStr = (value) => {
 
 // js时间转化为几天前,几小时前，几分钟前
 export const getDateDiff = (value, now) => {
+    let result = '';
     let minute = 1000 * 60;
     let hour = minute * 60;
     let day = hour * 24;

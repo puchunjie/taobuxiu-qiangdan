@@ -100,10 +100,30 @@ const router = new Router({
                     name: 'market',
                     redirect: '/market/iron',
                     component: resolve => require(['@/views/market/index'], resolve),
+                    meta: {
+                        requireAuth: true
+                    },
                     children: [{
                         path: 'iron',
                         name: 'mIron',
-                        component: resolve => require(['@/views/market/iron/index'], resolve)
+                        component: resolve => require(['@/views/market/iron/index'], resolve),
+                        meta: {
+                            requireAuth: true
+                        }
+                    }, {
+                        path: 'plan',
+                        name: 'mPlan',
+                        component: resolve => require(['@/views/market/plan/index'], resolve),
+                        meta: {
+                            requireAuth: true
+                        }
+                    }, {
+                        path: 'special',
+                        name: 'mSpecial',
+                        component: resolve => require(['@/views/market/special/index'], resolve),
+                        meta: {
+                            requireAuth: true
+                        }
                     }]
                 },
                 {

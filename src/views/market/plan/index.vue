@@ -1,6 +1,6 @@
 <template>
   <div class="market-inner-container">
-    <FilterGrop @on-change="asyncFilter" @on-search="search"></FilterGrop>
+    <FilterGrop @on-change="asyncFilter" @on-search="search" isDk></FilterGrop>
     <tableWrap v-model="page" @on-sort="getData">
       <div class="list-table">
         <Spin fix v-show="listLoad"></Spin>
@@ -20,12 +20,13 @@
               <th class="exponentia">实时指数
               </th>
               <th class="warehouse">仓库</th>
+              <th class="plan-time">计划开平时间</th>
               <th class="operation">操作</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(item,i) in list" :key="item.id">
-              <td class="icon"><span class="iconfont icon-xian"></span></td>
+              <td class="icon"><span class="iconfont icon-ding"></span></td>
               <td>{{ item.ironTypeName }}</td>
               <td>{{ item.materialName }}</td>
               <td>{{ item.surfaceName }}</td>
@@ -39,6 +40,7 @@
                 <exponentia :recommendPoint="item.recommendPoint" :updateTime="item.updateTime" :serveTime="item.serveTime"></exponentia>
               </td>
               <td>{{ item.storeHouseName }}</td>
+              <td>{{ item.remark }}</td>
               <td><a class="purchase">我要采购</a></td>
             </tr>
           </tbody>
@@ -81,13 +83,11 @@
         this.filterValue = data;
       },
       getData() {
-        this.listLoad = true;
-        this.$http.post(this.$api.findAllSpotGoodsPage,this.queryParams).then(res=>{
+        this.$http.post(this.$api.findDingKaiAll,this.queryParams).then(res=>{
           if(res.code === 1000){
             this.page.totleCount = res.data.totalCount;
             this.list = res.data.list;
           }
-          this.listLoad = false;
         })
       },
       search(data){

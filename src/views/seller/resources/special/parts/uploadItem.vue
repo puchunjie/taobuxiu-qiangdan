@@ -38,7 +38,7 @@
         </div>
         <div class="table-td operation" v-show="!isEdit">
             <Poptip v-model="tip" placement="left" trigger="hover">
-                <span class="iconfont icon-caozuo action"></span>
+                <span class="iconfont icon-ziyuan9 action"></span>
                 <div slot="content" class="action-btns">
                     <div class="item" @click="add">新增</div>
                     <div class="item" @click="copy">复制</div>

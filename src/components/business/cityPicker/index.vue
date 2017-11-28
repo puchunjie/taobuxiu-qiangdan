@@ -11,6 +11,10 @@
     import ajaxPanel from './ajaxPanel.vue'
     export default {
         props: {
+            validate: {
+                type: Boolean,
+                default: false
+            },
             value: {
                 type: Object,
                 default: function() {
@@ -59,16 +63,18 @@
                 this.$emit('input', val);
             },
             panelShow(val) {
-                let inpuEl = this.$refs.input;
-                let elClassName = inpuEl.className;
-                // 如果点击后又没有输入或者没有输入对，测出现错误提示
-                if (!val && this.chech.name == '') {
-                    if (elClassName.indexOf('on-err') < 0)
-                        inpuEl.className = elClassName + ' ' + 'on-err';
-                } else {
-                    if (elClassName.indexOf('on-err') > 0) {
-                        let reg = new RegExp("on-err", "g");
-                        inpuEl.className = elClassName.replace(reg, "").replace(/(^\s*)|(\s*$)/g, "")
+                if (this.validate) {
+                    let inpuEl = this.$refs.input;
+                    let elClassName = inpuEl.className;
+                    // 如果点击后又没有输入或者没有输入对，测出现错误提示
+                    if (!val && this.chech.name == '') {
+                        if (elClassName.indexOf('on-err') < 0)
+                            inpuEl.className = elClassName + ' ' + 'on-err';
+                    } else {
+                        if (elClassName.indexOf('on-err') > 0) {
+                            let reg = new RegExp("on-err", "g");
+                            inpuEl.className = elClassName.replace(reg, "").replace(/(^\s*)|(\s*$)/g, "")
+                        }
                     }
                 }
             }
@@ -100,7 +106,7 @@
                 this.saveData(data);
             }
         },
-        mounted () {
+        mounted() {
             this.chech = this.value
         }
     }
