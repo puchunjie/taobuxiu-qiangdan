@@ -18,11 +18,12 @@
                 </div>
                 <div class="file-upload">
                     <p class="file-show">{{ fileName }}</p>
-                    <Upload class="btn" ref="upload" :show-upload-list="false" :data="{type:type}" :on-success="handleSuccess" :format="['xlsx']" :max-size="1024" :on-format-error="handleFormatError" :on-exceeded-size="handleMaxSize" :before-upload="beforeUp" :on-error="ctryErr"
+                    <Upload class="btn" ref="upload" :show-upload-list="false" :headers="ajaxHead" :data="{type:type}" :on-success="handleSuccess" :format="['xlsx']" :max-size="1024" :on-format-error="handleFormatError" :on-exceeded-size="handleMaxSize" :before-upload="beforeUp" :on-error="ctryErr"
                         :action="uploadApi">
                         上传
                     </Upload>
-                    <a class="goast" :href="$api.excelDownloadUrl + excelUrl" download @click="countNum">下载模板</a>
+                    <a class="goast" v-if="!canDown" @click="noPass">下载模板</a>
+                    <a class="goast" v-else :href="$api.excelDownloadUrl + excelUrl" download @click="countNum">下载模板</a>
                     <a class="goast" @click="getHistory">下载历史文件</a>
                 </div>
                 <p class="tip"><span>* </span>必须使用<a>《淘不锈接单版-资源标准模板》</a>，填好资源后上传。</p>
@@ -55,6 +56,7 @@
 </template>
 
 <script>
+    import { mapGetters } from 'vuex'
     export default {
         props: {
             value: {
@@ -78,10 +80,12 @@
                 historyList: [],
                 uploadLoading: false,
                 excelUrl: '',
-                excelName:''
+                excelName:'',
+                canDown: false
             }
         },
         computed: {
+            ...mapGetters(['ajaxHead']),
             excelType(){
                 return {
                     storeType: this.storeType,
@@ -135,6 +139,7 @@
                 if (res.code === 1000) {
                     this.$Message.success('上传成功！');
                     this.fileName = res.data.fileName;
+                    this.$emit('on-upload-success');
                 } else {
                     this.$Notice.error({
                         title: '上传异常!',
@@ -166,8 +171,11 @@
             getExcelUrl(){
                 this.$http.post(this.$api.selectExecleUrlByType,this.excelType).then(res => {
                     if(res.code === 1000){
+                        this.canDown = true;
                         this.excelUrl = res.data.modelUrl;
                         this.excelName = res.data.modelUrl.split("/")[res.data.modelUrl.split("/").length-1].split(".")[0]
+                    }else{
+                        this.canDown = false;
                     }
                 })
             },
@@ -175,6 +183,12 @@
                 let params = {fileName:this.excelName,url:this.excelUrl};
                 let fparams = Object.assign(params,this.excelType);
                 this.$http.post(this.$api.downloadExcel,fparams);
+            },
+            noPass(){
+                this.$Notice.warning({
+                    title: '下载异常',
+                    desc: '您下载的模板在服务器上消失了！'
+                });
             }
         },
         mounted() {

@@ -80,6 +80,14 @@
         return Object.assign(this.filterValue,this.page);
       }
     },
+    watch: {
+      'page.currentPage': {
+          handler: function(val, oldVal) {
+              this.getData();
+          },
+          deep: true
+      }
+    },
     methods: {
       asyncFilter(data) {
         this.filterValue = data;

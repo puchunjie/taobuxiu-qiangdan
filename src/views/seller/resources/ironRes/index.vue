@@ -9,7 +9,7 @@
         <a class="action-btn" @click="batchModify">批量调价</a>
         <a class="action-btn" @click="batchGetoff">批量下架</a>
       </div>
-      <div class="btn-group" slot="btns" v-show="filterData.status == 0">
+      <div class="btn-group" slot="btns" v-show="filterData.status != 1">
         <a class="action-btn" @click="batchEdit('批量上架','确认上架')">批量上架</a>
         <a class="action-btn" @click="batchDelete">批量删除</a>
       </div>
@@ -63,7 +63,7 @@
                     <div class="item" @click="edit(item,'修改','确认修改')">修改</div>
                   </div>
                 </Poptip>
-                <Poptip v-model="item.tip" placement="left" trigger="hover" v-show="filterData.status == 0">
+                <Poptip v-model="item.tip" placement="left" trigger="hover" v-show="filterData.status != 1">
                   <span class="iconfont icon-ziyuan9 action"></span>
                   <div slot="content" class="action-btns">
                     <div class="item" @click="edit(item,'上架','确认上架')">上架</div>
@@ -80,7 +80,7 @@
     </tableWrap>
     <upload v-model="uploadShow" :strs="uploadStr" :editList="editList" @on-ajax-success="getList"></upload>
     <ModifyPrice v-model="modifyPriceShow" :apiUrl="$api.changePriceSpotGoods" :batchIds="batchIds" :listData="editList" @on-ajax-success="getList"></ModifyPrice>
-    <uploadExcel v-model="excelShow" :storeType="1" :uploadApi="$api.saveSpotGoodsByExcel" :historyApi="$api.findSpotGoodsExcel"></uploadExcel>
+    <uploadExcel v-model="excelShow" :storeType="1" :uploadApi="$api.saveSpotGoodsByExcel" :historyApi="$api.findSpotGoodsExcel" @on-upload-success="getList"></uploadExcel>
   </div>
 </template>
 

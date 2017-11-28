@@ -18,7 +18,7 @@
             </div>
         </div>
         <div class="bottom-bar">
-            <Page :total="page.totleCount" :current.sync="page.currentPage" :page-size="page.pageSize" size="small" show-total></Page>
+            <Page :total="page.totleCount" show-elevator :current.sync="page.currentPage" :page-size="page.pageSize" size="small" show-total></Page>
         </div>
     </div>
 </template>

@@ -27,38 +27,45 @@
         </div>
         <div class="filter-item">
             <label>厚度</label>
-            <tbInput class="interval" :disabled="!isBJ" v-model="other.heightMin"></tbInput>
+            <tbInput class="interval" :disabled="!hwlDisabel" v-model="other.heightMin"></tbInput>
             <span>-</span>
-            <tbInput class="interval" :disabled="!isBJ" v-model="other.heightMax"></tbInput>
+            <tbInput class="interval" :disabled="!hwlDisabel" v-model="other.heightMax"></tbInput>
         </div>
         <div class="filter-item">
             <label>宽度</label>
-            <tbInput class="interval" :disabled="!isBJ" v-model="other.widthMin"></tbInput>
+            <tbInput class="interval" :disabled="!hwlDisabel" v-model="other.widthMin"></tbInput>
             <span>-</span>
-            <tbInput class="interval" :disabled="!isBJ" v-model="other.widthMax"></tbInput>
+            <tbInput class="interval" :disabled="!hwlDisabel" v-model="other.widthMax"></tbInput>
         </div>
         <div class="filter-item">
             <label>长度</label>
-            <tbInput class="interval" :disabled="!isBJ" v-model="other.lengthMin"></tbInput>
+            <tbInput class="interval" :disabled="!hwlDisabel" v-model="other.lengthMin"></tbInput>
             <span>-</span>
-            <tbInput class="interval" :disabled="!isBJ" v-model="other.lengthMax"></tbInput>
+            <tbInput class="interval" :disabled="!hwlDisabel" v-model="other.lengthMax"></tbInput>
         </div>
         <div class="filter-item">
             <label>公差</label>
-            <tbInput class="interval" :disabled="!isBJ" v-model="other.tolenceMin"></tbInput>
+            <tbInput class="interval" :disabled="!hwlDisabel" v-model="other.tolenceMin"></tbInput>
             <span>-</span>
-            <tbInput class="interval" :disabled="!isBJ" v-model="other.tolenceMax"></tbInput>
+            <tbInput class="interval" :disabled="!hwlDisabel" v-model="other.tolenceMax"></tbInput>
         </div>
         <div class="filter-item no-m"><span class="red-tip">*精确搜索，对应内容项只需填写任意一空</span></div>
     
-        <div class="filter-item">
-            <label>规格</label>
-            <tbInput class="lager-input" :disabled="isBJ" v-model="other.specifications"></tbInput>
-        </div>
-    
-        <div class="filter-item">
-            <label>公差</label>
-            <tbInput class="lager-input" :disabled="isBJ" v-model="other.tolerance"></tbInput>
+        <template v-if="!isDk">
+             <div class="filter-item">
+                <label>规格</label>
+                <tbInput class="lager-input" :disabled="!stDisable" v-model="other.specifications"></tbInput>
+            </div>
+        
+            <div class="filter-item">
+                <label>公差</label>
+                <tbInput class="lager-input" :disabled="!stDisable" v-model="other.tolerance"></tbInput>
+            </div>
+        </template>
+
+        <div class="filter-item" v-else>
+            <label>计划开平时间</label>
+            <asyncPicker style="width:160px" v-model="kaiPing" :api="$api.findAllKaiping"></asyncPicker>
         </div>
     
         <div class="search-btns">
@@ -115,6 +122,10 @@
                     id: "",
                     name: ""
                 },
+                kaiPing:{
+                    id: "",
+                    name: ""
+                },
                 other: {
                     heightMin: "",
                     heightMax: "",
@@ -134,6 +145,17 @@
             isBJ() {
                 return this.ironType.name == '不锈钢板' || this.ironType.name == '不锈钢卷'
             },
+            // 厚宽长公差是否可输入
+            hwlDisabel(){
+                let threeInput = this.other.specifications == '' && this.other.tolerance == '';
+                let bj = this.isBJ || this.ironType.name == '';
+                return  threeInput && bj
+            },
+            stDisable(){
+                let twoInput = this.other.heightMin == '' && this.other.heightMax == '' && this.other.widthMin == '' && this.other.widthMax == '' && this.other.lengthMin == '' && this.other.lengthMax == '' && this.other.tolenceMin == '' && this.other.tolenceMax == ''
+                let bj = !this.isBJ || this.ironType.name == '';
+                return twoInput && bj
+            },
             filterValue() {
                 return {
                     locationId: this.location.id,
@@ -151,7 +173,8 @@
                     tolenceMin: this.other.tolenceMin,
                     tolenceMax: this.other.tolenceMax,
                     specifications: this.other.specifications,
-                    tolerance: this.other.tolerance
+                    tolerance: this.other.tolerance,
+                    kaiPing: this.kaiPing.name
                 }
             }
         },
@@ -198,6 +221,8 @@
                 this.proPlace.name = '';
                 this.storeHouse.id = '';
                 this.storeHouse.name = '';
+                this.kaiPing.id = '';
+                this.kaiPing.name = '';
                 _froEach(this.other, (val, key) => {
                     this.other[key] = ''
                 })
