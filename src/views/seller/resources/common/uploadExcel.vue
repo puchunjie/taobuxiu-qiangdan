@@ -160,12 +160,14 @@
                     title: '上传文件类型错误！',
                     desc: '您上传的： ' + file.name + ' 格式不正确, 请选择.xlsx后缀的文件。'
                 });
+                this.uploadLoading = false;
             },
             handleMaxSize(file) {
                 this.$Notice.warning({
                     title: '上传文件超出尺寸',
                     desc: '您上传的：  ' + file.name + ' 太大了, 不得超过1MB。'
                 });
+                this.uploadLoading = false;
             },
             // 获取EXCEL模板地址
             getExcelUrl(){

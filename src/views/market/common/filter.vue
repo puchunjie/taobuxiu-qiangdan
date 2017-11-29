@@ -69,6 +69,7 @@
         </div>
     
         <div class="search-btns">
+            <a class="reflash-list" @click="reFalsh">刷新列表</a>
             <a class="btn" @click="search(false)">搜索</a>
             <a class="btn goast" @click="search(true)">清空条件</a>
         </div>
@@ -226,6 +227,9 @@
                 _froEach(this.other, (val, key) => {
                     this.other[key] = ''
                 })
+            },
+            reFalsh(){
+                this.$parent.getData()
             }
         }
     }
@@ -281,6 +285,11 @@
                 background-color: #fff;
                 color: @dark_blue;
                 margin-left: 20px;
+            }
+
+            .reflash-list{
+                font-size: 12px;
+                margin-right: 20px;
             }
         }
     }
