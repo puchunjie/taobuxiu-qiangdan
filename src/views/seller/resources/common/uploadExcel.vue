@@ -44,7 +44,7 @@
                             <td>{{ item.fileName }}</td>
                             <td>{{ item.createTime | dateformat }}</td>
                             <td>
-                                <a>预览</a>
+                                <a target="_blank" :href="$api.excelDownloadUrl + item.excelUrl + '.html'">预览</a>
                                 <a :href="$api.excelDownloadUrl + item.excelUrl" download>下载</a>
                             </td>
                         </tr>

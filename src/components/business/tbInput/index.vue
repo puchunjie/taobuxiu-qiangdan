@@ -21,6 +21,10 @@
             value: {
                 type: [String, Number],
                 default: ''
+            },
+            type: {
+                type: String,
+                default: 'text'
             }
         },
         data() {
@@ -51,7 +55,9 @@
                         }
                     }
                 }
-            }
+            },
+            // 类型检查
+            
         },
         mounted() {
             this.inValue = this.value

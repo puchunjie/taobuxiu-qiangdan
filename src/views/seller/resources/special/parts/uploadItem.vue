@@ -16,13 +16,13 @@
             <specPicker validate v-model="spec" :ironType="iron" :surface="surface"></specPicker>
         </div>
         <div class="table-td tolerance">
-            <tbInput v-model="other.tolerance"></tbInput>
+            <tbInput validate v-model="other.tolerance"></tbInput>
         </div>
         <div class="table-td measuring">
             <tbSelect v-model="other.measuringType" :data='[{label:"理计",value:"2"},{label:"过磅",value:"1"}]'></tbSelect>
         </div>
         <div class="table-td price">
-            <tbInput v-model="other.price"></tbInput>
+            <tbInput validate v-model="other.price"></tbInput>
         </div>
         <div class="table-td tax">
             <tbSelect v-model="other.taxType" :data='[{label:"是",value:"1"},{label:"否",value:"2"}]'></tbSelect>
@@ -30,11 +30,11 @@
         <div class="table-td location">
             <cityPicter validate v-model="location"></cityPicter>
         </div>
-        <div class="table-td warehouse">
-            <asyncPicker validate v-model="warehouse" :api="$api.getStores"></asyncPicker>
-        </div>
         <div class="table-td stock">
-            <tbInput v-model="other.storeHouseCount"></tbInput>
+            <tbInput validate v-model="other.storeHouseCount"></tbInput>
+        </div>
+        <div class="table-td warehouse">
+            <asyncPicker validate v-model="warehouse" placement="right" :api="$api.getStores"></asyncPicker>
         </div>
         <div class="table-td operation" v-show="!isEdit">
             <Poptip v-model="tip" placement="left" trigger="hover">

@@ -16,13 +16,13 @@
             <specPicker validate v-model="spec" :ironType="iron" :surface="surface"></specPicker>
         </div>
         <div class="table-td tolerance">
-            <tbInput v-model="other.tolerance"></tbInput>
+            <tbInput validate v-model="other.tolerance"></tbInput>
         </div>
         <div class="table-td measuring">
             <tbSelect v-model="other.measuringType" :data='[{label:"理计",value:"2"},{label:"过磅",value:"1"}]'></tbSelect>
         </div>
         <div class="table-td price">
-            <tbInput v-model="other.price"></tbInput>
+            <tbInput validate v-model="other.price"></tbInput>
         </div>
         <div class="table-td location">
             <cityPicter validate v-model="location"></cityPicter>

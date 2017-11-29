@@ -24,7 +24,7 @@
                             <td>{{ item.materialName }}</td>
                             <td>{{ item.surfaceName }}</td>
                             <td>{{ item.proPlacesName }}</td>
-                            <td>{{ `${item.height}*${item.width}*${item.length}` }}</td>
+                            <td>{{ item.specifications ? item.specifications :`${item.height}*${item.width}*${item.length}`  }}</td>
                             <td>{{ item.tolerance | emptyHlod }}</td>
                             <td>{{ item.measuringType | measuringStr }}</td>
                             <td>{{ item.price }}</td>
@@ -37,7 +37,7 @@
             <div class="modify-statistics">
                 共选中{{ listData.length }}条，
                 <tbSelect class="modify-type" v-model="type" :data='[{label:"上涨",value:"2"},{label:"下调",value:"1"}]'></tbSelect>， 调整金额：
-                <tbInput class="modify-type" v-model="price"></tbInput>
+                <tbInput class="modify-type" v-model="price"></tbInput> 元/吨
             </div>
             <div class="bottom-btns">
                 <a class="btn" @click="modifySome">确认调价</a>
