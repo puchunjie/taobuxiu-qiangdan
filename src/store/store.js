@@ -20,11 +20,14 @@ export default new Vuex.Store({
         pushData: ''
     },
     getters: {
+        isLogin: state => {
+            return state.user != ''
+        },
         roleId: state => {
             //写死的超管id,后期修改为从state user中获取
             return state.loginId
         },
-        ajaxHead:state => {
+        ajaxHead: state => {
             return {
                 authorization: state.authorization,
                 loginId: state.loginId

@@ -43,73 +43,29 @@
                 <exponentia :recommendPoint="item.recommendPoint" :updateTime="item.updateTime" :serveTime="item.serveTime"></exponentia>
               </td>
               <td>{{ item.storeHouseName }}</td>
-              <td><a class="purchase">我要采购</a></td>
+              <td><a class="purchase" @click="purchase(item.createUserId,item)">我要采购</a></td>
             </tr>
           </tbody>
         </table>
       </div>
     </tableWrap>
+    <purchasePanel v-model="purchaseShow" :info="businessInfo" :item="pickerItem" type="specail" isSpecail></purchasePanel>
   </div>
 </template>
 
 <script>
-  import FilterGrop from '../common/filter.vue'
-  import tableWrap from '../common/tableWrap.vue'
-  import exponentia from '../common/exponentia.vue'
+  import sameMix from '../common/mixin.js'
   export default {
-    components: {
-      FilterGrop,
-      tableWrap,
-      exponentia
-    },
-    data() {
-      return {
-        filterValue: {},
-        listLoad: false,
-        list: [],
-        page: {
-          totleCount: 10,
-          pageSize: 20,
-          currentPage: 1,
-          priceSort: ""
-        }
-      }
-    },
-    computed: {
-      queryParams(){
-        return Object.assign(this.filterValue,this.page);
-      }
-    },
-    watch: {
-      'page.currentPage': {
-          handler: function(val, oldVal) {
-              this.getData();
-          },
-          deep: true
-      }
-    },
+    mixins: [sameMix],
     methods: {
-      asyncFilter(data) {
-        this.filterValue = data;
-      },
       getData() {
-        this.listLoad = true;
-        this.$http.post(this.$api.findAllSpecialPricePage,this.queryParams).then(res=>{
-          if(res.code === 1000){
+        this.$http.post(this.$api.findAllSpecialPricePage, this.queryParams).then(res => {
+          if (res.code === 1000) {
             this.page.totleCount = res.data.totalCount;
             this.list = res.data.list;
           }
-          this.listLoad = false;
         })
-      },
-      search(data){
-        this.filterValue = data;
-        this.page.currentPage = 1;
-        this.getData();
       }
-    },
-    created () {
-      this.getData();
     }
   }
 </script>

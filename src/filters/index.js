@@ -29,13 +29,13 @@ export const measuringStr = (value) => {
 }
 
 // 是否含税转义
-export const taxStr = (value) => {
+export const taxStr = (value, isBoolen = true) => {
     switch (value) {
         case 1:
-            return '是'
+            return isBoolen ? '是' : '含税'
             break;
         case 2:
-            return '否'
+            return isBoolen ? '否' : '不含税'
             break;
         default:
             break;
@@ -44,14 +44,15 @@ export const taxStr = (value) => {
 
 // js时间转化为几天前,几小时前，几分钟前
 export const getDateDiff = (value, now) => {
+    let nowTime = now ? now : new Date().getTime();
     let result = '';
     let minute = 1000 * 60;
     let hour = minute * 60;
     let day = hour * 24;
     let halfamonth = day * 15;
     let month = day * 30;
-    let diffValue = now - value;
-    if (diffValue < 0) { return; }
+    let diffValue = nowTime - value;
+    if (diffValue < 0) { return '刚刚'; }
     let monthC = diffValue / month;
     let weekC = diffValue / (7 * day);
     let dayC = diffValue / day;

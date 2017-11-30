@@ -38,7 +38,6 @@
     .crown-container {
         position: relative;
         display: inline-block;
-        vertical-align: top;
         height: 16px;
         text-indent: 0!important;
         span {

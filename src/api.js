@@ -200,7 +200,7 @@ export const saveDiscount = '/demands/bInfo/updateBuserProInfo'
 /**
  * 查询仓库数据
  */
-export const getStores = '/demands/query/findStoreHouse'
+export const getStores = '/api/query/findStoreHouse'
 
 /**
  * 查询所有地址信息
@@ -461,3 +461,13 @@ export const findAllSpecialPricePage = '/api/dingkai/findAllSpecialPricePage'
  * 定开商家查询
  */
 export const findDingKaiAll = '/api/dingkai/findDingKaiAll'
+
+/**
+ *  采购卖家信息查询
+ */
+export const queryUserInfo = '/demands/userIronInfo/queryUserInfo'
+
+/**
+ * 获取订单有效确认时间选项
+ */
+export const selectStorerSubOrderName = '/api/ad/selectStorerSubOrderName'

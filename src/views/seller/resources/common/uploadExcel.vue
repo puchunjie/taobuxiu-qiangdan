@@ -112,6 +112,7 @@
                 this.file = '';
                 this.uploadLoading = false;
                 this.historyList = [];
+                this.excelName = '';
             },
             // 获取历史记录
             getHistory() {

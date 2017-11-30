@@ -5,8 +5,8 @@
             <crown tit="求购活跃度：" :level='level'></crown>
         </p>
         <p class="inline" style="margin-left:80px">
-            资质认证：<span v-show="user.isFaithUser == '1'" class="iconfont icon-cheng right" style="color:#F5A623"></span>
-            <span v-show="user.isGuaranteeUser == '1'" class="iconfont icon-bao right" style="color:#C16BD6"></span></p>
+            资质认证：<merchantLabel :faith="user.isFaithUser == '1'" :guarantee="user.isGuaranteeUser == '1'"></merchantLabel>
+        </p>
         <p>
             <span class="tit-ico iconfont icon-user"></span>{{ user.contact }}
             <span class="tit-ico iconfont icon-phone"></span>{{ user.contactNum }}
@@ -21,6 +21,7 @@
         mapGetters
     } from 'vuex'
     import crown from '@/components/basics/crown/index.vue'
+    import merchantLabel from '@/components/business/merchantLabel/index.vue'
     export default {
         props: {
             level: {
@@ -29,7 +30,8 @@
             }
         },
         components: {
-            crown
+            crown,
+            merchantLabel
         },
         computed: {
             ...mapGetters(['user'])

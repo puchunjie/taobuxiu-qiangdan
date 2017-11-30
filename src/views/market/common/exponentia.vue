@@ -1,6 +1,6 @@
 <template>
     <div class="exponentia-box" :class="'type-color'+num">
-        <p class="time-limit">{{ updateTime | getDateDiff(nowTime) }}</p>
+        <p class="time-limit">{{ updateTime | getDateDiff(serveTime) }}</p>
         <div class="line-wrap">
             <span class="line-item" v-for="el in num" :key="el"></span>
         </div>
@@ -29,9 +29,6 @@
         computed: {
             num(){
                 return +this.recommendPoint > 0 ? +this.recommendPoint : 1
-            },
-            nowTime(){
-                return !!this.serveTime ? this.serveTime : new Date().getTime();
             }
         }
     }
