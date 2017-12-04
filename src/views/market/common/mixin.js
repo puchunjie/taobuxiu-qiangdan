@@ -29,7 +29,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['isLogin']),
+        ...mapGetters(['isLogin', 'roleId']),
         queryParams() {
             return Object.assign(this.filterValue, this.page);
         }
@@ -69,10 +69,15 @@ export default {
                     this.purchaseShow = true;
                 });
             } else {
-                this.$router.replace({
-                    path: '/login',
-                    query: {
-                        redirect: this.$route.fullPath
+                this.$Modal.confirm({
+                    content: '您还没有登录，请登录',
+                    onOk: () => {
+                        this.$router.replace({
+                            path: '/login',
+                            query: {
+                                redirect: this.$route.fullPath
+                            }
+                        })
                     }
                 })
             }

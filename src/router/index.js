@@ -49,6 +49,21 @@ const router = new Router({
                             path: 'Bright',
                             name: 'Bright',
                             component: resolve => require(['@/views/rights/index'], resolve)
+                        },
+                        {
+                            path: 'BironOrder',
+                            name: 'BironOrder',
+                            component: resolve => require(['@/views/buyer/orders/iron/index'], resolve)
+                        },
+                        {
+                            path: 'BplanOrder',
+                            name: 'BplanOrder',
+                            component: resolve => require(['@/views/buyer/orders/plan/index'], resolve)
+                        },
+                        {
+                            path: 'BspecialOrder',
+                            name: 'BspecialOrder',
+                            component: resolve => require(['@/views/buyer/orders/special/index'], resolve)
                         }
                     ]
                 },

@@ -39,13 +39,13 @@
                 <exponentia :recommendPoint="item.recommendPoint" :updateTime="item.updateTime" :serveTime="item.serveTime"></exponentia>
               </td>
               <td>{{ item.storeHouseName }}</td>
-              <td><a class="purchase" @click="purchase(item.createUserId,item)">我要采购</a></td>
+              <td><a class="purchase" v-if="item.createUserId != roleId" @click="purchase(item.createUserId,item)">我要采购</a><span class="me-gry" v-else>我的资源</span></td>
             </tr>
           </tbody>
         </table>
       </div>
     </tableWrap>
-    <purchasePanel v-model="purchaseShow" :info="businessInfo" :item="pickerItem" type="iron"></purchasePanel>
+    <purchasePanel v-model="purchaseShow" :info="businessInfo" :item="pickerItem" type="1"></purchasePanel>
   </div>
 </template>
 

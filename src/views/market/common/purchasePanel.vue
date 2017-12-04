@@ -11,7 +11,7 @@
                                 <merchantLabel :faith="info.isFaithUser == '1'" :guarantee="info.isGuaranteeUser == '1'"></merchantLabel>
                                 <crown :level='info.level'></crown>
                                 <qq style="margin-left:75px" :data="{name:info.contact,phone:info.contactNum,qq:info.QQ}"></qq>
-
+    
                                 <span style="float:right">{{ item.updateTime | dateformat }}</span>
                             </th>
                         </tr>
@@ -36,11 +36,11 @@
                             <td>{{ item.price }}元/吨</td>
                             <td>{{ item.storeHouseName }}</td>
                             <td v-show="isSpecail">{{ item.storeHouseCount }}</td>
-                            <td v-if="type == 'iron'">-/-</td>
-                            <td v-else-if="type == 'plan'">{{ item.remark }}</td>
-                            <td v-else-if="type == 'specail'">{{ item.taxType | taxStr(false)}}</td>
+                            <td v-if="type == '1'">-/-</td>
+                            <td v-else-if="type == '2'">{{ item.remark }}</td>
+                            <td v-else-if="type == '3'">{{ item.taxType | taxStr(false)}}</td>
                             <td>
-                                <tbInput validate style="width:100px;margin-right:5px"></tbInput>吨
+                                <tbInput validate @on-input="validateNum" v-model="apiData.nums" style="width:100px;margin-right:5px"></tbInput>吨
                             </td>
                         </tr>
                     </tbody>
@@ -52,8 +52,8 @@
             </div>
             <div class="bottom-btns">
                 有效确认时间
-                <tbSelect style="width:120px;margin:0 20px 0 10px;" :api="$api.selectStorerSubOrderName"></tbSelect>
-                <a class="btn">确认下单</a>
+                <tbSelect style="width:120px;margin:0 20px 0 10px;" :api="$api.selectStorerSubOrderName" v-model="apiData.validity"></tbSelect>
+                <a class="btn" @click="saveStoreOrder">确认下单</a>
                 <a class="btn goast" @click="close">取消</a>
             </div>
         </div>
@@ -106,11 +106,19 @@
                 default: function() {
                     return {}
                 }
-            }
+            },
+            // 下单最大数量限制,不传为无限制
+            maxNum: Number
         },
         data() {
             return {
-                visible: false
+                visible: false,
+                apiData: {
+                    nums: '',
+                    storeId: '',
+                    validity: '',
+                    storeType: ''
+                }
             }
         },
         computed: {
@@ -129,6 +137,30 @@
         methods: {
             close() {
                 this.visible = false;
+            },
+            validateNum(){
+                if(isNaN(this.apiData.nums) || this.apiData.nums <= 0){
+                    this.apiData.nums = ''
+                }
+            },
+            // 下订单
+            saveStoreOrder() {
+                if (this.apiData.nums != '') {
+                    let params = this.$clearData(this.apiData);
+                    params.storeId = this.item.id;
+                    params.storeType = this.type;
+                    this.$http.post(this.$api.saveStoreOrder,params).then(res => {
+                        if(res.code === 1000){
+                            this.visible = false;
+                            this.$Message.success('下单成功');
+                        }else if(res.code === -1){
+                            this.$Message.error('无法对自己发布的资源进行下单!');
+                        }
+                        this.apiData.nums = ''
+                    })
+                } else {
+                    this.$Message.error('请输入要购买的数量!');
+                }
             }
         },
         mounted() {

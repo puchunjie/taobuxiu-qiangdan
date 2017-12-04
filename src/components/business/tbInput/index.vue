@@ -1,7 +1,7 @@
 <template>
     <div class="tb-picker">
         <div class="tb-picker-rel">
-            <input ref="input" v-if="!disabled" class="tb-input" type="text" v-model="inValue" @blur="checkValue" />
+            <input ref="input" v-if="!disabled" class="tb-input" type="text" v-model="inValue" @blur="checkValue" @keyup="inPut" />
             <div v-else class="tb-input disabled"></div>
         </div>
     </div>
@@ -57,7 +57,9 @@
                 }
             },
             // 类型检查
-            
+            inPut(){
+                this.$emit("on-input")
+            }
         },
         mounted() {
             this.inValue = this.value

@@ -17,8 +17,8 @@
             leftMenu
         },
         computed: {
-            ...mapGetters(['nums','pushData']),
-            asyncMenu(){
+            ...mapGetters(['nums', 'pushData']),
+            asyncMenu() {
                 this.menus[0].subs[0].count = this.nums.todayBuy;
                 this.menus[0].subs[1].count = this.nums.historyBuy;
                 return this.menus
@@ -43,6 +43,37 @@
                         count: 14002,
                         router: {
                             name: 'Bbuys',
+                            params: {
+                                isToday: 0
+                            }
+                        }
+                    }]
+                }, {
+                    title: '我的订单',
+                    icon: 'icon-dingdan2',
+                    subs: [{
+                        name: '现货订单',
+                        count: 300,
+                        router: {
+                            name: 'BironOrder',
+                            params: {
+                                isToday: 1
+                            }
+                        }
+                    }, {
+                        name: '定开订单',
+                        count: 14002,
+                        router: {
+                            name: 'BplanOrder',
+                            params: {
+                                isToday: 0
+                            }
+                        }
+                    },{
+                        name: '特价订单',
+                        count: 14002,
+                        router: {
+                            name: 'BspecialOrder',
                             params: {
                                 isToday: 0
                             }

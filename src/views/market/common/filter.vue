@@ -52,16 +52,16 @@
         <div class="filter-item no-m"><span class="red-tip">*精确搜索，对应内容项只需填写任意一空</span></div>
     
         <template v-if="!isDk">
-             <div class="filter-item">
-                <label>规格</label>
-                <tbInput class="lager-input" :disabled="!stDisable" v-model="other.specifications"></tbInput>
-            </div>
-        
-            <div class="filter-item">
-                <label>公差</label>
-                <tbInput class="lager-input" :disabled="!stDisable" v-model="other.tolerance"></tbInput>
-            </div>
-        </template>
+                 <div class="filter-item">
+                    <label>规格</label>
+                    <tbInput class="lager-input" :disabled="!stDisable" v-model="other.specifications"></tbInput>
+                </div>
+            
+                <div class="filter-item">
+                    <label>公差</label>
+                    <tbInput class="lager-input" :disabled="!stDisable" v-model="other.tolerance"></tbInput>
+                </div>
+</template>
 
         <div class="filter-item" v-else>
             <label>计划开平时间</label>
@@ -78,7 +78,6 @@
 
 <script>
     import tbInput from '@/components/business/tbInput/index'
-    import tbSelect from '@/components/business/tbSelect/index'
     import cityPicter from '@/components/business/cityPicker/index'
     import asyncPicker from '@/components/business/asyncPicker/index'
     import specPicker from '@/components/business/specPicker/index'
@@ -86,7 +85,6 @@
     export default {
         components: {
             tbInput,
-            tbSelect,
             cityPicter,
             asyncPicker,
             specPicker
@@ -123,7 +121,7 @@
                     id: "",
                     name: ""
                 },
-                kaiPing:{
+                kaiPing: {
                     id: "",
                     name: ""
                 },
@@ -147,14 +145,14 @@
                 return this.ironType.name == '不锈钢板' || this.ironType.name == '不锈钢卷'
             },
             // 厚宽长公差是否可输入
-            hwlDisabel(){
+            hwlDisabel() {
                 let threeInput = this.other.specifications == '' && this.other.tolerance == '';
                 let bj = this.isBJ || this.ironType.name == '';
-                return  threeInput && bj
+                return threeInput && bj
             },
-            stDisable(){
-                let twoInput = this.other.heightMin == '' && this.other.heightMax == '' && this.other.widthMin == '' && this.other.widthMax == '' && this.other.lengthMin == '' && this.other.lengthMax == '' && this.other.tolenceMin == '' && this.other.tolenceMax == ''
-                let bj = !this.isBJ || this.ironType.name == '';
+            stDisable() {
+                let twoInput = this.other.heightMin == '' && this.other.heightMax == '' && this.other.widthMin == '' && this.other.widthMax == '' && this.other.lengthMin == '' && this.other.lengthMax == '' && this.other.tolenceMin == '' && this.other.tolenceMax == '';
+                let bj = !this.isBJ;
                 return twoInput && bj
             },
             filterValue() {
@@ -181,20 +179,17 @@
         },
         watch: {
             //板卷、非板卷切换时候重置筛选参数
-            isBJ(val) {
-                if (val) {
-                    this.other.specifications = '';
-                    this.other.tolerance = '';
-                } else {
-                    this.other.heightMin = '';
-                    this.other.heightMax = '';
-                    this.other.widthMin = '';
-                    this.other.widthMax = '';
-                    this.other.lengthMin = '';
-                    this.other.lengthMax = '';
-                    this.other.tolenceMin = '';
-                    this.other.tolenceMax = '';
-                }
+            hwlDisabel(val) {
+                this.switchValue(val)
+            },
+            stDisable(val) {
+                this.switchValue(!val)
+            },
+            'other': {
+                handler: function(val, oldVal) {
+                    this.$emit('on-change', val);
+                },
+                deep: true
             },
             'filterValue': {
                 handler: function(val, oldVal) {
@@ -228,8 +223,23 @@
                     this.other[key] = ''
                 })
             },
-            reFalsh(){
+            reFalsh() {
                 this.$parent.getData()
+            },
+            switchValue(val) {
+                if (val) {
+                    this.other.specifications = '';
+                    this.other.tolerance = '';
+                } else {
+                    this.other.heightMin = '';
+                    this.other.heightMax = '';
+                    this.other.widthMin = '';
+                    this.other.widthMax = '';
+                    this.other.lengthMin = '';
+                    this.other.lengthMax = '';
+                    this.other.tolenceMin = '';
+                    this.other.tolenceMax = '';
+                }
             }
         }
     }
@@ -286,8 +296,7 @@
                 color: @dark_blue;
                 margin-left: 20px;
             }
-
-            .reflash-list{
+            .reflash-list {
                 font-size: 12px;
                 margin-right: 20px;
             }

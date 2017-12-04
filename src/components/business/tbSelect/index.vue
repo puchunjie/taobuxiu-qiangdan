@@ -62,7 +62,7 @@
                         res.data.forEach(el => {
                             this.list.push({
                                 label: el.name,
-                                value: el.name
+                                value: el.id
                             })
                         })
                     }

@@ -471,3 +471,16 @@ export const queryUserInfo = '/demands/userIronInfo/queryUserInfo'
  * 获取订单有效确认时间选项
  */
 export const selectStorerSubOrderName = '/api/ad/selectStorerSubOrderName'
+
+
+
+// =================================订单=================================
+/**
+ * 用户下订单
+ */
+export const saveStoreOrder = '/demands/storeOrder/saveStoreOrder'
+
+/**
+ * 订单买家查询
+ */
+export const findBuyerStoreOrder = '/demands/storeOrder/findBuyerStoreOrder'

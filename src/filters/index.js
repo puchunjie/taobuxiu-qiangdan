@@ -72,3 +72,25 @@ export const getDateDiff = (value, now) => {
         result = "刚刚";
     return result;
 }
+
+
+//订单state转换
+// 买家订单
+export const bOrderState = (value) => {
+    switch (Number(value)) {
+        case 1:
+            return '已完成'
+            break;
+        case 2:
+            return '待确认'
+            break;
+        case 3:
+            return '卖家未接单'
+            break;
+        case 4:
+            return '已取消'
+            break;
+        default:
+            break;
+    }
+}
