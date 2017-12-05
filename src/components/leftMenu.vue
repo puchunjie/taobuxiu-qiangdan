@@ -85,7 +85,7 @@
     .left-menu {
         position: absolute;
         width: 160px;
-        height: 100%;
+        min-height: 100%;
         top: 0;
         padding-top: 148px;
         background-color: #303653;

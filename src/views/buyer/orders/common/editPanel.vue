@@ -1,7 +1,7 @@
 <template>
     <div class="purchase-panel" v-if="visible">
         <div class="inner-wrap">
-            <div class="header">确认采购订单<span class="close iconfont icon-close" @click="close"></span></div>
+            <div class="header">修改订单<span class="close iconfont icon-close" @click="close"></span></div>
             <div class="content">
                 <table class="info-table">
                     <thead>
@@ -11,7 +11,8 @@
                                 <merchantLabel :faith="item.isFaithUser == '1'" :guarantee="item.isGuaranteeUser == '1'"></merchantLabel>
                                 <crown :level='item.sellLevel'></crown>
                                 <qq style="margin-left:75px" :data="{name:item.contact,phone:item.contactNum,qq:item.QQ}"></qq>
-                                <span style="float:right">{{ item.updateTime | dateformat }}</span>
+    
+                                <span style="float:right">{{ item.storeCreateTime | dateformat }}</span>
                             </th>
                         </tr>
                     </thead>
@@ -39,20 +40,20 @@
                             <td v-else-if="type == '2'">{{ item.remark }}</td>
                             <td v-else-if="type == '3'">{{ item.taxType | taxStr(false)}}</td>
                             <td>
-                                <tbInput validate @on-input="validateNum" v-model="apiData.nums" style="width:100px;margin-right:5px"></tbInput>吨
+                                <tbInput validate @on-input="validateNum" v-model="editData.nums" style="width:100px;margin-right:5px"></tbInput>吨
                             </td>
                         </tr>
                     </tbody>
                 </table>
                 <div class="fresh-index">
-                    新鲜指数：该资源更新于<span class="red-tip">{{ item.updateTime | getDateDiff(item.serveTime) }}</span>，{{ item.recommendRemark }}
+                    新鲜指数：该资源更新于<span class="red-tip">{{ item.storeUpdateTime | getDateDiff(item.serveTime) }}</span>，{{ item.recommendRemark }}
                 </div>
                 <p>供应商地址：{{ item.address }}</p>
             </div>
             <div class="bottom-btns">
                 有效确认时间
-                <tbSelect style="width:120px;margin:0 20px 0 10px;" :api="$api.selectStorerSubOrderName" v-model="apiData.validity"></tbSelect>
-                <a class="btn" @click="saveStoreOrder">确认下单</a>
+                <countDown style="margin-right:20px" normal :endTime="item.confirmTime" :nowTime="item.serveTime"></countDown>
+                <a class="btn" @click="editOrder">确认修改</a>
                 <a class="btn goast" @click="close">取消</a>
             </div>
         </div>
@@ -61,14 +62,14 @@
 
 <script>
     import tbInput from '@/components/business/tbInput/index'
-    import tbSelect from '@/components/business/tbSelect/index'
     import crown from '@/components/basics/crown/index.vue'
+    import countDown from '@/components/countDown.vue'
     import qq from '@/components/business/qqContant/index.vue'
     import merchantLabel from '@/components/business/merchantLabel/index.vue'
     export default {
         components: {
+            countDown,
             tbInput,
-            tbSelect,
             crown,
             qq,
             merchantLabel
@@ -79,7 +80,7 @@
                 default: false
             },
             type: {
-                type: [String,Number]
+                type: [String, Number]
             },
             isSpecail: {
                 type: Boolean,
@@ -97,11 +98,9 @@
         data() {
             return {
                 visible: false,
-                apiData: {
+                editData: {
                     nums: '',
-                    storeId: '',
-                    validity: '',
-                    storeType: ''
+                    id: ''
                 }
             }
         },
@@ -116,6 +115,10 @@
             },
             value(val) {
                 this.visible = val
+            },
+            item(val) {
+                this.editData.nums = val.nums
+                this.editData.id = val.id
             }
         },
         methods: {
@@ -123,32 +126,29 @@
                 this.visible = false;
             },
             validateNum() {
-                if (isNaN(this.apiData.nums) || this.apiData.nums <= 0) {
-                    this.apiData.nums = ''
-                } else if (this.isSpecail && this.apiData.nums > this.item.storeHouseCount) {
-                    this.apiData.nums = ''
+                if (isNaN(this.editData.nums) || this.editData.nums <= 0) {
+                    this.editData.nums = ''
+                } else if (this.isSpecail && this.editData.nums > this.item.storeHouseCount) {
+                    this.editData.nums = ''
                     this.$Message.error('您输入的数量已经超出库存，请重新输入!');
                 }
             },
-            // 下订单
-            saveStoreOrder() {
-                if (this.apiData.nums != '') {
-                    let params = this.$clearData(this.apiData);
-                    params.storeId = this.item.storeId;
-                    params.storeType = this.type;
-                    this.$http.post(this.$api.saveStoreOrder, params).then(res => {
+            editOrder() {
+                if (this.editData.nums != '') {
+                    this.$http.post(this.$api.modifyStoreOrder, this.editData).then(res => {
                         if (res.code === 1000) {
                             this.visible = false;
-                            this.$Message.success('下单成功');
+                            this.$Message.success('修改成功');
+                            this.$emit("on-edit");
                         } else if (res.code === -1) {
                             this.$Message.error(res.message);
                         }
-                        this.apiData.nums = ''
+                        this.editData.nums = ''
                     })
                 } else {
                     this.$Message.error('请输入要购买的数量!');
                 }
-            }
+            },
         },
         mounted() {
             this.visible = this.value;
@@ -158,7 +158,7 @@
 
 
 <style lang="less" scoped>
-    @import url('../../../assets/base.less');
+    @import url('../../../../assets/base.less');
     .purchase-panel {
         position: fixed;
         width: 100%;

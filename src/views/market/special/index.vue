@@ -52,7 +52,7 @@
         </table>
       </div>
     </tableWrap>
-    <purchasePanel v-model="purchaseShow" :info="businessInfo" :item="pickerItem" type="3" isSpecail></purchasePanel>
+    <purchasePanel v-model="purchaseShow" :item="purchaseItem" type="3" isSpecail></purchasePanel>
   </div>
 </template>
 

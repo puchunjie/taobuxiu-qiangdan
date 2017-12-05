@@ -35,7 +35,10 @@
         },
         methods: {
             pickerStatus(i) {
-                this.activeStatus = i
+                if(i != this.activeStatus && this.data[i].count>0){
+                    this.activeStatus = i;
+                }
+                
             }
         }
     }

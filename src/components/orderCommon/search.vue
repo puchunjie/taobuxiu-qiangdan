@@ -2,13 +2,15 @@
     <div class="seach-div">
         <div class="search-input">
             <input type="text" v-model="search.str" :placeholder="placeholder" />
-            <a>搜索</a>
+            <a @click="search.str = ''">重置</a>
         </div>
         <div class="time-limit">
             下单时间：
             <tbSelect class="select" v-model="search.limitTime" :data='selectData'></tbSelect>
         </div>
-        <slot class="page"></slot>
+        <div class="page">
+            <slot></slot>
+        </div>
     </div>
 </template>
 
@@ -234,6 +236,7 @@
         .page {
             position: absolute;
             right: 0;
+            top: 10px;
         }
     }
 </style>

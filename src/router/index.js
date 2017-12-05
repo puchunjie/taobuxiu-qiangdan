@@ -99,14 +99,29 @@ const router = new Router({
                             component: resolve => require(['@/views/seller/resources/ironRes/index'], resolve)
                         },
                         {
-                            path: 'plan',
-                            name: 'plan',
+                            path: 'planRes',
+                            name: 'planRes',
                             component: resolve => require(['@/views/seller/resources/plan/index'], resolve)
                         },
                         {
-                            path: 'special',
-                            name: 'special',
+                            path: 'specialRes',
+                            name: 'specialRes',
                             component: resolve => require(['@/views/seller/resources/special/index'], resolve)
+                        },
+                        {
+                            path: 'SironOrder',
+                            name: 'SironOrder',
+                            component: resolve => require(['@/views/seller/orders/iron/index'], resolve)
+                        },
+                        {
+                            path: 'SplanOrder',
+                            name: 'SplanOrder',
+                            component: resolve => require(['@/views/seller/orders/plan/index'], resolve)
+                        },
+                        {
+                            path: 'SspecialOrder',
+                            name: 'SspecialOrder',
+                            component: resolve => require(['@/views/seller/orders/special/index'], resolve)
                         }
                     ]
                 },

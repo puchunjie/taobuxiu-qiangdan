@@ -481,6 +481,26 @@ export const selectStorerSubOrderName = '/api/ad/selectStorerSubOrderName'
 export const saveStoreOrder = '/demands/storeOrder/saveStoreOrder'
 
 /**
- * 订单买家查询
+ * 买家查询订单
  */
 export const findBuyerStoreOrder = '/demands/storeOrder/findBuyerStoreOrder'
+
+/**
+ * 买家取消订单
+ */
+export const cancelStoreOrder = '/demands/storeOrder/cancelStoreOrder'
+
+/**
+ * 买家修改订单
+ */
+export const modifyStoreOrder = '/demands/storeOrder/modifyStoreOrder'
+
+/**
+ * 卖家查询订单
+ */
+export const findSellerStoreOrder = '/demands/storeOrder/findSellerStoreOrder'
+
+/**
+ * 卖家确认订单
+ */
+export const confirmStoreOrder = '/demands/storeOrder/confirmStoreOrder'

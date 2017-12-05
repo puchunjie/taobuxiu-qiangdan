@@ -45,7 +45,7 @@
         </table>
       </div>
     </tableWrap>
-    <purchasePanel v-model="purchaseShow" :info="businessInfo" :item="pickerItem" type="1"></purchasePanel>
+    <purchasePanel v-model="purchaseShow" :item="purchaseItem" type="1"></purchasePanel>
   </div>
 </template>
 

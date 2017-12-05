@@ -1,7 +1,7 @@
 <template>
   <div class="order-container">
     <status :data="statusData" v-model="apiData.orderStatus"></status>
-    <searchBar placeholder="搜索供应商名称/订单号" v-model="searchData">
+    <searchBar placeholder="搜索买方公司抬头/订单号" v-model="searchData">
       <Page class="no-color line-page" :total="page.totalCount" :current.sync="page.currentPage" :page-size="page.pageSize" size="small" show-total></Page>
     </searchBar>
     <div class="table-contnet">
@@ -27,7 +27,7 @@
             <span class="mr-80">{{ item.createTime | dateformat('yyyy-MM-dd hh:mm:ss') }}</span>
             <span class="mr-80">订单号：{{ item.id }}</span> {{ item.companyName }}
             <merchantLabel :faith="item.isFaithUser == '1'" :guarantee="item.isGuaranteeUser == '1'"></merchantLabel>
-            <crown class="mr-80" :level='item.sellLevel'></crown>
+            <crown class="mr-80" :level='item.buyLevel'></crown>
             <qq :data="{name:item.contact,phone:item.contactNum,qq:item.QQ}"></qq>
           </th>
         </tr>
@@ -51,10 +51,9 @@
           </td>
           <td class="operation">
             <template v-if="item.orderStatus == 2">
-                  <a @click="cancelStoreOrder(item.id)">取消订单</a><br>
-                  <a @click="editOrder(item,i)">修改订单</a>
+                <a @click="confirmOrder(item.id)">确认接单</a><br>
+                <a @click="cancelStoreOrder(item.id)">不接此单</a>
             </template>
-            <a v-else-if="item.orderStatus == 1" @click="orderAgain(item,i)">再次采购</a>
           </td>
         </tr>
       </table>
@@ -65,8 +64,6 @@
     <div class="bottom-bar">
       <Page show-elevator :total="page.totalCount" :current.sync="page.currentPage" :page-size="page.pageSize"></Page>
     </div>
-    <editPanel v-model="editShow" :item="purchaseItem" :type="type" @on-edit="getOrders"></editPanel>
-    <purchasePanel v-model="purchaseShow" :item="purchaseItem" type="1"></purchasePanel>
   </div>
 </template>
 
@@ -79,8 +76,6 @@
   import merchantLabel from '@/components/business/merchantLabel/index.vue'
   import countDown from '@/components/countDown.vue'
   import debounce from 'lodash/debounce'
-  import editPanel from './editPanel.vue'
-  import purchasePanel from '@/views/market/common/purchasePanel.vue'
   export default {
     components: {
       status,
@@ -89,8 +84,6 @@
       qq,
       merchantLabel,
       countDown,
-      editPanel,
-      purchasePanel
     },
     props: {
       type: {
@@ -101,18 +94,16 @@
     data() {
       return {
         listLoad: false,
-        editShow: false,
-        purchaseShow: false,
         statusData: [{
           label: '待确认',
           value: '2',
           count: 0
         }, {
-          label: '已完成',
+          label: '已成交',
           value: '1',
           count: 0
         }, {
-          label: '未接单',
+          label: '已放弃',
           value: '3',
           count: 0
         }, {
@@ -137,8 +128,7 @@
         searchData: {
           str: '',
           limitTime: ''
-        },
-        purchaseItem: {}
+        }
       }
     },
     computed: {
@@ -203,19 +193,24 @@
           }
         })
       },
-      // 修改订单
-      editOrder(item) {
-        let data = this.$clearData(item);
-        this.purchaseItem = data;
-        this.editShow = true;
-      },
-      // 再次购买
-      orderAgain(item) {
-        if (item.storeStatus) {
-          let data = this.$clearData(item);
-          this.purchaseItem = data;
-          this.purchaseShow = true;
-        }
+      // 确认接单
+      confirmOrder(id) {
+        this.$Modal.confirm({
+          title: "接单确认",
+          content: "是否确认接单？",
+          onOk: () => {
+            this.$Spin.show()
+            this.$http.post(this.$api.confirmStoreOrder, {
+              id: id
+            }).then(res => {
+              if (res.code === 1000) {
+                this.getOrders();
+                this.$Message.success('接单成功！');
+              }
+              this.$Spin.hide();
+            })
+          }
+        })
       }
     },
     created() {

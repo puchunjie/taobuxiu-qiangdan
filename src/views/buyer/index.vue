@@ -53,7 +53,7 @@
                     icon: 'icon-dingdan2',
                     subs: [{
                         name: '现货订单',
-                        count: 300,
+                        count: 0,
                         router: {
                             name: 'BironOrder',
                             params: {
@@ -62,7 +62,7 @@
                         }
                     }, {
                         name: '定开订单',
-                        count: 14002,
+                        count: 0,
                         router: {
                             name: 'BplanOrder',
                             params: {
@@ -71,7 +71,7 @@
                         }
                     },{
                         name: '特价订单',
-                        count: 14002,
+                        count: 0,
                         router: {
                             name: 'BspecialOrder',
                             params: {

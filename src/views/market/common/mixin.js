@@ -32,6 +32,9 @@ export default {
         ...mapGetters(['isLogin', 'roleId']),
         queryParams() {
             return Object.assign(this.filterValue, this.page);
+        },
+        purchaseItem() {
+            return Object.assign(this.businessInfo, this.pickerItem)
         }
     },
     watch: {
