@@ -8,7 +8,8 @@
 
 <script>
   import {
-    mapGetters
+    mapGetters,
+    mapActions
   } from 'vuex'
   import longBar from '@/components/loginBar'
   import PublicHead from '@/components/publicHead'
@@ -25,6 +26,7 @@
       ...mapGetters(['user', 'base'])
     },
     methods: {
+      ...mapActions(['getUserCount']),
       getUserInfo() {
         this.$http.post(this.$api.getUser).then(res => {
           if (res.code === 1000) {
@@ -49,6 +51,7 @@
     },
     created() {
       this.getUserInfo();
+      this.getUserCount();
     }
   }
 </script>

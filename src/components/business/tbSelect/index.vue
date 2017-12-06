@@ -22,7 +22,7 @@
                 default: false
             },
             value: {
-                type: [String, Number,Object]
+                type: [String, Number, Object]
             },
             api: {
                 type: String,
@@ -30,6 +30,10 @@
             },
             data: {
                 type: Array
+            },
+            k: {
+                type: String,
+                default: 'id'
             }
         },
         data() {
@@ -62,7 +66,7 @@
                         res.data.forEach(el => {
                             this.list.push({
                                 label: el.name,
-                                value: el.id
+                                value: el[this.k]
                             })
                         })
                     }
@@ -97,7 +101,7 @@
                     this.setActive()
                 })
             } else {
-                this.getAjax().then(()=> {
+                this.getAjax().then(() => {
                     this.setActive()
                 });
             }

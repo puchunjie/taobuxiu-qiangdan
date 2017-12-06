@@ -504,3 +504,8 @@ export const findSellerStoreOrder = '/demands/storeOrder/findSellerStoreOrder'
  * 卖家确认订单
  */
 export const confirmStoreOrder = '/demands/storeOrder/confirmStoreOrder'
+
+/**
+ * 订单，求购待处理统计
+ */
+export const userCountInfo = '/demands/userIronInfo/userCountInfo'

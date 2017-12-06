@@ -166,3 +166,11 @@
     -webkit-align-self: @align;
     align-self: @align;
 }
+
+.scale(@s :1){
+    transform: scale(@s,@s);
+  -webkit-transform: scale(@s,@s);
+  -moz-transform: scale(@s,@s);
+  -o-transform: scale(@s,@s);
+  -ms-transform: scale(@s,@s);
+}

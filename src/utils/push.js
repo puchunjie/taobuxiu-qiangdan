@@ -1,5 +1,7 @@
 import * as types from '@/store/types'
 import { MathRand } from '@/utils/tools.js'
+import { mapActions } from 'vuex'
+import debounce from 'lodash/debounce'
 export default {
     data() {
         return {
@@ -11,6 +13,7 @@ export default {
         }
     },
     methods: {
+        ...mapActions(['getUserCount']),
         initScoket() {
             let _this = this;
             let rand = this.$ls.get('rand');
@@ -31,13 +34,12 @@ export default {
                 _this.msg = data;
                 _this.notify(data);
                 _this.$store.commit(types.UPDATE_PUSH_MSG, data);
-                if (data.code == 1) {
-                    _this.$store.commit(types.UPDATE_NUMS);
-                }
+                _this.updateCount();
             };
 
             ws.onclose = function(evt) {
                 // console.log("Connection closed.");
+                // 后台重启服务器，10秒后重连
                 setTimeout(() => {
                     _this.initScoket();
                 }, 10000)
@@ -88,6 +90,9 @@ export default {
                     }, 500);
                 }
             }
-        }
+        },
+        updateCount: debounce(function() {
+            this.getUserCount()
+        }, 2000)
     }
 }

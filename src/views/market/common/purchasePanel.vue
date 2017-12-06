@@ -136,6 +136,7 @@
                     let params = this.$clearData(this.apiData);
                     params.storeId = this.item.storeId;
                     params.storeType = this.type;
+                    console.table(params)
                     this.$http.post(this.$api.saveStoreOrder, params).then(res => {
                         if (res.code === 1000) {
                             this.visible = false;

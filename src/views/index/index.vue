@@ -47,31 +47,28 @@
         height: 114px;
         border-right: @b_d1;
         border-bottom: @b_d1;
-        img{
+        img {
           display: block;
           width: 100%;
           height: 100%;
         }
       }
     }
-    
-    .lem-container{
+    .lem-container {
       float: left;
       width: 648px;
       height: 480px;
       background-color: #fff;
       .borderRadius;
     }
-
-    .ranking-container{
+    .ranking-container {
       float: right;
       width: 648px;
       height: 480px;
       background-color: #fff;
       .borderRadius;
     }
-
-    .swiper-bottom{
+    .swiper-bottom {
       width: 100%;
       height: 100%;
     }
@@ -104,7 +101,7 @@
           <lem class="lem-container"></lem>
           <ranking class="ranking-container"></ranking>
         </div>
-
+  
         <todayPrice></todayPrice>
       </div>
     </div>
@@ -118,6 +115,8 @@
         <publicFooter></publicFooter>
       </div>
     </div>
+
+    <quickNvigation></quickNvigation>
   </div>
 </template>
 
@@ -130,6 +129,7 @@
   import todayPrice from './parts/todayPrice.vue'
   import swiperBottom from './parts/swiperBottom.vue'
   import publicFooter from '@/components/publicFooter.vue'
+  import quickNvigation from '@/components/quickNvigation.vue'
   export default {
     components: {
       swiperBanner,
@@ -139,7 +139,8 @@
       ranking,
       todayPrice,
       swiperBottom,
-      publicFooter
+      publicFooter,
+      quickNvigation
     }
   }
 </script>

@@ -39,7 +39,7 @@
           <td class="measure bo-b">{{ item.measuringType | measuringStr }}</td>
           <td class="price bo-b">&yen;{{ item.price }}</td>
           <td class="num">x{{ item.nums }}</td>
-          <td class="totle" v-show="type == 1">&yen;{{ item.price * item.nums }}</td>
+          <td class="totle" v-show="type == 1">&yen;{{ item.totalPrice }}</td>
           <td class="time" v-show="type == 2">含税</td>
           <td class="tax" v-show="type == 3">含税</td>
           <td class="location">{{ item.locationName }}</td>
@@ -81,7 +81,9 @@
   import debounce from 'lodash/debounce'
   import editPanel from './editPanel.vue'
   import purchasePanel from '@/views/market/common/purchasePanel.vue'
+  import pushAsync from '@/utils/pushAsync.js'
   export default {
+    mixins: [pushAsync],
     components: {
       status,
       searchBar,

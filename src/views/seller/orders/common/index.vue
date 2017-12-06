@@ -39,7 +39,7 @@
           <td class="measure bo-b">{{ item.measuringType | measuringStr }}</td>
           <td class="price bo-b">&yen;{{ item.price }}</td>
           <td class="num">x{{ item.nums }}</td>
-          <td class="totle" v-show="type == 1">&yen;{{ item.price * item.nums }}</td>
+          <td class="totle" v-show="type == 1">&yen;{{ item.totalPrice }}</td>
           <td class="time" v-show="type == 2">含税</td>
           <td class="tax" v-show="type == 3">含税</td>
           <td class="location">{{ item.locationName }}</td>
@@ -76,7 +76,9 @@
   import merchantLabel from '@/components/business/merchantLabel/index.vue'
   import countDown from '@/components/countDown.vue'
   import debounce from 'lodash/debounce'
+  import pushAsync from '@/utils/pushAsync.js'
   export default {
+    mixins: [pushAsync],
     components: {
       status,
       searchBar,
@@ -162,7 +164,7 @@
     methods: {
       getOrders() {
         this.listLoad = true;
-        this.$http.post(this.$api.findBuyerStoreOrder, this.apiParams).then(res => {
+        this.$http.post(this.$api.findSellerStoreOrder, this.apiParams).then(res => {
           if (res.code === 1000) {
             this.list = res.data.list;
             this.statusData[0].count = res.data.needConfirm;

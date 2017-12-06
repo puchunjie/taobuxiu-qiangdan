@@ -6,8 +6,12 @@ export default {
         ...mapGetters(['pushData']),
     },
     watch: {
-        pushData: debounce(function() {
-            this.getDataList();
+        pushData: debounce(function(val) {
+            if (val.type == 'order') {
+                this.getOrders();
+            } else if (val.type == 'iron') {
+                this.getData();
+            }
         }, 500)
     }
 }

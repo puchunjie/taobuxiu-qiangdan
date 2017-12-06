@@ -17,6 +17,7 @@ export default {
             purchaseShow: false,
             filterValue: {},
             listLoad: false,
+            openStatus: false, //是否开市
             list: [],
             page: {
                 totleCount: 10,

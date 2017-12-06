@@ -1,7 +1,10 @@
 import Vuex from 'vuex'
 import Vue from 'vue'
+import * as api from '../api.js'
 import * as types from './types'
 import VueLocalStorage from 'vue-ls';
+import axios from 'axios'
+
 
 Vue.use(VueLocalStorage);
 Vue.use(Vuex);
@@ -17,7 +20,19 @@ export default new Vuex.Store({
             todayBuy: 0,
             todaySell: 0,
         },
-        pushData: ''
+        pushData: '',
+        userCount: {
+            buyD: 0, //买家 定开
+            buyIronH: 0, //买家 求购历史
+            buyIronT: 0, //买家 求购当日
+            buyT: 0, //买家 特价
+            buyX: 0, //买家 现货
+            sellD: 0, //卖家 定开
+            sellIronH: 0, //卖家 求购历史
+            sellIronT: 0, //卖家 求购当日
+            sellT: 0, //卖家 特价
+            sellX: 0, //卖家 现货
+        }
     },
     getters: {
         isLogin: state => {
@@ -44,6 +59,9 @@ export default new Vuex.Store({
         },
         pushData: state => {
             return state.pushData
+        },
+        userCount: state => {
+            return state.userCount
         }
     },
     mutations: {
@@ -82,6 +100,19 @@ export default new Vuex.Store({
         // 消息推送commit
         [types.UPDATE_PUSH_MSG]: (state, payload) => {
             state.pushData = payload;
+        },
+        //订单，求购数据存储
+        [types.SAVE_USER_COUNT]: (state, payload) => {
+            state.userCount = payload;
+        }
+    },
+    actions: {
+        getUserCount(context) {
+            axios.post(api.userCountInfo).then(res => {
+                if (res.code === 1000) {
+                    context.commit(types.SAVE_USER_COUNT, res.data);
+                }
+            })
         }
     }
-})
+});

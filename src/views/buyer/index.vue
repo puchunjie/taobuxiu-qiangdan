@@ -17,10 +17,13 @@
             leftMenu
         },
         computed: {
-            ...mapGetters(['nums', 'pushData']),
+            ...mapGetters(['pushData','userCount']),
             asyncMenu() {
-                this.menus[0].subs[0].count = this.nums.todayBuy;
-                this.menus[0].subs[1].count = this.nums.historyBuy;
+                this.menus[0].subs[0].count = this.userCount.buyIronT;
+                this.menus[0].subs[1].count = this.userCount.buyIronH;
+                this.menus[1].subs[0].count = this.userCount.buyX;
+                this.menus[1].subs[1].count = this.userCount.buyD;
+                this.menus[1].subs[2].count = this.userCount.buyT;
                 return this.menus
             }
         },
@@ -31,7 +34,7 @@
                     icon: 'icon-guanli',
                     subs: [{
                         name: '今日',
-                        count: 300,
+                        count: 0,
                         router: {
                             name: 'Bbuys',
                             params: {
@@ -40,7 +43,7 @@
                         }
                     }, {
                         name: '历史',
-                        count: 14002,
+                        count: 0,
                         router: {
                             name: 'Bbuys',
                             params: {

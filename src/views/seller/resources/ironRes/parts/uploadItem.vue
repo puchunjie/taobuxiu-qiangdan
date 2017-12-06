@@ -170,10 +170,14 @@
                 return this.spec.specifications != '' || (this.spec.length !="" &&this.spec.height !="" &&this.spec.width !="" ) 
             },
             otherOk(){
+                let isBJ = this.iron.name == '不锈钢卷' || this.iron.name == '不锈钢板';
                 let arr = remove(Object.keys(this.assignObj),(n)=>{
                     return n != 'id' && n != 'specifications' && n != 'length' && n != 'height' && n != 'width'
                 })
                 let ok = true;
+                if(!isBJ)
+                    remove(arr,n=>{return n == 'tolerance'})
+
                 arr.forEach(el => {
                     if(this.assignObj[el] == ''){
                         ok = false

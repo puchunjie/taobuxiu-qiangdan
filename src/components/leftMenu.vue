@@ -7,7 +7,8 @@
                 </div>
                 <ul class="sub-menu-list">
                     <li v-for="(sub,i) in item.subs" :class="{'active':sub.active}" :key="i" @click="routerGo(sub)">
-                        {{ sub.name }}{{ sub.count != undefined ? `(${sub.count})`: '' }}
+                        {{ sub.name }}
+                        <span v-if="sub.count != undefined && sub.count>0">{{ sub.count }}</span>
                     </li>
                 </ul>
             </li>
@@ -58,14 +59,6 @@
                         this.$set(el, 'active', false);
                     })
                 });
-            },
-            // 获取求购报价统计
-            getNumbers() {
-                this.$http.get(this.$api.getNums).then(res => {
-                    if (res.code === 1000) {
-                        this.$store.commit(types.SET_NUMS, res.data);
-                    }
-                })
             }
         },
         watch: {
@@ -75,13 +68,13 @@
         },
         created() {
             this.setHighLight();
-            this.getNumbers();
         }
     }
 </script>
 
 
 <style lang="less" scoped>
+    @import url('../assets/base.less');
     .left-menu {
         position: absolute;
         width: 160px;
@@ -111,12 +104,28 @@
         .sub-menu-list {
             width: 100%;
             li {
+                position: relative;
                 line-height: 40px;
                 text-indent: 35px;
                 cursor: pointer;
                 &.active,
                 &:hover {
                     background-color: rgba(225, 225, 225, 0.3);
+                }
+                span {
+                    position: absolute;
+                    width: 24px;
+                    height: 16px;
+                    top: 12px;
+                    right: 39px;
+                    background-color: @dark_red;
+                    color: #fff;
+                    font-size: 12px;
+                    text-align: center;
+                    line-height: 16px;
+                    text-indent: 0;
+                    .ellipsis;
+                    .borderRadius(100px);
                 }
             }
         }

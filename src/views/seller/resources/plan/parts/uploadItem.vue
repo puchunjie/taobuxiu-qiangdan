@@ -31,7 +31,7 @@
             <asyncPicker validate v-model="warehouse" :api="$api.getStores"></asyncPicker>
         </div>
         <div class="table-td remark">
-            <tbSelect v-model="other.remark" :api="$api.findAllKaiping"></tbSelect>
+            <tbSelect v-model="other.remark" k="name" :api="$api.findAllKaiping"></tbSelect>
         </div>
         <div class="table-td operation" v-show="!isEdit">
             <Poptip v-model="tip" placement="left" trigger="hover">

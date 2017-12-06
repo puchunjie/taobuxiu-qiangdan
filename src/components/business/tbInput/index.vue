@@ -8,6 +8,7 @@
 </template>
 
 <script>
+    import debounce from 'lodash/debounce'
     export default {
         props: {
             validate: {
@@ -57,9 +58,9 @@
                 }
             },
             // 类型检查
-            inPut(){
+            inPut:debounce(function(){
                 this.$emit("on-input")
-            }
+            },500)
         },
         mounted() {
             this.inValue = this.value

@@ -39,7 +39,11 @@
                 <exponentia :recommendPoint="item.recommendPoint" :updateTime="item.updateTime" :serveTime="item.serveTime"></exponentia>
               </td>
               <td>{{ item.storeHouseName }}</td>
-              <td><a class="purchase" v-if="item.createUserId != roleId" @click="purchase(item.createUserId,item)">我要采购</a><span class="me-gry" v-else>我的资源</span></td>
+              <td>
+                <a class="purchase down" v-if="!openStatus">已经休市</a>
+                <a class="purchase" v-else-if="item.createUserId != roleId" @click="purchase(item.createUserId,item)">我要采购</a>
+                <span class="me-gry" v-else>我的资源</span>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -59,6 +63,7 @@
           if (res.code === 1000) {
             this.page.totleCount = res.data.totalCount;
             this.list = res.data.list;
+            this.openStatus = res.data.openStatus;
           }
         })
       }
