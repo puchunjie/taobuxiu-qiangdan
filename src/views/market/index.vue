@@ -10,11 +10,16 @@
                 <router-view></router-view>
             </div>
         </div>
+        <quickNvigation></quickNvigation>
     </div>
 </template>
 
 <script>
+    import quickNvigation from '@/components/quickNvigation.vue'
     export default {
+        components: {
+            quickNvigation
+        },
         data() {
             return {
                 routerTabs: [{

@@ -252,8 +252,8 @@
         <p>发布成功，是否跳转到我的求购？</p>
       </div>
     </Modal>
-  
-  
+
+    <quickNvigation></quickNvigation>
   </div>
 </template>
 
@@ -261,6 +261,7 @@
   import editItem from './pareParts/editItem.vue'
   import history from './pareParts/history.vue'
   import filter from 'lodash/filter'
+  import quickNvigation from '@/components/quickNvigation.vue'
   const initialItem = {
     check: false,
     save: false,
@@ -296,7 +297,8 @@
   export default {
     components: {
       editItem,
-      history
+      history,
+      quickNvigation
     },
     data() {
       return {

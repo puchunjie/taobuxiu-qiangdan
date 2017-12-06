@@ -17,10 +17,10 @@
         </div>
         <div class="qn-item-group open">
             <div class="qn-ac-items">
-                <div class="ac-item">
+                <a class="ac-item" href="tel:0510-81812184">
                     <span class="iconfont icon-kefu"></span>
                     <div class="ac-item-desc">在线客服</div>
-                </div>
+                </a>
             </div>
         </div>
         <div class="qn-item-group open">
@@ -49,22 +49,22 @@
                         icon: 'icon-216',
                         count: 0,
                         desc: '进行中求购订单',
-                        path: ''
+                        path: {name:'Bbuys',params: {isToday: 1}}
                     }, {
                         icon: 'icon-xianhuo',
                         count: 10,
                         desc: '待确认现货订单',
-                        path: ''
+                        path: {name:'BironOrder'}
                     }, {
                         icon: 'icon-c-allocation',
                         count: 10,
                         desc: '待确认定开订单',
-                        path: ''
+                        path: {name:'BplanOrder'}
                     }, {
                         icon: 'icon-tejia',
                         count: 10,
                         desc: '待确认特价订单',
-                        path: ''
+                        path: {name:'BspecialOrder'}
                     }]
                 }, {
                     tipName: '卖家中心',
@@ -73,22 +73,22 @@
                         icon: 'icon-baojia',
                         count: 10,
                         desc: '待报价求购订单',
-                        path: ''
+                        path: {name:'Sbuys',params: {isToday: 1}}
                     }, {
                         icon: 'icon-xianhuo',
                         count: 10,
                         desc: '待接单现货订单',
-                        path: ''
+                        path: {name:'SironOrder'}
                     }, {
                         icon: 'icon-c-allocation',
                         count: 10,
                         desc: '待接单定开订单',
-                        path: ''
+                        path: {name:'SplanOrder'}
                     }, {
                         icon: 'icon-tejia',
                         count: 10,
                         desc: '待接单特价订单',
-                        path: ''
+                        path: {name:'SspecialOrder'}
                     }]
                 }]
             }
@@ -205,6 +205,7 @@
         overflow: hidden;
         .ac-item {
             position: relative;
+            display: block;
             width: 50px;
             height: 50px;
             line-height: 50px;

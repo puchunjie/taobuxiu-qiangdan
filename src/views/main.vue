@@ -23,7 +23,7 @@
       longBar
     },
     computed: {
-      ...mapGetters(['user', 'base'])
+      ...mapGetters(['user', 'base', 'roleId'])
     },
     methods: {
       ...mapActions(['getUserCount']),
@@ -50,8 +50,10 @@
       }
     },
     created() {
-      this.getUserInfo();
-      this.getUserCount();
+      if (this.roleId) {
+        this.getUserInfo();
+        this.getUserCount();
+      }
     }
   }
 </script>

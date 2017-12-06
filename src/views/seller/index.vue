@@ -21,9 +21,9 @@
             asyncMenu() {
                 this.menus[0].subs[0].count = this.userCount.sellIronT;
                 this.menus[0].subs[1].count = this.userCount.sellIronH;
-                this.menus[1].subs[0].count = this.userCount.sellX;
-                this.menus[1].subs[1].count = this.userCount.sellD;
-                this.menus[1].subs[2].count = this.userCount.sellT;
+                this.menus[2].subs[0].count = this.userCount.sellX;
+                this.menus[2].subs[1].count = this.userCount.sellD;
+                this.menus[2].subs[2].count = this.userCount.sellT;
                 return this.menus
             }
         },
