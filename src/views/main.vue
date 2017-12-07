@@ -28,7 +28,7 @@
     methods: {
       ...mapActions(['getUserCount']),
       getUserInfo() {
-        this.$http.post(this.$api.getUser).then(res => {
+        return this.$http.post(this.$api.getUser).then(res => {
           if (res.code === 1000) {
             this.$store.commit(types.SET_USER_INFO, res.data);
             document.addEventListener('visibilitychange', () => {
@@ -47,13 +47,17 @@
             this.initScoket();
           }
         })
+      },
+      // 获取用户订单，求购数据统计
+      async getUserCounts() {
+        await this.getUserInfo();
+        if (this.user != '') {
+          this.getUserCount();
+        }
       }
     },
     created() {
-      if (this.roleId) {
-        this.getUserInfo();
-        this.getUserCount();
-      }
+      this.getUserCounts()
     }
   }
 </script>

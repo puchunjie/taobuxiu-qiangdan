@@ -64,6 +64,28 @@ const router = new Router({
                             path: 'BspecialOrder',
                             name: 'BspecialOrder',
                             component: resolve => require(['@/views/buyer/orders/special/index'], resolve)
+                        },
+                        {
+                            path: 'Boc',
+                            name: 'Boc',
+                            redirect: 'Boc/step1',
+                            component: resolve => require(['@/components/contractTemp/index'], resolve),
+                            children: [{
+                                    path: 'Bstep1-:type',
+                                    name: 'Bstep1',
+                                    component: resolve => require(['@/components/contractTemp/step1'], resolve)
+                                },
+                                {
+                                    path: 'Bstep2-:sellId-:type',
+                                    name: 'Bstep2',
+                                    component: resolve => require(['@/components/contractTemp/step2'], resolve)
+                                },
+                                {
+                                    path: 'Bstep3-:type',
+                                    name: 'Bstep3',
+                                    component: resolve => require(['@/components/contractTemp/step3'], resolve)
+                                }
+                            ]
                         }
                     ]
                 },
@@ -122,6 +144,22 @@ const router = new Router({
                             path: 'SspecialOrder',
                             name: 'SspecialOrder',
                             component: resolve => require(['@/views/seller/orders/special/index'], resolve)
+                        },
+                        {
+                            path: 'Soc',
+                            name: 'Soc',
+                            component: resolve => require(['@/components/contractTemp/index'], resolve),
+                            children: [{
+                                    path: 'Sstep1-:type',
+                                    name: 'Sstep1',
+                                    component: resolve => require(['@/components/contractTemp/step1'], resolve)
+                                },
+                                {
+                                    path: 'Sstep2-:sellId-:type',
+                                    name: 'Sstep2',
+                                    component: resolve => require(['@/components/contractTemp/step2'], resolve)
+                                }
+                            ]
                         }
                     ]
                 },

@@ -94,3 +94,23 @@ export const bOrderState = (value) => {
             break;
     }
 }
+
+// 0：实单求购 1:现货资源 2:定开计划 3.特价资源
+export const storeTypeStr = (value) => {
+    switch (Number(value)) {
+        case 0:
+            return '实单求购'
+            break;
+        case 1:
+            return '现货资源'
+            break;
+        case 2:
+            return '定开计划'
+            break;
+        case 3:
+            return '特价资源'
+            break;
+        default:
+            break;
+    }
+}

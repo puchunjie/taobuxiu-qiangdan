@@ -6,7 +6,7 @@
 </template>
 
 <style lang="less" scoped>
-    @import url("../../../../assets/base.less");
+    @import url("../../assets/base.less");
     .page-title {
         width: 100%;
         height: 30px;

@@ -40,8 +40,8 @@
           <td class="price bo-b">&yen;{{ item.price }}</td>
           <td class="num">x{{ item.nums }}</td>
           <td class="totle" v-show="type == 1">&yen;{{ item.totalPrice }}</td>
-          <td class="time" v-show="type == 2">含税</td>
-          <td class="tax" v-show="type == 3">含税</td>
+          <td class="time" v-show="type == 2">{{ item.remark }}</td>
+          <td class="tax" v-show="type == 3">{{ item.taxType | taxStr }}</td>
           <td class="location">{{ item.locationName }}</td>
           <td class="warehouse">{{ item.storeHouseName }}</td>
           <td class="state">

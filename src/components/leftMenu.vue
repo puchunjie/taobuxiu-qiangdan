@@ -6,10 +6,10 @@
                     <span class="iconfont" :class="item.icon"></span> {{ item.title }}
                 </div>
                 <ul class="sub-menu-list">
-                    <li v-for="(sub,i) in item.subs" :class="{'active':sub.active}" :key="i" @click="routerGo(sub)">
+                    <router-link v-for="(sub,i) in item.subs" :key="i" :to="sub.router" tag="li" active-class="active" exact>
                         {{ sub.name }}
                         <span v-if="sub.count != undefined && sub.count>0">{{ sub.count }}</span>
-                    </li>
+                    </router-link>
                 </ul>
             </li>
         </ul>
@@ -17,57 +17,9 @@
 </template>
 
 <script>
-    import * as types from '@/store/types'
     export default {
         props: {
             menus: Array
-        },
-        data() {
-            return {
-                documentHeight: 800
-            }
-        },
-        methods: {
-            routerGo(item) {
-                this.$router.push(item.router);
-            },
-            // 设置高亮
-            setHighLight() {
-                this.initMenuActive();
-                setTimeout(() => {
-                    let routerPath = this.$route.path;
-                    this.menus.forEach(sub => {
-                        sub.subs.forEach(el => {
-                            if (routerPath.indexOf(el.router.name) > 0) {
-                                if (this.$route.name == 'Bbuys' || this.$route.name == 'Sbuys') {
-                                    if (el.router.params.isToday == this.$route.params.isToday) {
-                                        el.active = true;
-                                        return false
-                                    }
-                                } else {
-                                    el.active = true;
-                                    return false
-                                }
-                            }
-                        })
-                    })
-                }, 50);
-            },
-            initMenuActive() {
-                this.menus.forEach(sub => {
-                    sub.subs.forEach(el => {
-                        this.$set(el, 'active', false);
-                    })
-                });
-            }
-        },
-        watch: {
-            $route() {
-                this.setHighLight();
-            }
-        },
-        created() {
-            this.setHighLight();
         }
     }
 </script>

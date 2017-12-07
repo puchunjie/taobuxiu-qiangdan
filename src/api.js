@@ -510,3 +510,25 @@ export const confirmStoreOrder = '/demands/storeOrder/confirmStoreOrder'
  * 订单，求购待处理统计
  */
 export const userCountInfo = '/demands/userIronInfo/userCountInfo'
+
+
+// =================================合同=================================
+/**
+ * 起草合同选择签约方分页查询
+ */
+export const queryContractMangerPage = '/demands/contractManger/queryContractMangerPage'
+
+/**
+ * 起草合同选择签约订单分页查询
+ */
+export const queryContractOrderPage = '/demands/contractManger/queryContractOrderPage'
+
+/**
+ * 根据登录人编号获取商户认证信息
+ */
+export const getCheckContractInfoByAppUserId = '/common/checkcontract/getCheckContractInfoByAppUserId'
+
+/**
+ * 电子合同平台用户信息认证
+ */
+export const saveCheckContract = '/common/checkcontract/saveCheckContract'

@@ -90,7 +90,7 @@
 
 
 <script>
-  import innerTitle from '../common/innerTitle.vue'
+  import innerTitle from '@/components/business/innerTitle.vue'
   import listFilter from '../common/listFilter.vue'
   import tableWrap from '../common/tableWrap.vue'
   import sortIcon from '../common/sortIcon.vue'

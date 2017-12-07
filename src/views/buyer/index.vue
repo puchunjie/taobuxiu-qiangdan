@@ -17,7 +17,7 @@
             leftMenu
         },
         computed: {
-            ...mapGetters(['pushData','userCount']),
+            ...mapGetters(['pushData', 'userCount']),
             asyncMenu() {
                 this.menus[0].subs[0].count = this.userCount.buyIronT;
                 this.menus[0].subs[1].count = this.userCount.buyIronH;
@@ -72,11 +72,33 @@
                                 isToday: 0
                             }
                         }
-                    },{
+                    }, {
                         name: '特价订单',
                         count: 0,
                         router: {
                             name: 'BspecialOrder',
+                            params: {
+                                isToday: 0
+                            }
+                        }
+                    }]
+                }, {
+                    title: '合同管理',
+                    icon: 'icon-dingdan2',
+                    subs: [{
+                        name: '起草合同',
+                        count: 0,
+                        router: {
+                            name: 'Bstep1',
+                            params: {
+                                type: 1
+                            }
+                        }
+                    }, {
+                        name: '管理合同',
+                        count: 0,
+                        router: {
+                            name: 'BplanOrder',
                             params: {
                                 isToday: 0
                             }

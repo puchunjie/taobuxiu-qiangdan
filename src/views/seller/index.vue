@@ -106,6 +106,28 @@
                             }
                         }]
                     }, {
+                        title: '合同管理',
+                        icon: 'icon-dingdan2',
+                        subs: [{
+                            name: '起草合同',
+                            count: 0,
+                            router: {
+                                name: 'Sstep1',
+                                params: {
+                                    type: 2
+                                }
+                            }
+                        }, {
+                            name: '管理合同',
+                            count: 0,
+                            router: {
+                                name: 'BplanOrder',
+                                params: {
+                                    isToday: 0
+                                }
+                            }
+                        }]
+                    }, {
                         title: '我的卖家档案',
                         icon: 'icon-weibiaoti1',
                         subs: [{
