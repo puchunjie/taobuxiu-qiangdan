@@ -532,3 +532,18 @@ export const getCheckContractInfoByAppUserId = '/common/checkcontract/getCheckCo
  * 电子合同平台用户信息认证
  */
 export const saveCheckContract = '/common/checkcontract/saveCheckContract'
+
+/**
+ * 新增起草合同
+ */
+export const saveContract = '/common/contractAddress/saveContract'
+
+/**
+ * 开始起草合同页面信息
+ */
+export const selectStartContractInfo = '/demands/contractManger/selectStartContractInfo'
+
+/**
+ * 保存起草合同信息
+ */
+export const saveContractInfo = '/demands/contractManger/saveContractInfo'

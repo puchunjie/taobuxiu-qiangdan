@@ -114,3 +114,46 @@ export const storeTypeStr = (value) => {
             break;
     }
 }
+
+// 用户类型
+export const userTypeStr = (value) => {
+    switch (Number(value)) {
+        case 1:
+            return '个人'
+            break;
+        case 2:
+            return '企业'
+            break;
+        case 3:
+            return '平台'
+            break;
+        default:
+            break;
+    }
+}
+
+// 证件类型
+export const certifyTypeStr = (value) => {
+    switch (Number(value)) {
+        case 1:
+            return '身份证'
+            break;
+        case 2:
+            return '护照'
+            break;
+        case 3:
+            return '军官证'
+            break;
+        case 4:
+            return '营业执照'
+            break;
+        case 5:
+            return '组织机构代码证'
+            break;
+        case 6:
+            return '社会统一信用代码'
+            break;
+        default:
+            break;
+    }
+}

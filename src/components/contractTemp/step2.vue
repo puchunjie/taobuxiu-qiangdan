@@ -151,6 +151,13 @@
                 return filter(this.list, el => {
                     return el.check
                 })
+            },
+            checkedItemId(){
+                let arr = [];
+                this.checkedItem.forEach(el => {
+                    arr.push(el.id)
+                })
+                return arr
             }
         },
         methods: {
@@ -211,7 +218,8 @@
                 })
             },
             goNext() {
-                if (this.checkedItem.length > 0) {
+                if (this.checkedItem.length > 0) { 
+                    this.saveContractInfo();  
                     this.$router.push({
                         name: this.type == 1 ? 'Bstep3' : 'Sstep3',
                         params: {
@@ -221,6 +229,14 @@
                 }else{
                     this.$Message.warning('请选择订单！');
                 }
+            },
+            // 本地保存合同信息
+            saveContractInfo(){
+                this.$ls.set('contractInfo', this.$clearData({
+                    partBId: this.sellId, //乙方ID
+                    partAContractId: '', //甲方ID
+                    orderIds: this.checkedItemId, //订单ids
+                }));
             }
         },
         created() {
@@ -287,7 +303,6 @@
         .store-type {
             display: inline-block;
             width: 270px;
-            margin-right: 30px;
         }
         .btns {
             float: right;

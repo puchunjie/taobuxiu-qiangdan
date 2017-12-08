@@ -1,6 +1,6 @@
 <template>
     <div class="oc-step3">
-        <h2>以下是您的电子合同认证信息</h2>
+        <h2 class="oc-title">以下是您的电子合同认证信息</h2>
         <table class="info-table" v-if="isRZ">
             <thead>
                 <tr>
@@ -8,66 +8,98 @@
                     <th style="width:170px">认证合同手机号</th>
                     <th style="width:120px">用户类型</th>
                     <th style="width:165px">认证证件类型</th>
-                    <th style="width:240px">认证证件号</th>
-                    <th style="width:120px">最近认证时间</th>
+                    <th style="width:200px">认证证件号</th>
+                    <th style="width:160px">最近认证时间</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td class="cp-name">公司名称</td>
-                    <td>公司名称</td>
-                    <td>公司名称</td>
-                    <td>公司名称</td>
-                    <td>公司名称</td>
-                    <td>公司名称</td>
+                    <td class="cp-name">{{ acInfo.sellName }}</td>
+                    <td>{{ acInfo.cellNum }}</td>
+                    <td>{{ acInfo.userType | userTypeStr }}</td>
+                    <td>{{ acInfo.certifyType | certifyTypeStr }}</td>
+                    <td>{{ acInfo.certifyNumber }}</td>
+                    <td>{{ acInfo.checkTime | dateformat }}</td>
                 </tr>
             </tbody>
         </table>
         <!-- 认证部分 -->
-        <div class="oc-panel">
+        <div class="oc-panel" v-if="!isRZ">
             <p class="tips">
                 <span class="iconfont icon-about"></span> 您还未认证电子合同用户信息，用户认证信息成功后可继续操作
             </p>
             <div class="oc-from">
                 <div class="from-group">
-                    <label>
-                            <span class="iconfont icon-bitianxiang"></span>
-                            商户名称
-                        </label>
-                    <p class="input-disable">{{ user.companyName }}</p>
+                    <div class="label">
+                        <span class="iconfont icon-bitianxiang"></span> 商户名称
+                    </div>
+                    <p class="input-disable">{{ base.realName }}</p>
                 </div>
                 <div class="from-group">
-                    <label>
-                            <span class="iconfont icon-bitianxiang"></span>
-                            用户类型
-                        </label>
+                    <div class="label">
+                        <span class="iconfont icon-bitianxiang"></span> 用户类型
+                    </div>
                     <p class="input-disable wid200">企业</p>
                 </div>
                 <div class="from-group">
-                    <label>
-                            <span class="iconfont icon-bitianxiang"></span>
-                            认证证件
-                        </label>
+                    <div class="label">
+                        <span class="iconfont icon-bitianxiang"></span> 认证证件
+                    </div>
                     <tbSelect class="wid200" :data='idTypes' v-model="rzApiData.certifyType"></tbSelect>
                 </div>
                 <div class="from-group">
-                    <label>
-                            <span class="iconfont icon-bitianxiang"></span>
-                            证件号码
-                        </label>
+                    <div class="label">
+                        <span class="iconfont icon-bitianxiang"></span> 证件号码
+                    </div>
                     <tbInput validate class="wid200" placeholder="请输入完整证件号" v-model="rzApiData.certifyNumber"></tbInput>
                 </div>
                 <div class="from-group">
-                    <label>
-                            <span class="iconfont icon-bitianxiang"></span>
-                            认证手机
-                        </label>
+                    <div class="label">
+                        <span class="iconfont icon-bitianxiang"></span> 认证手机
+                    </div>
                     <tbInput validate class="wid200" placeholder="请输入手机号" v-model="rzApiData.cellNum"></tbInput>
                     <span class="warn-tip">*该手机号将用作签约前校验与签约信息短信通知使用，请谨慎填写</span>
                 </div>
             </div>
             <div class="panel-btns">
-
+                <a class="btn" @click="saveCheckContract">认证信息</a>
+                <a class="btn goast" @click="$router.go(-1)">返回上一层</a>
+            </div>
+        </div>
+        <!-- 确认部分 -->
+        <div class="oc-panel" v-if="isRZ">
+            <p class="tips">
+                <span class="iconfont icon-about"></span> 请确认您的客户信息，合同中将以此作为甲/已方信息(我方信息)
+            </p>
+            <div class="oc-from">
+                <div class="from-group">
+                    <div class="label">
+                        <span class="iconfont icon-bitianxiang"></span> 甲方名称
+                    </div>
+                    <p class="input-disable">{{ base.realName }}</p>
+                </div>
+                <div class="from-group">
+                    <div class="label">
+                        <span class="iconfont icon-bitianxiang"></span> 仓库
+                    </div>
+                    <tbInput validate style="width:600px" placeholder="请输入仓库地址" v-model="uerInfo.address"></tbInput>
+                </div>
+                <div class="from-group">
+                    <div class="label">
+                        <span class="iconfont icon-bitianxiang"></span> 联系人
+                    </div>
+                    <tbInput validate class="wid200" placeholder="请输入联系人姓名" v-model="uerInfo.contacts"></tbInput>
+                </div>
+                <div class="from-group">
+                    <div class="label">
+                        <span class="iconfont icon-bitianxiang"></span> 电话
+                    </div>
+                    <tbInput validate class="wid200" placeholder="请输入联系电话" v-model="uerInfo.tel"></tbInput>
+                </div>
+            </div>
+            <div class="panel-btns">
+                <a class="btn" @click="useRZinfo">确认使用该信息</a>
+                <a class="btn goast" @click="$router.go(-1)">返回上一层</a>
             </div>
         </div>
     </div>
@@ -89,57 +121,85 @@
                 isRZ: false,
                 acInfo: '',
                 idTypes: [{
-                    label: "身份证",
-                    value: "1"
-                }, {
-                    label: "护照",
-                    value: "2"
-                },{
-                    label: "军官证",
-                    value: "3"
-                }, {
                     label: "营业执照",
                     value: "4"
-                },{
+                }, {
                     label: "组织机构代码证",
                     value: "5"
                 }, {
                     label: "社会统一信用代码",
                     value: "6"
                 }],
-                rzApiData:{
+                rzApiData: {
                     appUserId: "",
                     cellNum: "",
                     userType: "2",
                     userName: "",
                     certifyType: "",
                     certifyNumber: ""
+                },
+                uerInfo: {
+                    address: '',
+                    contacts: '',
+                    tel: '',
+                    companyName: ''
                 }
-    
             }
         },
         computed: {
-            ...mapGetters(['user'])
+            ...mapGetters(['base']),
+            type() {
+                return this.$route.params.type
+            }
         },
         methods: {
+            // 获取认证信息
             getRZinfo() {
                 this.$http.post(this.$api.getCheckContractInfoByAppUserId).then(res => {
                     this.isRZ = res.code == 1000;
-                    if (res.code === -1) {
-                        //去认证
-    
+                    if (res.code === 1000) {
+                        this.acInfo = res.data
                     }
                 })
             },
-            saveCheckContract(){
-                let params = this.$clearData(this.rzApiData);
-                params.appUserId = this.user.id;
-                params.userName = this.user.companyName;
-                    if(this.rzApiData.certifyNumber != '' && this.rzApiData.cellNum != ''){
-                        this.$http.post(this.$api.saveCheckContract,params).then(res => {
-
+            // 认证
+            saveCheckContract() {
+                if (this.rzApiData.certifyNumber != '' && this.rzApiData.cellNum != '') {
+                    let params = this.$clearData(this.rzApiData);
+                    params.appUserId = this.base.id;
+                    params.userName = this.base.realName;
+                    this.$http.post(this.$api.saveCheckContract, params).then(res => {
+                        if (res.code === 1000) {
+                            this.$Message.success('认证通过。');
+                        } else {
+                            this.$Message.error('认证失败！');
+                        }
                     })
-                }else{
+                } else {
+                    this.$Message.warning('请将信息填写完整!');
+                }
+            },
+            // 使用认证信息
+            useRZinfo() {
+                if (this.uerInfo.address != '' && this.uerInfo.contacts != '' && this.uerInfo.tel != '') {
+                    let params = this.$clearData(this.uerInfo);
+                    params.companyName = this.base.realName;
+                    this.$http.post(this.$api.saveContract, params).then(res => {
+                        if (res.code === 1000) {
+                            let data = this.$ls.get('contractInfo');
+                            data.partAContractId = res.data.id;
+                            this.$ls.set('contractInfo', data);
+                            this.$router.push({
+                                name: this.type == 1 ? 'Bstep4' : 'Sstep4',
+                                params: {
+                                    type: this.type
+                                }
+                            })
+                        } else {
+                            this.$Message.error(res.message);
+                        }
+                    })
+                } else {
                     this.$Message.warning('请将信息填写完整!');
                 }
             }
@@ -155,7 +215,7 @@
     @import url('../../assets/base.less');
     .oc-step3 {
         padding: 0 20px;
-        h2 {
+        .oc-title {
             font-size: 16px;
             color: @f_dark;
             font-weight: bold;
@@ -208,12 +268,14 @@
                 height: 30px;
                 margin-bottom: 20px;
                 line-height: 30px;
-                label {
+                .label {
                     display: inline-block;
-                    width: 100px;
+                    width: 80px;
                     height: 100%;
                     color: @f_goast;
                     vertical-align: middle;
+                    margin-right: 30px;
+                    text-align: right;
                     span {
                         color: @dark_red;
                         font-size: 12px;
@@ -241,12 +303,26 @@
                     vertical-align: middle;
                 }
             }
-            .panel-btns{
-                width: 100%;
-                padding-left: 100px;
-                // btn{
-                    
-                // }
+        }
+        .panel-btns {
+            width: 100%;
+            padding-left: 113px;
+            padding-bottom: 50px;
+            .btn {
+                display: inline-block;
+                width: 140px;
+                height: 34px;
+                margin-right: 20px;
+                line-height: 32px;
+                border: 1px solid @dark_blue;
+                color: #fff;
+                font-size: 14px;
+                text-align: center;
+                background-color: @dark_blue;
+                &.goast {
+                    color: @dark_blue;
+                    background-color: #fff;
+                }
             }
         }
     }

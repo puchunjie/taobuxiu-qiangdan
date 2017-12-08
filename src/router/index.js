@@ -84,6 +84,11 @@ const router = new Router({
                                     path: 'Bstep3-:type',
                                     name: 'Bstep3',
                                     component: resolve => require(['@/components/contractTemp/step3'], resolve)
+                                },
+                                {
+                                    path: 'Bstep4-:type',
+                                    name: 'Bstep4',
+                                    component: resolve => require(['@/components/contractTemp/step4'], resolve)
                                 }
                             ]
                         }
@@ -158,7 +163,18 @@ const router = new Router({
                                     path: 'Sstep2-:sellId-:type',
                                     name: 'Sstep2',
                                     component: resolve => require(['@/components/contractTemp/step2'], resolve)
+                                },
+                                {
+                                    path: 'Sstep3-:type',
+                                    name: 'Sstep3',
+                                    component: resolve => require(['@/components/contractTemp/step3'], resolve)
+                                },
+                                {
+                                    path: 'Sstep4-:type',
+                                    name: 'Sstep4',
+                                    component: resolve => require(['@/components/contractTemp/step4'], resolve)
                                 }
+
                             ]
                         }
                     ]

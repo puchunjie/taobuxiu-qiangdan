@@ -1,7 +1,7 @@
 <template>
     <div class="tb-picker" v-clickoutside="ousideClick">
         <div class="tb-picker-rel">
-            <input ref="input" class="tb-input" v-model="chech.name" @keyup="showPanel" @focus="saveValue" />
+            <input ref="input" class="tb-input" :placeholder="placeholder" v-model="chech.name" @keyup="showPanel" @focus="saveValue" />
         </div>
         <ajaxPanel ref="panel" :search="chech.name" :options="option" :tip="option.searchTitle" @on-picker="saveData" v-if="panelShow"></ajaxPanel>
     </div>
@@ -11,6 +11,10 @@
     import ajaxPanel from './ajaxPanel.vue'
     export default {
         props: {
+            placeholder:{
+                type: String,
+                default: ''
+            },
             validate: {
                 type: Boolean,
                 default: false
