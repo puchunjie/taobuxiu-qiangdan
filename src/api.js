@@ -547,3 +547,23 @@ export const selectStartContractInfo = '/demands/contractManger/selectStartContr
  * 保存起草合同信息
  */
 export const saveContractInfo = '/demands/contractManger/saveContractInfo'
+
+/**
+ * 合同管理分页查询
+ */
+export const queryContractInfoPage = '/demands/contractManger/queryContractInfoPage'
+
+/**
+ * 查询商户是否认证
+ */
+export const queryBaseInfo = '/demands/business/queryBaseInfo'
+
+/**
+ * 验证信息商户获取验证码
+ */
+export const getSmsCode = '/demands/business/getSmsCode'
+
+/**
+ * 认证信息商户保存
+ */
+export const saveBaseInfo = '/demands/business/saveBaseInfo'

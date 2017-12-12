@@ -166,6 +166,9 @@
     watch: {
       'apiParams': {
         handler: debounce(function(val, oldVal) {
+          // 是否是翻页操作
+          if(val.currentPage == oldVal.currentPage)
+            this.page.currentPage = 1;
           this.getOrders();
         }, 200),
         deep: true

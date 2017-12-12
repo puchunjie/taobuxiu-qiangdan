@@ -1,7 +1,7 @@
 <template>
     <div class="oc-step3">
         <h2 class="oc-title">以下是您的电子合同认证信息</h2>
-        <table class="info-table" v-if="isRZ">
+        <table class="info-table">
             <thead>
                 <tr>
                     <th class="cp-name">公司名称</th>
@@ -24,7 +24,7 @@
             </tbody>
         </table>
         <!-- 认证部分 -->
-        <div class="oc-panel" v-if="!isRZ">
+        <!-- <div class="oc-panel" v-if="!isRZ">
             <p class="tips">
                 <span class="iconfont icon-about"></span> 您还未认证电子合同用户信息，用户认证信息成功后可继续操作
             </p>
@@ -65,9 +65,9 @@
                 <a class="btn" @click="saveCheckContract">认证信息</a>
                 <a class="btn goast" @click="$router.go(-1)">返回上一层</a>
             </div>
-        </div>
+        </div> -->
         <!-- 确认部分 -->
-        <div class="oc-panel" v-if="isRZ">
+        <div class="oc-panel">
             <p class="tips">
                 <span class="iconfont icon-about"></span> 请确认您的客户信息，合同中将以此作为甲/已方信息(我方信息)
             </p>
@@ -118,7 +118,6 @@
         },
         data() {
             return {
-                isRZ: false,
                 acInfo: '',
                 idTypes: [{
                     label: "营业执照",
@@ -156,7 +155,7 @@
             // 获取认证信息
             getRZinfo() {
                 this.$http.post(this.$api.getCheckContractInfoByAppUserId).then(res => {
-                    this.isRZ = res.code == 1000;
+                    // this.isRZ = res.code == 1000;
                     if (res.code === 1000) {
                         this.acInfo = res.data
                     }
@@ -212,7 +211,7 @@
 
 
 <style lang="less">
-    @import url('../../assets/base.less');
+    @import url('../../../assets/base.less');
     .oc-step3 {
         padding: 0 20px;
         .oc-title {

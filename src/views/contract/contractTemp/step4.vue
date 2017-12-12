@@ -23,7 +23,7 @@
             <div class="tit">
                 <span class="ic-rq">*</span>请确认本次货物内容，合同中将以此作为交易货物明细
                 <span class="tip">（计价方式=“重量”，总价=重量*单价 | 计价方式=“数量”，总价=数量*单价）</span>
-                <span style="float:right">合计：<font>{{ totlePrice }}</font></span>
+                <span style="float:right">合计：<font>&yen;{{ totlePrice }}</font></span>
             </div>
             <div class="table">
                 <table>
@@ -60,7 +60,7 @@
                                 <tbInput style="width:80px" v-model="item.price"></tbInput>
                             </td>
                             <td>
-                                <tbInput style="width:180px" v-model="item.remark"></tbInput>
+                                <tbInput v-model="item.remark"></tbInput>
                             </td>
                             <td class="price">{{ totlePrcieArr[i] }}</td>
                         </tr>
@@ -81,7 +81,7 @@
         <div class="oc-step4-bottom">
             <a class="back" @click="$router.go(-1)">返回上一步</a>
             <div class="next-step">
-                <a class="btn goast">确认起草电子合同</a>
+                <a class="btn goast">放弃起草电子合同</a>
                 <a class="btn" @click="doAction">确认起草电子合同</a>
             </div>
         </div>
@@ -136,10 +136,10 @@
             ajaxParams() {
                 return {
                     partBId: this.info.partBId,
-                    partAContractId: this.info.partBId,
+                    partAContractId: this.info.partAContractId,
                     locationId: this.locationId.id,
                     locationName: this.locationId.name,
-                    orderIds: JSON.stringify(this.info.orderIds)
+                    orderIds: JSON.stringify({orderIds:this.info.orderIds})
                 }
             }
         },
@@ -172,7 +172,7 @@
 
 
 <style lang="less">
-    @import url('../../assets/base.less');
+    @import url('../../../assets/base.less');
     .oc-step4 {
         padding: 0 20px 90px;
         .oc-title {

@@ -121,12 +121,20 @@
                             name: '管理合同',
                             count: 0,
                             router: {
-                                name: 'BplanOrder',
+                                name: 'BocManage',
                                 params: {
-                                    isToday: 0
+                                    type: 2
                                 }
                             }
-                        }]
+                        },{
+                        name: '认证合同',
+                        router: {
+                            name: 'SocAuthen',
+                                params: {
+                                    type: 2
+                                }
+                        }
+                    }]
                     }, {
                         title: '我的卖家档案',
                         icon: 'icon-weibiaoti1',

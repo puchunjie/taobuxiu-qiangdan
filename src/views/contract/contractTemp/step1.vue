@@ -112,8 +112,8 @@
 </script>
 
 
-<style lang="less">
-    @import url('../../assets/base.less');
+<style lang="less" scroped>
+    @import url('../../../assets/base.less');
     .oc-search {
         position: relative;
         width: 100%;
@@ -155,7 +155,7 @@
             }
         }
         .btns {
-            display: inline-block;
+            float: right;
             .btn {
                 display: inline-block;
                 width: 90px;

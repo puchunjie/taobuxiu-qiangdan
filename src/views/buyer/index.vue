@@ -87,7 +87,6 @@
                     icon: 'icon-dingdan2',
                     subs: [{
                         name: '起草合同',
-                        count: 0,
                         router: {
                             name: 'Bstep1',
                             params: {
@@ -96,11 +95,18 @@
                         }
                     }, {
                         name: '管理合同',
-                        count: 0,
                         router: {
-                            name: 'BplanOrder',
+                            name: 'BocManage',
                             params: {
-                                isToday: 0
+                                type: 1
+                            }
+                        }
+                    },{
+                        name: '认证合同',
+                        router: {
+                            name: 'BocAuthen',
+                            params: {
+                                type: 1
                             }
                         }
                     }]

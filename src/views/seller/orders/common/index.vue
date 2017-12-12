@@ -156,6 +156,8 @@
     watch: {
       'apiParams': {
         handler: debounce(function(val, oldVal) {
+          if(val.currentPage == oldVal.currentPage)
+            this.page.currentPage = 1;
           this.getOrders();
         }, 200),
         deep: true

@@ -147,6 +147,6 @@
 <style lang="less" scoped>
     @import url('../../../assets/picker.less');
     .tb-picker-contnet .item{
-        width: 50px;
+        min-width: 50px;
     }
 </style>

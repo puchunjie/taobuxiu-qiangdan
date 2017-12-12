@@ -69,27 +69,54 @@ const router = new Router({
                             path: 'Boc',
                             name: 'Boc',
                             redirect: 'Boc/step1',
-                            component: resolve => require(['@/components/contractTemp/index'], resolve),
+                            component: resolve => require(['@/views/contract/contractTemp/index'], resolve),
                             children: [{
                                     path: 'Bstep1-:type',
                                     name: 'Bstep1',
-                                    component: resolve => require(['@/components/contractTemp/step1'], resolve)
+                                    component: resolve => require(['@/views/contract/contractTemp/step1'], resolve)
                                 },
                                 {
                                     path: 'Bstep2-:sellId-:type',
                                     name: 'Bstep2',
-                                    component: resolve => require(['@/components/contractTemp/step2'], resolve)
+                                    component: resolve => require(['@/views/contract/contractTemp/step2'], resolve)
                                 },
                                 {
                                     path: 'Bstep3-:type',
                                     name: 'Bstep3',
-                                    component: resolve => require(['@/components/contractTemp/step3'], resolve)
+                                    component: resolve => require(['@/views/contract/contractTemp/step3'], resolve)
                                 },
                                 {
                                     path: 'Bstep4-:type',
                                     name: 'Bstep4',
-                                    component: resolve => require(['@/components/contractTemp/step4'], resolve)
+                                    component: resolve => require(['@/views/contract/contractTemp/step4'], resolve)
                                 }
+                            ]
+                        },
+                        {
+                            path: 'BocManage-:type',
+                            name: 'BocManage',
+                            component: resolve => require(['@/views/contract/contractManage/index'], resolve)
+                        },
+                        {
+                            path: 'BocAuthen-:type',
+                            name: 'BocAuthen',
+                            component: resolve => require(['@/views/contract/authentication/index'], resolve),
+                            children: [{
+                                    path: 'step1',
+                                    name: 'BatStep1',
+                                    component: resolve => require(['@/views/contract/authentication/step1'], resolve)
+                                },
+                                {
+                                    path: 'step2',
+                                    name: 'BatStep2',
+                                    component: resolve => require(['@/views/contract/authentication/step2'], resolve)
+                                },
+                                {
+                                    path: 'step3',
+                                    name: 'BatStep3',
+                                    component: resolve => require(['@/views/contract/authentication/step3'], resolve)
+                                }
+
                             ]
                         }
                     ]
@@ -153,26 +180,53 @@ const router = new Router({
                         {
                             path: 'Soc',
                             name: 'Soc',
-                            component: resolve => require(['@/components/contractTemp/index'], resolve),
+                            component: resolve => require(['@/views/contract/contractTemp/index'], resolve),
                             children: [{
                                     path: 'Sstep1-:type',
                                     name: 'Sstep1',
-                                    component: resolve => require(['@/components/contractTemp/step1'], resolve)
+                                    component: resolve => require(['@/views/contract/contractTemp/step1'], resolve)
                                 },
                                 {
                                     path: 'Sstep2-:sellId-:type',
                                     name: 'Sstep2',
-                                    component: resolve => require(['@/components/contractTemp/step2'], resolve)
+                                    component: resolve => require(['@/views/contract/contractTemp/step2'], resolve)
                                 },
                                 {
                                     path: 'Sstep3-:type',
                                     name: 'Sstep3',
-                                    component: resolve => require(['@/components/contractTemp/step3'], resolve)
+                                    component: resolve => require(['@/views/contract/contractTemp/step3'], resolve)
                                 },
                                 {
                                     path: 'Sstep4-:type',
                                     name: 'Sstep4',
-                                    component: resolve => require(['@/components/contractTemp/step4'], resolve)
+                                    component: resolve => require(['@/views/contract/contractTemp/step4'], resolve)
+                                }
+
+                            ]
+                        },
+                        {
+                            path: 'SocManage-:type',
+                            name: 'SocManage',
+                            component: resolve => require(['@/views/contract/contractManage/index'], resolve)
+                        },
+                        {
+                            path: 'SocAuthen-:type',
+                            name: 'SocAuthen',
+                            component: resolve => require(['@/views/contract/authentication/index'], resolve),
+                            children: [{
+                                    path: 'step1',
+                                    name: 'SatStep1',
+                                    component: resolve => require(['@/views/contract/authentication/step1'], resolve)
+                                },
+                                {
+                                    path: 'step2',
+                                    name: 'SatStep2',
+                                    component: resolve => require(['@/views/contract/authentication/step2'], resolve)
+                                },
+                                {
+                                    path: 'step3',
+                                    name: 'SatStep3',
+                                    component: resolve => require(['@/views/contract/authentication/step3'], resolve)
                                 }
 
                             ]

@@ -247,8 +247,8 @@
 </script>
 
 
-<style lang="less">
-    @import url('../../assets/base.less');
+<style lang="less" scroped>
+    @import url('../../../assets/base.less');
     .oc-business-info {
         width: 100%;
         height: 40px;

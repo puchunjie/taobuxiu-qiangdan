@@ -18,38 +18,50 @@
         components: {
             innerTitle
         },
-        props: {
-            steps: {
-                type: Array,
-                default: function() {
-                    return ['选择签约方', '选择签约订单', '确认我方信息', '开始起草合同']
-                }
-            }
-        },
-        data () {
+        data() {
             return {
+                steps: ['选择签约方', '选择签约订单', '确认我方信息', '开始起草合同'],
                 nowSetp: 1
             }
         },
         methods: {
-          setStep(val){
-              this.nowSetp = val.replace(/[^0-9]/ig,"");
-          }  
+            setStep(val) {
+                this.nowSetp = val.replace(/[^0-9]/ig, "");
+            },
+            //查询是否认证
+            queryBaseInfo() {
+                this.$http.post(this.$api.queryBaseInfo).then(res => {
+                    if (res.code === 1000) {
+                        if (res.data == '') {
+                            this.$Modal.confirm({
+                                content: '对不起您还没有认证，是否前往认证？',
+                                onOk: () => {
+                                    let routerName = this.$route.params.type == 1 ? 'BocAuthen' : 'SocAuthen';
+                                    this.$router.push({
+                                        name: routerName
+                                    });
+                                }
+                            });
+                        }
+                    }
+                })
+            }
         },
         watch: {
-          '$route.name'(val){
-              this.setStep(val)
-          }
+            '$route.name' (val) {
+                this.setStep(val)
+            }
         },
-        created () {
-            this.setStep(this.$route.name)
+        created() {
+            this.setStep(this.$route.name);
+            this.queryBaseInfo();
         }
     }
 </script>
 
 
-<style lang="less">
-    @import url('../../assets/base.less');
+<style lang="less" scoped>
+    @import url('../../../assets/base.less');
     .oc-container {
         width: 100%;
     }
