@@ -94,6 +94,7 @@
                 handler: function(val, oldVal) {
                     if(this.isInit)
                         this.$emit('input',val.value);
+                        this.$emit("on-change",val)
                 },
                 deep: true
             }

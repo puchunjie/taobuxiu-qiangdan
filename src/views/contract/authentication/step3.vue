@@ -3,7 +3,7 @@
     <p class="icon"><span class="iconfont icon-CombinedShape"></span></p>
     <p class="text">认证信息提交成功，将在1个工作日内完成审核，请耐心等待</p>
     <p>
-      <router-link class="btn" :to="{name: type == 1 ? 'BocAuthen' : 'SocAuthen',params: {type: type}}" replace>确定</router-link>
+      <a class="btn" :href="type == 1 ? 'BocAuthen-' + type : 'SocAuthen-' + type">确定</a>
     </p>
   </div>
 </template>

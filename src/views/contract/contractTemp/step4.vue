@@ -81,7 +81,7 @@
         <div class="oc-step4-bottom">
             <a class="back" @click="$router.go(-1)">返回上一步</a>
             <div class="next-step">
-                <a class="btn goast">放弃起草电子合同</a>
+                <a class="btn goast" @click="giveUp">放弃起草电子合同</a>
                 <a class="btn" @click="doAction">确认起草电子合同</a>
             </div>
         </div>
@@ -184,6 +184,14 @@
                 }else{
                     this.$Message.error('请选择交货地址!')
                 }
+            },
+            giveUp(){
+                this.$router.replace({
+                    name: this.type == 1 ? 'Bstep1' : 'Sstep1',
+                    params: {
+                        type: this.type
+                    }
+                })
             }
         },
         created() {
