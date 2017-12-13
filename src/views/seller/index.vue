@@ -121,7 +121,7 @@
                             name: '管理合同',
                             count: 0,
                             router: {
-                                name: 'BocManage',
+                                name: 'SocManage',
                                 params: {
                                     type: 2
                                 }

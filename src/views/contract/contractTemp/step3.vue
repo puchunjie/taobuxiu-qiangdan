@@ -68,6 +68,7 @@
         </div> -->
         <!-- 确认部分 -->
         <div class="oc-panel">
+            <a class="history" @click="getHistory">历史填写记录</a>
             <p class="tips">
                 <span class="iconfont icon-about"></span> 请确认您的客户信息，合同中将以此作为甲/已方信息(我方信息)
             </p>
@@ -80,9 +81,9 @@
                 </div>
                 <div class="from-group">
                     <div class="label">
-                        <span class="iconfont icon-bitianxiang"></span> 仓库
+                        <span class="iconfont icon-bitianxiang"></span> 联系地址
                     </div>
-                    <tbInput validate style="width:600px" placeholder="请输入仓库地址" v-model="uerInfo.address"></tbInput>
+                    <tbInput validate style="width:600px" placeholder="请输入联系地址" v-model="uerInfo.address"></tbInput>
                 </div>
                 <div class="from-group">
                     <div class="label">
@@ -102,6 +103,22 @@
                 <a class="btn goast" @click="$router.go(-1)">返回上一层</a>
             </div>
         </div>
+        
+        <div class="history-list" v-if="historyShow">
+            <div class="inner-wrap">
+            <div class="header">历史地址(最近5条)<span class="close iconfont icon-close" @click="historyShow = false"></span></div>
+            <div class="content">
+                <table>
+                    <tr v-for="his in historyList" :key="his.id">
+                        <td style="width:400px">{{ his.address }}</td>
+                        <td style="width:100px">{{ his.contacts }}</td>
+                        <td style="width:280px">{{ his.tel }}</td>
+                        <td style="width:80px"><a class="in-btn" @click="fill(his)">选择</a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        </div>
     </div>
 </template>
 
@@ -118,6 +135,8 @@
         },
         data() {
             return {
+                historyShow:false,
+                historyList:[],
                 acInfo: '',
                 idTypes: [{
                     label: "营业执照",
@@ -201,6 +220,22 @@
                 } else {
                     this.$Message.warning('请将信息填写完整!');
                 }
+            },
+            getHistory(){
+                this.$http.post(this.$api.findRecentFiveContract,{
+                    pageSize: 5
+                }).then(res => {
+                    if(res.code === 1000){
+                        this.historyList = res.data;
+                        this.historyShow = true;
+                    }
+                })
+            },
+            fill(item){
+                this.uerInfo.address = item.address;
+                this.uerInfo.contacts = item.contacts;
+                this.uerInfo.tel = item.tel;
+                this.historyShow = false;
             }
         },
         created() {
@@ -210,7 +245,7 @@
 </script>
 
 
-<style lang="less">
+<style lang="less" scoped>
     @import url('../../../assets/base.less');
     .oc-step3 {
         padding: 0 20px;
@@ -240,11 +275,17 @@
     }
     
     .oc-panel {
+        position:relative;
         width: 100%;
         padding: 10px;
         border: @b_d1;
         margin-top: 12px;
         font-size: 14px;
+        .history{
+            position: absolute;
+            right: 20px;
+            top: 60px;
+        }
         .tips {
             width: 100%;
             height: 36px;
@@ -324,6 +365,61 @@
                 }
             }
         }
+    }
+
+    .history-list{
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        background-color: rgba(0,0,0,.4);
+        z-index: 990;
+        font-size: 12px;
+        .inner-wrap{
+            width: 910px;
+            min-height: 270px;
+            background-color: #fff;
+            margin: 200px auto;
+            padding-bottom: 20px;
+        }
+        .header{
+            position: relative;
+            width: 100%;
+            height: 40px;
+            line-height: 40px;
+            padding: 0 14px;
+            font-size: 14px;
+            color: #fff;
+            background-color: @mask_blue;
+            .close{
+                position: absolute;
+                right: 14px;
+                cursor: pointer;
+            }
+        }
+        .content{
+            width: 100%;
+            padding: 30px;
+            table{
+                width: 100%;
+                td{
+                    height: 34px;
+                }
+            }
+        }
+    }
+    .in-btn{
+        display: inline-block;
+        vertical-align: middle;
+        height: 24px;
+        line-height: 24px;
+        padding: 0 19px;
+        text-align: center;
+        color: #fff;
+        font-size: 12px;
+        background-color: @mask_blue;
+        .borderRadius(2px);
     }
 </style>
 

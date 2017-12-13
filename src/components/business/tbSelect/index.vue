@@ -73,9 +73,12 @@
                 })
             },
             setActive() {
+                console.log(this.value)
                 let inputActive = findIndex(this.list, el => {
+                   console.log(el.value)
                     return el.value == this.value
                 })
+                console.log(inputActive)
                 this.activeIndex = inputActive >= 0 ? inputActive : 0
                 this.isInit = true;
             },
@@ -89,7 +92,8 @@
         watch: {
             'activeItem': {
                 handler: function(val, oldVal) {
-                    this.$emit('input', this.isInit ? val.value : this.list[0].value);
+                    if(this.isInit)
+                        this.$emit('input',val.value);
                 },
                 deep: true
             }

@@ -73,15 +73,14 @@
         <div class="label"><span class="required">*</span>短信验证码</div>
         <div class="value">
           <tbInput validate style="width:180px" v-model="apiData.smsCode" placeholder="请输入短信验证码"></tbInput>
-          <getCode :apiUrl="$api.getSmsCode" :mobile="apiData.legalPersonMobile">
+          <getCode :apiUrl="$api.getSmsCode" :mobile="apiData.legalPersonMobile" @on-success="codeSend = true">
             <a class="get-code">获取短信验证码</a>
           </getCode>
         </div>
       </div>
-      <a class="btn" style="margin-left:180px" @click="saveBaseInfo">下一步</a>
-      <a class="btn goast">放弃认证</a>
+      <a class="btn" style="margin-left:180px" @click="goNext">下一步</a>
+      <a class="btn goast" @click="giveUp">放弃认证</a>
     </div>
-  
   </div>
 </template>
 
@@ -104,6 +103,7 @@
     },
     data() {
       return {
+        codeSend: false,
         idTypes: [{
           label: "营业执照",
           value: "4"
@@ -139,7 +139,7 @@
       }
     },
     computed: {
-      ...mapGetters(['user']),
+      ...mapGetters(['user', 'ajaxHead']),
       ajaxParams() {
         let params = this.$clearData(this.apiData);
         params.companyName = this.user.companyName;
@@ -153,17 +153,72 @@
           ok = v != '' || k == 'address'
         })
         return ok
+      },
+      type() {
+        return this.$route.params.type
       }
     },
     methods: {
-      // 保存商户信息
+      giveUp() {
+        this.$Modal.confirm({
+          title: '提示！',
+          content: '是否要放弃认证？',
+          onOk: () => {
+            this.$router.replace({
+              name: this.type == 1 ? 'BocAuthen' : 'SocAuthen',
+              params: {
+                type: this.type
+              }
+            })
+          }
+        })
+      },
+      // 保存商户信息到本地去，然后去下一步
       saveBaseInfo() {
-        if(this.isOk){
-          this.$http.post(this.$api.saveBaseInfo,this.ajaxParams)
-        }else{
-          this.$Message.error('请将带星号的栏目正确填写完整！')
+        let data = this.$clearData(this.ajaxParams);
+        data.v = this.ajaxHead.loginId;
+        this.$ls.set('rzInfo', data);
+      },
+      goNext() {
+        if (this.isOk && this.codeSend) {
+          this.saveBaseInfo();
+          this.$router.replace({
+            name: this.type == 1 ? 'BatStep2' : 'SatStep2'
+          })
+        } else {
+          this.$Message.error(this.isOk ? '请发送验证码验证手机号！' : '请将带星号的栏目正确填写完整！')
+        }
+      },
+      // 查看是否有历史填写记录，如果有就填充
+      getHistory() {
+        let data = this.$ls.get('rzInfo');
+        if (data && data.v == this.ajaxHead.loginId) {
+          data.smsCode = '';
+          this.apiData = data;
+          this.locaiton.id = data.locationId;
+          this.locaiton.name = data.locationName;
+        } else {
+          this.$ls.remove('rzInfo');
         }
       }
+    },
+    beforeRouteLeave(to, from, next) {
+      this.saveBaseInfo();
+      next();
+      // if (to.name != 'SatStep2' && to.name != 'BatStep2') {
+      //   this.$Modal.confirm({
+      //     title: '提示！',
+      //     content: '离开页面将丢失您填写的信息，是否继续离开？',
+      //     onOk() {
+      //       next();
+      //     }
+      //   })
+      // } else {
+      //   next();
+      // }
+    },
+    created() {
+      this.getHistory();
     }
   }
 </script>

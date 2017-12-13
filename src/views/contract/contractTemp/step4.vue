@@ -48,13 +48,13 @@
                                 <tbInput style="width:110px" v-model="item.tolerance"></tbInput>
                             </td>
                             <td>
-                                <tbInput style="width:62px" v-model="item.numbers"></tbInput>
+                                <tbInput style="width:62px" type="number" v-model="item.numbers"></tbInput>
                             </td>
                             <td>
-                                <tbInput style="width:62px" v-model="item.weights"></tbInput>
+                                <tbInput style="width:62px" type="number" v-model="item.weights"></tbInput>
                             </td>
                             <td>
-                                <tbSelect v-model="item.priceMode" :data='[{label:"重量",value:"2"},{label:"数量",value:"1"}]'></tbSelect>
+                                <tbSelect v-model="item.priceMode" :data='[{label:"数量",value:"1"},{label:"重量",value:"2"}]'></tbSelect>
                             </td>
                             <td>
                                 <tbInput style="width:80px" v-model="item.price"></tbInput>
@@ -120,7 +120,7 @@
             totlePrcieArr() {
                 let arr = [];
                 this.info.orderIds.forEach(el => {
-                    let number = el.priceMode == 2 ? el.numbers : el.weights;
+                    let number = el.priceMode == 1 ? el.numbers : el.weights;
                     number *= 1;
                     arr.push((el.price * number).toFixed(2));
                 })
@@ -141,6 +141,9 @@
                     locationName: this.locationId.name,
                     orderIds: JSON.stringify({orderIds:this.info.orderIds})
                 }
+            },
+            type() {
+                return this.$route.params.type
             }
         },
         methods: {
@@ -150,6 +153,9 @@
                 this.$http.post(this.$api.selectStartContractInfo, params).then(res => {
                     if (res.code === 1000) {
                         this.info = res.data;
+                        this.info.orderIds.forEach(el => {
+                            el.tolerance+= ' '+el.proPlacesName
+                        })
                     } else {
                         this.$Message.error(res.message);
                     }
@@ -157,10 +163,26 @@
             },
             // 确认起草合同
             doAction() {
-                if (this.locationId != '') {
+                if (this.locationId.id != '') {
                     this.$http.post(this.$api.saveContractInfo,this.ajaxParams).then(res => {
-
+                        if(res.code === 1000){
+                            this.$Modal.success({
+                                content: '起草完成！',
+                                onOk: () => {
+                                    this.$router.replace({
+                                        name: this.type == 1 ? 'BocManage' : 'SocManage',
+                                        params: {
+                                            type: this.type
+                                        }
+                                    })
+                                }
+                            })
+                        }else{
+                            this.$Message.error(res.message)
+                        }
                     })
+                }else{
+                    this.$Message.error('请选择交货地址!')
                 }
             }
         },
@@ -171,9 +193,10 @@
 </script>
 
 
-<style lang="less">
+<style lang="less" scoped>
     @import url('../../../assets/base.less');
     .oc-step4 {
+        position: relative;
         padding: 0 20px 90px;
         .oc-title {
             font-size: 16px;
@@ -274,4 +297,5 @@
         }
     }
 </style>
+
 

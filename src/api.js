@@ -9,7 +9,11 @@ if (process.env.NODE_ENV == 'development') {
     uploadHost = ''
 }
 
-export const excelDownloadUrl = 'http://tbxoss.oss-cn-hangzhou.aliyuncs.com/'
+export const aliClound = 'http://tbxoss.oss-cn-hangzhou.aliyuncs.com/'
+
+export const uploadPic = uploadHost + '/fileUpload/images'
+
+// export const uploadPic = uploadHost + '/common/fileUpload/images'
 
 /**
  * 获取用户信息
@@ -544,6 +548,11 @@ export const saveContract = '/common/contractAddress/saveContract'
 export const selectStartContractInfo = '/demands/contractManger/selectStartContractInfo'
 
 /**
+ * 查询最近五条起草方联系人信息
+ */
+export const findRecentFiveContract = '/common/contractAddress/findRecentFiveContract'
+
+/**
  * 保存起草合同信息
  */
 export const saveContractInfo = '/demands/contractManger/saveContractInfo'
@@ -567,3 +576,8 @@ export const getSmsCode = '/demands/business/getSmsCode'
  * 认证信息商户保存
  */
 export const saveBaseInfo = '/demands/business/saveBaseInfo'
+
+/**
+ * 重新认证
+ */
+export const appContractAgain = '/demands/business/appContractAgain'

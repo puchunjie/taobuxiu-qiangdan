@@ -23,7 +23,7 @@
                         上传
                     </Upload>
                     <a class="goast" v-if="!canDown" @click="noPass">下载模板</a>
-                    <a class="goast" v-else :href="$api.excelDownloadUrl + excelUrl" download @click="countNum">下载模板</a>
+                    <a class="goast" v-else :href="$api.aliClound + excelUrl" download @click="countNum">下载模板</a>
                     <a class="goast" @click="getHistory">下载历史文件</a>
                 </div>
                 <p class="tip"><span>* </span>必须使用<a>《淘不锈接单版-资源标准模板》</a>，填好资源后上传。</p>
@@ -44,8 +44,8 @@
                             <td>{{ item.fileName }}</td>
                             <td>{{ item.createTime | dateformat }}</td>
                             <td>
-                                <a target="_blank" :href="$api.excelDownloadUrl + item.excelUrl + '.html'">预览</a>
-                                <a :href="$api.excelDownloadUrl + item.excelUrl" download>下载</a>
+                                <a target="_blank" :href="$api.aliClound + item.excelUrl + '.html'">预览</a>
+                                <a :href="$api.aliClound + item.excelUrl" download>下载</a>
                             </td>
                         </tr>
                     </tbody>

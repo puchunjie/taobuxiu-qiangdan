@@ -32,10 +32,10 @@
             queryBaseInfo() {
                 this.$http.post(this.$api.queryBaseInfo).then(res => {
                     if (res.code === 1000) {
-                        if (res.data == '') {
-                            this.$Modal.confirm({
-                                content: '对不起您还没有认证，是否前往认证？',
-                                onOk: () => {
+                        if (res.data == '' || res.data.status != 1) {
+                            this.$Modal.warning({
+                                content: '对不起您还没有认证，请前往认证？',
+                                 onOk: () => {
                                     let routerName = this.$route.params.type == 1 ? 'BocAuthen' : 'SocAuthen';
                                     this.$router.push({
                                         name: routerName

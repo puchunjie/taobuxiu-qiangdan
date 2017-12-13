@@ -67,7 +67,11 @@
             },500)
         },
         mounted() {
-            this.inValue = this.value
+            if(this.type == 'number'){
+                this.inValue = isNaN(Number(this.value)) ? 0 : Number(this.value)
+            }else{
+                this.inValue = this.value
+            }
         }
     }
 </script>

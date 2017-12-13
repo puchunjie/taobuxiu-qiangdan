@@ -112,7 +112,7 @@
 </script>
 
 
-<style lang="less" scroped>
+<style lang="less" scoped>
     @import url('../../../assets/base.less');
     .oc-search {
         position: relative;
