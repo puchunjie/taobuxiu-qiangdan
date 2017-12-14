@@ -25,7 +25,8 @@
                             <viewPic :imgUrl="rzInfo.businessCertificate">查看企业授权书</viewPic>
                         </div>
                         <div class="group"><label>负责人证件类型：</label>{{ rzInfo.legalPersonCertifyType | certifyTypeStr }}
-                            <viewPic :imgUrl="rzInfo.legalPersonCardPhotoA">查看图片</viewPic>
+                            <viewPic :imgUrl="rzInfo.legalPersonCardPhotoA">查看正面</viewPic>
+                            <viewPic :imgUrl="rzInfo.legalPersonCardPhotoB">查看反面</viewPic>
                         </div>
                         <div class="group"><label>负责人证件号：</label>{{ rzInfo.legalPersonCardId }}</div>
                         <div class="group"><label>负责人手机号：</label>{{ rzInfo.legalPersonMobile }}</div>

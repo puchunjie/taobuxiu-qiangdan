@@ -3,7 +3,7 @@
         <div class="btn-group" @click="getCode" v-show="btnShow">
             <slot></slot>
         </div>
-        <span v-show="!btnShow" class="count">{{count}}秒后可重新发送</span>
+        <span v-show="!btnShow" class="count">{{count}}s重新发送</span>
     </div>
 </template>
 
@@ -41,11 +41,11 @@
         methods: {
             getCode() {
                 if (this.isMobile) {
+                    this.countCode();
                     this.$http.post(this.apiUrl, {
                         mobile: this.mobile
                     }).then(res => {
                         if (res.code === 1000) {
-                            this.countCode();
                             this.$emit('on-success')
                         } else {
                             this.$Notice.warning({
@@ -88,6 +88,7 @@
             line-height: 30px;
             color: red;
             text-align: center;
+            white-space: nowrap;
         }
     }
 </style>

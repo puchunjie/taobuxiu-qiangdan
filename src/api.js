@@ -581,3 +581,8 @@ export const saveBaseInfo = '/demands/business/saveBaseInfo'
  * 重新认证
  */
 export const appContractAgain = '/demands/business/appContractAgain'
+
+/**
+ * 根据用户编号查询商户认证信息
+ */
+export const getContractAuthenticationByUserId = '/demands/contractManger/getContractAuthenticationByUserId'

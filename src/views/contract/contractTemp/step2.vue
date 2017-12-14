@@ -113,7 +113,7 @@
                     orderId: '',
                     storeType: ""
                 },
-                dateTime: ['', ''],
+                dateTime: [null, null],
                 storeTypes: [{
                     label: "所有类型",
                     value: ""
@@ -136,8 +136,8 @@
         computed: {
             timeFrame() {
                 return {
-                    startTime: this.dateTime[0] != '' ? new Date(this.dateTime[0]).getTime() : '',
-                    endTime: this.dateTime[1] != '' ? new Date(this.dateTime[1]).getTime() : ''
+                    startTime: this.dateTime[0] != null ? new Date(this.dateTime[0]).getTime() : '',
+                    endTime: this.dateTime[1] != null ? new Date(this.dateTime[1]).getTime() : ''
                 }
             },
             type() {
@@ -194,7 +194,7 @@
                 this.getList();
             },
             reset() {
-                this.dateTime = ['', ''];
+                this.dateTime = [null, null];
                 this.apiData.storeType = '';
                 this.apiData.orderId = '';
                 this.search();
@@ -349,6 +349,8 @@
                 text-align: left;
                 text-indent: 20px;
                 height: 34px;
+            }
+            th{
                 border-bottom: @b_d1;
             }
             td {

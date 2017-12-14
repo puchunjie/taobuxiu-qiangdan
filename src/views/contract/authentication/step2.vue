@@ -3,19 +3,19 @@
     <p class="tip">
       <span class="iconfont icon-about"></span> 请将证件原件清晰拍照或彩色扫描上传，图片支持jpg/jpeg、png格式，图片大小建议在2M以下
     </p>
-    <h2 class="sub-tit">上传 <a>无锡淘不锈电子商务有限公司</a> 工商营业执照</h2>
+    <h2 class="sub-tit">上传 <a>{{ rzInfo.companyName }}</a> 工商营业执照</h2>
     <div class="upload-group">
       <uploadPic title="工商营业执照" v-model="apiData.businessLicense"></uploadPic>
-      <sample desc="副本" style="margin-left:60px;"></sample>
+      <sample desc="副本" style="margin-left:60px;" img="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/contract/certify.png"></sample>
     </div>
-    <h2 class="sub-tit">上传认证负责人<a>彭澄</a>的身份证信息</h2>
+    <h2 class="sub-tit">上传认证负责人<a>{{ rzInfo.legalPersonName }}</a>的身份证信息</h2>
     <div class="upload-group">
       <uploadPic title="身份证正面" v-model="apiData.legalPersonCardPhotoA"></uploadPic>
       <uploadPic title="身份证反面" v-model="apiData.legalPersonCardPhotoB"></uploadPic>
-      <sample desc="副本" style="margin-left:60px;"></sample>
-      <sample desc="副本"></sample>
+      <sample desc="正面" style="margin-left:60px;" img="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/contract/ID_CARD_A.png"></sample>
+      <sample desc="反面" img="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/contract/ID_CARD_B.jpg "></sample>
     </div>
-    <h2 class="sub-tit">上传认证负责人<a>彭澄</a>的企业饿授权书</h2>
+    <h2 class="sub-tit">上传认证负责人<a>{{ rzInfo.legalPersonName }}</a>的企业授权书</h2>
     <div class="upload-group">
       <div style="margin-bottom:10px">
         <span style="color:red">*必须使用本品台提供的模板《企业应用电子合同认证授权书》，请您下载</span>
@@ -23,7 +23,7 @@
       </div>
   
       <uploadPic v-model="apiData.businessCertificate"></uploadPic>
-      <sample desc="副本" style="margin-left:60px;"></sample>
+      <sample desc="授权书" style="margin-left:60px;"></sample>
     </div>
     <div style="text-align:right;">
       <a class="btn goast" @click="giveUp">放弃认证</a>
@@ -51,6 +51,7 @@
           legalPersonCardPhotoA: '',
           legalPersonCardPhotoB: ''
         },
+        rzInfo: {},
         isOver: false //是否是重新编辑
       }
     },
@@ -69,8 +70,10 @@
     methods: {
       submitData() {
         if (this.isOk) {
-          let part1Data = this.$ls.get('rzInfo');
-          let params = this.$clearData(Object.assign(this.apiData, part1Data));
+          let params = this.$clearData(this.rzInfo);
+          map(this.apiData,(v,k) => {
+            params[k] = v;
+          })
           // 是否是重新认证
           let rzUrl = this.isOver ? this.$api.appContractAgain : this.$api.saveBaseInfo;
           this.$http.post(rzUrl, params).then(res => {
@@ -80,6 +83,10 @@
                 name: this.type == 1 ? 'BatStep3' : 'SatStep3'
               })
               this.$ls.remove('rzInfo');
+            }else{
+              params.dead = true;
+              this.$ls.set('rzInfo',params);
+              this.$Message.error(res.message)
             }
           })
         } else {
@@ -102,11 +109,11 @@
       }
     },
     created () {
-      let data = this.$ls.get('rzInfo');
-      this.isOver = !!data && !!data.id;
+      this.rzInfo = this.$ls.get('rzInfo');
+      this.isOver = !!this.rzInfo && !!this.rzInfo.id;
       if(this.isOver){
         map(this.apiData,(v,k) => {
-          this.apiData[k] = data[k]
+          this.apiData[k] = this.rzInfo[k]
         })
       }
     }

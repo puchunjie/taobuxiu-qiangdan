@@ -35,7 +35,7 @@
                         <td>{{ item.orderNum }}</td>
                         <td>{{ item.updateTime }}</td>
                         <td>
-                            <router-link class="pick" :to="{name:type==1?'Bstep2':'Sstep2',params:{sellId:item.sellId,type:type}}">选择</router-link>
+                            <a class="pick" @click="pickItem(item.sellId)">选择</a>
                         </td>
                     </tr>
                 </tbody>
@@ -45,7 +45,7 @@
             </div>
         </div>
         <div class="oc-bottom">
-            <Page show-elevator  @on-change="getList" :total="totalCount" :current.sync="apiData.currentPage" :page-size="apiData.pageSize"></Page>
+            <Page show-elevator @on-change="getList" :total="totalCount" :current.sync="apiData.currentPage" :page-size="apiData.pageSize"></Page>
         </div>
     </div>
 </template>
@@ -67,17 +67,17 @@
                     type: '',
                     sellName: ''
                 },
-                dateTime: ['', '']
+                dateTime: [null, null]
             }
         },
         computed: {
             timeFrame() {
                 return {
-                    startTime: this.dateTime[0] != '' ? new Date(this.dateTime[0]).getTime() : '',
-                    endTime: this.dateTime[1] != '' ? new Date(this.dateTime[1]).getTime() : ''
+                    startTime: this.dateTime[0] != null ? new Date(this.dateTime[0]).getTime() : '',
+                    endTime: this.dateTime[1] != null ? new Date(this.dateTime[1]).getTime() : ''
                 }
             },
-            type(){
+            type() {
                 return this.$route.params.type
             }
         },
@@ -95,7 +95,7 @@
                     this.listLoad = false;
                 })
             },
-            search(){
+            search() {
                 this.apiData.currentPage = 1;
                 this.getList();
             },
@@ -103,6 +103,23 @@
                 this.dateTime = ['', ''];
                 this.apiData.sellName = '';
                 this.search();
+            },
+            pickItem(sellId) {
+                this.$http.post(this.$api.getContractAuthenticationByUserId, {
+                    userId: sellId
+                }).then(res => {
+                    if (res.code === 1000) {
+                        this.$router.push({
+                            name: this.type == 1 ? 'Bstep2' : 'Sstep2',
+                            params: {
+                                sellId: sellId,
+                                type: this.type
+                            }
+                        })
+                    } else {
+                        this.$Message.error(res.message)
+                    }
+                })
             }
         },
         mounted() {

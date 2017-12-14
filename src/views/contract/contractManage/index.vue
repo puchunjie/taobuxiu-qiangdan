@@ -24,7 +24,7 @@
                         <tr>
                             <th style="width: 180px;text-indent:30px">合同编号</th>
                             <th style="width: 300px">合同标题</th>
-                            <th style="width: 200px">买/卖方公司名称</th>
+                            <th style="width: 200px">对方公司名称</th>
                             <th style="width: 160px">更新时间</th>
                             <th style="width: 120px">合同状态</th>
                             <th class="action" style="width: 95px">操作</th>
@@ -38,7 +38,7 @@
                             <td>{{ item.updateTime | dateformat }}</td>
                             <td><span :class="'state state-'+item.status">{{ item.status | statusStr }}</span></td>
                             <td class="action">
-                                <a>查看</a><br>
+                                <a :href="mosaicUrl(item)" target="_blank">查看</a><br>
                                 <a>合同信息</a>
                             </td>
                         </tr>
@@ -56,6 +56,7 @@
 </template>
 
 <script>
+    import { mapGetters } from 'vuex'
     import status from '@/components/orderCommon/status.vue'
     import innerTitle from '@/components/business/innerTitle.vue'
     export default {
@@ -72,7 +73,7 @@
                     selectname: '',
                     checkstatus: ''
                 },
-                dateTime: ['', ''],
+                dateTime: [null, null],
                 statusData: [{
                     label: '全部合同',
                     value: '',
@@ -99,10 +100,11 @@
             }
         },
         computed: {
+            ...mapGetters(['ajaxHead']),
             timeFrame() {
                 return {
-                    startTime: this.dateTime[0] != '' ? new Date(this.dateTime[0]).getTime() : '',
-                    endTime: this.dateTime[1] != '' ? new Date(this.dateTime[1]).getTime() : ''
+                    startTime: this.dateTime[0] != null ? new Date(this.dateTime[0]).getTime() : '',
+                    endTime: this.dateTime[1] != null ? new Date(this.dateTime[1]).getTime() : ''
                 }
             },
             type() {
@@ -115,7 +117,7 @@
                     case 'a':
                         return '待我方签署'
                         break;
-                    case 'a':
+                    case 'b':
                         return '待对方签署'
                         break;
                     case '1':
@@ -154,6 +156,10 @@
                 this.dateTime = ['', ''];
                 this.apiData.selectname = '';
                 this.search();
+            },
+            mosaicUrl(item){
+                let host = location.origin;
+                return `${host}:8080/contract.jsp?appUserId=${this.ajaxHead.loginId}&loginId=${this.ajaxHead.loginId}&contractId=${item.contractId}&authorization=${this.ajaxHead.authorization}&flash=${Math.random()}`
             }
         },
         watch: {

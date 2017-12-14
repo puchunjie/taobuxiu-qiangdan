@@ -5,19 +5,23 @@
             <img :src="img">
         </div>
         <p class="desc">{{ desc }}</p>
-        <a class="show">查看大图</a>
+        <viewPic :imgUrl="img" class="show">查看大图</viewPic>
     </div>
 </template>
 
 <script>
+    import viewPic from '@/components/basics/viewPic/index.vue'
     export default {
-        props:{
-            desc:{
-                type:String,
+        components: {
+            viewPic
+        },
+        props: {
+            desc: {
+                type: String,
                 default: ''
             },
-            img:{
-                type:String,
+            img: {
+                type: String,
                 default: ''
             }
         }
@@ -44,15 +48,15 @@
             background-color: #fff;
             overflow: hidden;
             padding: 5px;
-            img{
+            img {
                 display: block;
                 width: 100%;
             }
         }
-        .desc{
-           margin-top: 10px;
+        .desc {
+            margin-top: 10px;
         }
-        .show{
+        .show {
             position: absolute;
             right: 0;
             bottom: 0;

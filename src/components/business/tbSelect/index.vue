@@ -73,13 +73,15 @@
                 })
             },
             setActive() {
-                console.log(this.value)
                 let inputActive = findIndex(this.list, el => {
-                   console.log(el.value)
                     return el.value == this.value
                 })
-                console.log(inputActive)
-                this.activeIndex = inputActive >= 0 ? inputActive : 0
+                if(inputActive > 0){
+                    this.activeIndex = inputActive;
+                }else{
+                    this.activeIndex = 0;
+                    this.$emit('input',this.activeItem.value);
+                }
                 this.isInit = true;
             },
             // 点击外部
@@ -92,11 +94,15 @@
         watch: {
             'activeItem': {
                 handler: function(val, oldVal) {
-                    if(this.isInit)
+                    if(this.isInit){
                         this.$emit('input',val.value);
                         this.$emit("on-change",val)
+                    }     
                 },
                 deep: true
+            },
+            value(val){
+                this.setActive()
             }
         },
         created() {

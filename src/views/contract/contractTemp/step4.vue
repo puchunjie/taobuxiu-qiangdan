@@ -164,6 +164,7 @@
             // 确认起草合同
             doAction() {
                 if (this.locationId.id != '') {
+                    this.$spinToggle(true);
                     this.$http.post(this.$api.saveContractInfo,this.ajaxParams).then(res => {
                         if(res.code === 1000){
                             this.$Modal.success({
@@ -180,6 +181,7 @@
                         }else{
                             this.$Message.error(res.message)
                         }
+                        this.$spinToggle(false);
                     })
                 }else{
                     this.$Message.error('请选择交货地址!')
