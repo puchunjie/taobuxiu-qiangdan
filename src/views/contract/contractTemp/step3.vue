@@ -25,47 +25,47 @@
         </table>
         <!-- 认证部分 -->
         <!-- <div class="oc-panel" v-if="!isRZ">
-            <p class="tips">
-                <span class="iconfont icon-about"></span> 您还未认证电子合同用户信息，用户认证信息成功后可继续操作
-            </p>
-            <div class="oc-from">
-                <div class="from-group">
-                    <div class="label">
-                        <span class="iconfont icon-bitianxiang"></span> 商户名称
+                <p class="tips">
+                    <span class="iconfont icon-about"></span> 您还未认证电子合同用户信息，用户认证信息成功后可继续操作
+                </p>
+                <div class="oc-from">
+                    <div class="from-group">
+                        <div class="label">
+                            <span class="iconfont icon-bitianxiang"></span> 商户名称
+                        </div>
+                        <p class="input-disable">{{ base.realName }}</p>
                     </div>
-                    <p class="input-disable">{{ base.realName }}</p>
-                </div>
-                <div class="from-group">
-                    <div class="label">
-                        <span class="iconfont icon-bitianxiang"></span> 用户类型
+                    <div class="from-group">
+                        <div class="label">
+                            <span class="iconfont icon-bitianxiang"></span> 用户类型
+                        </div>
+                        <p class="input-disable wid200">企业</p>
                     </div>
-                    <p class="input-disable wid200">企业</p>
-                </div>
-                <div class="from-group">
-                    <div class="label">
-                        <span class="iconfont icon-bitianxiang"></span> 认证证件
+                    <div class="from-group">
+                        <div class="label">
+                            <span class="iconfont icon-bitianxiang"></span> 认证证件
+                        </div>
+                        <tbSelect class="wid200" :data='idTypes' v-model="rzApiData.certifyType"></tbSelect>
                     </div>
-                    <tbSelect class="wid200" :data='idTypes' v-model="rzApiData.certifyType"></tbSelect>
-                </div>
-                <div class="from-group">
-                    <div class="label">
-                        <span class="iconfont icon-bitianxiang"></span> 证件号码
+                    <div class="from-group">
+                        <div class="label">
+                            <span class="iconfont icon-bitianxiang"></span> 证件号码
+                        </div>
+                        <tbInput validate class="wid200" placeholder="请输入完整证件号" v-model="rzApiData.certifyNumber"></tbInput>
                     </div>
-                    <tbInput validate class="wid200" placeholder="请输入完整证件号" v-model="rzApiData.certifyNumber"></tbInput>
-                </div>
-                <div class="from-group">
-                    <div class="label">
-                        <span class="iconfont icon-bitianxiang"></span> 认证手机
+                    <div class="from-group">
+                        <div class="label">
+                            <span class="iconfont icon-bitianxiang"></span> 认证手机
+                        </div>
+                        <tbInput validate class="wid200" placeholder="请输入手机号" v-model="rzApiData.cellNum"></tbInput>
+                        <span class="warn-tip">*该手机号将用作签约前校验与签约信息短信通知使用，请谨慎填写</span>
                     </div>
-                    <tbInput validate class="wid200" placeholder="请输入手机号" v-model="rzApiData.cellNum"></tbInput>
-                    <span class="warn-tip">*该手机号将用作签约前校验与签约信息短信通知使用，请谨慎填写</span>
                 </div>
-            </div>
-            <div class="panel-btns">
-                <a class="btn" @click="saveCheckContract">认证信息</a>
-                <a class="btn goast" @click="$router.go(-1)">返回上一层</a>
-            </div>
-        </div> -->
+                <div class="panel-btns">
+                    <a class="btn" @click="saveCheckContract">认证信息</a>
+                    <a class="btn goast" @click="$router.go(-1)">返回上一层</a>
+                </div>
+            </div> -->
         <!-- 确认部分 -->
         <div class="oc-panel">
             <a class="history" @click="getHistory">历史填写记录</a>
@@ -103,21 +103,21 @@
                 <a class="btn goast" @click="$router.go(-1)">返回上一层</a>
             </div>
         </div>
-        
+    
         <div class="history-list" v-if="historyShow">
             <div class="inner-wrap">
-            <div class="header">历史地址(最近5条)<span class="close iconfont icon-close" @click="historyShow = false"></span></div>
-            <div class="content">
-                <table>
-                    <tr v-for="his in historyList" :key="his.id">
-                        <td style="width:400px">{{ his.address }}</td>
-                        <td style="width:100px">{{ his.contacts }}</td>
-                        <td style="width:280px">{{ his.tel }}</td>
-                        <td style="width:80px"><a class="in-btn" @click="fill(his)">选择</a></td>
-                    </tr>
-                </table>
+                <div class="header">历史地址(最近5条)<span class="close iconfont icon-close" @click="historyShow = false"></span></div>
+                <div class="content">
+                    <table>
+                        <tr v-for="his in historyList" :key="his.id">
+                            <td style="width:400px">{{ his.address }}</td>
+                            <td style="width:100px">{{ his.contacts }}</td>
+                            <td style="width:280px">{{ his.tel }}</td>
+                            <td style="width:80px"><a class="in-btn" @click="fill(his)">选择</a></td>
+                        </tr>
+                    </table>
+                </div>
             </div>
-        </div>
         </div>
     </div>
 </template>
@@ -135,8 +135,8 @@
         },
         data() {
             return {
-                historyShow:false,
-                historyList:[],
+                historyShow: false,
+                historyList: [],
                 acInfo: '',
                 idTypes: [{
                     label: "营业执照",
@@ -221,17 +221,17 @@
                     this.$Message.warning('请将信息填写完整!');
                 }
             },
-            getHistory(){
-                this.$http.post(this.$api.findRecentFiveContract,{
+            getHistory() {
+                this.$http.post(this.$api.findRecentFiveContract, {
                     pageSize: 5
                 }).then(res => {
-                    if(res.code === 1000){
+                    if (res.code === 1000) {
                         this.historyList = res.data;
                         this.historyShow = true;
                     }
                 })
             },
-            fill(item){
+            fill(item) {
                 this.uerInfo.address = item.address;
                 this.uerInfo.contacts = item.contacts;
                 this.uerInfo.tel = item.tel;
@@ -275,13 +275,13 @@
     }
     
     .oc-panel {
-        position:relative;
+        position: relative;
         width: 100%;
         padding: 10px;
         border: @b_d1;
         margin-top: 12px;
         font-size: 14px;
-        .history{
+        .history {
             position: absolute;
             right: 20px;
             top: 60px;
@@ -366,24 +366,24 @@
             }
         }
     }
-
-    .history-list{
+    
+    .history-list {
         position: fixed;
         width: 100%;
         height: 100%;
         left: 0;
         top: 0;
-        background-color: rgba(0,0,0,.4);
+        background-color: rgba(0, 0, 0, .4);
         z-index: 990;
         font-size: 12px;
-        .inner-wrap{
+        .inner-wrap {
             width: 910px;
             min-height: 270px;
             background-color: #fff;
             margin: 200px auto;
             padding-bottom: 20px;
         }
-        .header{
+        .header {
             position: relative;
             width: 100%;
             height: 40px;
@@ -392,24 +392,25 @@
             font-size: 14px;
             color: #fff;
             background-color: @mask_blue;
-            .close{
+            .close {
                 position: absolute;
                 right: 14px;
                 cursor: pointer;
             }
         }
-        .content{
+        .content {
             width: 100%;
             padding: 30px;
-            table{
+            table {
                 width: 100%;
-                td{
+                td {
                     height: 34px;
                 }
             }
         }
     }
-    .in-btn{
+    
+    .in-btn {
         display: inline-block;
         vertical-align: middle;
         height: 24px;

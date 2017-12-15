@@ -60,11 +60,12 @@
                         }
                     }
                 }
+                this.$emit("on-input")
             },
             // 类型检查
             inPut:debounce(function(){
                 this.$emit("on-input")
-            },500)
+            },100)
         },
         mounted() {
             if(this.type == 'number'){

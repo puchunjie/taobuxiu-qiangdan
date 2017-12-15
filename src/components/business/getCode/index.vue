@@ -81,6 +81,7 @@
 <style lang="less" scoped>
     .code-container {
         display: inline-block;
+        vertical-align: middle;
         .count {
             display: inline-block;
             width: 100px;

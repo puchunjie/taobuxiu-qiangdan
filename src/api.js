@@ -553,6 +553,16 @@ export const selectStartContractInfo = '/demands/contractManger/selectStartContr
 export const findRecentFiveContract = '/common/contractAddress/findRecentFiveContract'
 
 /**
+ * 起草合同获取验证码
+ */
+export const contractGetSmsCode = '/demands/contractManger/contractGetSmsCode'
+
+/**
+ * 起草合同验证短信验证码
+ */
+export const checkContractSmsCode = '/demands/contractManger/checkContractSmsCode'
+
+/**
  * 保存起草合同信息
  */
 export const saveContractInfo = '/demands/contractManger/saveContractInfo'
@@ -576,6 +586,11 @@ export const getSmsCode = '/demands/business/getSmsCode'
  * 认证信息商户保存
  */
 export const saveBaseInfo = '/demands/business/saveBaseInfo'
+
+/**
+ * 认证信息商户上传证件
+ */
+export const saveBasePicture = '/demands/business/saveBasePicture'
 
 /**
  * 重新认证

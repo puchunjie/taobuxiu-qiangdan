@@ -1,16 +1,29 @@
 <template>
-  <div class="success-div">
+   <div class="authen-container">
+    <innerTitle>认证信息</innerTitle>
+    <div class="at-main">
+      <step nowSetp="3"></step>
+      <div class="success-div">
     <p class="icon"><span class="iconfont icon-CombinedShape"></span></p>
     <p class="text">认证信息提交成功，将在1个工作日内完成审核，请耐心等待</p>
     <p>
-      <router-link class="btn" :to="{ name: type == 1 ? 'BocAuthen' : 'SocAuthen',params:{type:type,isAjax: true}}" replace>确定</router-link>
+      <router-link class="btn" :to="{ name: type == 1 ? 'BocAuthen' : 'SocAuthen',params:{type:type,isAjax: true}}">确定</router-link>
     </p>
   </div>
+    </div>
+  </div>
+  
 </template>
 
 
 <script>
+  import step from './parts/step.vue'
+  import innerTitle from '@/components/business/innerTitle.vue'
   export default {
+    components: {
+      step,
+      innerTitle
+    },
     computed: {
       type() {
         return this.$route.params.type

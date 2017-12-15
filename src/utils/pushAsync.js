@@ -11,6 +11,8 @@ export default {
                 this.getOrders();
             } else if (val.type == 'iron') {
                 this.getData();
+            } else if (val.type == 'contract') {
+                this.getList();
             }
         }, 500)
     }

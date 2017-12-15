@@ -22,7 +22,7 @@
             <tbSelect v-model="other.measuringType" :data='[{label:"理计",value:"2"},{label:"过磅",value:"1"}]'></tbSelect>
         </div>
         <div class="table-td price">
-            <tbInput validate v-model="other.price"></tbInput>
+            <tbInput validate v-model="other.price" @on-input="validatePrice"></tbInput>
         </div>
         <div class="table-td tax">
             <tbSelect v-model="other.taxType" :data='[{label:"是",value:"1"},{label:"否",value:"2"}]'></tbSelect>
@@ -223,6 +223,11 @@
             del() {
                 this.$emit('del', this.index);
                 this.tip = false;
+            },
+            validatePrice(){
+                if(isNaN(this.other.price )){
+                    this.other.price = ''
+                }
             }
         },
         mounted() {

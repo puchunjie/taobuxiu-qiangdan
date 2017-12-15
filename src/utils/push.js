@@ -2,6 +2,7 @@ import * as types from '@/store/types'
 import { MathRand } from '@/utils/tools.js'
 import { mapActions } from 'vuex'
 import debounce from 'lodash/debounce'
+import { code2Url } from './pushCode2Url'
 export default {
     data() {
         return {
@@ -60,14 +61,8 @@ export default {
                     requireInteraction: true
                 });
                 notif.onclick = () => {
-                    // 1 求购信息推送 2 报价消息推送 3 中标 4报价修正 5放弃报价
-                    if (data.code == 2 || data.code == 4 || data.code == 5) {
-                        // 跳转到卖家中心报价
-                        this.$router.push('/buyer/Bbuys-1');
-                    } else {
-                        // 跳转到买家中心求购
-                        this.$router.push('/seller/Sbuys-1');
-                    }
+                    this.$router.push(code2Url(data.code))
+
                     window.focus();
                     notif.close();
                 }

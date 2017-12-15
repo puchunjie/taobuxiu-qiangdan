@@ -82,9 +82,26 @@
             <a class="back" @click="$router.go(-1)">返回上一步</a>
             <div class="next-step">
                 <a class="btn goast" @click="giveUp">放弃起草电子合同</a>
-                <a class="btn" @click="doAction">确认起草电子合同</a>
+                <a class="btn" @click="codePanelShow">确认起草电子合同</a>
             </div>
         </div>
+    
+        <modelPanel title="短信验证" v-model="codeShow" width="600">
+            <div>
+                <p class="code-tip">尊敬的用户，请输入您手机收到的短信验证码，该验证码在30分钟内有效。<br> 已发送验证码至{{ info.partAContractTel }}，请输入验证码完成合同起草。
+                </p>
+                <div class="code-in">
+                    <passWordInput v-model="messageCode"></passWordInput>
+                    <getCode :apiUrl="$api.contractGetSmsCode" :mobile="info.partAContractTel" @on-success="codeSend = true">
+                        <a class="get-code">获取短信验证码</a>
+                    </getCode>
+                </div>
+                <div class="inner-btns">
+                    <a class="inner-btn goast" @click="messageCode = ''">重置</a>
+                    <a class="inner-btn" @click="onCheck">确认</a>
+                </div>
+            </div>
+        </modelPanel>
     </div>
 </template>
 
@@ -92,14 +109,22 @@
     import cityPicter from '@/components/business/cityPicker/index'
     import tbInput from '@/components/business/tbInput/index'
     import tbSelect from '@/components/business/tbSelect/index'
+    import modelPanel from '@/components/basics/modelPanel/index.vue'
+    import passWordInput from '@/components/basics/passwordInput/index.vue'
+    import getCode from '@/components/business/getCode/index'
     export default {
         components: {
             cityPicter,
             tbInput,
-            tbSelect
+            tbSelect,
+            modelPanel,
+            passWordInput,
+            getCode
         },
         data() {
             return {
+                codeShow: false,
+                messageCode: '',
                 info: {
                     orderIds: [],
                     partAContractAddress: "",
@@ -139,7 +164,9 @@
                     partAContractId: this.info.partAContractId,
                     locationId: this.locationId.id,
                     locationName: this.locationId.name,
-                    orderIds: JSON.stringify({orderIds:this.info.orderIds})
+                    orderIds: JSON.stringify({
+                        orderIds: this.info.orderIds
+                    })
                 }
             },
             type() {
@@ -154,7 +181,7 @@
                     if (res.code === 1000) {
                         this.info = res.data;
                         this.info.orderIds.forEach(el => {
-                            el.tolerance+= ' '+el.proPlacesName
+                            el.tolerance += ' ' + el.proPlacesName
                         })
                     } else {
                         this.$Message.error(res.message);
@@ -163,37 +190,56 @@
             },
             // 确认起草合同
             doAction() {
-                if (this.locationId.id != '') {
-                    this.$spinToggle(true);
-                    this.$http.post(this.$api.saveContractInfo,this.ajaxParams).then(res => {
-                        if(res.code === 1000){
-                            this.$Modal.success({
-                                content: '起草完成！',
-                                onOk: () => {
-                                    this.$router.replace({
-                                        name: this.type == 1 ? 'BocManage' : 'SocManage',
-                                        params: {
-                                            type: this.type
-                                        }
-                                    })
-                                }
-                            })
-                        }else{
-                            this.$Message.error(res.message)
-                        }
-                        this.$spinToggle(false);
-                    })
-                }else{
-                    this.$Message.error('请选择交货地址!')
-                }
+                this.$spinToggle(true);
+                this.$http.post(this.$api.saveContractInfo, this.ajaxParams).then(res => {
+                    if (res.code === 1000) {
+                        this.$Modal.success({
+                            content: '起草完成！',
+                            onOk: () => {
+                                this.$router.replace({
+                                    name: this.type == 1 ? 'BocManage' : 'SocManage',
+                                    params: {
+                                        type: this.type
+                                    }
+                                })
+                            }
+                        })
+                    } else {
+                        this.$Message.error(res.message)
+                    }
+                    this.$spinToggle(false);
+                })
             },
-            giveUp(){
+            giveUp() {
                 this.$router.replace({
                     name: this.type == 1 ? 'Bstep1' : 'Sstep1',
                     params: {
                         type: this.type
                     }
                 })
+            },
+            codePanelShow() {
+                if (this.locationId.id != '') {
+                    this.codeShow = true;
+                } else {
+                    this.$Message.error('请选择交货地址!')
+                }
+            },
+            onCheck() {
+                if (this.messageCode != '' && this.messageCode.length == 6) {
+                    return this.$http.post(this.$api.checkContractSmsCode, {
+                        smsCode: this.messageCode
+                    }).then(res => {
+                        if (res.code === 1000) {
+                            this.codeShow = false;
+                            this.doAction();
+                        } else {
+                            this.$Message.error(res.message)
+                        }
+                    })
+                } else {
+                    this.$Message.error('请输入验证码!')
+                }
             }
         },
         created() {
@@ -303,6 +349,43 @@
                         color: @dark_blue;
                     }
                 }
+            }
+        }
+        .code-tip {
+            text-align: center;
+            font-size: 14px;
+            color: #333;
+            letter-spacing: 0.2px;
+            line-height: 26px;
+        }
+        .code-in {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .get-code {
+            display: inline-block;
+            padding: 0 10px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            color: #fff;
+            font-size: 14px;
+            background-color: @mask_blue;
+            .borderRadius;
+        }
+        .inner-btns {
+            text-align: center;
+            .inner-btn {
+                display: inline-block;
+                vertical-align: middle;
+                width: 90px;
+                height: 40px;
+                line-height: 40px;
+                text-align: center;
+                color: #fff;
+                font-size: 14px;
+                background-color: @mask_blue;
+                .borderRadius;
             }
         }
     }

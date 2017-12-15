@@ -59,7 +59,9 @@
     import { mapGetters } from 'vuex'
     import status from '@/components/orderCommon/status.vue'
     import innerTitle from '@/components/business/innerTitle.vue'
+    import pushAsync from '@/utils/pushAsync.js'
     export default {
+        mixins: [pushAsync],
         components: {
             status,
             innerTitle
@@ -71,7 +73,8 @@
                     currentPage: 1,
                     pageSize: 10,
                     selectname: '',
-                    checkstatus: ''
+                    checkstatus: '',
+                    firstType: ''
                 },
                 dateTime: [null, null],
                 statusData: [{
@@ -135,6 +138,7 @@
             getList() {
                 this.listLoad = true;
                 let params = this.$clearData(Object.assign(this.apiData, this.timeFrame));
+                params.firstType = this.type;
                 this.$http.post(this.$api.queryContractInfoPage, params).then(res => {
                     if (res.code === 1000) {
                         this.list = res.data.list;

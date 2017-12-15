@@ -213,23 +213,21 @@ const router = new Router({
                             path: 'SocAuthen-:type',
                             name: 'SocAuthen',
                             component: resolve => require(['@/views/contract/authentication/index'], resolve),
-                            children: [{
-                                    path: 'step1',
-                                    name: 'SatStep1',
-                                    component: resolve => require(['@/views/contract/authentication/step1'], resolve)
-                                },
-                                {
-                                    path: 'step2',
-                                    name: 'SatStep2',
-                                    component: resolve => require(['@/views/contract/authentication/step2'], resolve)
-                                },
-                                {
-                                    path: 'step3',
-                                    name: 'SatStep3',
-                                    component: resolve => require(['@/views/contract/authentication/step3'], resolve)
-                                }
-
-                            ]
+                        },
+                        {
+                            path: 'SocAuthenStep1-:type-:status',
+                            name: 'SatStep1',
+                            component: resolve => require(['@/views/contract/authentication/step1'], resolve)
+                        },
+                        {
+                            path: 'SocAuthenStep2-:type-:status',
+                            name: 'SatStep2',
+                            component: resolve => require(['@/views/contract/authentication/step2'], resolve)
+                        },
+                        {
+                            path: 'SocAuthenStep3-:type',
+                            name: 'SatStep3',
+                            component: resolve => require(['@/views/contract/authentication/step3'], resolve)
                         }
                     ]
                 },
