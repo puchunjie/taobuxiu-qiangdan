@@ -1,11 +1,19 @@
 <template>
     <div class="main-container">
-        <longBar></longBar>
+        <div class="inner-container">
+            <longBar></longBar>
+        </div>
         <div class="main-header">
-            <router-link :to="{name:'index'}"><span class="logo iconfont icon-ziyuan4"></span></router-link>
-            <ul class="menu">
-                <router-link :to="{name:'index'}" tag="li">返回主页</router-link>
-            </ul>
+            <div class="inner-container" style="position: relative;">
+                <router-link :to="{name:'index'}"><span class="logo iconfont icon-ziyuan4"></span></router-link>
+                <ul class="menu">
+                    <router-link :to="{name:'index'}" tag="li">返回主页</router-link>
+                </ul>
+                <div class="search">
+                    <input type="text" class="search-input" placeholder="输入品类、材质、规格查询" v-model="search">
+                    <a class="search-btn" @click="doSearch">店内搜索</a>
+                </div>
+            </div>
         </div>
         <div class="inner-container" style="margin-top:16px">
             <shopInfo :item="itemData">
@@ -30,13 +38,17 @@
         },
         data() {
             return {
-                itemData: {}
+                itemData: {},
+                search: ''
             }
         },
         computed: {
             userId() {
                 return this.$route.params.id
-            }
+            },
+            storeType() {
+                return this.$route.params.type
+            },
         },
         methods: {
             getShopInfo() {
@@ -45,6 +57,14 @@
                 }).then(res => {
                     if (res.code === 1000) {
                         this.itemData = res.data;
+                    }
+                })
+            },
+            doSearch() {
+                this.$router.replace({
+                    name: this.$route.name,
+                    query: {
+                        search: this.search
                     }
                 })
             }
@@ -58,7 +78,6 @@
 <style lang="less" scoped>
     @import '../../assets/base.less';
     .main-header {
-        position: relative;
         width: 100%;
         height: 80px;
         overflow: hidden;
@@ -85,6 +104,42 @@
                 font-weight: 500;
                 color: #fff;
                 cursor: pointer;
+            }
+        }
+        .search {
+            position: relative;
+            float: right;
+            right: 20px;
+            top: 20px;
+            width: 360px;
+            height: 34px;
+            background-color: #fff;
+            .search-input {
+                display: inline-block;
+                width: 280px;
+                height: 34px;
+                font-size: 12px;
+                color: @f_dark;
+                background-color: #fff;
+                background-image: none;
+                border: 0;
+                margin: 0;
+                padding: 10px;
+                outline: none;
+            }
+            .search-btn {
+                position: absolute;
+                display: block;
+                width: 80px;
+                height: 34px;
+                line-height: 34px;
+                text-align: center;
+                right: 0;
+                top: 0;
+                color: #fff;
+                background-color: @dark_blue;
+                border: 1px solid #fff;
+                font-size: 12px;
             }
         }
     }

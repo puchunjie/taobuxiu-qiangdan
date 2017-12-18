@@ -21,7 +21,7 @@
                 </li>
                 <li>
                     <p class="tit">仓库</p>
-                    <div class="content">{{ item.servicePoint }}</div>
+                    <div class="content">{{ item.storeHouseName }}</div>
                 </li>
             </ul>
         </div>

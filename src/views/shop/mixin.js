@@ -44,6 +44,9 @@ export default {
         },
         storeType() {
             return this.$route.params.type
+        },
+        searchName() {
+            return this.$route.query.search
         }
     },
     watch: {
@@ -52,6 +55,9 @@ export default {
                 this.getData();
             },
             deep: true
+        },
+        searchName(val) {
+            this.getData();
         }
     },
     methods: {
@@ -94,6 +100,9 @@ export default {
             }
         },
         getData() {
+            this.apiData.userId = this.userId;
+            this.apiData.storeType = this.storeType;
+            this.apiData.searchName = this.searchName;
             this.$http.post(this.$api.queryDemandStoreInfo, this.queryParams).then(res => {
                 if (res.code === 1000) {
                     this.page.totleCount = res.data.totalCount;
@@ -104,8 +113,6 @@ export default {
         }
     },
     created() {
-        this.apiData.userId = this.userId;
-        this.apiData.storeType = this.storeType;
         this.getData();
     }
 }
