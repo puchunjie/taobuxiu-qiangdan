@@ -1,7 +1,8 @@
 <template>
     <div class="password-input">
-        <div class="item" v-for="el in number" :key="el" :ref="'pi'+el">
-            <input type="text" @keyup="focusNext(el,$event)">
+        <input type="tel" maxlength="6" class="realInput" v-model="realInput" @keyup="getNum()" @keydown="delNum()">
+        <div class="item" v-for="(disInput,i) in disInputs" :key="i">
+            <input type="tel" maxlength="1" v-model="disInput.value">
         </div>
     </div>
 </template>
@@ -16,62 +17,60 @@
             value: {
                 type: [Number, String]
             },
-            type:{
-                type:String,
+            type: {
+                type: String,
                 default: 'text'
             }
         },
         data() {
             return {
-                resout: ''
-            }
-        },
-        methods: {
-            focusNext(el, e) {
-                if (this.check(e)) {
-                    let num = +e.target.value;
-                    if (!isNaN(num))
-                        this.resout += String(num);
-
-                    if (this.$refs['pi' + (el + 1)]) {
-                        this.$refs['pi' + (el + 1)][0].children[0].focus()
-                    } else {
-                        e.target.blur();
-                    }
-                } else {
-                    e.target.value = ''
-                }
-            },
-            // 判断是否为数字
-            check(obj) {
-                if (event.keyCode == 13 || event.keyCode == 46)
-                    return true;
-                if (event.keyCode < 48 || event.keyCode > 57)
-                    return false;
-                else
-                    return true;
+                messagepacket: false,
+                disInputs: [],
+                realInput: ''
+    
             }
         },
         watch: {
-            resout(val) {
+            realInput(val) {
                 this.$emit('input', val)
             },
             value(val) {
-                this.resout = val;
-                if (val == '') {
-                    for (let i = 0; i < this.number; i++) {
-                        this.$refs['pi'+ (i+1)][0].children[0].value = ''
+                this.realInput = val;
+            }
+        },
+        methods: {
+            getNum() {
+                for (let i = 0; i < this.realInput.length; i++) {
+                    this.disInputs[i].value = this.realInput.charAt(i)
+                    // 表示字符串中某个位置的数字，即字符在字符串中的下标。
+                }
+            },
+            delNum() {
+                let oEvent = window.event;
+                if (oEvent.keyCode == 8) {
+                    if (this.realInput.length > 0) {
+                        this.disInputs[this.realInput.length - 1].value = ''
                     }
                 }
+            },
+            init() {
+                for (let i = 0; i < this.number; i++) {
+                    this.disInputs.push({
+                        value: ''
+                    })
+                }
             }
+        },
+        created() {
+            this.init()
         }
     }
 </script>
 
-
 <style lang="less" scoped>
     @import url('../../../assets/base.less');
     .password-input {
+        position: relative;
         display: inline-block;
         height: 40px;
         padding: 6px 0;
@@ -100,5 +99,19 @@
             outline: none;
             text-indent: 11px;
         }
+        .realInput {
+            position: absolute;
+            display: block;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            outline: none;
+            border: 0;
+            z-index: 1;
+            background: none;
+            .opacity(0);
+        }
     }
 </style>
+

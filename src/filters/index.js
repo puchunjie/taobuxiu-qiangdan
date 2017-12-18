@@ -157,3 +157,9 @@ export const certifyTypeStr = (value) => {
             break;
     }
 }
+
+// 手机号隐藏4位
+export const hidePhone = (value) => {
+    var reg = /^(\d{3})\d{4}(\d{4})$/;
+    return value.replace(reg, "$1****$2");
+}

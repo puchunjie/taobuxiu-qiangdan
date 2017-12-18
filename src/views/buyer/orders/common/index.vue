@@ -25,7 +25,8 @@
         <tr>
           <th colspan="9" class="item-title">
             <span class="mr-80">{{ item.createTime | dateformat('yyyy-MM-dd hh:mm:ss') }}</span>
-            <span class="mr-80">订单号：{{ item.id }}</span> {{ item.companyName }}
+            <span class="mr-80">订单号：{{ item.id }}</span>
+            <companyLink :hasShop="item.isHaveShop" :userId="item.buserUserId">{{ item.companyName }}</companyLink>
             <merchantLabel :faith="item.isFaithUser == '1'" :guarantee="item.isGuaranteeUser == '1'"></merchantLabel>
             <crown class="mr-80" :level='item.sellLevel'></crown>
             <qq :data="{name:item.contact,phone:item.contactNum,qq:item.QQ}"></qq>
@@ -81,6 +82,7 @@
   import debounce from 'lodash/debounce'
   import editPanel from './editPanel.vue'
   import purchasePanel from '@/views/market/common/purchasePanel.vue'
+  import companyLink from '@/components/business/companyLink/index.vue'
   import pushAsync from '@/utils/pushAsync.js'
   export default {
     mixins: [pushAsync],
@@ -92,7 +94,8 @@
       merchantLabel,
       countDown,
       editPanel,
-      purchasePanel
+      purchasePanel,
+      companyLink
     },
     props: {
       type: {

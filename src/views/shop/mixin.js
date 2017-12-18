@@ -1,13 +1,11 @@
-import FilterGrop from './filter.vue'
-import tableWrap from './tableWrap.vue'
-import exponentia from './exponentia.vue'
-import purchasePanel from './purchasePanel.vue'
+import tableWrap from '@/views/market/common/tableWrap.vue'
+import exponentia from '@/views/market/common/exponentia.vue'
+import purchasePanel from '@/views/market/common/purchasePanel.vue'
 import {
     mapGetters
 } from 'vuex'
 export default {
     components: {
-        FilterGrop,
         tableWrap,
         exponentia,
         purchasePanel
@@ -15,10 +13,14 @@ export default {
     data() {
         return {
             purchaseShow: false,
-            filterValue: {},
             listLoad: false,
             openStatus: false, //是否开市
             list: [],
+            apiData: {
+                userId: '',
+                storeType: 1,
+                searchName: ""
+            },
             page: {
                 totleCount: 10,
                 pageSize: 20,
@@ -32,10 +34,16 @@ export default {
     computed: {
         ...mapGetters(['isLogin', 'roleId']),
         queryParams() {
-            return Object.assign(this.filterValue, this.page);
+            return Object.assign(this.apiData, this.page);
         },
         purchaseItem() {
             return Object.assign(this.businessInfo, this.pickerItem)
+        },
+        userId() {
+            return this.$route.params.id
+        },
+        storeType() {
+            return this.$route.params.type
         }
     },
     watch: {
@@ -47,9 +55,6 @@ export default {
         }
     },
     methods: {
-        asyncFilter(data) {
-            this.filterValue = data;
-        },
         search(data) {
             this.filterValue = data;
             this.page.currentPage = 1;
@@ -87,9 +92,20 @@ export default {
                     }
                 })
             }
+        },
+        getData() {
+            this.$http.post(this.$api.queryDemandStoreInfo, this.queryParams).then(res => {
+                if (res.code === 1000) {
+                    this.page.totleCount = res.data.totalCount;
+                    this.list = res.data.list;
+                    this.openStatus = res.data.openStatus;
+                }
+            })
         }
     },
     created() {
+        this.apiData.userId = this.userId;
+        this.apiData.storeType = this.storeType;
         this.getData();
     }
 }

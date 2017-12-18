@@ -94,7 +94,7 @@
         height: 100%;
         padding: 30px;
         .group {
-            width: 200px;
+            width: 300px;
             margin: 20px 0;
             p {
                 line-height: 40px;

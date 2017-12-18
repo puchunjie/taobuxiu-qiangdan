@@ -601,3 +601,15 @@ export const appContractAgain = '/demands/business/appContractAgain'
  * 根据用户编号查询商户认证信息
  */
 export const getContractAuthenticationByUserId = '/demands/contractManger/getContractAuthenticationByUserId'
+
+
+// =================================商铺=================================
+/**
+ * 商家店铺商家查询
+ */
+export const queryDemandInfo = '/api/storeInfo/queryDemandInfo'
+
+/**
+ * 商家店铺资源查询
+ */
+export const queryDemandStoreInfo = '/api/storeInfo/queryDemandStoreInfo'

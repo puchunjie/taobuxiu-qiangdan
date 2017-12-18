@@ -31,7 +31,7 @@
             return {
                 menus: [{
                     title: '现货求购管理',
-                    icon: 'icon-guanli',
+                    icon: 'icon-ziyuan10',
                     subs: [{
                         name: '今日',
                         count: 0,
@@ -53,7 +53,7 @@
                     }]
                 }, {
                     title: '我的订单',
-                    icon: 'icon-dingdan2',
+                    icon: 'icon-ziyuan13',
                     subs: [{
                         name: '现货订单',
                         count: 0,
@@ -84,7 +84,7 @@
                     }]
                 }, {
                     title: '合同管理',
-                    icon: 'icon-dingdan2',
+                    icon: 'icon-ic_import_contacts_b',
                     subs: [{
                         name: '起草合同',
                         router: {
@@ -112,7 +112,7 @@
                     }]
                 }, {
                     title: '我的买家档案',
-                    icon: 'icon-weibiaoti1',
+                    icon: 'icon-ziyuan11',
                     subs: [{
                             name: '基本信息',
                             router: {

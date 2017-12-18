@@ -23,11 +23,11 @@
         <div class="upload-group">
           <div style="margin-bottom:10px">
             <span style="color:red">*必须使用本品台提供的模板《企业应用电子合同认证授权书》，请您下载</span>
-            <a class="in-btn" style="margin-left:10px" download :href="$api.aliClound+'contract/%E6%8E%88%E6%9D%83%E5%A7%94%E6%89%98%E4%B9%A6.pdf'">下载</a>
+            <a class="in-btn" style="margin-left:10px" download :href="$api.aliClound+'contract/%E4%BC%81%E4%B8%9A%E5%BA%94%E7%94%A8%E7%94%B5%E5%AD%90%E5%90%88%E5%90%8C%E6%8E%88%E6%9D%83%E8%AE%A4%E8%AF%81%E4%B9%A6.doc'">下载</a>
           </div>
   
           <uploadPic v-model="apiData.businessCertificate"></uploadPic>
-          <sample desc="授权书" style="margin-left:60px;"></sample>
+          <sample desc="授权书" style="margin-left:60px;" img="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/contract/%E6%B7%98%E4%B8%8D%E9%94%88%E8%AE%A4%E8%AF%81.png"></sample>
         </div>
         <div style="text-align:right;">
           <a class="btn goast" @click="giveUp">放弃认证</a>

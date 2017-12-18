@@ -196,9 +196,7 @@
       },
       goNext() {
         if (this.isOk && this.codeSend) {
-          let params = this.$clearData(this.apiData);
-          params.locationId = this.locaiton.id;
-          params.locationName = this.locaiton.name;
+          let params = this.$clearData(this.ajaxParams);;
           let rzUrl = this.isOver ? this.$api.appContractAgain : this.$api.saveBaseInfo;
           this.$http.post(rzUrl, params).then(res => {
             if (res.code === 1000) {

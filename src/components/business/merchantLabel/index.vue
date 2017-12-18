@@ -33,6 +33,8 @@
         .iconfont:hover:after {
             content: attr(data-msg);
             position: absolute;
+            top: 20px;
+            left: 0;
             font-size: 12px;
             line-height: 30px;
             text-align: center;

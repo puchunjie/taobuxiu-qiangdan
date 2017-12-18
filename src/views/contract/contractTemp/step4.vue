@@ -48,16 +48,16 @@
                                 <tbInput style="width:110px" v-model="item.tolerance"></tbInput>
                             </td>
                             <td>
-                                <tbInput style="width:62px" type="number" v-model="item.numbers"></tbInput>
+                                <tbInput style="width:62px" type="number" v-model="item.numbers"  @on-input="validatePrice(item,'numbers')"></tbInput>
                             </td>
                             <td>
-                                <tbInput style="width:62px" type="number" v-model="item.weights"></tbInput>
+                                <tbInput style="width:62px" type="number" v-model="item.weights"  @on-input="validatePrice(item,'weights')"></tbInput>
                             </td>
                             <td>
                                 <tbSelect v-model="item.priceMode" :data='[{label:"数量",value:"1"},{label:"重量",value:"2"}]'></tbSelect>
                             </td>
                             <td>
-                                <tbInput style="width:80px" v-model="item.price"></tbInput>
+                                <tbInput style="width:80px" v-model="item.price" @on-input="validatePrice(item,'price')"></tbInput>
                             </td>
                             <td>
                                 <tbInput v-model="item.remark"></tbInput>
@@ -88,7 +88,7 @@
     
         <modelPanel title="短信验证" v-model="codeShow" width="600">
             <div>
-                <p class="code-tip">尊敬的用户，请输入您手机收到的短信验证码，该验证码在30分钟内有效。<br> 已发送验证码至{{ info.partAContractTel }}，请输入验证码完成合同起草。
+                <p class="code-tip">尊敬的用户，请输入您手机收到的短信验证码，该验证码在30分钟内有效。<br> 已发送验证码至{{ info.partAContractTel | hidePhone }}，请输入验证码完成合同起草。
                 </p>
                 <div class="code-in">
                     <passWordInput v-model="messageCode"></passWordInput>
@@ -239,6 +239,11 @@
                     })
                 } else {
                     this.$Message.error('请输入验证码!')
+                }
+            },
+            validatePrice(item,key){
+                if(isNaN(item[key] )){
+                    item[key] = ''
                 }
             }
         },

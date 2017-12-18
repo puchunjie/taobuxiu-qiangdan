@@ -7,7 +7,7 @@
                     <thead>
                         <tr>
                             <th :colspan="colspan">
-                                供应商：{{ item.companyName }}
+                                供应商：<companyLink :hasShop="item.isHaveShop" :userId="item.userId">{{ item.companyName }}</companyLink>
                                 <merchantLabel :faith="item.isFaithUser == '1'" :guarantee="item.isGuaranteeUser == '1'"></merchantLabel>
                                 <crown :level='item.sellLevel'></crown>
                                 <qq style="margin-left:75px" :data="{name:item.contact,phone:item.contactNum,qq:item.QQ}"></qq>
@@ -65,13 +65,15 @@
     import crown from '@/components/basics/crown/index.vue'
     import qq from '@/components/business/qqContant/index.vue'
     import merchantLabel from '@/components/business/merchantLabel/index.vue'
+    import companyLink from '@/components/business/companyLink/index.vue'
     export default {
         components: {
             tbInput,
             tbSelect,
             crown,
             qq,
-            merchantLabel
+            merchantLabel,
+            companyLink
         },
         props: {
             value: {

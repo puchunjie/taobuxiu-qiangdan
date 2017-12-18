@@ -5,11 +5,11 @@
             <status :data="statusData" v-model="apiData.checkstatus"></status>
             <div class="oc-search">
                 <div class="search-input">
-                    <input type="text" v-model="apiData.selectname" placeholder="请输入订单号搜索" />
+                    <input type="text" v-model="apiData.selectname" placeholder="请输入合同编号搜索" />
                     <a @click="search">搜索</a>
                 </div>
                 <div class="time-limit">
-                    成交时间：
+                    签署时间：
                     <DatePicker type="daterange" placement="bottom-end" v-model="dateTime" placeholder="选择时间" style="width: 200px"></DatePicker>
                 </div>
                 <div class="btns">

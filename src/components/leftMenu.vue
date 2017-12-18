@@ -2,7 +2,7 @@
     <div class="left-menu">
         <ul class="menu-list">
             <li class="menu-item" v-for="(item,index) in menus" :key="index">
-                <div class="item-title">
+                <div class="item-title" :class="{'active': activeType == index}">
                     <span class="iconfont" :class="item.icon"></span> {{ item.title }}
                 </div>
                 <ul class="sub-menu-list">
@@ -20,6 +20,30 @@
     export default {
         props: {
             menus: Array
+        },
+        data () {
+            return {
+                activeType: 0      
+            }
+        },
+        methods: {
+            setType(){
+                let routerName = this.$route.name;
+                this.menus.forEach((item,index) => {
+                    item.subs.forEach(el => {
+                        if(el.router.name == routerName)
+                            this.activeType = index;
+                    })
+                })
+            }
+        },
+        watch: {
+          '$route.name'(){
+              this.setType();
+          }  
+        },
+        created () {
+            this.setType()
         }
     }
 </script>
@@ -38,18 +62,27 @@
     
     .menu-list {
         width: 100%;
-        color: #fff;
-        font-size: 14px;
+        color: #C1C3CB;
+        font-size: 12px;
         font-weight: 500;
         .menu-item {
             width: 100%;
             .item-title {
                 width: 100%;
-                height: 50px;
-                line-height: 50px;
+                height: 40px;
+                line-height: 40px;
                 text-indent: 12px;
+                cursor: pointer;
                 .iconfont {
-                    font-size: 20px;
+                    color: #C1C3CB;
+                    font-size: 16px;
+                }
+                &.active {
+                    background-color: @mask_blue;
+                    color: #fff;
+                    .iconfont {
+                        color: #fff;
+                    }
                 }
             }
         }
@@ -62,7 +95,7 @@
                 cursor: pointer;
                 &.active,
                 &:hover {
-                    background-color: rgba(225, 225, 225, 0.3);
+                    color: #fff;
                 }
                 span {
                     position: absolute;

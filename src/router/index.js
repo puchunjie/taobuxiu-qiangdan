@@ -101,23 +101,21 @@ const router = new Router({
                             path: 'BocAuthen-:type',
                             name: 'BocAuthen',
                             component: resolve => require(['@/views/contract/authentication/index'], resolve),
-                            children: [{
-                                    path: 'step1',
-                                    name: 'BatStep1',
-                                    component: resolve => require(['@/views/contract/authentication/step1'], resolve)
-                                },
-                                {
-                                    path: 'step2',
-                                    name: 'BatStep2',
-                                    component: resolve => require(['@/views/contract/authentication/step2'], resolve)
-                                },
-                                {
-                                    path: 'step3',
-                                    name: 'BatStep3',
-                                    component: resolve => require(['@/views/contract/authentication/step3'], resolve)
-                                }
-
-                            ]
+                        },
+                        {
+                            path: 'BocAuthenStep1-:type-:status',
+                            name: 'BatStep1',
+                            component: resolve => require(['@/views/contract/authentication/step1'], resolve)
+                        },
+                        {
+                            path: 'BocAuthenStep2-:type-:status',
+                            name: 'BatStep2',
+                            component: resolve => require(['@/views/contract/authentication/step2'], resolve)
+                        },
+                        {
+                            path: 'BocAuthenStep3-:type',
+                            name: 'BatStep3',
+                            component: resolve => require(['@/views/contract/authentication/step3'], resolve)
                         }
                     ]
                 },
@@ -276,6 +274,36 @@ const router = new Router({
                 requireAuth: true
             },
             component: resolve => require(['@/views/login/index'], resolve)
+        },
+        {
+            path: '/shop-:id',
+            name: 'shop',
+            redirect: '/shop-:id/iron-:type',
+            component: resolve => require(['@/views/shop/index'], resolve),
+            children: [{
+                    path: 'iron-:type',
+                    name: 'sIron',
+                    component: resolve => require(['@/views/shop/iron/index'], resolve),
+                    meta: {
+                        requireAuth: true
+                    }
+                },
+                {
+                    path: 'plan-:type',
+                    name: 'sPlan',
+                    component: resolve => require(['@/views/shop/plan/index'], resolve),
+                    meta: {
+                        requireAuth: true
+                    }
+                }, {
+                    path: 'special-:type',
+                    name: 'sSpecial',
+                    component: resolve => require(['@/views/shop/special/index'], resolve),
+                    meta: {
+                        requireAuth: true
+                    }
+                }
+            ]
         },
         {
             path: '/retrieve',
