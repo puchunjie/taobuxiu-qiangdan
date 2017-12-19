@@ -1,5 +1,5 @@
 <template>
-    <router-link class="company-link" v-if="hasShop == 1" :to="`/shop-${userId}/iron-1?search=`">
+    <router-link class="company-link" v-if="hasShop == 1" :to="`/shop-${userId}/iron-1`">
         <slot></slot>
     </router-link>
     <span v-else><slot></slot></span>

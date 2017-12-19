@@ -57,6 +57,7 @@ export default {
             deep: true
         },
         searchName(val) {
+            this.page.currentPage = 1;
             this.getData();
         }
     },

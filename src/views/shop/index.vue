@@ -23,15 +23,21 @@
                 <router-view></router-view>
             </div>
         </div>
+        <quickNvigation></quickNvigation>
     </div>
 </template>
 
 <script>
+    import quickNvigation from '@/components/quickNvigation.vue'
     import longBar from '@/components/loginBar'
     import shopInfo from './shopInfo.vue'
     import tab from './tab.vue'
+    import loginInit from '@/utils/loginInit.js'
+    import push from '@/utils/push.js'
     export default {
+        mixins: [loginInit,push],
         components: {
+            quickNvigation,
             longBar,
             shopInfo,
             tab
@@ -77,6 +83,11 @@
 
 <style lang="less" scoped>
     @import '../../assets/base.less';
+
+    .main-container{
+        background-color: @bg_color;
+    }
+
     .main-header {
         width: 100%;
         height: 80px;

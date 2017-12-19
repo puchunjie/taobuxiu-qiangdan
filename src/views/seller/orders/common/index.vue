@@ -51,9 +51,9 @@
           </td>
           <td class="operation">
             <template v-if="item.orderStatus == 2">
-                <a @click="confirmOrder(item.id)">确认接单</a><br>
-                <a @click="cancelStoreOrder(item.id)">不接此单</a>
-            </template>
+                  <a @click="confirmOrder(item.id)">确认接单</a><br>
+                  <a @click="cancelStoreOrder(item.id)">不接此单</a>
+</template>
           </td>
         </tr>
       </table>
@@ -85,7 +85,7 @@
       crown,
       qq,
       merchantLabel,
-      countDown,
+      countDown
     },
     props: {
       type: {
@@ -156,7 +156,7 @@
     watch: {
       'apiParams': {
         handler: debounce(function(val, oldVal) {
-          if(val.currentPage == oldVal.currentPage)
+          if (val.currentPage == oldVal.currentPage)
             this.page.currentPage = 1;
           this.getOrders();
         }, 200),

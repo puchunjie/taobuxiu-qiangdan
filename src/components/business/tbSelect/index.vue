@@ -61,7 +61,7 @@
                 this.panelShow = false;
             },
             getAjax() {
-                return this.$http.post(this.api).then(res => {
+                this.$http.post(this.api).then(res => {
                     if (res.code === 1000) {
                         res.data.forEach(el => {
                             this.list.push({
@@ -69,18 +69,20 @@
                                 value: el[this.k]
                             })
                         })
+                        this.setActive();
                     }
                 })
             },
             setActive() {
+                console.log(this.value)
                 let inputActive = findIndex(this.list, el => {
                     return el.value == this.value
                 })
-                if(inputActive > 0){
+                if (inputActive > 0) {
                     this.activeIndex = inputActive;
-                }else{
+                } else {
                     this.activeIndex = 0;
-                    this.$emit('input',this.activeItem.value);
+                    this.$emit('input', this.activeItem.value);
                 }
                 this.isInit = true;
             },
@@ -94,15 +96,12 @@
         watch: {
             'activeItem': {
                 handler: function(val, oldVal) {
-                    if(this.isInit){
-                        this.$emit('input',val.value);
-                        this.$emit("on-change",val)
-                    }     
+                    if (this.isInit) {
+                        this.$emit('input', val.value);
+                        this.$emit("on-change", val)
+                    }
                 },
                 deep: true
-            },
-            value(val){
-                this.setActive()
             }
         },
         created() {
@@ -112,9 +111,7 @@
                     this.setActive()
                 })
             } else {
-                this.getAjax().then(() => {
-                    this.setActive()
-                });
+                this.getAjax()
             }
         }
     }

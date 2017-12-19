@@ -1,12 +1,12 @@
 <template>
     <div class="tabs">
-        <router-link class="item" :to="{name:'sIron',params:{type:1}}" active-class="active" tag="div" exact>
+        <router-link class="item" :to="{name:'sIron',params:{type:1}}" active-class="active" tag="div">
             <a>现货资源</a>
         </router-link>
-        <router-link class="item" :to="{name:'sPlan',params:{type:2}}" active-class="active" tag="div" exact>
+        <router-link class="item" :to="{name:'sPlan',params:{type:2}}" active-class="active" tag="div">
             <a>定开资源</a>
         </router-link>
-        <router-link class="item" :to="{name:'sSpecial',params:{type:3}}" active-class="active" tag="div" exact>
+        <router-link class="item" :to="{name:'sSpecial',params:{type:3}}" active-class="active" tag="div">
             <a>特价资源</a>
         </router-link>
     </div>

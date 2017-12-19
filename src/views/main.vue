@@ -7,57 +7,16 @@
 </template>
 
 <script>
-  import {
-    mapGetters,
-    mapActions
-  } from 'vuex'
   import longBar from '@/components/loginBar'
   import PublicHead from '@/components/publicHead'
   import push from '@/utils/push.js'
   import leftMenu from '@/components/leftMenu.vue'
-  import * as types from '@/store/types'
+  import loginInit from '@/utils/loginInit.js'
   export default {
-    mixins: [push],
+    mixins: [loginInit,push],
     components: {
       PublicHead,
       longBar
-    },
-    computed: {
-      ...mapGetters(['user', 'base', 'roleId'])
-    },
-    methods: {
-      ...mapActions(['getUserCount']),
-      getUserInfo() {
-        return this.$http.post(this.$api.getUser).then(res => {
-          if (res.code === 1000) {
-            this.$store.commit(types.SET_USER_INFO, res.data);
-            document.addEventListener('visibilitychange', () => {
-              let isHidden = document.hidden;
-              if (isHidden) {
-                this.isFocus = false;
-              } else {
-                this.isFocus = true;
-                document.title = this.titleInit;
-                window.clearInterval(this.stl);
-                if (!this.isNotice) {
-                  this.notify(this.msg)
-                }
-              }
-            });
-            this.initScoket();
-          }
-        })
-      },
-      // 获取用户订单，求购数据统计
-      async getUserCounts() {
-        await this.getUserInfo();
-        if (this.user != '') {
-          this.getUserCount();
-        }
-      }
-    },
-    created() {
-      this.getUserCounts()
     }
   }
 </script>

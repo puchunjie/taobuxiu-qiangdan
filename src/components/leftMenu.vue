@@ -2,7 +2,7 @@
     <div class="left-menu">
         <ul class="menu-list">
             <li class="menu-item" v-for="(item,index) in menus" :key="index">
-                <div class="item-title" :class="{'active': activeType == index}">
+                <div class="item-title">
                     <span class="iconfont" :class="item.icon"></span> {{ item.title }}
                 </div>
                 <ul class="sub-menu-list">
@@ -20,30 +20,6 @@
     export default {
         props: {
             menus: Array
-        },
-        data () {
-            return {
-                activeType: 0      
-            }
-        },
-        methods: {
-            setType(){
-                let routerName = this.$route.name;
-                this.menus.forEach((item,index) => {
-                    item.subs.forEach(el => {
-                        if(el.router.name == routerName)
-                            this.activeType = index;
-                    })
-                })
-            }
-        },
-        watch: {
-          '$route.name'(){
-              this.setType();
-          }  
-        },
-        created () {
-            this.setType()
         }
     }
 </script>
@@ -77,13 +53,6 @@
                     color: #C1C3CB;
                     font-size: 16px;
                 }
-                &.active {
-                    background-color: @mask_blue;
-                    color: #fff;
-                    .iconfont {
-                        color: #fff;
-                    }
-                }
             }
         }
         .sub-menu-list {
@@ -93,8 +62,11 @@
                 line-height: 40px;
                 text-indent: 35px;
                 cursor: pointer;
-                &.active,
-                &:hover {
+                &.active {
+                    background-color: @mask_blue;
+                    color: #fff;
+                }
+                &:hover{
                     color: #fff;
                 }
                 span {
