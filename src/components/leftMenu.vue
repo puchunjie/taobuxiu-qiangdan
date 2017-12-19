@@ -48,7 +48,6 @@
                 height: 40px;
                 line-height: 40px;
                 text-indent: 12px;
-                cursor: pointer;
                 .iconfont {
                     color: #C1C3CB;
                     font-size: 16px;

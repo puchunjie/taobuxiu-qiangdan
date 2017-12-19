@@ -74,7 +74,6 @@
                 })
             },
             setActive() {
-                console.log(this.value)
                 let inputActive = findIndex(this.list, el => {
                     return el.value == this.value
                 })

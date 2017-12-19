@@ -81,6 +81,7 @@
                 uploadLoading: false,
                 excelUrl: '',
                 excelName:'',
+                excelId:'',
                 canDown: false
             }
         },
@@ -140,6 +141,7 @@
                 if (res.code === 1000) {
                     this.$Message.success('上传成功！');
                     this.fileName = res.data.fileName;
+                    this.visible = false;
                     this.$emit('on-upload-success');
                 } else {
                     this.$Notice.error({
@@ -175,6 +177,7 @@
                 this.$http.post(this.$api.selectExecleUrlByType,this.excelType).then(res => {
                     if(res.code === 1000){
                         this.canDown = true;
+                        this.excelId = res.data.modelId;
                         this.excelUrl = res.data.modelUrl;
                         this.excelName = res.data.modelUrl.split("/")[res.data.modelUrl.split("/").length-1].split(".")[0]
                     }else{
@@ -183,7 +186,7 @@
                 })
             },
             countNum(){
-                let params = {fileName:this.excelName,url:this.excelUrl};
+                let params = {fileName:this.excelName,url:this.excelUrl,modelId:this.excelId};
                 let fparams = Object.assign(params,this.excelType);
                 this.$http.post(this.$api.downloadExcel,fparams);
             },

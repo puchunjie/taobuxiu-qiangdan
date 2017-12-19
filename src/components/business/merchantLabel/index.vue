@@ -24,6 +24,9 @@
     @import url('../../../assets/base.less');
     .merchant-container {
         display: inline-block;
+        .iconfont {
+            position: relative;
+        }
         .icon-bao {
             color: #C16BD6
         }

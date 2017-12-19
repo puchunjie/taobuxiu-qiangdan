@@ -1,7 +1,7 @@
 <template>
     <div class="oc-step4">
-        <h2 class="oc-title">最终确认签约内容，起草电子合同</h2>
-        
+        <h2 class="oc-title">最终确认签约内容，起草电子合同</h2><br>
+    
         <div class="info-confim">
             <div class="tit">
                 <span class="ic-rq">*</span>请确认供应方公司信息(对方信息)，<a>电子合同将送达给供应方等确认签署。</a>
@@ -39,6 +39,7 @@
                             <td>单价(元/单位)</td>
                             <td>备注</td>
                             <td>总价(元)</td>
+                            <td></td>
                         </tr>
                         <tr v-for="(item,i) in info.orderIds" :key="i">
                             <td class="name">{{ item.ironTypeName }}</td>
@@ -48,10 +49,10 @@
                                 <tbInput style="width:110px" v-model="item.tolerance"></tbInput>
                             </td>
                             <td>
-                                <tbInput style="width:62px" type="number" v-model="item.numbers"  @on-input="validatePrice(item,'numbers')"></tbInput>
+                                <tbInput style="width:62px" type="number" v-model="item.numbers" @on-input="validatePrice(item,'numbers')"></tbInput>
                             </td>
                             <td>
-                                <tbInput style="width:62px" type="number" v-model="item.weights"  @on-input="validatePrice(item,'weights')"></tbInput>
+                                <tbInput style="width:62px" type="number" v-model="item.weights" @on-input="validatePrice(item,'weights')"></tbInput>
                             </td>
                             <td>
                                 <tbSelect v-model="item.priceMode" :data='[{label:"数量",value:"1"},{label:"重量",value:"2"}]'></tbSelect>
@@ -63,21 +64,97 @@
                                 <tbInput v-model="item.remark"></tbInput>
                             </td>
                             <td class="price">{{ totlePrcieArr[i] }}</td>
+                            <td></td>
+                        </tr>
+                        <tr v-for="(item,i)  in info.costs" :key="i">
+                            <td class="name">
+                                <tbInput style="width: 100px" v-model="item.ironTypeName"></tbInput>
+                            </td>
+                            <td>
+                                <tbInput style="width: 100px" v-model="item.materialName"></tbInput>
+                            </td>
+                            <td>
+                                <tbInput style="width: 120px" v-model="item.specifications"></tbInput>
+                            </td>
+                            <td>
+                                <tbInput style="width: 110px" v-model="item.tolerance"></tbInput>
+                            </td>
+                            <td>
+                                <tbInput style="width: 62px" v-model="item.numbers"></tbInput>
+                            </td>
+                            <td>
+                                <tbInput style="width: 62px" v-model="item.weights"></tbInput>
+                            </td>
+                            <td>
+                                <tbSelect v-model="item.priceMode" :data='[{label:"数量",value:"1"},{label:"重量",value:"2"}]'></tbSelect>
+                            </td>
+                            <td>
+                                <tbInput style="width: 80px" v-model="item.price"></tbInput>
+                            </td>
+                            <td>
+                                <tbInput></tbInput>
+                            </td>
+                            <td class="price">{{ totlePrcieArr2[i] }}</td>
+                            <td><span class="iconfont icon-quxiao" @click="delCost(i)"></span></td>
                         </tr>
                     </tbody>
                 </table>
+    
+                <iconBtn icon="icon-jiahao" @click.native="coatTypeShow = true">添加其他费用</iconBtn>
             </div>
         </div>
     
         <div class="info-confim">
             <div class="tit">
-                <span class="ic-rq">*</span>请确认合同交货地点
+                <span class="ic-rq">*</span>请确认采购方验货有效期限
             </div>
-            <div class="info" style="padding-left:20px;">
+            <div class="info pl2">
+                <span class="ic-rq">*</span>验货有效期：
+                <tbInput style="width: 80px" placeholder="请输入天数" v-model="info.inspectionTime"></tbInput> 天 <span class="tip">（乙方如认为代采购货物不合格，应在提货后验货有效期内与丙方进行沟通并提出书面异议）</span>
+            </div>
+        </div>
+    
+        <div class="info-confim">
+            <div class="tit">
+                <span class="ic-rq">*</span>请确认货物交付细节：
+            </div>
+            <div class="info pl2">
                 <span class="ic-rq">*</span>交货地点：
                 <cityPicter v-model="locationId" placeholder="请选择省市信息" style="width:160px"></cityPicter>
             </div>
+            <div class="info pl2">
+                <span class="ic-rq">*</span>交货期限：
+                <DatePicker type="date" v-model="info.deliveryTerm" :options="notToday" placeholder="请选择日期" style="width: 160px"></DatePicker>
+                前，特殊情况请提前沟通
+            </div>
+            <div class="info pl2">
+                <span class="ic-rq">*</span>质量标准： 产品符合生产厂家出厂标准，以货品相对应的质量证明书为准
+            </div>
+            <div class="info pl2">
+                <span class="ic-rq">*</span>备注信息：
+                <tbTextarea v-model="info.remark" placeholder="请输入交货条款备注，如是否送木架，是否免力费等" style="width:1000px"></tbTextarea>
+            </div>
         </div>
+    
+        <div class="info-confim">
+            <div class="tit">
+                <span class="ic-rq">*</span>请确认订单结算方式
+            </div>
+            <div class="info pl2">
+                <span class="ic-rq">*</span>三方采用以下认可的付款方式：
+                <tbRadio v-model="info.payMent"></tbRadio>
+            </div>
+        </div>
+    
+        <div class="info-confim">
+            <div class="tit">
+                <span class="ic-rq">*</span>请确认本合同有限签署期限
+            </div>
+            <div class="info pl2">
+                <span class="ic-rq">*</span>合同有效期限仅限起草当日：{{ info.systemTime | dateformat('yyyy-MM-dd') }}
+            </div>
+        </div>
+    
         <div class="oc-step4-bottom">
             <a class="back" @click="$router.go(-1)">返回上一步</a>
             <div class="next-step">
@@ -102,42 +179,77 @@
                 </div>
             </div>
         </modelPanel>
+    
+        <modelPanel title="短信验证" v-model="coatTypeShow" width="600">
+            <div>
+                <div style="text-align:center;margin-bottom:20px">
+                    <tbRadio v-model="coatType" :data="[{label: '加工费',value: 'machining'},{label: '人力费',value: 'human'},{label: '小车费',value: 'car'},{label: '其他',value: 'default'}]"></tbRadio>
+                </div>
+                <div class="inner-btns">
+                    <a class="inner-btn" @click="addCost">确认</a>
+                </div>
+            </div>
+        </modelPanel>
     </div>
 </template>
 
 <script>
+    import iconBtn from '@/components/basics/iconBtn/index'
     import cityPicter from '@/components/business/cityPicker/index'
     import tbInput from '@/components/business/tbInput/index'
+    import tbTextarea from '@/components/business/tbTextarea/index'
     import tbSelect from '@/components/business/tbSelect/index'
     import modelPanel from '@/components/basics/modelPanel/index.vue'
     import passWordInput from '@/components/basics/passwordInput/index.vue'
     import getCode from '@/components/business/getCode/index'
+    import tbRadio from '@/components/business/tbRadio/index.vue'
+    import map from 'lodash/map'
+    import {
+        castData
+    } from './other.js'
+    
     export default {
         components: {
+            iconBtn,
             cityPicter,
             tbInput,
             tbSelect,
             modelPanel,
             passWordInput,
-            getCode
+            getCode,
+            tbTextarea,
+            tbRadio
         },
         data() {
             return {
+                coatTypeShow: false,
+                coatType: 'default',
                 codeShow: false,
                 messageCode: '',
                 info: {
                     orderIds: [],
+                    costs: [],
                     partAContractAddress: "",
                     partAContractContact: "",
                     partAContractId: "",
                     partAContractName: "",
                     partAContractTel: "",
                     partBId: "",
-                    partBName: ""
+                    partBName: "",
+                    inspectionTime: "",
+                    deliveryTerm: "",
+                    remark: "",
+                    payMent: 1,
+                    invoiceDate: 25
                 },
                 locationId: {
                     id: '',
                     name: ''
+                },
+                notToday: {
+                    disabledDate(date) {
+                        return date && date.valueOf() < Date.now() - 86400000;
+                    }
                 }
             }
         },
@@ -151,23 +263,36 @@
                 })
                 return arr
             },
+            totlePrcieArr2() {
+                let arr = [];
+                this.info.costs.forEach(el => {
+                    let number = el.priceMode == 1 ? el.numbers : el.weights;
+                    number *= 1;
+                    arr.push((el.price * number).toFixed(2));
+                })
+                return arr
+            },
             totlePrice() {
                 let price = 0;
                 this.totlePrcieArr.forEach(el => {
                     price += Number(el);
                 })
+                this.totlePrcieArr2.forEach(el => {
+                    price += Number(el);
+                })
                 return price.toFixed(2)
             },
             ajaxParams() {
-                return {
-                    partBId: this.info.partBId,
-                    partAContractId: this.info.partAContractId,
-                    locationId: this.locationId.id,
-                    locationName: this.locationId.name,
-                    orderIds: JSON.stringify({
-                        orderIds: this.info.orderIds
-                    })
-                }
+                let data = this.$clearData(this.info);
+                data.locationId = this.locationId.id;
+                data.locationName = this.locationId.name;
+                data.orderIds = JSON.stringify({
+                    orderIds: this.info.orderIds,
+                    costs: this.info.costs
+                });
+                data.startDate = data.systemTime;
+                data.endDate = data.systemTime;
+                return data
             },
             type() {
                 return this.$route.params.type
@@ -179,7 +304,10 @@
                 params.orderIds = JSON.stringify(params.orderIds);
                 this.$http.post(this.$api.selectStartContractInfo, params).then(res => {
                     if (res.code === 1000) {
-                        this.info = res.data;
+                        // this.info = res.data;
+                        map(res.data, (v, k) => {
+                            this.info[k] = v;
+                        })
                         this.info.orderIds.forEach(el => {
                             el.tolerance += ' ' + el.proPlacesName
                         })
@@ -241,10 +369,20 @@
                     this.$Message.error('请输入验证码!')
                 }
             },
-            validatePrice(item,key){
-                if(isNaN(item[key] )){
+            validatePrice(item, key) {
+                if (isNaN(item[key])) {
                     item[key] = ''
                 }
+            },
+            //添加其他费用
+            addCost() {
+                let data = this.$clearData(castData[this.coatType]);
+                this.info.costs.push(data);
+                this.coatTypeShow = false;
+            },
+            //删除其他费用
+            delCost(i) {
+                this.info.costs.splice(i, 1);
             }
         },
         created() {
@@ -287,6 +425,9 @@
                 width: 100%;
                 padding: 16px 30px;
                 color: @f_dark;
+                &.pl2 {
+                    padding-left: 20px;
+                }
             }
             .ic-rq {
                 color: @dark_red;
@@ -310,6 +451,15 @@
                     .price {
                         color: @dark_red;
                         font-weight: bold;
+                    }
+                    .icon-quxiao {
+                        color: @back_gray;
+                        vertical-align: middle;
+                        font-size: 20px;
+                        cursor: pointer;
+                        &:hover {
+                            color: @dark_red;
+                        }
                     }
                 }
             }

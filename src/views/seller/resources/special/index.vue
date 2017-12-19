@@ -32,7 +32,7 @@
               </th>
               <th class="tax">含税</th>
               <th class="location">所在地</th>
-              <th class="stock">库存量</th>
+              <th class="stock">库存量(吨)</th>
               <th class="warehouse">仓库</th>
               <th class="time">更新时间
                 <sortIcon v-model="sort.time" @on-sort="sort.price = ''"></sortIcon>

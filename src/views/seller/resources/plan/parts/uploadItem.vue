@@ -25,10 +25,10 @@
             <tbInput validate v-model="other.price" @on-input="validatePrice"></tbInput>
         </div>
         <div class="table-td location">
-            <cityPicter validate v-model="location"></cityPicter>
+            <cityPicter validate v-model="location" placement="right"></cityPicter>
         </div>
         <div class="table-td warehouse">
-            <asyncPicker validate v-model="warehouse" :api="$api.getStores"></asyncPicker>
+            <asyncPicker validate v-model="warehouse" placement="right" :api="$api.getStores"></asyncPicker>
         </div>
         <div class="table-td remark">
             <tbSelect v-model="other.remark" k="name" :api="$api.findAllKaiping"></tbSelect>

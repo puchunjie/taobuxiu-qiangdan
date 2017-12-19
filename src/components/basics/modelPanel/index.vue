@@ -58,7 +58,6 @@
         font-size: 12px;
         .inner-wrap {
             width: 910px;
-            min-height: 270px;
             background-color: #fff;
             margin: 200px auto;
             padding-bottom: 20px;

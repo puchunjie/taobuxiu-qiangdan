@@ -11,6 +11,7 @@
             show() {
                 this.$Modal.info({
                     width: 500,
+                    maskClosable: true,
                     render: (h) => {
                         return h('img', {
                             attrs: {

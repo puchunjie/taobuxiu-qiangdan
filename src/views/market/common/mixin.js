@@ -21,7 +21,7 @@ export default {
             list: [],
             page: {
                 totleCount: 10,
-                pageSize: 20,
+                pageSize: 30,
                 currentPage: 1,
                 priceSort: ""
             },

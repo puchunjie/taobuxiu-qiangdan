@@ -28,7 +28,7 @@
             <tbSelect v-model="other.taxType" :data='[{label:"是",value:"1"},{label:"否",value:"2"}]'></tbSelect>
         </div>
         <div class="table-td location">
-            <cityPicter validate v-model="location"></cityPicter>
+            <cityPicter validate v-model="location" placement="right"></cityPicter>
         </div>
         <div class="table-td stock">
             <tbInput validate v-model="other.storeHouseCount"></tbInput>

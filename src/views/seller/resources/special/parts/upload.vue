@@ -14,7 +14,7 @@
                     <div class="table-td price">单价(元/吨)</div>
                     <div class="table-td tax">含税</div>
                     <div class="table-td location">所在地</div>
-                    <div class="table-td stock">库存量</div>
+                    <div class="table-td stock">库存量(吨)</div>
                     <div class="table-td warehouse">仓库</div>
                     <div class="table-td operation" v-show="!isEdit">操作</div>
                 </div>

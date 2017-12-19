@@ -36,6 +36,7 @@
         width: 100%;
         min-width: 1200px;
         height: 100%;
+        background-color: #fff;
         .header {
             width: 100%;
             height: 100px;

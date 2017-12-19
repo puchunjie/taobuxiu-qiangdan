@@ -125,7 +125,7 @@
                 this.visible = false;
             },
             validateNum() {
-                if (isNaN(this.apiData.nums) || this.apiData.nums <= 0) {
+                if (isNaN(this.apiData.nums) || this.apiData.nums < 0) {
                     this.apiData.nums = ''
                 } else if (this.isSpecail && this.apiData.nums > this.item.storeHouseCount) {
                     this.apiData.nums = ''
@@ -134,7 +134,7 @@
             },
             // 下订单
             saveStoreOrder() {
-                if (this.apiData.nums != '') {
+                if (this.apiData.nums != '' && this.apiData.nums > 0) {
                     let params = this.$clearData(this.apiData);
                     params.storeId = this.item.storeId;
                     params.storeType = this.type;
@@ -149,7 +149,7 @@
                         this.apiData.nums = ''
                     })
                 } else {
-                    this.$Message.error('请输入要购买的数量!');
+                    this.$Message.error('请输入要购买的有效数量!');
                 }
             }
         },
