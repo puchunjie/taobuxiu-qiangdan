@@ -34,6 +34,7 @@
                         <div class="group"><label>认证状态：</label><span :class="'state state-'+rzInfo.status">{{ rzInfo.status | stateStr }}</span> <a v-show="rzInfo.status == 9" @click="showFalid(rzInfo.remark)">查看原因</a></div>
                         <div class="group">
                             <label></label>
+                            <a class="btn" v-show="rzInfo.status == 1" @click="rzAgin">变更信息</a>
                             <a class="btn" v-show="rzInfo.status == 0" @click="goOnrz">继续认证</a>
                             <a class="btn" v-show="rzInfo.status == 9" @click="rzAgin">再次认证</a>
                         </div>
@@ -81,6 +82,9 @@
                         break;
                     case 2:
                         return '审核中'
+                        break;
+                    case 4:
+                        return '变更审核中'
                         break;
                     case 9:
                         return '认证失败'

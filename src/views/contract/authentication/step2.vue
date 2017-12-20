@@ -61,8 +61,7 @@
           legalPersonCardPhotoA: '',
           legalPersonCardPhotoB: ''
         },
-        rzInfo: {},
-        isOver: false //是否是重新编辑
+        rzInfo: {}
       }
     },
     computed: {
@@ -125,7 +124,6 @@
         map(this.apiData, (v, k) => {
           this.apiData[k] = this.rzInfo[k]
         })
-        this.isOver = this.status == 9;
       }
     }
   }

@@ -108,9 +108,11 @@
                 if (panel.isSearch && panel.search != '' && panel.searchList.length > 0) {
                     data.id = panel.searchList[0].id;
                     data.name = panel.searchList[0].shortName
-                } else {
-                    data.name = data.name == this.oldValue ? data.name : this.oldValue
+                }else{
+                    data.id = '';
+                    data.name = '';
                 }
+                
                 this.saveData(data);
             }
         },

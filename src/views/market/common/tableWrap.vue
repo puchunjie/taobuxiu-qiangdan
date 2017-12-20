@@ -9,7 +9,11 @@
                     <a @click.stop="pickerSort(2)">价格从低到高</a>
                 </div>
             </div>
-            <Page class="no-color line-page" :total="page.totleCount" :current.sync="page.currentPage" :page-size="page.pageSize" size="small" show-total></Page>
+            <div class="right-action">
+                <a class="reflash-list" @click="reFalsh">刷新列表</a>
+                <Page class="no-color line-page" :total="page.totleCount" :current.sync="page.currentPage" :page-size="page.pageSize" size="small" show-total></Page>
+            </div>
+    
         </div>
         <div class="slot-contnet">
             <slot v-show="page.totleCount>0"></slot>
@@ -50,9 +54,9 @@
             }
         },
         computed: {
-          sortStr(){
-              return this.page.priceSort != '' ? this.page.priceSort == 1 ? '价格从高到低': '价格从低到高' : '价格从高到低'
-          }  
+            sortStr() {
+                return this.page.priceSort != '' ? this.page.priceSort == 1 ? '价格从高到低' : '价格从低到高' : '价格从高到低'
+            }
         },
         watch: {
             'page': {
@@ -70,6 +74,9 @@
                 this.page.priceSort = sort;
                 this.sortPicker = false;
                 this.$emit('on-sort')
+            },
+            reFalsh() {
+                this.$parent.getData()
             }
         },
         mounted() {
@@ -84,11 +91,11 @@
         width: 100%;
         margin-top: 10px;
         padding-bottom: 20px;
-        .list-table{
+        .list-table {
             border: @b_d1;
         }
-
         .head-bar {
+            position: relative;
             width: 100%;
             height: 40px;
             background-color: #fff;
@@ -96,11 +103,15 @@
             border-bottom: 0;
             letter-spacing: -4px;
             .noselect;
-            .line-page {
-                position: relative;
-                float: right;
-                letter-spacing: 0;
+            .right-action {
+                position: absolute;
+                right: 10px;
                 top: 5px;
+                letter-spacing: 0;
+                .reflash-list {
+                    font-size: 12px;
+                    margin-right: 20px;
+                }
             }
             .sort-item {
                 position: relative;
@@ -145,26 +156,24 @@
                 }
             }
         }
-
-        .slot-contnet{
+        .slot-contnet {
             width: 100%;
-            .empty{
+            .empty {
                 width: 100%;
                 min-height: 270px;
                 text-align: center;
                 background-color: #fff;
-                img{
+                img {
                     display: inline-block;
                     width: 230px;
-                    margin-top:20px;
+                    margin-top: 20px;
                 }
             }
         }
-
-        .bottom-bar{
+        .bottom-bar {
             width: 100%;
             margin-top: 20px;
-            text-align: center; 
+            text-align: center;
         }
     }
 </style>

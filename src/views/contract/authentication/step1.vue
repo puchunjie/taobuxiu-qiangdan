@@ -114,7 +114,6 @@
     },
     data() {
       return {
-        isOver: false,
         codeSend: false,
         idTypes: [{
           label: "营业执照",
@@ -171,6 +170,21 @@
       },
       status() {
         return this.$route.params.status
+      },
+      rzUrl() {
+        switch (Number(this.status)) {
+          case 1:
+            return this.$api.changeContractInfo
+            break;
+          case 0:
+            return this.$api.saveBaseInfo
+            break;
+          case 9:
+            return this.$api.appContractAgain
+            break;
+          default:
+            break;
+        }
       }
     },
     methods: {
@@ -197,8 +211,7 @@
       goNext() {
         if (this.isOk && this.codeSend) {
           let params = this.$clearData(this.ajaxParams);;
-          let rzUrl = this.isOver ? this.$api.appContractAgain : this.$api.saveBaseInfo;
-          this.$http.post(rzUrl, params).then(res => {
+          this.$http.post(this.rzUrl, params).then(res => {
             if (res.code === 1000) {
               this.$router.push({
                 name: this.type == 1 ? 'BatStep2' : 'SatStep2',
@@ -245,7 +258,6 @@
     },
     created() {
       this.getHistory();
-      this.isOver = this.status == 9;
     }
   }
 </script>

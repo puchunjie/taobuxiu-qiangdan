@@ -23,7 +23,7 @@
             </div>
             <div class="btns">
                 <a class="btn" @click="search">搜索</a>
-                <a class="btn goast" @click="reset">清空条件</a>
+                <a class="btn goast" @click="reset">清空</a>
             </div>
         </div>
         <div class="oc-table">
@@ -65,7 +65,7 @@
                     </td>
                     <td class="measure bo-b">{{ item.measuringType | measuringStr }}</td>
                     <td class="price bo-b">&yen;{{ item.price }}</td>
-                    <td class="num">x{{ item.storeType == 0 ? item.weights != '' ? item.weights : item.numbers : item.nums }}</td>
+                    <td class="num">{{ item.storeType == 0 ? item.weights != '' ? item.weights : item.numbers : item.nums }}</td>
                     <td class="totle">&yen;{{ item.allPrice }}</td>
                     <td class="location">{{ item.locationName }}</td>
                     <td class="warehouse">{{ item.storeHouseName }}</td>

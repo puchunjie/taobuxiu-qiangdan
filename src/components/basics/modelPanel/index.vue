@@ -14,7 +14,8 @@
     export default {
         props: {
             value: {
-                type: Boolean
+                type: Boolean,
+                default: false
             },
             title: {
                 type: String,
@@ -30,7 +31,7 @@
             }
         },
         watch: {
-            visible(val) {
+            visable(val) {
                 this.$emit('input', val)
             },
             value(val) {
@@ -38,8 +39,7 @@
             }
         },
         mounted() {
-            if (this.value)
-                this.visable = this.value
+            this.visable = this.value
         }
     }
 </script>

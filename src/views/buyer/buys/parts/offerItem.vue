@@ -21,8 +21,9 @@
             </div>
             <div class="item left name">
                 <companyLink :hasShop="item.isHaveShop" :userId="item.user">{{ item.companyName }}</companyLink>
-                <span v-show="item.isFaithUser == '1'" data-msg="企业信用程度高、经营管理水平优，社会反响、品牌、信誉度高。" class="iconfont icon-cheng right" style="color:#F5A623"></span>
-                <span v-show="item.isGuaranteeUser == '1'" data-msg="企业资金实力强，需方验收货物后淘不锈与供方结算。依据淘不锈平台担保商户入驻条款评选得出。" class="iconfont icon-bao right" style="color:#C16BD6"></span>
+                <merchantLabel :faith="item.isFaithUser == '1'" :guarantee="item.isGuaranteeUser == '1'"></merchantLabel>
+                <!-- <span v-show="item.isFaithUser == '1'" data-msg="企业信用程度高、经营管理水平优，社会反响、品牌、信誉度高。" class="iconfont icon-cheng right" style="color:#F5A623"></span>
+                <span v-show="item.isGuaranteeUser == '1'" data-msg="企业资金实力强，需方验收货物后淘不锈与供方结算。依据淘不锈平台担保商户入驻条款评选得出。" class="iconfont icon-bao right" style="color:#C16BD6"></span> -->
                 <crown :tip="`总报价：${item.sellAllNum}次,中标：${item.sellGetNum}次`" :level='item.level'></crown>
             </div>
             <div class="item right">
@@ -77,6 +78,7 @@
 </template>
 
 <script>
+    import merchantLabel from '@/components/business/merchantLabel/index.vue'
     import crown from '@/components/basics/crown/index.vue'
     import companyLink from '@/components/business/companyLink/index.vue'
     export default {
@@ -90,7 +92,8 @@
         },
         components: {
             crown,
-            companyLink
+            companyLink,
+            merchantLabel
         },
         computed: {
             showNew() {
@@ -214,27 +217,6 @@
                 }
                 &.name {
                     color: @f_dark;
-                    .iconfont {
-                        position: relative;
-                        &:hover:after {
-                            content: attr(data-msg);
-                            position: absolute;
-                            font-size: 12px;
-                            line-height: 30px;
-                            text-align: center;
-                            color: #fff;
-                            text-indent: 0;
-                            padding: 0 10px;
-                            background-color: rgba(70, 76, 91, .9);
-                            white-space: nowrap;
-                            z-index: 10;
-                            .borderRadius;
-                        }
-                        &.right:after {
-                            top: 0;
-                            left: 20px;
-                        }
-                    }
                 }
             }
         }

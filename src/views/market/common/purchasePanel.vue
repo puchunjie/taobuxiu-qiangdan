@@ -7,7 +7,8 @@
                     <thead>
                         <tr>
                             <th :colspan="colspan">
-                                供应商：<companyLink :hasShop="item.isHaveShop" :userId="item.userId">{{ item.companyName }}</companyLink>
+                                供应商：
+                                <companyLink :hasShop="item.isHaveShop" :userId="item.userId">{{ item.companyName }}</companyLink>
                                 <merchantLabel :faith="item.isFaithUser == '1'" :guarantee="item.isGuaranteeUser == '1'"></merchantLabel>
                                 <crown :level='item.sellLevel'></crown>
                                 <qq style="margin-left:75px" :data="{name:item.contact,phone:item.contactNum,qq:item.QQ}"></qq>
@@ -60,6 +61,9 @@
 </template>
 
 <script>
+    import {
+        mapActions
+    } from 'vuex'
     import tbInput from '@/components/business/tbInput/index'
     import tbSelect from '@/components/business/tbSelect/index'
     import crown from '@/components/basics/crown/index.vue'
@@ -81,7 +85,7 @@
                 default: false
             },
             type: {
-                type: [String,Number]
+                type: [String, Number]
             },
             isSpecail: {
                 type: Boolean,
@@ -121,15 +125,21 @@
             }
         },
         methods: {
+            ...mapActions(['getUserCount']),
             close() {
                 this.visible = false;
             },
             validateNum() {
                 if (isNaN(this.apiData.nums) || this.apiData.nums < 0) {
                     this.apiData.nums = ''
-                } else if (this.isSpecail && this.apiData.nums > this.item.storeHouseCount) {
-                    this.apiData.nums = ''
-                    this.$Message.error('您输入的数量已经超出库存，请重新输入!');
+                } else {
+                    if (this.apiData.nums > 10000) {
+                        this.apiData.nums = 10000;
+                        this.$Message.warning('最大下单数量为10000');
+                    } else if (this.isSpecail && this.apiData.nums > this.item.storeHouseCount) {
+                        this.apiData.nums = this.item.storeHouseCount;
+                        this.$Message.warning('库存不足!');
+                    }
                 }
             },
             // 下订单
@@ -138,9 +148,9 @@
                     let params = this.$clearData(this.apiData);
                     params.storeId = this.item.storeId;
                     params.storeType = this.type;
-                    console.table(params)
                     this.$http.post(this.$api.saveStoreOrder, params).then(res => {
                         if (res.code === 1000) {
+                            this.getUserCount();
                             this.visible = false;
                             this.$Message.success('下单成功');
                         } else if (res.code === -1) {

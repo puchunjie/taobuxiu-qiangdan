@@ -9,12 +9,12 @@
                     <a @click="search">搜索</a>
                 </div>
                 <div class="time-limit">
-                    签署时间：
+                    最近更新时间：
                     <DatePicker type="daterange" placement="bottom-end" v-model="dateTime" placeholder="选择时间" style="width: 200px"></DatePicker>
                 </div>
                 <div class="btns">
                     <a class="btn" @click="search">搜索</a>
-                    <a class="btn goast" @click="reset">清空条件</a>
+                    <a class="btn goast" @click="reset">清空</a>
                 </div>
             </div>
             <div class="oc-table">

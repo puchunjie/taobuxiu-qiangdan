@@ -126,7 +126,7 @@
                 this.visible = false;
             },
             validateNum() {
-                if (isNaN(this.editData.nums) || this.editData.nums <= 0) {
+                if (isNaN(this.editData.nums) || this.editData.nums < 0) {
                     this.editData.nums = ''
                 } else if (this.isSpecail && this.editData.nums > this.item.storeHouseCount) {
                     this.editData.nums = ''
@@ -134,7 +134,7 @@
                 }
             },
             editOrder() {
-                if (this.editData.nums != '') {
+                if (this.editData.nums != '' && this.editData.nums > 0) {
                     this.$http.post(this.$api.modifyStoreOrder, this.editData).then(res => {
                         if (res.code === 1000) {
                             this.visible = false;

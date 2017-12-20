@@ -11,7 +11,7 @@
             </div>
             <div class="btns">
                 <a class="btn" @click="search">搜索</a>
-                <a class="btn goast" @click="reset">清空条件</a>
+                <a class="btn goast" @click="reset">清空</a>
             </div>
         </div>
         <div class="oc-table">

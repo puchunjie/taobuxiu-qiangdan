@@ -61,7 +61,7 @@
                     <label>公差</label>
                     <tbInput class="lager-input" :disabled="!stDisable" v-model="other.tolerance"></tbInput>
                 </div>
-</template>
+        </template>
 
         <div class="filter-item" v-else>
             <label>计划开平时间</label>
@@ -69,9 +69,8 @@
         </div>
     
         <div class="search-btns">
-            <a class="reflash-list" @click="reFalsh">刷新列表</a>
             <a class="btn" @click="search(false)">搜索</a>
-            <a class="btn goast" @click="search(true)">清空条件</a>
+            <a class="btn goast" @click="search(true)">清空</a>
         </div>
     </div>
 </template>
@@ -223,9 +222,6 @@
                     this.other[key] = ''
                 })
             },
-            reFalsh() {
-                this.$parent.getData()
-            },
             switchValue(val) {
                 if (val) {
                     this.other.specifications = '';
@@ -295,10 +291,6 @@
                 background-color: #fff;
                 color: @dark_blue;
                 margin-left: 20px;
-            }
-            .reflash-list {
-                font-size: 12px;
-                margin-right: 20px;
             }
         }
     }

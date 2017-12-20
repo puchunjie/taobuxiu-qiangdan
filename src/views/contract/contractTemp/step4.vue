@@ -92,7 +92,7 @@
                                 <tbInput style="width: 80px" v-model="item.price"></tbInput>
                             </td>
                             <td>
-                                <tbInput></tbInput>
+                                <tbInput v-model="item.remark"></tbInput>
                             </td>
                             <td class="price">{{ totlePrcieArr2[i] }}</td>
                             <td><span class="iconfont icon-quxiao" @click="delCost(i)"></span></td>
@@ -165,11 +165,11 @@
     
         <modelPanel title="短信验证" v-model="codeShow" width="600">
             <div>
-                <p class="code-tip">尊敬的用户，请输入您手机收到的短信验证码，该验证码在30分钟内有效。<br> 已发送验证码至{{ info.partAContractTel | hidePhone }}，请输入验证码完成合同起草。
+                <p class="code-tip">尊敬的用户，请输入您手机收到的短信验证码，该验证码在30分钟内有效。<br> 已发送验证码至{{ info.partAMobile | hidePhone }}，请输入验证码完成合同起草。
                 </p>
                 <div class="code-in">
                     <passWordInput v-model="messageCode"></passWordInput>
-                    <getCode :apiUrl="$api.contractGetSmsCode" :mobile="info.partAContractTel" @on-success="codeSend = true">
+                    <getCode :apiUrl="$api.contractGetSmsCode" :mobile="info.partAMobile" @on-success="codeSend = true">
                         <a class="get-code">获取短信验证码</a>
                     </getCode>
                 </div>
@@ -180,7 +180,7 @@
             </div>
         </modelPanel>
     
-        <modelPanel title="短信验证" v-model="coatTypeShow" width="600">
+        <modelPanel title="选择费用类型" v-model="coatTypeShow" width="600">
             <div>
                 <div style="text-align:center;margin-bottom:20px">
                     <tbRadio v-model="coatType" :data="[{label: '加工费',value: 'machining'},{label: '人力费',value: 'human'},{label: '小车费',value: 'car'},{label: '其他',value: 'default'}]"></tbRadio>
@@ -282,18 +282,6 @@
                 })
                 return price.toFixed(2)
             },
-            ajaxParams() {
-                let data = this.$clearData(this.info);
-                data.locationId = this.locationId.id;
-                data.locationName = this.locationId.name;
-                data.orderIds = JSON.stringify({
-                    orderIds: this.info.orderIds,
-                    costs: this.info.costs
-                });
-                data.startDate = data.systemTime;
-                data.endDate = data.systemTime;
-                return data
-            },
             type() {
                 return this.$route.params.type
             }
@@ -316,10 +304,23 @@
                     }
                 })
             },
+            ajaxParams() {
+                let data = this.$clearData(this.info);
+                data.locationId = this.locationId.id;
+                data.locationName = this.locationId.name;
+                data.orderIds = JSON.stringify({
+                    orderIds: this.info.orderIds,
+                    costs: this.info.costs
+                });
+                data.deliveryTerm = new Date(this.info.deliveryTerm).getTime();
+                data.startDate = data.systemTime;
+                data.endDate = data.systemTime;
+                return data
+            },
             // 确认起草合同
             doAction() {
                 this.$spinToggle(true);
-                this.$http.post(this.$api.saveContractInfo, this.ajaxParams).then(res => {
+                this.$http.post(this.$api.saveContractInfo, this.ajaxParams()).then(res => {
                     if (res.code === 1000) {
                         this.$Modal.success({
                             content: '起草完成！',
@@ -347,10 +348,10 @@
                 })
             },
             codePanelShow() {
-                if (this.locationId.id != '') {
+                if (this.isAllOk()) {
                     this.codeShow = true;
                 } else {
-                    this.$Message.error('请选择交货地址!')
+                    this.$Message.error('请填写完带星号的选项!')
                 }
             },
             onCheck() {
@@ -383,6 +384,10 @@
             //删除其他费用
             delCost(i) {
                 this.info.costs.splice(i, 1);
+            },
+            // 是否可以提交？
+            isAllOk(){
+                return this.info.deliveryTerm != '' && this.info.inspectionTime != '' && this.info.remark != '' && this.locationId.id != ''
             }
         },
         created() {

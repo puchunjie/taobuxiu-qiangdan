@@ -1,7 +1,7 @@
 <template>
     <div class="merchant-container">
-        <span v-show="guarantee" data-msg="企业资金实力强，需方验收货物后淘不锈与供方结算。依据淘不锈平台担保商户入驻条款评选得出。" class="iconfont icon-bao"></span>
         <span v-show="faith" data-msg="企业信用程度高、经营管理水平优，社会反响、品牌、信誉度高。" class="iconfont icon-cheng"></span>
+        <span v-show="guarantee" data-msg="企业资金实力强，需方验收货物后淘不锈与供方结算。依据淘不锈平台担保商户入驻条款评选得出。" class="iconfont icon-bao"></span>
     </div>
 </template>
 
@@ -23,7 +23,7 @@
 <style lang="less" scoped>
     @import url('../../../assets/base.less');
     .merchant-container {
-        display: inline-block;
+        display: inline;
         .iconfont {
             position: relative;
         }

@@ -95,6 +95,7 @@
                 color: @f_dark;
                 border-bottom: 3px solid #fff;
                 &.active {
+                    color: @dark_blue;
                     font-weight: bold;
                     border-color: @dark_blue;
                 }

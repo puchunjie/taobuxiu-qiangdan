@@ -598,6 +598,11 @@ export const saveBasePicture = '/demands/business/saveBasePicture'
 export const appContractAgain = '/demands/business/appContractAgain'
 
 /**
+ * 修改认证信息
+ */
+export const changeContractInfo = '/demands/business/changeContractInfo'
+
+/**
  * 根据用户编号查询商户认证信息
  */
 export const getContractAuthenticationByUserId = '/demands/contractManger/getContractAuthenticationByUserId'

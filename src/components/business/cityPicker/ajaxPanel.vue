@@ -72,19 +72,22 @@
             outPut(val) {
                 this.$emit('on-picker', val);
             },
-            'search': {
+            search: {
                 handler: debounce(function(val, oldVal) {
-                    if (val != '') {
-                        this.isSearch = true;
-                        this.active = 1;
-                        this.searchData(val)
-                    } else {
-                        this.isSearch = false;
-                    }
+                    this.setSearch(val);
                 }, 500)
             }
         },
         methods: {
+            setSearch(val) {
+                if (val != '') {
+                    this.isSearch = true;
+                    this.active = 1;
+                    this.searchData(val)
+                } else {
+                    this.isSearch = false;
+                }
+            },
             // 获取选择列表
             getData(i, params = {}) {
                 let apiUrl = this.options.selectData[i].api;
@@ -125,8 +128,8 @@
             },
             // 切回一级
             backToP(i) {
-                if (this.active != (i+1)) {
-                    this.active = i+1;
+                if (this.active != (i + 1)) {
+                    this.active = i + 1;
                     this.getData(i);
                 }
             },
@@ -140,13 +143,14 @@
         },
         created() {
             this.getData(0);
+            this.setSearch(this.search);
         }
     }
 </script>
 
 <style lang="less" scoped>
     @import url('../../../assets/picker.less');
-    .tb-picker-contnet .item{
+    .tb-picker-contnet .item {
         min-width: 50px;
     }
 </style>

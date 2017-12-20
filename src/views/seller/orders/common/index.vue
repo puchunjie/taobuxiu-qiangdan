@@ -38,7 +38,7 @@
           </td>
           <td class="measure bo-b">{{ item.measuringType | measuringStr }}</td>
           <td class="price bo-b">&yen;{{ item.price }}</td>
-          <td class="num">x{{ item.nums }}</td>
+          <td class="num">{{ item.nums }}</td>
           <td class="totle" v-show="type == 1">&yen;{{ item.totalPrice }}</td>
           <td class="time" v-show="type == 2">{{ item.remark }}</td>
           <td class="tax" v-show="type == 3">{{ item.taxType | taxStr }}</td>
@@ -69,6 +69,7 @@
 
 
 <script>
+  import { mapActions } from 'vuex'
   import status from '@/components/orderCommon/status.vue'
   import searchBar from '@/components/orderCommon/search.vue'
   import crown from '@/components/basics/crown/index.vue'
@@ -164,6 +165,7 @@
       }
     },
     methods: {
+      ...mapActions(['getUserCount']),
       getOrders() {
         this.listLoad = true;
         this.$http.post(this.$api.findSellerStoreOrder, this.apiParams).then(res => {
@@ -189,6 +191,7 @@
               id: id
             }).then(res => {
               if (res.code === 1000) {
+                this.getUserCount();
                 this.getOrders();
                 this.$Message.success('订单已取消');
               }
@@ -208,6 +211,7 @@
               id: id
             }).then(res => {
               if (res.code === 1000) {
+                this.getUserCount();
                 this.getOrders();
                 this.$Message.success('接单成功！');
               }

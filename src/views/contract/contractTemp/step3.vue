@@ -206,8 +206,6 @@
                         if (res.code === 1000) {
                             let data = this.$ls.get('contractInfo');
                             data.partAContractId = res.data.id;
-                            data.contractShowId = res.data.contractShowId;
-                            dara.systemTime = res.data.systemTime;
                             this.$ls.set('contractInfo', data);
                             this.$router.push({
                                 name: this.type == 1 ? 'Bstep4' : 'Sstep4',
