@@ -4,19 +4,29 @@
     
         <div class="info-confim">
             <div class="tit">
-                <span class="ic-rq">*</span>请确认供应方公司信息(对方信息)，<a>电子合同将送达给供应方等确认签署。</a>
+                <span class="ic-rq">*</span>请确认甲方服务方平台身份信息
             </div>
-            <div class="info">乙方名称：{{ info.partBName }}</div>
+            <div class="info">甲方名称：{{ info.systemAppName }}</div>
         </div>
-    
+
         <div class="info-confim">
             <div class="tit">
-                <span class="ic-rq">*</span>请确认您的客户信息，合同中将以此作为甲方信息(我方信息)
+                <span class="ic-rq">*</span>请确认采购方的客户信息，合同中将以此作为乙方信息
             </div>
-            <div class="info">甲/乙方名称：{{ info.partAContractName }}</div>
-            <div class="info">甲/乙方地址：{{ info.partAContractAddress }}</div>
+            <div class="info">乙方名称：{{ info.partAContractName }}</div>
+            <div class="info">乙方地址：{{ info.partAContractAddress }}</div>
             <div class="info">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;联系人：{{ info.partAContractContact }}</div>
             <div class="info">&nbsp;&nbsp;&nbsp;&nbsp;联系方式：{{ info.partAContractTel }}</div>
+        </div>
+
+        <div class="info-confim">
+            <div class="tit">
+                <span class="ic-rq">*</span>请确供应商的客户信息，合同中将以此作为丙方信息
+            </div>
+            <div class="info">丙方名称：{{ info.partBContractName }}</div>
+            <div class="info">丙方地址：{{ info.partBContractAddress }}</div>
+            <div class="info">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;联系人：{{ info.partBContractContact }}</div>
+            <div class="info">&nbsp;&nbsp;&nbsp;&nbsp;联系方式：{{ info.partBContractTel }}</div>
         </div>
     
         <div class="info-confim">
@@ -159,6 +169,7 @@
             <a class="back" @click="$router.go(-1)">返回上一步</a>
             <div class="next-step">
                 <a class="btn goast" @click="giveUp">放弃起草电子合同</a>
+                <a class="btn goast" @click="showPreview">预览电子合同</a>
                 <a class="btn" @click="codePanelShow">确认起草电子合同</a>
             </div>
         </div>
@@ -190,6 +201,11 @@
                 </div>
             </div>
         </modelPanel>
+        
+        <Modal v-model="pShow" width="1000px">
+            <preview :previewData="info" :other="{}"></preview>
+        </Modal>
+        
     </div>
 </template>
 
@@ -204,6 +220,7 @@
     import getCode from '@/components/business/getCode/index'
     import tbRadio from '@/components/business/tbRadio/index.vue'
     import map from 'lodash/map'
+    import preview from './preview.vue'
     import {
         castData
     } from './other.js'
@@ -218,10 +235,12 @@
             passWordInput,
             getCode,
             tbTextarea,
-            tbRadio
+            tbRadio,
+            preview
         },
         data() {
             return {
+                pShow: false,
                 coatTypeShow: false,
                 coatType: 'default',
                 codeShow: false,
@@ -234,8 +253,8 @@
                     partAContractId: "",
                     partAContractName: "",
                     partAContractTel: "",
+                    partAMobile: "",
                     partBId: "",
-                    partBName: "",
                     inspectionTime: "",
                     deliveryTerm: "",
                     remark: "",
@@ -349,6 +368,7 @@
             },
             codePanelShow() {
                 if (this.isAllOk()) {
+                    this.messageCode = '';
                     this.codeShow = true;
                 } else {
                     this.$Message.error('请填写完带星号的选项!')
@@ -388,6 +408,13 @@
             // 是否可以提交？
             isAllOk(){
                 return this.info.deliveryTerm != '' && this.info.inspectionTime != '' && this.info.remark != '' && this.locationId.id != ''
+            },
+            showPreview(){
+                if(this.isAllOk()){
+                    this.pShow = true;
+                } else {
+                    this.$Message.error('请填写完带星号的选项!')
+                }
             }
         },
         created() {

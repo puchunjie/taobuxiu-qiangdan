@@ -29,7 +29,7 @@
             <companyLink :hasShop="item.isHaveShop" :userId="item.buserUserId">{{ item.companyName }}</companyLink>
             <merchantLabel :faith="item.isFaithUser == '1'" :guarantee="item.isGuaranteeUser == '1'"></merchantLabel>
             <crown class="mr-80" :level='item.sellLevel'></crown>
-            <qq :data="{name:item.contact,phone:item.contactNum,qq:item.QQ}"></qq>
+            <qq class="qq-right" :data="{name:item.contact,phone:item.contactNum,qq:item.QQ}"></qq>
           </th>
         </tr>
         <tr>
@@ -264,10 +264,15 @@
       border: @b_d1;
       margin-top: 12px;
       .item-title {
+        position: relative;
         text-align: left;
         text-indent: 20px;
         height: 34px;
         border-bottom: @b_d1;
+        .qq-right{
+          position: absolute;
+          left: 800px;
+        }
       }
       td {
         height: 100px;

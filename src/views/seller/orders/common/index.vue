@@ -25,10 +25,11 @@
         <tr>
           <th colspan="9" class="item-title">
             <span class="mr-80">{{ item.createTime | dateformat('yyyy-MM-dd hh:mm:ss') }}</span>
-            <span class="mr-80">订单号：{{ item.id }}</span> {{ item.companyName }}
+            <span class="mr-80">订单号：{{ item.id }}</span> 
+            <companyLink :hasShop="item.isHaveShop" :userId="item.buserUserId">{{ item.companyName }}</companyLink>
             <merchantLabel :faith="item.isFaithUser == '1'" :guarantee="item.isGuaranteeUser == '1'"></merchantLabel>
             <crown class="mr-80" :level='item.buyLevel'></crown>
-            <qq :data="{name:item.contact,phone:item.contactNum,qq:item.QQ}"></qq>
+            <qq class="qq-right" :data="{name:item.contact,phone:item.contactNum,qq:item.QQ}"></qq>
           </th>
         </tr>
         <tr>
@@ -53,7 +54,7 @@
             <template v-if="item.orderStatus == 2">
                   <a @click="confirmOrder(item.id)">确认接单</a><br>
                   <a @click="cancelStoreOrder(item.id)">不接此单</a>
-</template>
+            </template>
           </td>
         </tr>
       </table>
@@ -75,6 +76,7 @@
   import crown from '@/components/basics/crown/index.vue'
   import qq from '@/components/business/qqContant/index.vue'
   import merchantLabel from '@/components/business/merchantLabel/index.vue'
+  import companyLink from '@/components/business/companyLink/index.vue'
   import countDown from '@/components/countDown.vue'
   import debounce from 'lodash/debounce'
   import pushAsync from '@/utils/pushAsync.js'
@@ -86,7 +88,8 @@
       crown,
       qq,
       merchantLabel,
-      countDown
+      countDown,
+      companyLink
     },
     props: {
       type: {
@@ -256,10 +259,15 @@
       border: @b_d1;
       margin-top: 12px;
       .item-title {
+        position: relative;
         text-align: left;
         text-indent: 20px;
         height: 34px;
         border-bottom: @b_d1;
+        .qq-right{
+          position: absolute;
+          left: 800px;
+        }
       }
       td {
         height: 100px;

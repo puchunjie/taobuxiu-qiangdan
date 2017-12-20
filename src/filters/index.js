@@ -85,10 +85,16 @@ export const bOrderState = (value) => {
             return '待确认'
             break;
         case 3:
-            return '卖家未接单'
+            return '卖家取消'
             break;
         case 4:
-            return '已取消'
+            return '卖家未接单'
+            break;
+        case 5:
+            return '买家取消'
+            break;
+        case 6:
+            return '超管取消'
             break;
         default:
             break;

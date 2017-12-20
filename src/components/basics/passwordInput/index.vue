@@ -32,16 +32,17 @@
         },
         watch: {
             realInput(val) {
-                this.$emit('input', val)
+                this.$emit('input', val);
             },
             value(val) {
                 this.realInput = val;
+                this.getNum();
             }
         },
         methods: {
             getNum() {
-                for (let i = 0; i < this.realInput.length; i++) {
-                    this.disInputs[i].value = this.realInput.charAt(i)
+                for (let i = 0; i < this.number; i++) {
+                    this.disInputs[i].value = this.realInput.charAt(i) ? this.realInput.charAt(i) : ''
                     // 表示字符串中某个位置的数字，即字符在字符串中的下标。
                 }
             },
