@@ -1,7 +1,7 @@
 <template>
     <div class="tb-picker">
         <div class="tb-picker-rel">
-            <textarea ref="input" v-if="!disabled" :placeholder="placeholder" class="tb-textarea" type="text" v-model="inValue" @blur="checkValue" @keyup="inPut" />
+            <textarea ref="input" v-if="!disabled" :style="{height:height+'px'}" :placeholder="placeholder" class="tb-textarea" type="text" v-model="inValue" @blur="checkValue" @keyup="inPut" />
         </div>
     </div>
 </template>
@@ -29,6 +29,10 @@
             placeholder:{
                 type: String,
                 default: ''
+            },
+            height:{
+                type:[String,Number],
+                default: 60
             }
         },
         data() {

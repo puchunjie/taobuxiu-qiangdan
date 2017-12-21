@@ -45,6 +45,9 @@
                         </tr>
                     </tbody>
                 </table>
+                <div class="input-remark" v-show="type == 2">
+                    开平尺寸：<tbInput v-model="editData.remark" style="width:940px" placeholder="选填，备注开平尺寸"></tbInput>
+                </div>
                 <div class="fresh-index">
                     新鲜指数：该资源更新于<span class="red-tip">{{ item.storeUpdateTime | getDateDiff(item.serveTime) }}</span>，{{ item.recommendRemark }}
                 </div>
@@ -100,7 +103,8 @@
                 visible: false,
                 editData: {
                     nums: '',
-                    id: ''
+                    id: '',
+                    remark: ''
                 }
             }
         },
@@ -219,6 +223,14 @@
                     }
                 }
             }
+
+            .input-remark{
+                width: 100%;
+                height: 30px;
+                line-height: 30px;
+                margin: 10px 0;
+            }
+
             .fresh-index {
                 width: 100%;
                 height: 30px;

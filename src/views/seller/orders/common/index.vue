@@ -25,7 +25,7 @@
         <tr>
           <th colspan="9" class="item-title">
             <span class="mr-80">{{ item.createTime | dateformat('yyyy-MM-dd hh:mm:ss') }}</span>
-            <span class="mr-80">订单号：{{ item.id }}</span> 
+            <span class="mr-80">订单号：{{ item.id }}</span>
             <companyLink :hasShop="item.isHaveShop" :userId="item.buserUserId">{{ item.companyName }}</companyLink>
             <merchantLabel :faith="item.isFaithUser == '1'" :guarantee="item.isGuaranteeUser == '1'"></merchantLabel>
             <crown class="mr-80" :level='item.buyLevel'></crown>
@@ -34,8 +34,12 @@
         </tr>
         <tr>
           <td class="info bo-b">
-            {{ item.ironTypeName }}&nbsp;&nbsp;&nbsp;&nbsp;{{ `${item.materialName}/${item.surfaceName}` }}&nbsp;&nbsp;&nbsp;&nbsp;{{ item.proPlacesName }}<br> {{ item.specifications ? item.specifications :`${item.height}*${item.width}*${item.length}` }}
-            &nbsp;&nbsp;&nbsp;&nbsp;{{ item.tolerance | emptyHlod('') }}
+            <span class="hight-light">{{ item.ironTypeName }}&nbsp;&nbsp;&nbsp;&nbsp;{{ `${item.materialName}/${item.surfaceName}` }}&nbsp;&nbsp;&nbsp;&nbsp;{{ item.specifications ? item.specifications :`${item.height}*${item.width}*${item.length}` }}
+            &nbsp;&nbsp;&nbsp;&nbsp;{{ item.tolerance | emptyHlod('') }}</span><br> <span class="pro">{{ item.proPlacesName }}</span>
+            开平尺寸：<span class="kp-mark" v-if="item.buyRemark.length < 14">{{ item.buyRemark }}</span>
+            <Tooltip v-else :content="item.buyRemark" placement="top-start">
+                <span class="kp-mark">{{ item.buyRemark }}</span>
+            </Tooltip>
           </td>
           <td class="measure bo-b">{{ item.measuringType | measuringStr }}</td>
           <td class="price bo-b">&yen;{{ item.price }}</td>
@@ -52,8 +56,8 @@
           </td>
           <td class="operation">
             <template v-if="item.orderStatus == 2">
-                  <a @click="confirmOrder(item.id)">确认接单</a><br>
-                  <a @click="cancelStoreOrder(item.id)">不接此单</a>
+                    <a @click="confirmOrder(item.id)">确认接单</a><br>
+                    <a @click="delOrder(item.id)">不接此单</a>
             </template>
           </td>
         </tr>
@@ -65,12 +69,26 @@
     <div class="bottom-bar">
       <Page show-elevator :total="page.totalCount" :current.sync="page.currentPage" :page-size="page.pageSize"></Page>
     </div>
+
+    <modelPanel title="不接此单" v-model="reasonShow" width="600">
+            <div>
+                <div class="input-textarea">
+                  <tbTextarea placeholder="请描述不接此单的理由" v-model="delData.remark" height="100"></tbTextarea>
+                </div>
+                <div class="inner-btns">
+                  <a class="inner-btn goast" @click="reasonShow = false">取消</a>
+                  <a class="inner-btn" @click="cancelStoreOrder">确认</a>
+                </div>
+            </div>
+        </modelPanel>
   </div>
 </template>
 
 
 <script>
-  import { mapActions } from 'vuex'
+  import {
+    mapActions
+  } from 'vuex'
   import status from '@/components/orderCommon/status.vue'
   import searchBar from '@/components/orderCommon/search.vue'
   import crown from '@/components/basics/crown/index.vue'
@@ -78,6 +96,8 @@
   import merchantLabel from '@/components/business/merchantLabel/index.vue'
   import companyLink from '@/components/business/companyLink/index.vue'
   import countDown from '@/components/countDown.vue'
+  import modelPanel from '@/components/basics/modelPanel/index.vue'
+  import tbTextarea from '@/components/business/tbTextarea/index'
   import debounce from 'lodash/debounce'
   import pushAsync from '@/utils/pushAsync.js'
   export default {
@@ -89,7 +109,9 @@
       qq,
       merchantLabel,
       countDown,
-      companyLink
+      companyLink,
+      modelPanel,
+      tbTextarea
     },
     props: {
       type: {
@@ -99,6 +121,7 @@
     },
     data() {
       return {
+        reasonShow: false,
         listLoad: false,
         statusData: [{
           label: '待确认',
@@ -134,6 +157,10 @@
         searchData: {
           str: '',
           limitTime: ''
+        },
+        delData:{
+          id: '',
+          remark:''//取消订单备注
         }
       }
     },
@@ -174,34 +201,44 @@
         this.$http.post(this.$api.findSellerStoreOrder, this.apiParams).then(res => {
           if (res.code === 1000) {
             this.list = res.data.list;
-            this.statusData[0].count = res.data.needConfirm;
-            this.statusData[1].count = res.data.over;
-            this.statusData[2].count = res.data.notGet;
-            this.statusData[3].count = res.data.cancel;
-            this.statusData[4].count = res.data.all;
+            if (res.data.needConfirm != undefined) {
+              this.statusData[0].count = res.data.needConfirm;
+              this.statusData[1].count = res.data.over;
+              this.statusData[2].count = res.data.notGet;
+              this.statusData[3].count = res.data.cancel;
+              this.statusData[4].count = res.data.all;
+            }
             this.page.totalCount = res.data.totalCount;
           }
           this.listLoad = false;
         })
       },
-      cancelStoreOrder(id) {
-        this.$Modal.confirm({
+      delOrder(id){
+        this.delData.id = id;
+        this.delData.remark = '';
+        this.reasonShow = true;
+      },
+      cancelStoreOrder() {
+        if(this.delData.remark != ''){
+          this.$Modal.confirm({
           title: "取消确认",
           content: "是否确认取消？",
           onOk: () => {
             this.$Spin.show()
-            this.$http.post(this.$api.cancelStoreOrder, {
-              id: id
-            }).then(res => {
+            this.$http.post(this.$api.cancelStoreOrder, this.delData).then(res => {
               if (res.code === 1000) {
                 this.getUserCount();
                 this.getOrders();
+                this.reasonShow = false;
                 this.$Message.success('订单已取消');
               }
               this.$Spin.hide();
             })
           }
         })
+        }else{
+          this.$Message.warning('请填写不接单理由！');
+        }
       },
       // 确认接单
       confirmOrder(id) {
@@ -232,110 +269,5 @@
 
 
 <style lang="less" scoped>
-  @import url('../../../../assets/base.less');
-  .order-container {
-    width: 100%;
-    padding: 20px;
-    background-color: #fff;
-    border: @b_d1;
-    font-size: 12px;
-    .table-contnet {
-      position: relative;
-    }
-    .header-table,
-    .item-table {
-      width: 100%;
-      height: 34px;
-      th,
-      td {
-        text-align: center;
-      }
-      th {
-        background-color: @table_headbg;
-        color: #777;
-      }
-    }
-    .item-table {
-      border: @b_d1;
-      margin-top: 12px;
-      .item-title {
-        position: relative;
-        text-align: left;
-        text-indent: 20px;
-        height: 34px;
-        border-bottom: @b_d1;
-        .qq-right{
-          position: absolute;
-          left: 800px;
-        }
-      }
-      td {
-        height: 100px;
-        line-height: 24px;
-        border-right: @b_d1;
-        color: @f_dark;
-      }
-      .price {
-        color: @dark_red;
-        font-weight: bold;
-      }
-      .totle {
-        font-weight: bold;
-      }
-    }
-    .info {
-      width: 310px;
-      text-align: left!important;
-      padding-left: 20px;
-    }
-    .measure {
-      width: 70px;
-    }
-    .price,
-    .num,
-    .warehouse {
-      width: 100px;
-    }
-    .location {
-      width: 90px;
-    }
-    .state,
-    .tax,
-    .totle,
-    .time {
-      width: 110px;
-    }
-    .operation {
-      width: 130px;
-      a {
-        color: @f_dark;
-        &:hover {
-          color: @light_blue;
-          text-decoration: underline;
-        }
-      }
-    }
-    .bo-b {
-      border-right: 0!important;
-    }
-    .mr-80 {
-      margin-right: 80px;
-    }
-    .bottom-bar {
-      width: 100%;
-      text-align: right;
-      margin: 20px 0;
-    }
-    .empty {
-      width: 100%;
-      min-height: 270px;
-      text-align: center;
-      background-color: #fff;
-      img {
-        display: inline-block;
-        width: 230px;
-        margin-top: 20px;
-      }
-    }
-  }
+  @import url('../../../../assets/order.less');
 </style>

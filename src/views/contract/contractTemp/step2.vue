@@ -60,8 +60,8 @@
                 <tr>
                     <td class="ckeck-box bo-b"></td>
                     <td class="info bo-b">
-                        {{ item.ironTypeName }}&nbsp;&nbsp;&nbsp;&nbsp;{{ `${item.materialName}/${item.surfaceName}` }}&nbsp;&nbsp;&nbsp;&nbsp;{{ item.proPlacesName }}<br> {{ item.specifications ? item.specifications :`${item.height}*${item.width}*${item.length}`
-                        }} &nbsp;&nbsp;&nbsp;&nbsp;{{ item.tolerance | emptyHlod('') }}
+                        <span class="hight-light">{{ item.ironTypeName }}&nbsp;&nbsp;&nbsp;&nbsp;{{ `${item.materialName}/${item.surfaceName}` }}&nbsp;&nbsp;&nbsp;&nbsp;{{ item.specifications ? item.specifications :`${item.height}*${item.width}*${item.length}` }}
+                &nbsp;&nbsp;&nbsp;&nbsp;{{ item.tolerance | emptyHlod('') }}</span><br> <span class="pro">{{ item.proPlacesName }}</span>
                     </td>
                     <td class="measure bo-b">{{ item.measuringType | measuringStr }}</td>
                     <td class="price bo-b">&yen;{{ item.price }}</td>
@@ -152,7 +152,7 @@
                     return el.check
                 })
             },
-            checkedItemId(){
+            checkedItemId() {
                 let arr = [];
                 this.checkedItem.forEach(el => {
                     arr.push(el.id)
@@ -218,20 +218,20 @@
                 })
             },
             goNext() {
-                if (this.checkedItem.length > 0) { 
-                    this.saveContractInfo();  
+                if (this.checkedItem.length > 0) {
+                    this.saveContractInfo();
                     this.$router.push({
                         name: this.type == 1 ? 'Bstep3' : 'Sstep3',
                         params: {
                             type: this.type
                         }
                     })
-                }else{
+                } else {
                     this.$Message.warning('请选择订单！');
                 }
             },
             // 本地保存合同信息
-            saveContractInfo(){
+            saveContractInfo() {
                 this.$ls.set('contractInfo', this.$clearData({
                     partBId: this.sellId, //乙方ID
                     partAContractId: '', //甲方ID
@@ -350,7 +350,7 @@
                 text-indent: 20px;
                 height: 34px;
             }
-            th{
+            th {
                 border-bottom: @b_d1;
             }
             td {
@@ -387,6 +387,17 @@
             width: 310px;
             text-align: left!important;
             padding-left: 20px;
+            .hight-light {
+                font-weight: bold;
+            }
+            .pro {
+                display: inline-block;
+                padding: 0 8px;
+                border: 1px solid @mask_blue;
+                color: @mask_blue;
+                line-height: 18px;
+                .borderRadius;
+            }
         }
         .measure {
             width: 70px;

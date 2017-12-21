@@ -47,7 +47,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <div class="input-remark" v-show="isSpecail">
+                <div class="input-remark" v-show="type == 2">
                     开平尺寸：<tbInput v-model="apiData.remark" style="width:940px" placeholder="选填，备注开平尺寸"></tbInput>
                 </div>
                 <div class="fresh-index">
@@ -124,7 +124,12 @@
         },
         watch: {
             visible(val) {
-                this.$emit('input', val)
+                this.$emit('input', val);
+                if(!val){
+                    this.apiData.remark = ''
+                    this.apiData.nums = ''
+                }
+                    
             },
             value(val) {
                 this.visible = val
@@ -162,7 +167,6 @@
                         } else if (res.code === -1) {
                             this.$Message.error(res.message);
                         }
-                        this.apiData.nums = ''
                     })
                 } else {
                     this.$Message.error('请输入要购买的有效数量!');

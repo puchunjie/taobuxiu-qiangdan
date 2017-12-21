@@ -39,7 +39,7 @@
                             <td><span :class="'state state-'+item.status">{{ item.status | statusStr }}</span></td>
                             <td class="action">
                                 <a :href="mosaicUrl(item)" target="_blank">查看合同</a><br>
-                                <a v-show="item.status == 1" @click="downloadHT(item.id)">下载合同</a>
+                                <a v-show="item.status == 1" :href="downloadURL(item)" target="_blank">下载合同</a>
                             </td>
                         </tr>
                     </tbody>
@@ -56,7 +56,9 @@
 </template>
 
 <script>
-    import { mapGetters } from 'vuex'
+    import {
+        mapGetters
+    } from 'vuex'
     import status from '@/components/orderCommon/status.vue'
     import innerTitle from '@/components/business/innerTitle.vue'
     import pushAsync from '@/utils/pushAsync.js'
@@ -161,17 +163,14 @@
                 this.apiData.selectname = '';
                 this.search();
             },
-            mosaicUrl(item){
+            mosaicUrl(item) {
                 let host = location.origin;
                 return `${host}:8080/contract.jsp?appUserId=${this.ajaxHead.loginId}&loginId=${this.ajaxHead.loginId}&contractId=${item.contractId}&authorization=${this.ajaxHead.authorization}&flash=${Math.random()}`
             },
             // 下载合同
-            downloadHT(id){
-                this.$http.post(this.$api.downLoadContract,{contractId:id}).then(res => {
-                    if(res.code == 1000){
-                        
-                    }
-                })
+            downloadURL(item) {
+                let host = location.origin;
+                return `${host}:8080/contract_download_demands.jsp?loginId=${this.ajaxHead.loginId}&contractId=${item.contractId}&authorization=${this.ajaxHead.authorization}&flash=${Math.random()}`
             }
         },
         watch: {

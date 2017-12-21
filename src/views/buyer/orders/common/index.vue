@@ -34,8 +34,12 @@
         </tr>
         <tr>
           <td class="info bo-b">
-            {{ item.ironTypeName }}&nbsp;&nbsp;&nbsp;&nbsp;{{ `${item.materialName}/${item.surfaceName}` }}&nbsp;&nbsp;&nbsp;&nbsp;{{ item.proPlacesName }}<br> {{ item.specifications ? item.specifications :`${item.height}*${item.width}*${item.length}` }}
-            &nbsp;&nbsp;&nbsp;&nbsp;{{ item.tolerance | emptyHlod('') }}
+            <span class="hight-light">{{ item.ironTypeName }}&nbsp;&nbsp;&nbsp;&nbsp;{{ `${item.materialName}/${item.surfaceName}` }}&nbsp;&nbsp;&nbsp;&nbsp;{{ item.specifications ? item.specifications :`${item.height}*${item.width}*${item.length}` }}
+            &nbsp;&nbsp;&nbsp;&nbsp;{{ item.tolerance | emptyHlod('') }}</span><br> <span class="pro">{{ item.proPlacesName }}</span>
+            开平尺寸：<span class="kp-mark" v-if="item.buyRemark.length < 14">{{ item.buyRemark }}</span>
+            <Tooltip v-else :content="item.buyRemark" placement="top-start">
+                <span class="kp-mark">{{ item.buyRemark }}</span>
+            </Tooltip>
           </td>
           <td class="measure bo-b">{{ item.measuringType | measuringStr }}</td>
           <td class="price bo-b">&yen;{{ item.price }}</td>
@@ -52,10 +56,13 @@
           </td>
           <td class="operation">
             <template v-if="item.orderStatus == 2">
-                  <a @click="cancelStoreOrder(item.id)">取消订单</a><br>
-                  <a @click="editOrder(item,i)">修改订单</a>
+                    <a @click="cancelStoreOrder(item.id)">取消订单</a><br>
+                    <a @click="editOrder(item,i)">修改订单</a>
             </template>
             <a v-else-if="item.orderStatus == 1" @click="orderAgain(item,i)">再次采购</a>
+            <Tooltip v-else-if="item.orderStatus == 3" :content="item.sellRemark" placement="top">
+                <a>查看取消原因</a>
+            </Tooltip>
           </td>
         </tr>
       </table>
@@ -73,7 +80,9 @@
 
 
 <script>
-  import { mapActions } from 'vuex'
+  import {
+    mapActions
+  } from 'vuex'
   import status from '@/components/orderCommon/status.vue'
   import searchBar from '@/components/orderCommon/search.vue'
   import crown from '@/components/basics/crown/index.vue'
@@ -171,7 +180,7 @@
       'apiParams': {
         handler: debounce(function(val, oldVal) {
           // 是否是翻页操作
-          if(val.currentPage == oldVal.currentPage)
+          if (val.currentPage == oldVal.currentPage)
             this.page.currentPage = 1;
           this.getOrders();
         }, 200),
@@ -185,11 +194,13 @@
         this.$http.post(this.$api.findBuyerStoreOrder, this.apiParams).then(res => {
           if (res.code === 1000) {
             this.list = res.data.list;
-            this.statusData[0].count = res.data.needConfirm;
-            this.statusData[1].count = res.data.over;
-            this.statusData[2].count = res.data.notGet;
-            this.statusData[3].count = res.data.cancel;
-            this.statusData[4].count = res.data.all;
+            if (res.data.needConfirm != undefined) {
+              this.statusData[0].count = res.data.needConfirm;
+              this.statusData[1].count = res.data.over;
+              this.statusData[2].count = res.data.notGet;
+              this.statusData[3].count = res.data.cancel;
+              this.statusData[4].count = res.data.all;
+            }
             this.page.totalCount = res.data.totalCount;
           }
           this.listLoad = false;
@@ -237,110 +248,5 @@
 
 
 <style lang="less" scoped>
-  @import url('../../../../assets/base.less');
-  .order-container {
-    width: 100%;
-    padding: 20px;
-    background-color: #fff;
-    border: @b_d1;
-    font-size: 12px;
-    .table-contnet {
-      position: relative;
-    }
-    .header-table,
-    .item-table {
-      width: 100%;
-      height: 34px;
-      th,
-      td {
-        text-align: center;
-      }
-      th {
-        background-color: @table_headbg;
-        color: #777;
-      }
-    }
-    .item-table {
-      border: @b_d1;
-      margin-top: 12px;
-      .item-title {
-        position: relative;
-        text-align: left;
-        text-indent: 20px;
-        height: 34px;
-        border-bottom: @b_d1;
-        .qq-right{
-          position: absolute;
-          left: 800px;
-        }
-      }
-      td {
-        height: 100px;
-        line-height: 24px;
-        border-right: @b_d1;
-        color: @f_dark;
-      }
-      .price {
-        color: @dark_red;
-        font-weight: bold;
-      }
-      .totle {
-        font-weight: bold;
-      }
-    }
-    .info {
-      width: 310px;
-      text-align: left!important;
-      padding-left: 20px;
-    }
-    .measure {
-      width: 70px;
-    }
-    .price,
-    .num,
-    .warehouse {
-      width: 100px;
-    }
-    .location {
-      width: 90px;
-    }
-    .state,
-    .tax,
-    .totle,
-    .time {
-      width: 110px;
-    }
-    .operation {
-      width: 130px;
-      a {
-        color: @f_dark;
-        &:hover {
-          color: @light_blue;
-          text-decoration: underline;
-        }
-      }
-    }
-    .bo-b {
-      border-right: 0!important;
-    }
-    .mr-80 {
-      margin-right: 80px;
-    }
-    .bottom-bar {
-      width: 100%;
-      text-align: right;
-      margin: 20px 0;
-    }
-    .empty {
-      width: 100%;
-      min-height: 270px;
-      text-align: center;
-      background-color: #fff;
-      img {
-        display: inline-block;
-        width: 230px;
-        margin-top: 20px;
-      }
-    }
-  }
+  @import url('../../../../assets/order.less');
 </style>

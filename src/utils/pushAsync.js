@@ -8,11 +8,14 @@ export default {
     watch: {
         pushData: debounce(function(val) {
             if (val.type == 'order') {
-                this.getOrders();
+                if(this.getOrders)
+                    this.getOrders();
             } else if (val.type == 'iron') {
-                this.getData();
+                if(this.getData)
+                    this.getData();
             } else if (val.type == 'contract') {
-                this.getList();
+                if(this.getList)
+                    this.getList();
             }
         }, 500)
     }

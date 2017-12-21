@@ -60,7 +60,6 @@
             width: 910px;
             background-color: #fff;
             margin: 200px auto;
-            padding-bottom: 20px;
         }
         .header {
             position: relative;

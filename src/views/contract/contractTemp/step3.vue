@@ -23,49 +23,6 @@
                 </tr>
             </tbody>
         </table>
-        <!-- 认证部分 -->
-        <!-- <div class="oc-panel" v-if="!isRZ">
-                <p class="tips">
-                    <span class="iconfont icon-about"></span> 您还未认证电子合同用户信息，用户认证信息成功后可继续操作
-                </p>
-                <div class="oc-from">
-                    <div class="from-group">
-                        <div class="label">
-                            <span class="iconfont icon-bitianxiang"></span> 商户名称
-                        </div>
-                        <p class="input-disable">{{ base.realName }}</p>
-                    </div>
-                    <div class="from-group">
-                        <div class="label">
-                            <span class="iconfont icon-bitianxiang"></span> 用户类型
-                        </div>
-                        <p class="input-disable wid200">企业</p>
-                    </div>
-                    <div class="from-group">
-                        <div class="label">
-                            <span class="iconfont icon-bitianxiang"></span> 认证证件
-                        </div>
-                        <tbSelect class="wid200" :data='idTypes' v-model="rzApiData.certifyType"></tbSelect>
-                    </div>
-                    <div class="from-group">
-                        <div class="label">
-                            <span class="iconfont icon-bitianxiang"></span> 证件号码
-                        </div>
-                        <tbInput validate class="wid200" placeholder="请输入完整证件号" v-model="rzApiData.certifyNumber"></tbInput>
-                    </div>
-                    <div class="from-group">
-                        <div class="label">
-                            <span class="iconfont icon-bitianxiang"></span> 认证手机
-                        </div>
-                        <tbInput validate class="wid200" placeholder="请输入手机号" v-model="rzApiData.cellNum"></tbInput>
-                        <span class="warn-tip">*该手机号将用作签约前校验与签约信息短信通知使用，请谨慎填写</span>
-                    </div>
-                </div>
-                <div class="panel-btns">
-                    <a class="btn" @click="saveCheckContract">认证信息</a>
-                    <a class="btn goast" @click="$router.go(-1)">返回上一层</a>
-                </div>
-            </div> -->
         <!-- 确认部分 -->
         <div class="oc-panel">
             <a class="history" @click="getHistory">历史填写记录</a>
@@ -95,7 +52,7 @@
                     <div class="label">
                         <span class="iconfont icon-bitianxiang"></span> 电话
                     </div>
-                    <tbInput validate class="wid200" placeholder="请输入联系电话" v-model="uerInfo.tel"></tbInput>
+                    <tbInput validate class="wid200" ref="mobile" placeholder="请输入联系电话" v-model="uerInfo.tel"></tbInput>
                 </div>
             </div>
             <div class="panel-btns">
@@ -168,6 +125,11 @@
             ...mapGetters(['base']),
             type() {
                 return this.$route.params.type
+            },
+            // 验证手机号
+            validMobile() {
+                let myreg = /^[1][3,4,5,7,8][0-9]{9}$/;
+                return myreg.test(this.uerInfo.tel);
             }
         },
         methods: {
@@ -180,43 +142,30 @@
                     }
                 })
             },
-            // 认证
-            saveCheckContract() {
-                if (this.rzApiData.certifyNumber != '' && this.rzApiData.cellNum != '') {
-                    let params = this.$clearData(this.rzApiData);
-                    params.appUserId = this.base.id;
-                    params.userName = this.base.realName;
-                    this.$http.post(this.$api.saveCheckContract, params).then(res => {
-                        if (res.code === 1000) {
-                            this.$Message.success('认证通过。');
-                        } else {
-                            this.$Message.error('认证失败！');
-                        }
-                    })
-                } else {
-                    this.$Message.warning('请将信息填写完整!');
-                }
-            },
             // 使用认证信息
             useRZinfo() {
                 if (this.uerInfo.address != '' && this.uerInfo.contacts != '' && this.uerInfo.tel != '') {
-                    let params = this.$clearData(this.uerInfo);
-                    params.companyName = this.base.realName;
-                    this.$http.post(this.$api.saveContract, params).then(res => {
-                        if (res.code === 1000) {
-                            let data = this.$ls.get('contractInfo');
-                            data.partAContractId = res.data.id;
-                            this.$ls.set('contractInfo', data);
-                            this.$router.push({
-                                name: this.type == 1 ? 'Bstep4' : 'Sstep4',
-                                params: {
-                                    type: this.type
-                                }
-                            })
-                        } else {
-                            this.$Message.error(res.message);
-                        }
-                    })
+                    if (this.validMobile) {
+                        let params = this.$clearData(this.uerInfo);
+                        params.companyName = this.base.realName;
+                        this.$http.post(this.$api.saveContract, params).then(res => {
+                            if (res.code === 1000) {
+                                let data = this.$ls.get('contractInfo');
+                                data.partAContractId = res.data.id;
+                                this.$ls.set('contractInfo', data);
+                                this.$router.push({
+                                    name: this.type == 1 ? 'Bstep4' : 'Sstep4',
+                                    params: {
+                                        type: this.type
+                                    }
+                                })
+                            } else {
+                                this.$Message.error(res.message);
+                            }
+                        })
+                    } else {
+                        this.$Message.warning('请填写正确的手机号!');
+                    }
                 } else {
                     this.$Message.warning('请将信息填写完整!');
                 }
