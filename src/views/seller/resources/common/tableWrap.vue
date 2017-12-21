@@ -105,19 +105,30 @@
                 display: inline-block;
             }
             
-            .count,
             .action-btn {
+                display: inline-block;
+                vertical-align: middle;
+                width: 64px;
+                height: 20px;
+                line-height: 20px;
+                margin-left: 20px;
+                color: @f_goast;
+                border: @b_d1;
+                text-align: center;
+                &:hover{
+                    background-color: @mask_blue;
+                    color: #fff;
+                    border-color: @mask_blue;
+                }
+            }
+            .count{
                 display: inline-block;
                 vertical-align: middle;
                 margin-left: 20px;
                 color: @f_dark;
-            }
-            .count{
                 width: 83px;
             }
-            .action-btn:hover {
-                color: @light_blue;
-            }
+            
             .line-page {
                 float: right;
             }

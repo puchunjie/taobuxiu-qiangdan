@@ -573,6 +573,11 @@ export const saveContractInfo = '/demands/contractManger/saveContractInfo'
 export const queryContractInfoPage = '/demands/contractManger/queryContractInfoPage'
 
 /**
+ * 下载合同
+ */
+export const downLoadContract = '/demands/contractManger/downLoadContract'
+
+/**
  * 查询商户是否认证
  */
 export const queryBaseInfo = '/demands/business/queryBaseInfo'

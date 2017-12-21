@@ -17,7 +17,7 @@
         </div>
         <div class="qn-item-group open">
             <div class="qn-ac-items">
-                <a class="ac-item" href="tel:0510-81812184">
+                <a class="ac-item" :href='"tencent://message/?uin=3252645503&amp;Site=&amp;Menu=yes"'>
                     <span class="iconfont icon-kefu"></span>
                     <div class="ac-item-desc">在线客服</div>
                 </a>

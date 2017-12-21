@@ -38,8 +38,8 @@
                             <td>{{ item.updateTime | dateformat }}</td>
                             <td><span :class="'state state-'+item.status">{{ item.status | statusStr }}</span></td>
                             <td class="action">
-                                <a :href="mosaicUrl(item)" target="_blank">查看</a><br>
-                                <a>合同信息</a>
+                                <a :href="mosaicUrl(item)" target="_blank">查看合同</a><br>
+                                <a v-show="item.status == 1" @click="downloadHT(item.id)">下载合同</a>
                             </td>
                         </tr>
                     </tbody>
@@ -164,6 +164,14 @@
             mosaicUrl(item){
                 let host = location.origin;
                 return `${host}:8080/contract.jsp?appUserId=${this.ajaxHead.loginId}&loginId=${this.ajaxHead.loginId}&contractId=${item.contractId}&authorization=${this.ajaxHead.authorization}&flash=${Math.random()}`
+            },
+            // 下载合同
+            downloadHT(id){
+                this.$http.post(this.$api.downLoadContract,{contractId:id}).then(res => {
+                    if(res.code == 1000){
+                        
+                    }
+                })
             }
         },
         watch: {
@@ -221,7 +229,7 @@
             }
             .time-limit {
                 display: inline-block;
-                width: 280px;
+                width: 300px;
                 margin-right: 30px;
                 .select {
                     width: 150px;

@@ -18,7 +18,8 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td style="width:310px">商品信息</td>
+                            <td style="width:230px">商品信息</td>
+                            <td>公差</td>
                             <td>产地</td>
                             <td>计量方式</td>
                             <td>单价</td>
@@ -29,8 +30,9 @@
                         </tr>
                         <tr>
                             <td>
-                                {{ `${item.ironTypeName} ${item.materialName}/${item.surfaceName}` }} {{ item.specifications ? item.specifications :`${item.height}*${item.width}*${item.length} `}} {{ item.tolerance | emptyHlod }}
+                                {{ `${item.ironTypeName} ${item.materialName}/${item.surfaceName}` }} {{ item.specifications ? item.specifications :`${item.height}*${item.width}*${item.length} `}}
                             </td>
+                            <td>{{ item.tolerance | emptyHlod }}</td>
                             <td>{{ item.proPlacesName }}</td>
                             <td>{{ item.measuringType | measuringStr }}</td>
                             <td>{{ item.price }}元/吨</td>
@@ -45,6 +47,9 @@
                         </tr>
                     </tbody>
                 </table>
+                <div class="input-remark" v-show="isSpecail">
+                    开平尺寸：<tbInput v-model="apiData.remark" style="width:940px" placeholder="选填，备注开平尺寸"></tbInput>
+                </div>
                 <div class="fresh-index">
                     新鲜指数：该资源更新于<span class="red-tip">{{ item.updateTime | getDateDiff(item.serveTime) }}</span>，{{ item.recommendRemark }}
                 </div>
@@ -107,13 +112,14 @@
                     nums: '',
                     storeId: '',
                     validity: '',
-                    storeType: ''
+                    storeType: '',
+                    remark: ''
                 }
             }
         },
         computed: {
             colspan() {
-                return this.isSpecail ? 8 : 7
+                return this.isSpecail ? 9 : 8
             }
         },
         watch: {
@@ -232,6 +238,14 @@
                     }
                 }
             }
+            
+            .input-remark{
+                width: 100%;
+                height: 30px;
+                line-height: 30px;
+                margin: 10px 0;
+            }
+
             .fresh-index {
                 width: 100%;
                 height: 30px;

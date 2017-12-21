@@ -248,13 +248,12 @@
     .filter-container {
         position: relative;
         width: 100%;
-        height: 178px;
         background-color: #fff;
         border: @b_d1;
-        padding: 20px 30px 30px;
+        padding: 20px 30px 10px;
         .filter-item {
             display: inline-block;
-            margin: 0 30px 16px 0;
+            margin: 0 30px 10px 0;
             label {
                 color: @f_goast;
                 margin-right: 10px;
@@ -276,7 +275,7 @@
         .search-btns {
             position: absolute;
             right: 30px;
-            bottom: 30px;
+            bottom: 20px;
             .btn {
                 display: inline-block;
                 width: 90px;

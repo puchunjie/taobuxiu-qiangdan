@@ -47,8 +47,8 @@
                     }
                 }
             },
-            exclude:{
-                type:Array
+            exclude: {
+                type: Array
             }
         },
         components: {
@@ -169,6 +169,7 @@
             }
         }
         .picker-filter {
+            position: relative;
             width: 100%;
             margin-top: 30px;
             padding: 0 10px;
@@ -180,10 +181,17 @@
                 }
             }
             .reset-search {
+                position: absolute;
                 display: inline-block;
-                vertical-align: bottom;
-                color: #3389FF;
+                width: 90px;
+                height: 32px;
+                right: 0;
+                line-height: 28px;
+                border: 2px solid @dark_blue;
+                color: @dark_blue;
+                text-align: center;
                 font-size: 12px;
+                background-color: #fff;
             }
         }
         .btns {

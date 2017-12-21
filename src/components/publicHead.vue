@@ -49,7 +49,7 @@
             margin-left: 42px;
             li {
                 float: left;
-                width: 100px;
+                width: 140px;
                 line-height: 80px;
                 text-align: center;
                 font-size: 16px;
