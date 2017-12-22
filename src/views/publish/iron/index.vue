@@ -258,6 +258,9 @@
 </template>
 
 <script>
+  import {
+    mapActions
+  } from 'vuex'
   import editItem from './pareParts/editItem.vue'
   import history from './pareParts/history.vue'
   import filter from 'lodash/filter'
@@ -354,6 +357,7 @@
       }
     },
     methods: {
+      ...mapActions(['getUserCount']),
       // 显示历史
       showHistory() {
         this.$http.post(this.$api.publishHistory).then(res => {
@@ -414,6 +418,7 @@
               this.refalshList();
             }
             this.updateStorge();
+            this.getUserCount();
             this.successShow = true;
           } else {
             this.$Message.error(res.message)
@@ -523,6 +528,7 @@
                 return !el.check
               });
               this.updateStorge();
+              this.getUserCount();
               this.successShow = true;
               if (this.list.length <= 0)
                 this.refalshList();

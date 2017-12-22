@@ -568,6 +568,11 @@ export const checkContractSmsCode = '/demands/contractManger/checkContractSmsCod
 export const saveContractInfo = '/demands/contractManger/saveContractInfo'
 
 /**
+ * 明细选项
+ */
+export const findBaseCost = '/api/query/findBaseCost'
+
+/**
  * 合同管理分页查询
  */
 export const queryContractInfoPage = '/demands/contractManger/queryContractInfoPage'

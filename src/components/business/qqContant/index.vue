@@ -29,7 +29,7 @@
 
 <style lang="less" scoped>
     .qq-conatnt {
-        display: inline-block;
+        display: inline;
         img {
             display: inline-block;
             width: 16px;

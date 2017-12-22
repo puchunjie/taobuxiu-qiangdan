@@ -33,8 +33,7 @@
         <h3>八、合同生效：</h3>
         <p>（一）本合同由三方授权代表签字或加盖公司印章后生效。</p>
         <p>（二）三方基于本合同交易的订单、委托函、确认书均具有法律效力。订单、委托函、确认书的传真件、复印件与原件具有同等法律效力。</p>
-        <p>（三）本合同有效期自<span class="l">{{previewData.systemTime | dateformat('yyyy-MM-dd')}}</span>起至<span class="l">{{previewData.systemTime | dateformat('yyyy-MM-dd')}}</span>止；</p>
-        <P>（四）本合同一式三份，三方各执一份具有同等法律效力。</P>
+        <p>（三）本合同一式三份，三方各执一份具有同等法律效力</p>
         <br><br>
         <div class="clearfix">
             <div class="per">
@@ -92,8 +91,8 @@
                     <td>{{info.ironTypeName}}</td>
                     <td>{{info.materialName}}</td>
                     <td>{{ info.specifications ? info.specifications :`${info.height}*${info.width}*${info.length}` }}</td>
-                    <td>{{info.numbers}}</td>
-                    <td>{{info.weights}}</td>
+                    <td><span v-show="info.numbers > 0">{{info.numbers}}</span></td>
+                    <td><span v-show="info.weights > 0">{{info.weights}}</span></td>
                     <td>{{info.price}}</td>
                     <td>{{info.orderTotalPrice}}</td>
                     <td>{{info.remark}}</td>
@@ -103,8 +102,8 @@
                     <td>{{info.ironTypeName}}</td>
                     <td>{{info.materialName}}</td>
                     <td>{{ info.specifications ? info.specifications :`${info.height}*${info.width}*${info.length}` }}</td>
-                    <td>{{info.numbers}}</td>
-                    <td>{{info.weights}}</td>
+                    <td><span v-show="info.numbers > 0">{{info.numbers}}</span></td>
+                    <td><span v-show="info.weights > 0">{{info.weights}}</span></td>
                     <td>{{info.price}}</td>
                     <td>{{info.orderTotalPrice}}</td>
                     <td>{{info.remark}}</td>
@@ -114,11 +113,21 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>{{ totleNums.number }}</td>
-                    <td>{{ totleNums.weight }}</td>
+                    <td><span v-show="totleNums.number > 0">{{ totleNums.number }}</span></td>
+                    <td><span v-show="totleNums.weight > 0">{{ totleNums.weight }}</span></td>
                     <td></td>
-                    <td>{{previewData.totlePrice}}</td>
+                    <td>{{previewData.totlePrice }}</td>
                     <td></td>
+                </tr>
+                <tr>
+                    <td>总金额：</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>{{previewData.totlePrice | numToCny }}</td>
                     <td></td>
                 </tr>
             </table>

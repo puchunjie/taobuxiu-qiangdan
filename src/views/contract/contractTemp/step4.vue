@@ -8,7 +8,7 @@
             </div>
             <div class="info">甲方名称：{{ info.systemAppName }}</div>
         </div>
-
+    
         <div class="info-confim">
             <div class="tit">
                 <span class="ic-rq">*</span>请确认采购方的客户信息，合同中将以此作为乙方信息
@@ -18,7 +18,7 @@
             <div class="info">&nbsp;&nbsp;&nbsp;&nbsp;联系人：{{ info.partAContractContact }}</div>
             <div class="info">联系方式：{{ info.partAContractTel }}</div>
         </div>
-
+    
         <div class="info-confim">
             <div class="tit">
                 <span class="ic-rq">*</span>请确供应商的客户信息，合同中将以此作为丙方信息
@@ -59,10 +59,10 @@
                                 <tbInput style="width:110px" v-model="item.tolerance"></tbInput>
                             </td>
                             <td>
-                                <tbInput style="width:62px" :disabled="item.priceMode == 2" type="number" v-model="item.numbers" @on-input="validatePrice(item,'numbers')"></tbInput>
+                                <tbInput style="width:62px" type="number" v-model="item.numbers" @on-input="validatePrice(item,'numbers')"></tbInput>
                             </td>
                             <td>
-                                <tbInput style="width:62px" :disabled="item.priceMode == 1" type="number" v-model="item.weights" @on-input="validatePrice(item,'weights')"></tbInput>
+                                <tbInput style="width:62px" type="number" v-model="item.weights" @on-input="validatePrice(item,'weights')"></tbInput>
                             </td>
                             <td>
                                 <tbSelect v-model="item.priceMode" :data='[{label:"数量",value:"1"},{label:"重量",value:"2"}]'></tbSelect>
@@ -90,10 +90,10 @@
                                 <tbInput style="width: 110px" v-model="item.tolerance"></tbInput>
                             </td>
                             <td>
-                                <tbInput style="width:62px" :disabled="item.priceMode == 2" type="number" v-model="item.numbers" @on-input="validatePrice(item,'numbers')"></tbInput>
+                                <tbInput style="width:62px" type="number" v-model="item.numbers" @on-input="validatePrice(item,'numbers')"></tbInput>
                             </td>
                             <td>
-                                <tbInput style="width:62px" :disabled="item.priceMode == 1" type="number" v-model="item.weights" @on-input="validatePrice(item,'weights')"></tbInput>
+                                <tbInput style="width:62px" type="number" v-model="item.weights" @on-input="validatePrice(item,'weights')"></tbInput>
                             </td>
                             <td>
                                 <tbSelect v-model="item.priceMode" :data='[{label:"数量",value:"1"},{label:"重量",value:"2"}]'></tbSelect>
@@ -110,7 +110,7 @@
                     </tbody>
                 </table>
     
-                <iconBtn icon="icon-jiahao" @click.native="coatTypeShow = true">添加其他费用</iconBtn>
+                <iconBtn icon="icon-jiahao" @click.native="showSelect">添加其他费用</iconBtn>
             </div>
         </div>
     
@@ -134,7 +134,7 @@
             </div>
             <div class="info pl2">
                 <span class="ic-rq">*</span>交货仓库：
-                <tbInput style="width: 200px" placeholder="请输入交货仓库（如：东方一期）" v-model="info.deliveryHouse"></tbInput> 
+                <tbInput style="width: 200px" placeholder="请输入交货仓库（如：东方一期）" v-model="info.deliveryHouse"></tbInput>
             </div>
             <div class="info pl2">
                 <span class="ic-rq">*</span>交货期限：
@@ -198,18 +198,18 @@
         <modelPanel title="选择费用类型" v-model="coatTypeShow" width="600">
             <div>
                 <div style="text-align:center;margin-bottom:20px">
-                    <tbRadio v-model="coatType" :data="[{label: '加工费',value: 'machining'},{label: '人力费',value: 'human'},{label: '小车费',value: 'car'},{label: '其他',value: 'default'}]"></tbRadio>
+                    <tbRadio v-model="coatType" :data="baseCost"></tbRadio>
                 </div>
                 <div class="inner-btns">
                     <a class="inner-btn" @click="addCost">确认</a>
                 </div>
             </div>
         </modelPanel>
-        
+    
         <Modal v-model="pShow" width="1000px">
             <preview :previewData="previewData"></preview>
         </Modal>
-        
+    
     </div>
 </template>
 
@@ -275,7 +275,8 @@
                     disabledDate(date) {
                         return date && date.valueOf() < Date.now() - 86400000;
                     }
-                }
+                },
+                baseCost: []
             }
         },
         computed: {
@@ -310,17 +311,13 @@
             type() {
                 return this.$route.params.type
             },
-            previewData(){
+            previewData() {
                 let data = this.$clearData(this.info);
-                data.orderIds.map((item,i) => {
+                data.orderIds.map((item, i) => {
                     item.orderTotalPrice = this.totlePrcieArr[i];
-                    item.numbers = item.priceMode == 1 ? item.numbers : '';
-                    item.weights = item.priceMode == 2 ? item.weights : '';
                 })
-                data.costs.map((item,i) => {
+                data.costs.map((item, i) => {
                     item.orderTotalPrice = this.totlePrcieArr2[i];
-                    item.numbers = item.priceMode == 1 ? item.numbers : '';
-                    item.weights = item.priceMode == 2 ? item.weights : '';
                 })
                 data.locationName = this.location.name;
                 data.totlePrice = this.totlePrice;
@@ -417,9 +414,23 @@
                     item[key] = ''
                 }
             },
+            // 显示添加费用
+            showSelect() {
+                this.$http.post(this.$api.findBaseCost).then(res => {
+                    if (res.code === 1000) {
+                        this.baseCost = res.data;
+                        this.baseCost.map(el => {
+                            el.id = el.name
+                        })
+                        this.coatTypeShow = true;
+                    }
+                })
+            },
             //添加其他费用
             addCost() {
-                let data = this.$clearData(castData[this.coatType]);
+                let data = this.$clearData(castData);
+                data.remark = this.coatType;
+                data.ironTypeName = this.coatType;
                 this.info.costs.push(data);
                 this.coatTypeShow = false;
             },
@@ -428,7 +439,7 @@
                 this.info.costs.splice(i, 1);
             },
             // 是否可以提交？
-            isAllOk(){
+            isAllOk() {
                 let aOk = this.info.deliveryTerm != '' && this.info.inspectionTime != '' && this.location.id != ''
                 let hasZore1 = findIndex(this.totlePrcieArr, el => {
                     return el == '0.00'
@@ -438,8 +449,8 @@
                 })
                 return aOk && hasZore1 == -1 && hasZore2 == -1
             },
-            showPreview(){
-                if(this.isAllOk()){
+            showPreview() {
+                if (this.isAllOk()) {
                     this.pShow = true;
                 } else {
                     this.$Message.error('请将必填信息填写完整，检查货物明细!')

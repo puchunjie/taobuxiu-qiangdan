@@ -8,13 +8,13 @@ export default {
     watch: {
         pushData: debounce(function(val) {
             if (val.type == 'order') {
-                if(this.getOrders)
+                if (this.getOrders)
                     this.getOrders();
             } else if (val.type == 'iron') {
-                if(this.getData)
-                    this.getData();
+                if (this.getDataList)
+                    this.getDataList();
             } else if (val.type == 'contract') {
-                if(this.getList)
+                if (this.getList)
                     this.getList();
             }
         }, 500)

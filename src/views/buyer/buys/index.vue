@@ -2,42 +2,45 @@
   <div class="buy-index">
     <statusBar ref="statusBar" @on-filter-status="filterStatus" :status="statusData"></statusBar>
     <template v-if="listEmpty">
-          <tabList @on-page-change="pageChange" :total="totalCount" ref="tabList">
-            <tabCard v-for="(item,index) in list" @click.native="selectItem(index)" :class="{ 'active':activeIndex == index }" :key="index" :item="item" :index="index" @on-edit="itemEdit" @on-del="deleteItem" @on-copy="copy(index)"></tabCard>
-          </tabList>
-          <div class="info-list">
-            <div class="winner-panel" v-if="activeItem.buyStatus == 2">
-              <div class="tit">中标商家</div>
-              <div class="list-row list-head">
-                <div class="item date">时间</div> 
-                <div class="item price">单价</div> 
-                <div class="item tolerance">公差</div> 
-                <div class="item proPlaces">产地</div> 
-                <div class="item totlePrice">总价</div> 
-                <div class="item remark">备注</div> 
-                <div class="item action"></div>
-              </div>
-              <offerItem :item="selectBusiness" v-if="selectBusiness" :isDone="false" style="border-bottom:0"></offerItem>
-            </div>
-            <Info :item="activeItem"></Info>
-            <offerList :offerList="offerList" :buyStatus="activeItem.buyStatus" @on-bidDone="bidDone"></offerList>
-          </div>
-          <!-- 编辑面板 -->
-          <div class="edit-container" v-if="editShow">
-            <div class="inner-content">
-              <div class="head">
-                编辑求购
-                <span class="iconfont icon-close" @click="editShow = false"></span>
-              </div>
-              <editItem :data="activeItem" @on-close="editShow = false" @on-save="doEdit"></editItem>
-            </div>
-          </div>
+                  <tabList @on-page-change="pageChange" :total="totalCount" ref="tabList">
+                    <tabCard v-for="(item,index) in list" @click.native="selectItem(index)" :class="{ 'active':activeIndex == index }" :key="index" :item="item" :index="index" @on-edit="itemEdit" @on-del="deleteItem" @on-copy="copy(index)"></tabCard>
+                  </tabList>
+                  <div class="info-list">
+                    <div class="winner-panel" v-if="activeItem.buyStatus == 2">
+                      <div class="tit">中标商家</div>
+                      <div class="list-row list-head">
+                        <div class="item date">时间</div> 
+                        <div class="item price">单价</div> 
+                        <div class="item tolerance">公差</div> 
+                        <div class="item proPlaces">产地</div> 
+                        <div class="item totlePrice">总价</div> 
+                        <div class="item remark">备注</div> 
+                        <div class="item action"></div>
+                      </div>
+                      <offerItem :item="selectBusiness" v-if="selectBusiness" :isDone="false" style="border-bottom:0"></offerItem>
+                    </div>
+                    <Info :item="activeItem"></Info>
+                    <offerList :offerList="offerList" :buyStatus="activeItem.buyStatus" @on-bidDone="bidDone"></offerList>
+                  </div>
+                  <!-- 编辑面板 -->
+                  <div class="edit-container" v-if="editShow">
+                    <div class="inner-content">
+                      <div class="head">
+                        编辑求购
+                        <span class="iconfont icon-close" @click="editShow = false"></span>
+                      </div>
+                      <editItem :data="activeItem" @on-close="editShow = false" @on-save="doEdit"></editItem>
+                    </div>
+                  </div>
 </template>
     <img v-else class="no-list" src="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/assets/no-list.png">
   </div>
 </template>
 
 <script>
+  import {
+    mapActions
+  } from 'vuex'
   import statusBar from './parts/statusBar.vue';
   import tabCard from './parts/tabCard.vue';
   import tabList from './parts/tabList.vue';
@@ -116,6 +119,7 @@
       }
     },
     methods: {
+      ...mapActions(['getUserCount']),
       // 切换Item
       selectItem(index) {
         this.activeIndex = index;
@@ -190,11 +194,12 @@
         this.$http.post(this.$api.publish_one, params).then(res => {
           if (res.code === 1000) {
             // 如果这也删完了，且不是第一页，就往后退一页
-            if (this.list.length <= 1 && this.getListApi.currentPage > 1)
+            if (this.list.length <= 1 && this.getListApi.currentPage > 1) {
               this.getListApi.currentPage--
-  
-              this.activeIndex = 0;
+            }
+            this.activeIndex = 0;
             this.getDataList();
+            this.getUserCount();
             this.$Message.success('已删除！')
           }
         })

@@ -224,6 +224,9 @@
 </template>
 
 <script>
+    import {
+        mapActions
+    } from 'vuex'
     import fuzzySelector from '@/components/business/fuzzySelector.vue'
     import forEach from 'lodash/forEach'
     export default {
@@ -322,6 +325,7 @@
             }
         },
         methods: {
+            ...mapActions(['getUserCount']),
             // 配置ID
             clectionData() {
                 this.offerApi.ironBuyId = this.ironBuyId;
@@ -409,6 +413,7 @@
                 this.$http.post(this.$api.doOffer, params).then(res => {
                     this.$spinToggle(false);
                     if (res.code === 1000) {
+                        this.getUserCount();
                         this.$Message.success(isIgon ? '已忽略' : '报价成功');
                         this.$emit('on-ajax', isIgon);
                         this.clearApi();

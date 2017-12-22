@@ -2,7 +2,7 @@
     <div class="tb-checkbox-container">
         <a class="riado-group" v-for="(item,i) in data" :key="i" @click="picker(i)">
             <span class="iconfont" :class="i == activeIndex ? 'icon-radioacheck' : 'icon-radio'"></span>
-            <label>{{ item.label }}</label>
+            <label>{{ item.name }}</label>
         </a>
     </div>
 </template>
@@ -18,14 +18,14 @@
                 type: Array,
                 default: function() {
                     return [{
-                        label: '电汇',
-                        value: 1
+                        name: '电汇',
+                        id: 1
                     }, {
-                        label: '支票',
-                        value: 2
+                        name: '支票',
+                        id: 2
                     }, {
-                        label: '承兑',
-                        value: 3
+                        name: '承兑',
+                        id: 3
                     }]
                 }
             }
@@ -39,25 +39,29 @@
         computed: {
             activeItem() {
                 return this.data.length > 0 ? this.data[this.activeIndex] : {
-                    label: undefined,
-                    value: undefined
+                    name: undefined,
+                    id: undefined
                 }
+            }
+        },
+        watch: {
+            activeItem(){
+                this.$emit('input', this.activeItem.id);
             }
         },
         methods: {
             picker(i) {
                 this.activeIndex = i;
-                this.$emit('input', this.activeItem.value);
             },
             setActive() {
                 let inputActive = findIndex(this.data, el => {
-                    return el.value == this.value
+                    return el.id == this.id
                 })
                 if (inputActive > 0) {
                     this.activeIndex = inputActive;
                 } else {
                     this.activeIndex = 0;
-                    this.$emit('input', this.activeItem.value);
+                    this.$emit('input', this.activeItem.id);
                 }
                 this.isInit = true;
             }

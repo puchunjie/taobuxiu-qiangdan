@@ -16,14 +16,12 @@
         <div class="company-info">
             <div class="item space">
                 <template v-if="item.offerStatus == 4">
-                    {{ item.createTime | dateformat('hh:mm') }}
-                </template>
+                        {{ item.createTime | dateformat('hh:mm') }}
+</template>
             </div>
             <div class="item left name">
                 <companyLink :hasShop="item.isHaveShop" :userId="item.user">{{ item.companyName }}</companyLink>
                 <merchantLabel :faith="item.isFaithUser == '1'" :guarantee="item.isGuaranteeUser == '1'"></merchantLabel>
-                <!-- <span v-show="item.isFaithUser == '1'" data-msg="企业信用程度高、经营管理水平优，社会反响、品牌、信誉度高。" class="iconfont icon-cheng right" style="color:#F5A623"></span>
-                <span v-show="item.isGuaranteeUser == '1'" data-msg="企业资金实力强，需方验收货物后淘不锈与供方结算。依据淘不锈平台担保商户入驻条款评选得出。" class="iconfont icon-bao right" style="color:#C16BD6"></span> -->
                 <crown :tip="`总报价：${item.sellAllNum}次,中标：${item.sellGetNum}次`" :level='item.level'></crown>
             </div>
             <div class="item right">
@@ -33,10 +31,7 @@
         <div class="company-info">
             <div class="item space"></div>
             <div class="item left">
-                {{ item.contact }} {{ item.contactNum }} 
-                <a class="tencent-qq" v-show="item.QQ != ''" :href="'tencent://message/?uin='+item.QQ+'&Site=&Menu=yes'">
-                    <img src="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/assets/icon_qq.png">
-                </a>
+                <qq :data="{name:item.contact,phone:item.contactNum,qq:item.QQ}"></qq>
             </div>
             <div v-show="item.address != ''" class="item right"><span class="iconfont icon-dingwei" style="color:#FF5555"></span>{{ item.storeHouseName != '' ? `${item.storeHouseName}(${item.storeHousePlace})` : '暂无仓库信息' }}</div>
         </div>
@@ -78,9 +73,13 @@
 </template>
 
 <script>
+    import {
+        mapActions
+    } from 'vuex'
     import merchantLabel from '@/components/business/merchantLabel/index.vue'
     import crown from '@/components/basics/crown/index.vue'
     import companyLink from '@/components/business/companyLink/index.vue'
+    import qq from '@/components/business/qqContant/index.vue'
     export default {
         props: {
             buyStatus: String,
@@ -93,7 +92,8 @@
         components: {
             crown,
             companyLink,
-            merchantLabel
+            merchantLabel,
+            qq
         },
         computed: {
             showNew() {
@@ -101,6 +101,7 @@
             }
         },
         methods: {
+            ...mapActions(['getUserCount']),
             //显示历史报价
             showHistory(item) {
                 item.historyShow = !item.historyShow;
@@ -122,6 +123,7 @@
                     ironSellId: this.item.ironSellId
                 }).then(res => {
                     if (res.code === 1000) {
+                        this.getUserCount();
                         this.$Message.success('恭喜您，已成交！');
                         this.$emit('on-bidDone');
                     }
