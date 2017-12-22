@@ -15,12 +15,12 @@
         <div class="win clearfix" v-if="item.offerStatus == 2">
             <span class="iconfont icon-jiangzhang"></span>
             <h3>恭喜您，本单中标！
-                <a class="tencent-qq" v-show="item.QQ != ''" :href="'tencent://message/?uin='+item.QQ+'&Site=&Menu=yes'">
+                <!-- <a class="tencent-qq" v-show="item.QQ != ''" :href="'tencent://message/?uin='+item.QQ+'&Site=&Menu=yes'">
                     <img style="width:20px" src="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/assets/icon_qq.png">
-                </a>
+                </a> -->
             </h3>
             <p>
-                联系买家：{{ item.companyName }}，{{ item.contact }}，{{ item.contactNum }}。
+                联系买家：<companyLink :hasShop="item.isHaveShop" :userId="item.user">{{ item.companyName }}</companyLink> <merchantLabel :faith="item.isFaithUser == '1'" :guarantee="item.isGuaranteeUser == '1'"></merchantLabel>，<qq :data="{name:item.contact,phone:item.contactNum,qq:item.QQ}"></qq>。
                 <span>中标时间：{{ item.updateTime | dateformat }}</span>
             </p>
         </div>
@@ -36,13 +36,19 @@
 </template>
 
 <script>
+    import qq from '@/components/business/qqContant/index.vue'
     import countDown from '@/components/countDown.vue'
+    import merchantLabel from '@/components/business/merchantLabel/index.vue'
+    import companyLink from '@/components/business/companyLink/index.vue'
     export default {
         props: {
             item: Object
         },
         components: {
-            countDown
+            countDown,
+            qq,
+            merchantLabel,
+            companyLink
         }
     }
 </script>
