@@ -27,12 +27,12 @@
         <div class="oc-panel">
             <a class="history" @click="getHistory">历史填写记录</a>
             <p class="tips">
-                <span class="iconfont icon-about"></span> 请确认您的客户信息，合同中将以此作为甲/已方信息(我方信息)
+                <span class="iconfont icon-about"></span> 请确认您的客户信息，合同中将以此作为已方信息
             </p>
             <div class="oc-from">
                 <div class="from-group">
                     <div class="label">
-                        <span class="iconfont icon-bitianxiang"></span> 甲方名称
+                        <span class="iconfont icon-bitianxiang"></span> 公司名称
                     </div>
                     <p class="input-disable">{{ base.realName }}</p>
                 </div>

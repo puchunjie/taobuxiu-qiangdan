@@ -42,7 +42,7 @@
                             <td class="name">货物名称</td>
                             <td>材质</td>
                             <td>规格及型号</td>
-                            <td>公差参厚</td>
+                            <td>公差产地</td>
                             <td>数量</td>
                             <td>重量(吨)</td>
                             <td>计价方式</td>

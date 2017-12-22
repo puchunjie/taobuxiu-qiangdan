@@ -100,7 +100,7 @@
                     name: this.type == 1 ? 'BatStep1' : 'SatStep1',
                     params: {
                         type: this.type,
-                        status: this.rzInfo.status ? this.rzInfo.status : -1
+                        status: this.rzInfo.status ? this.rzInfo.status : 0
                     }
                 })
             },

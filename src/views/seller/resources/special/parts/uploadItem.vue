@@ -31,7 +31,7 @@
             <cityPicter validate v-model="location" placement="right"></cityPicter>
         </div>
         <div class="table-td stock">
-            <tbInput validate v-model="other.storeHouseCount"></tbInput>
+            <tbInput validate @on-input="validateCount" v-model="other.storeHouseCount"></tbInput>
         </div>
         <div class="table-td warehouse">
             <asyncPicker validate v-model="warehouse" placement="right" :api="$api.getStores"></asyncPicker>
@@ -228,6 +228,11 @@
                 if(isNaN(this.other.price )){
                     this.other.price = ''
                 }
+            },
+            validateCount(){
+                // if(isNaN(this.other.storeHouseCount) || this.other.storeHouseCount < 0){
+                //     this.other.storeHouseCount = ''
+                // }
             }
         },
         mounted() {

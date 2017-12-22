@@ -49,7 +49,7 @@
                     开平尺寸：<tbInput v-model="editData.remark" style="width:940px" placeholder="选填，备注开平尺寸"></tbInput>
                 </div>
                 <div class="fresh-index">
-                    新鲜指数：该资源更新于<span class="red-tip">{{ item.storeUpdateTime | getDateDiff(item.serveTime) }}</span>，{{ item.recommendRemark }}
+                    新鲜指数：该资源更新于<span class="red-tip">{{ item.storeUpdateTime | getDateDiff(item.serveTime) }}</span>
                 </div>
                 <p>供应商地址：{{ item.address }}</p>
             </div>
@@ -123,6 +123,7 @@
             item(val) {
                 this.editData.nums = val.nums
                 this.editData.id = val.id
+                this.editData.remark = val.buyRemark
             }
         },
         methods: {

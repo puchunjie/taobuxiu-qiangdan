@@ -17,7 +17,7 @@
         <h3>三、货物明细、交货地点、交货期限以及发货凭证：</h3>
         <p>货物明细、费用、交货地点、交货期限等详情见尾部附页，丙方以甲方提货委托函为发货凭证并保留提货人有效证件信息。 </p>
         <h3>四、结算方式、服务流程及发票</h3>
-        <p>（一）三方采用以下认可的付款方式<span class="l">{{previewData.payMent | payMent}}</span>(1电汇、2支票、3承兑）进行结算。</p>
+        <p>（一）三方采用以下认可的付款方式<span class="l">{{previewData.payMent}}</span>(1电汇、2支票、3承兑）进行结算。</p>
         <p>（二）乙方确认代采购订单明细后，由甲方或者丙方生成此合同。</p>
         <p>（三）甲方收到乙方支付的代采购定单货款后按照与丙方约定的付款方式及期限支付款项，丙方根据乙方订单要求备货。</p>
         <p>（四）丙方在货物全部安排妥当后通知甲乙双方安排提货时间。</p>
@@ -79,20 +79,24 @@
                     <td>序号</td>
                     <td>货品名称</td>
                     <td>材质</td>
-                    <td>规格</td>
+                    <td>规格及型号</td>
+                    <td>公差产地</td>
                     <td>数量</td>
                     <td>重量(吨)</td>
-                    <td>单价</td>
+                    <td>计价方式</td>
+                    <td>单价(元/每单位)</td>
                     <td>总金额</td>
                     <td>备注</td>
                 </tr>
                 <tr v-for="(info,index) in previewData.orderIds" :key="info.index">
                     <td>{{index+1}}</td>
                     <td>{{info.ironTypeName}}</td>
-                    <td>{{info.materialName}}</td>
+                    <td>{{ info.materialName }}/{{ info.surfaceName }}</td>
                     <td>{{ info.specifications ? info.specifications :`${info.height}*${info.width}*${info.length}` }}</td>
+                    <td>{{ info.tolerance }}</td>
                     <td><span v-show="info.numbers > 0">{{info.numbers}}</span></td>
                     <td><span v-show="info.weights > 0">{{info.weights}}</span></td>
+                    <td>{{ info.priceMode | priceModeStr }}</td>
                     <td>{{info.price}}</td>
                     <td>{{info.orderTotalPrice}}</td>
                     <td>{{info.remark}}</td>
@@ -101,9 +105,11 @@
                     <td>{{previewData.orderIds.length + index + 1}}</td>
                     <td>{{info.ironTypeName}}</td>
                     <td>{{info.materialName}}</td>
-                    <td>{{ info.specifications ? info.specifications :`${info.height}*${info.width}*${info.length}` }}</td>
+                    <td>{{ info.specifications }}</td>
+                    <td>{{ info.tolerance }}</td>
                     <td><span v-show="info.numbers > 0">{{info.numbers}}</span></td>
                     <td><span v-show="info.weights > 0">{{info.weights}}</span></td>
+                    <td>{{ info.priceMode | priceModeStr }}</td>
                     <td>{{info.price}}</td>
                     <td>{{info.orderTotalPrice}}</td>
                     <td>{{info.remark}}</td>
@@ -113,14 +119,18 @@
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td></td>
                     <td><span v-show="totleNums.number > 0">{{ totleNums.number }}</span></td>
                     <td><span v-show="totleNums.weight > 0">{{ totleNums.weight }}</span></td>
+                    <td></td>
                     <td></td>
                     <td>{{previewData.totlePrice }}</td>
                     <td></td>
                 </tr>
                 <tr>
                     <td>总金额：</td>
+                    <td></td>
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -146,8 +156,17 @@
             previewData: Object
         },
         filters: {
-            payMent(value) {
-                return value
+            priceModeStr(value) {
+                switch (Number(value)) {
+                    case 1:
+                        return '数量'
+                        break;
+                    case 2:
+                        return '重量'
+                        break;
+                    default:
+                        break;
+                }
             }
         },
         computed: {
