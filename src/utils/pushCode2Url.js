@@ -24,6 +24,15 @@ export const code2Url = (value) => {
         case 23:
             return '/seller/SspecialOrder'
             break;
+        case 212:
+            return '/seller/SironOrder'
+            break;
+        case 222:
+            return '/seller/SplanOrder'
+            break;
+        case 232:
+            return '/seller/SspecialOrder'
+            break;
         case 24:
             return '/buyer/BironOrder'
             break;

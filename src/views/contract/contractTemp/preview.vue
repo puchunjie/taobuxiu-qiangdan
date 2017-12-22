@@ -63,12 +63,12 @@
                 <tr>
                     <td colspan="4">委托方：{{previewData.partAContractName}}</td>
                     <td colspan="4">供货方：{{previewData.partBContractName}}</td>
-                    <td colspan="3">采购单号：{{previewData.partBContractName}}</td>
+                    <td colspan="3">采购单号：{{previewData.contractShowId}}</td>
                 </tr>
                 <tr>
-                    <td colspan="2">联系人：{{previewData.systemAppName}}</td>
-                    <td colspan="2">联系电话：{{previewData.partAContractTel}}</td>
                     <td colspan="2">联系人：{{previewData.partAContractContact}}</td>
+                    <td colspan="2">联系电话：{{previewData.partAContractTel}}</td>
+                    <td colspan="2">联系人：{{previewData.partBContractContact}}</td>
                     <td colspan="2">联系电话：{{previewData.partBContractTel}}</td>
                     <td colspan="3">交货仓库：{{ previewData.deliveryHouse }}</td>
                 </tr>
@@ -82,7 +82,7 @@
                     <td>材质</td>
                     <td>规格</td>
                     <td>数量</td>
-                    <td>重量</td>
+                    <td>重量(吨)</td>
                     <td>单价</td>
                     <td>总金额</td>
                     <td>备注</td>
@@ -110,13 +110,13 @@
                     <td>{{info.remark}}</td>
                 </tr>
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
                     <td>合计：</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>{{ totleNums.number }}</td>
+                    <td>{{ totleNums.weight }}</td>
+                    <td></td>
                     <td>{{previewData.totlePrice}}</td>
                     <td></td>
                     <td></td>
@@ -139,6 +139,24 @@
         filters: {
             payMent(value) {
                 return value
+            }
+        },
+        computed: {
+            totleNums() {
+                let numbers = 0,
+                    weights = 0;
+                this.previewData.orderIds.forEach(el => {
+                    numbers += Number(el.numbers);
+                    weights += Number(el.weights);
+                })
+                this.previewData.costs.forEach(el => {
+                    numbers += Number(el.numbers);
+                    weights += Number(el.weights);
+                })
+                return {
+                    number: numbers,
+                    weight: weights
+                }
             }
         }
     }

@@ -15,8 +15,8 @@
             </div>
             <div class="info">乙方名称：{{ info.partAContractName }}</div>
             <div class="info">乙方地址：{{ info.partAContractAddress }}</div>
-            <div class="info">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;联系人：{{ info.partAContractContact }}</div>
-            <div class="info">&nbsp;&nbsp;&nbsp;&nbsp;联系方式：{{ info.partAContractTel }}</div>
+            <div class="info">&nbsp;&nbsp;&nbsp;&nbsp;联系人：{{ info.partAContractContact }}</div>
+            <div class="info">联系方式：{{ info.partAContractTel }}</div>
         </div>
 
         <div class="info-confim">
@@ -25,8 +25,8 @@
             </div>
             <div class="info">丙方名称：{{ info.partBContractName }}</div>
             <div class="info">丙方地址：{{ info.partBContractAddress }}</div>
-            <div class="info">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;联系人：{{ info.partBContractContact }}</div>
-            <div class="info">&nbsp;&nbsp;&nbsp;&nbsp;联系方式：{{ info.partBContractTel }}</div>
+            <div class="info">&nbsp;&nbsp;&nbsp;&nbsp;联系人：{{ info.partBContractContact }}</div>
+            <div class="info">联系方式：{{ info.partBContractTel }}</div>
         </div>
     
         <div class="info-confim">
@@ -59,10 +59,10 @@
                                 <tbInput style="width:110px" v-model="item.tolerance"></tbInput>
                             </td>
                             <td>
-                                <tbInput style="width:62px" type="number" v-model="item.numbers" @on-input="validatePrice(item,'numbers')"></tbInput>
+                                <tbInput style="width:62px" :disabled="item.priceMode == 2" type="number" v-model="item.numbers" @on-input="validatePrice(item,'numbers')"></tbInput>
                             </td>
                             <td>
-                                <tbInput style="width:62px" type="number" v-model="item.weights" @on-input="validatePrice(item,'weights')"></tbInput>
+                                <tbInput style="width:62px" :disabled="item.priceMode == 1" type="number" v-model="item.weights" @on-input="validatePrice(item,'weights')"></tbInput>
                             </td>
                             <td>
                                 <tbSelect v-model="item.priceMode" :data='[{label:"数量",value:"1"},{label:"重量",value:"2"}]'></tbSelect>
@@ -90,10 +90,10 @@
                                 <tbInput style="width: 110px" v-model="item.tolerance"></tbInput>
                             </td>
                             <td>
-                                <tbInput style="width: 62px" v-model="item.numbers"></tbInput>
+                                <tbInput style="width:62px" :disabled="item.priceMode == 2" type="number" v-model="item.numbers" @on-input="validatePrice(item,'numbers')"></tbInput>
                             </td>
                             <td>
-                                <tbInput style="width: 62px" v-model="item.weights"></tbInput>
+                                <tbInput style="width:62px" :disabled="item.priceMode == 1" type="number" v-model="item.weights" @on-input="validatePrice(item,'weights')"></tbInput>
                             </td>
                             <td>
                                 <tbSelect v-model="item.priceMode" :data='[{label:"数量",value:"1"},{label:"重量",value:"2"}]'></tbSelect>
@@ -314,9 +314,13 @@
                 let data = this.$clearData(this.info);
                 data.orderIds.map((item,i) => {
                     item.orderTotalPrice = this.totlePrcieArr[i];
+                    item.numbers = item.priceMode == 1 ? item.numbers : '';
+                    item.weights = item.priceMode == 2 ? item.weights : '';
                 })
                 data.costs.map((item,i) => {
                     item.orderTotalPrice = this.totlePrcieArr2[i];
+                    item.numbers = item.priceMode == 1 ? item.numbers : '';
+                    item.weights = item.priceMode == 2 ? item.weights : '';
                 })
                 data.locationName = this.location.name;
                 data.totlePrice = this.totlePrice;
