@@ -17,6 +17,9 @@
               <th class="price">单价(元/吨)</th>
               <th class="location">所在地</th>
               <th class="exponentia">实时指数
+                <Tooltip content="资源更新越及时，实时指数越高，越推荐下单" placement="top">
+                  <span class="iconfont icon-wenhao"></span>
+                </Tooltip>
               </th>
               <th class="warehouse">仓库</th>
               <th class="plan-time">计划开平时间</th>

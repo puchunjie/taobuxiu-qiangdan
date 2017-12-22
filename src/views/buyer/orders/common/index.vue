@@ -11,7 +11,7 @@
           <th class="info">货品详情</th>
           <th class="measure">计量方式</th>
           <th class="price">单价(元/吨)</th>
-          <th class="num">数量(吨)</th>
+          <th class="num">重量(吨)</th>
           <th class="totle" v-show="type == 1">总金额(元)</th>
           <th class="time" v-show="type == 2">计划开平时间</th>
           <th class="tax" v-show="type == 3">含税</th>
@@ -36,7 +36,7 @@
           <td class="info bo-b">
             <span class="hight-light">{{ item.ironTypeName }}&nbsp;&nbsp;&nbsp;&nbsp;{{ `${item.materialName}/${item.surfaceName}` }}&nbsp;&nbsp;&nbsp;&nbsp;{{ item.specifications ? item.specifications :`${item.height}*${item.width}*${item.length}` }}
             &nbsp;&nbsp;&nbsp;&nbsp;{{ item.tolerance | emptyHlod('') }}</span><br> <span class="pro">{{ item.proPlacesName }}</span>
-            开平尺寸：<span class="kp-mark" v-if="item.buyRemark.length < 14">{{ item.buyRemark }}</span>
+            <span v-show="type == 2">开平尺寸：</span><span class="kp-mark" v-if="item.buyRemark.length < 14">{{ item.buyRemark }}</span>
             <Tooltip v-else :content="item.buyRemark" placement="top-start">
                 <span class="kp-mark">{{ item.buyRemark }}</span>
             </Tooltip>

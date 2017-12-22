@@ -36,7 +36,7 @@
                     <th class="info">货品详情</th>
                     <th class="measure">计量方式</th>
                     <th class="price">单价(元/吨)</th>
-                    <th class="num">数量(吨)</th>
+                    <th class="num">重量(吨)</th>
                     <th class="totle">总金额(元)</th>
                     <th class="location">所在地</th>
                     <th class="warehouse">仓库</th>

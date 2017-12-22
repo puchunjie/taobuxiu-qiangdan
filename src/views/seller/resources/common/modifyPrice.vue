@@ -135,11 +135,13 @@
                                 md: this.type,
                                 price: this.handlerPrice
                             }).then(res => {
+                                this.$Spin.hide();
                                 if (res.code === 1000) {
-                                    this.$Spin.hide();
                                     this.$Message.success('调价完成');
                                     this.close();
                                     this.$emit('on-ajax-success');
+                                }else{
+                                    this.$Message.error(res.message);
                                 }
                             })
                         }

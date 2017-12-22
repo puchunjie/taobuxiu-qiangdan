@@ -49,19 +49,19 @@ export const code2Url = (value) => {
             return '/buyer/BocAuthen-1'
             break;
         case 341:
-            return '/buyer/Bbuys-1'
+            return '/buyer/BocManage-1'
             break;
         case 342:
             return '/seller/SocManage-2'
             break;
         case 351:
-            return '/buyer/Bbuys-1'
+            return '/buyer/BocManage-1'
             break;
         case 352:
             return '/seller/SocManage-2'
             break;
         case 361:
-            return '/buyer/Bbuys-1'
+            return '/buyer/BocManage-1'
             break;
         case 362:
             return '/seller/SocManage-2'

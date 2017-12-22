@@ -62,15 +62,15 @@
                     count: 0,
                     state: 1
                 }, {
-                    name: "已手动下架",
+                    name: "已下架",
                     count: 0,
                     state: 0
                 }, {
-                    name: "过期自动下架",
+                    name: "过期下架",
                     count: 0,
                     state: 3
                 }, {
-                    name: "管理员下架",
+                    name: "超管下架",
                     count: 0,
                     state: 2
                 }],

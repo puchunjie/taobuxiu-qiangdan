@@ -130,19 +130,23 @@
             </div>
             <div class="info pl2">
                 <span class="ic-rq">*</span>交货地点：
-                <cityPicter v-model="locationId" placeholder="请选择省市信息" style="width:160px"></cityPicter>
+                <cityPicter v-model="location" placeholder="请选择省市信息" style="width:200px"></cityPicter>
+            </div>
+            <div class="info pl2">
+                <span class="ic-rq">*</span>交货仓库：
+                <tbInput style="width: 200px" placeholder="请输入交货仓库（如：东方一期）" v-model="info.deliveryHouse"></tbInput> 
             </div>
             <div class="info pl2">
                 <span class="ic-rq">*</span>交货期限：
-                <DatePicker type="date" v-model="info.deliveryTerm" :options="notToday" placeholder="请选择日期" style="width: 160px"></DatePicker>
+                <DatePicker type="date" v-model="info.deliveryTerm" :options="notToday" placeholder="请选择日期" style="width: 200px"></DatePicker>
                 前，特殊情况请提前沟通
             </div>
             <div class="info pl2">
                 <span class="ic-rq">*</span>质量标准： 产品符合生产厂家出厂标准，以货品相对应的质量证明书为准
             </div>
             <div class="info pl2">
-                <span class="ic-rq">*</span>备注信息：
-                <tbTextarea v-model="info.remark" placeholder="请输入交货条款备注，如是否送木架，是否免力费等" style="width:1000px"></tbTextarea>
+                <span class="ic-rq">&nbsp;</span>备注信息：
+                <tbTextarea v-model="info.remark" placeholder="请输入交货条款备注，如是否送木架，是否免力费等" style="width:1000px;top: -10px;"></tbTextarea>
             </div>
         </div>
     
@@ -203,7 +207,7 @@
         </modelPanel>
         
         <Modal v-model="pShow" width="1000px">
-            <preview :previewData="info" :other="{}"></preview>
+            <preview :previewData="previewData"></preview>
         </Modal>
         
     </div>
@@ -220,6 +224,7 @@
     import getCode from '@/components/business/getCode/index'
     import tbRadio from '@/components/business/tbRadio/index.vue'
     import map from 'lodash/map'
+    import findIndex from 'lodash/findIndex'
     import preview from './preview.vue'
     import {
         castData
@@ -256,12 +261,13 @@
                     partAMobile: "",
                     partBId: "",
                     inspectionTime: "",
+                    deliveryHouse: "",
                     deliveryTerm: "",
                     remark: "",
                     payMent: 1,
                     invoiceDate: 25
                 },
-                locationId: {
+                location: {
                     id: '',
                     name: ''
                 },
@@ -303,6 +309,18 @@
             },
             type() {
                 return this.$route.params.type
+            },
+            previewData(){
+                let data = this.$clearData(this.info);
+                data.orderIds.map((item,i) => {
+                    item.orderTotalPrice = this.totlePrcieArr[i];
+                })
+                data.costs.map((item,i) => {
+                    item.orderTotalPrice = this.totlePrcieArr2[i];
+                })
+                data.locationName = this.location.name;
+                data.totlePrice = this.totlePrice;
+                return data
             }
         },
         methods: {
@@ -325,8 +343,8 @@
             },
             ajaxParams() {
                 let data = this.$clearData(this.info);
-                data.locationId = this.locationId.id;
-                data.locationName = this.locationId.name;
+                data.locationId = this.location.id;
+                data.locationName = this.location.name;
                 data.orderIds = JSON.stringify({
                     orderIds: this.info.orderIds,
                     costs: this.info.costs
@@ -407,13 +425,20 @@
             },
             // 是否可以提交？
             isAllOk(){
-                return this.info.deliveryTerm != '' && this.info.inspectionTime != '' && this.info.remark != '' && this.locationId.id != ''
+                let aOk = this.info.deliveryTerm != '' && this.info.inspectionTime != '' && this.location.id != ''
+                let hasZore1 = findIndex(this.totlePrcieArr, el => {
+                    return el == '0.00'
+                })
+                let hasZore2 = findIndex(this.totlePrcieArr2, el => {
+                    return el == '0.00'
+                })
+                return aOk && hasZore1 == -1 && hasZore2 == -1
             },
             showPreview(){
                 if(this.isAllOk()){
                     this.pShow = true;
                 } else {
-                    this.$Message.error('请填写完带星号的选项!')
+                    this.$Message.error('请将必填信息填写完整，检查货物明细!')
                 }
             }
         },

@@ -30,7 +30,7 @@
                         </div>
                         <div class="group"><label>负责人证件号：</label>{{ rzInfo.legalPersonCardId }}</div>
                         <div class="group"><label>负责人手机号：</label>{{ rzInfo.legalPersonMobile }}</div>
-                        <div class="group"><label>最后更新时间：</label>{{ rzInfo.updateTime }}</div>
+                        <div class="group"><label>最后更新时间：</label>{{ rzInfo.updateTime | dateformat }}</div>
                         <div class="group"><label>认证状态：</label><span :class="'state state-'+rzInfo.status">{{ rzInfo.status | stateStr }}</span> <a v-show="rzInfo.status == 9" @click="showFalid(rzInfo.remark)">查看原因</a></div>
                         <div class="group">
                             <label></label>

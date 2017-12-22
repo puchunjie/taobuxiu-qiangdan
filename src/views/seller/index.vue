@@ -17,7 +17,7 @@
             leftMenu
         },
         computed: {
-            ...mapGetters(['userCount']),
+            ...mapGetters(['userCount','user']),
             asyncMenu() {
                 this.menus[0].subs[0].count = this.userCount.sellIronT;
                 this.menus[0].subs[1].count = this.userCount.sellIronH;
@@ -70,6 +70,16 @@
                                 name: '特价资源',
                                 router: {
                                     name: 'specialRes'
+                                }
+                            },
+                            {
+                                name: '我的店铺',
+                                router: {
+                                    name: 'shop',
+                                    params: {
+                                        id: 'xxx',
+                                        type: 1
+                                    }
                                 }
                             }
                         ]
@@ -166,6 +176,9 @@
                     }
                 ]
             }
+        },
+        created () {
+            this.menus[1].subs[3].router.params.id = this.user.userId
         }
     }
 </script>
