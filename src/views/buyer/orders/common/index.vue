@@ -74,7 +74,7 @@
       <Page show-elevator :total="page.totalCount" :current.sync="page.currentPage" :page-size="page.pageSize"></Page>
     </div>
     <editPanel v-model="editShow" :item="purchaseItem" :type="type" @on-edit="getOrders"></editPanel>
-    <purchasePanel v-model="purchaseShow" :item="purchaseItem" type="1"></purchasePanel>
+    <purchasePanel v-model="purchaseShow" :item="purchaseItem" type="1" @on-ordered="getOrders"></purchasePanel>
   </div>
 </template>
 

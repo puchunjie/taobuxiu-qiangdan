@@ -23,7 +23,7 @@
                 <router-view></router-view>
             </div>
         </div>
-        <div class="inner-container" style="margin-top:16px" v-show="itemData.isHaveShop == 0">
+        <div class="inner-container" style="margin-top:16px;padding-bottom:300px" v-show="itemData.isHaveShop == 0">
             <img style="display:block;margin: 100px auto 20px;" src="../../assets/shop-none.png">
             <p style="text-align:center;line-height:24px">您还未开通企业店铺哦</p>
             <p style="text-align:center;line-height:24px">联系电话： 0510-66068092（周一至周六 8:00-17.30）</p>
@@ -88,10 +88,6 @@
 
 <style lang="less" scoped>
     @import '../../assets/base.less';
-    body {
-        background-color: @bg_color;
-    }
-    
     .container {
         width: 100%;
         background-color: #303653;

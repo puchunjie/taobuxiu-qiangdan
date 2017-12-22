@@ -29,7 +29,7 @@
             return {
                 content: '',
                 timer: '',
-                now:this.nowTime
+                now: this.nowTime
             }
         },
         props: {
@@ -51,15 +51,16 @@
     
                 }
             },
-            normal:{
-                type:Boolean,
-                default:false
+            normal: {
+                type: Boolean,
+                default: false
             }
         },
-        created () {
+        created() {
             this.content = this.normal ? '00:00:00' : '<span>00</span>:<span>00</span>:<span>00</span>';
         },
         mounted() {
+            this.action(this.endTime);
             this.countdowm(this.endTime)
         },
         methods: {
@@ -68,7 +69,7 @@
                 clearInterval(this.timer);
                 let self = this;
                 this.timer = setInterval(function() {
-                    self.now+=1000;
+                    self.now += 1000;
                     let nowTime = new Date()
                     let endTime = new Date(timestamp);
                     let t = endTime.getTime() - self.now;
@@ -80,8 +81,8 @@
                         hour = hour < 10 ? "0" + hour : hour;
                         min = min < 10 ? "0" + min : min;
                         sec = sec < 10 ? "0" + sec : sec;
-                        let format = normal ? `${hour}:${min}:${sec}` :`<span>${hour}</span>:<span>${min}</span>:<span>${sec}</span>`;
-                        self.content =  format;
+                        let format = normal ? `${hour}:${min}:${sec}` : `<span>${hour}</span>:<span>${min}</span>:<span>${sec}</span>`;
+                        self.content = format;
                     } else {
                         clearInterval(self.timer);
                         self.content = self.endText;
@@ -93,6 +94,22 @@
                 if (this.callback && this.callback instanceof Function) {
                     this.callback(...this);
                 }
+            },
+            action(timestamp) {
+                let normal = this.normal;
+                this.now += 1000;
+                let nowTime = new Date()
+                let endTime = new Date(timestamp);
+                let t = endTime.getTime() - this.now;
+                let day = Math.floor(t / 86400000);
+                let hour = Math.floor((t / 3600000) % 24);
+                let min = Math.floor((t / 60000) % 60);
+                let sec = Math.floor((t / 1000) % 60);
+                hour = hour < 10 ? "0" + hour : hour;
+                min = min < 10 ? "0" + min : min;
+                sec = sec < 10 ? "0" + sec : sec;
+                let format = normal ? `${hour}:${min}:${sec}` : `<span>${hour}</span>:<span>${min}</span>:<span>${sec}</span>`;
+                this.content = format;
             }
         },
         watch: {

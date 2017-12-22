@@ -35,25 +35,7 @@
       float: right;
       .borderRadius;
     }
-    .seller-items {
-      .flex-block;
-      .flex-wrap(wrap);
-      width: 100%;
-      border-left: @b_d1;
-      border-top: @b_d1;
-      .seller-img {
-        display: block;
-        width: 20%;
-        height: 114px;
-        border-right: @b_d1;
-        border-bottom: @b_d1;
-        img {
-          display: block;
-          width: 100%;
-          height: 100%;
-        }
-      }
-    }
+    
     .lem-container {
       float: left;
       width: 648px;
@@ -84,14 +66,7 @@
           <swiperBanner class="swiper-banner"></swiperBanner>
           <qualityUnit class="quality-unit"></qualityUnit>
         </div>
-        <div>
-          <div class="inner-title">推荐卖家</div>
-          <div class="seller-items">
-            <a class="seller-img" v-for="el in 10" :key="el">
-              <img src="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/2017/10/20/20171020110002049449.png">
-            </a>
-          </div>
-        </div>
+        <reSeller></reSeller>
       </div>
     </div>
     <div class="full-group floor2">
@@ -101,7 +76,7 @@
           <lem class="lem-container"></lem>
           <ranking class="ranking-container"></ranking>
         </div>
-  
+      
         <todayPrice></todayPrice>
       </div>
     </div>
@@ -124,6 +99,7 @@
   import swiperBanner from './parts/swiperBanner.vue'
   import qualityUnit from './parts/qualityHelper.vue'
   import dynamic from './parts/dynamic.vue'
+  import reSeller from './parts/recommendSeller.vue'
   import lem from './parts/lem.vue'
   import ranking from './parts/ranking.vue'
   import todayPrice from './parts/todayPrice.vue'
@@ -135,6 +111,7 @@
       swiperBanner,
       qualityUnit,
       dynamic,
+      reSeller,
       lem,
       ranking,
       todayPrice,

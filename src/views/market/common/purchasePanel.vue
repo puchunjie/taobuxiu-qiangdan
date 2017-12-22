@@ -164,6 +164,7 @@
                             this.getUserCount();
                             this.visible = false;
                             this.$Message.success('下单成功');
+                            this.$emit('on-ordered');
                         } else if (res.code === -1) {
                             this.$Message.error(res.message);
                         }

@@ -53,6 +53,7 @@
             },
             handleSuccess(res, file) {
                 let pres = JSON.parse(res);
+                console.log(pres)
                 this.imgSrc = this.$api.aliClound + pres[0].url;
                 this.$Message.success('上传成功！');
                 this.uploadLoading = false;

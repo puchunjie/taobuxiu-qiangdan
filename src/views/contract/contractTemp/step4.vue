@@ -206,7 +206,7 @@
             </div>
         </modelPanel>
     
-        <Modal v-model="pShow" width="1000px">
+        <Modal v-model="pShow" width="1200px">
             <preview :previewData="previewData"></preview>
         </Modal>
     
