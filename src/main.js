@@ -31,7 +31,6 @@ import {
     Tooltip,
     Notice,
     Form,
-    FormItem,
     Input,
     Cascader,
     Select,
@@ -40,6 +39,21 @@ import {
     Spin,
     Upload
 } from 'iview';
+// import Modal from 'iview/src/components/modal'
+// import Button from 'iview/src/components/button'
+// import Message from 'iview/src/components/message'
+// import Page from 'iview/src/components/page'
+// import Circle from 'iview/src/components/circle'
+// import Poptip from 'iview/src/components/poptip'
+// import Tooltip from 'iview/src/components/tooltip'
+// import Notice from 'iview/src/components/notice'
+// import Form from 'iview/src/components/form'
+// import Input from 'iview/src/components/input'
+// import Cascader from 'iview/src/components/input'
+// import { Select, Option } from 'iview/src/components/select'
+// import DatePicker from 'iview/src/components/date-picker'
+// import Spin from 'iview/src/components/spin'
+// import Upload from 'iview/src/components/upload'
 
 Vue.component(Modal.name, Modal);
 Vue.prototype.$Modal = Modal;
@@ -49,7 +63,7 @@ Vue.component(Page.name, Page);
 Vue.component('DatePicker', DatePicker);
 Vue.component('i-circle', Circle);
 Vue.component('i-form', Form);
-Vue.component('form-item', FormItem);
+Vue.component('form-item', Form.Item);
 Vue.component('i-input', Input);
 Vue.component('i-select', Select);
 Vue.component('i-option', Option);

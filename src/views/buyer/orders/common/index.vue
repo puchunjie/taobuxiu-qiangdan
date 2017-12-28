@@ -237,6 +237,8 @@
           let data = this.$clearData(item);
           this.purchaseItem = data;
           this.purchaseShow = true;
+        }else{
+          this.$Message.warning("资源已下架！")
         }
       }
     },

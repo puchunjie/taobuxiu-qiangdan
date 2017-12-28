@@ -7,11 +7,11 @@
                     <thead>
                         <tr>
                             <th :colspan="colspan">
-                                供应商：
-                                <companyLink :hasShop="item.isHaveShop" :userId="item.userId">{{ item.companyName }}</companyLink>
+                                供应商：确认下单采购后，可查看公司抬头与联系人信息
+                                <!-- <companyLink :hasShop="item.isHaveShop" :userId="item.userId">{{ item.companyName }}</companyLink>
                                 <merchantLabel :faith="item.isFaithUser == '1'" :guarantee="item.isGuaranteeUser == '1'"></merchantLabel>
                                 <crown :level='item.sellLevel'></crown>
-                                <qq style="margin-left:75px" :data="{name:item.contact,phone:item.contactNum,qq:item.QQ}"></qq>
+                                <qq style="margin-left:75px" :data="{name:item.contact,phone:item.contactNum,qq:item.QQ}"></qq> -->
                                 <span style="float:right">{{ item.updateTime | dateformat }}</span>
                             </th>
                         </tr>
