@@ -1,11 +1,11 @@
 export let ws = '';
 let uploadHost = '';
 if (process.env.NODE_ENV == 'development') {
-    ws = 'ws://192.168.0.251:8080/websocket';
+    ws = 'ws://192.168.0.251/websocket';
     uploadHost = 'http://192.168.0.251'
 } else {
-    ws = 'ws://120.55.63.70:8080/websocket';
-    // ws = 'ws://192.168.0.251:8080/websocket';
+    ws = 'ws://120.55.63.70/websocket';
+    // ws = 'ws://192.168.0.251/websocket';
     uploadHost = ''
 }
 
@@ -475,7 +475,9 @@ export const queryUserInfo = '/demands/userIronInfo/queryUserInfo'
 /**
  * 获取订单有效确认时间选项
  */
-export const selectStorerSubOrderName = '/api/ad/selectStorerSubOrderName'
+// export const selectStorerSubOrderName = '/api/ad/selectStorerSubOrderName'
+// 修复在2345浏览器上因为'ad'字符被拦截bug
+export const selectStorerSubOrderName = '/api/died/selectStorerSubOrderName'
 
 
 
