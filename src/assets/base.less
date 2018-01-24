@@ -177,3 +177,19 @@
   -o-transform: scale(@s,@s);
   -ms-transform: scale(@s,@s);
 }
+
+.placeholder(@rules) {
+    
+        &::-webkit-input-placeholder {
+            @rules();
+        }
+        &:-moz-placeholder {
+            @rules();
+        }
+        &::-moz-placeholder {
+            @rules();
+        }
+        &:-ms-input-placeholder {
+            @rules();
+        }
+    }
