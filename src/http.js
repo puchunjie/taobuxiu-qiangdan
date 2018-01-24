@@ -123,10 +123,10 @@ axios.interceptors.response.use(response => {
                 error.message = '服务器线路异常'
         }
     }
-    Notice.error({
-        title: error.message,
-        desc: '网络或服务器正消极罢工，请刷新重试或联系客服人员报备解决，谢谢！'
-    })
+    // Notice.error({
+    //     title: error.message,
+    //     desc: '网络或服务器正消极罢工，请刷新重试或联系客服人员报备解决，谢谢！'
+    // })
     return Promise.reject(error)
 });
 

@@ -1,10 +1,10 @@
 export let ws = '';
 let uploadHost = '';
 if (process.env.NODE_ENV == 'development') {
-    ws = 'ws://192.168.0.251/websocket';
+    ws = 'ws://192.168.0.251:8080/websocket';
     uploadHost = 'http://192.168.0.251'
 } else {
-    ws = 'ws://120.55.63.70/websocket';
+    ws = 'ws://120.55.63.70:8080/websocket';
     // ws = 'ws://192.168.0.251/websocket';
     uploadHost = ''
 }
@@ -73,6 +73,11 @@ export const G_getProvince = '/api/query/findProvince'
  * 查询市信息 
  */
 export const G_getCity = '/api/query/findCity'
+
+/**
+ * 查询区信息
+ */
+export const G_getDistrict = '/api/query/findDistrict'
 
 /**
  * 查询品类信息

@@ -213,7 +213,8 @@
                 ws.onclose = function(evt) {
                     // console.log("lem链接关闭！");
                     setTimeout(() => {
-                        _this.initScoket();
+                        if (_this.initScoket)
+                            _this.initScoket();
                     }, 10000)
                 };
             },

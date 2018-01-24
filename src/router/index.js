@@ -330,6 +330,22 @@ const router = new Router({
             }
         },
         {
+            path: '/appDownload',
+            name: 'appDownload',
+            component: resolve => require(['@/views/appDownload/index'], resolve),
+            meta: {
+                requireAuth: true
+            }
+        },
+        {
+            path: '/logistics',
+            name: 'logistics',
+            component: resolve => require(['@/views/logistics/index'], resolve),
+            meta: {
+                requireAuth: true
+            }
+        },
+        {
             path: '*',
             name: 'notFound',
             component: resolve => require(['@/views/notFound/index'], resolve)

@@ -39,10 +39,11 @@ export default {
             };
 
             ws.onclose = function(evt) {
-                // console.log("Connection closed.");
+                console.log("Connection closed.");
                 // 后台重启服务器，10秒后重连
                 setTimeout(() => {
-                    _this.initScoket();
+                    if (_this.initScoket)
+                        _this.initScoket();
                 }, 10000)
             };
 
