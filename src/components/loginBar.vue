@@ -1,12 +1,15 @@
 <template>
-  <div class="main-bar">
-    <a class="back" href="http://www.itaobuxiu.com" target="_blank">淘不锈首页</a>
-    <a class="link"><span class="iconfont icon-ziyuan7"></span>0510-81812186</a>
+  <div class="main-bar" :class="{'new':isNew}">
+    <slot>
+      <a class="back" href="http://www.itaobuxiu.com" target="_blank">淘不锈首页</a>
+      <a class="link"><span class="iconfont icon-ziyuan7"></span>0510-81812186</a>
+    </slot>
     <div class="fr group">
+      <router-link :to="{name:'appDownload'}">APP下载</router-link>
       <a v-if="isLogin" @click="showP">
-          {{ user.companyName }}
-          <span class="iconfont" :class="panelShow ? 'icon-iconjiaobiaoxiangshang': 'icon-iconjiaobiaoxiangxia'"></span>
-        </a>
+            {{ user.companyName }}
+            <span class="iconfont" :class="panelShow ? 'icon-iconjiaobiaoxiangshang': 'icon-iconjiaobiaoxiangxia'"></span>
+          </a>
       <router-link v-else :to="{name:'login',query: { redirect: $router.currentRoute.fullPath }}">您好，请登录</router-link>
       <a class="back" v-show="!isLogin" href="http://www.itaobuxiu.com/html/view/common/register.html" target="_blank">注册</a>
     </div>
@@ -24,6 +27,12 @@
     mapGetters
   } from 'vuex'
   export default {
+    props:{
+      isNew:{
+        type:Boolean,
+        default: false
+      }
+    },
     computed: {
       ...mapGetters(['user']),
       isLogin() {
@@ -37,21 +46,23 @@
       }
     },
     methods: {
-      togglePShow(){
+      togglePShow() {
         this.count++
-        if(this.count>1){
-          this.panelShow = false
-          this.count = 0
-        }
+          if (this.count > 1) {
+            this.panelShow = false
+            this.count = 0
+          }
       },
-      showP(){
+      showP() {
         this.panelShow = !this.panelShow;
       },
-      go(path){
-        this.$router.push({name:path});
+      go(path) {
+        this.$router.push({
+          name: path
+        });
         this.panelShow = !this.panelShow;
       },
-      loginOut(){
+      loginOut() {
         this.$store.commit(types.LOGOUT);
         // 使用原生跳转，强制页面刷新，断开scoket
         window.location.href = '/qd/index';
@@ -74,22 +85,23 @@
     font-size: 12px;
     background-color: @bg_color;
     z-index: 901;
+
     .action-panel {
       position: absolute;
       width: 100px;
       height: 90px;
       right: 70px;
-      top:30px;
+      top: 30px;
       text-indent: 10px;
       background-color: #fff;
-      border:@b_d1;
+      border: @b_d1;
       .borderRadius;
-      .item{
+      .item {
         width: 100%;
         height: 30px;
         line-height: 30px;
         cursor: pointer;
-        &:hover{
+        &:hover {
           background-color: @goast_gray;
         }
       }
@@ -100,8 +112,8 @@
     .link {
       margin-left: 10px;
       color: @light_blue;
-      .iconfont{
-        margin-right:5px;
+      .iconfont {
+        margin-right: 5px;
         font-size: 14px;
       }
     }
@@ -117,6 +129,31 @@
       .iconfont {
         color: @f_ligth;
         font-size: 14px;
+      }
+    }
+
+    &.new{
+      height: 90px;
+      line-height: 90px;
+      background: none;
+      color: #fff;
+      margin-bottom: 109px;
+      .group a,.iconfont{
+        color: #fff;
+      }
+      .action-panel{
+        width: 100px;
+        text-align: center;
+        top: 70px;
+        right: 35px;
+        .item{
+          color: #999;
+          text-indent: 0;
+          &:hover{
+            background: none;
+            color: #20B678;
+          }
+        }
       }
     }
   }

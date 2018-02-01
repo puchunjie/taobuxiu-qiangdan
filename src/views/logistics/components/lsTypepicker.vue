@@ -8,7 +8,7 @@
                 <span v-for="(tab,i) in tabs" :key="i" :class="{ 'active': i == activeTab }" v-show="tab.data.length > 0" @click="switchTab(i)">{{ tab.label }}</span>
             </div>
             <div class="items-contnet">
-                <span class="item" :class="{ 'active': activeItem.active == j }" v-for="(item,j) in activeItem.data" :key="item.id" @click="pick(j)">{{ item.shortName }}</span>
+                <span class="item" :class="{ 'active': activeItem.active == j }" v-for="(item,j) in activeItem.data" :key="item.id" @click="pick(j)">{{ item.goodsName }}</span>
             </div>
         </div>
     </div>
@@ -32,19 +32,11 @@
             return {
                 tabs: [{
                         label: '请选择',
-                        api: 'G_getProvince',
                         active: null,
                         data: []
                     },
                     {
                         label: '请选择',
-                        api: 'G_getCity',
-                        active: null,
-                        data: []
-                    },
-                    {
-                        label: '请选择',
-                        api: 'G_getDistrict',
                         active: null,
                         data: []
                     }
@@ -66,7 +58,7 @@
                     if (j <= i) {
                         arr.push({
                             id: tab.data[tab.active].id,
-                            name: tab.data[tab.active].shortName
+                            name: tab.data[tab.active].goodsName
                         });
                     }
                 });
@@ -102,10 +94,10 @@
                 let activeItem = this.tabs[this.activeTab];
                 if (this.activeTab > 0) {
                     let parent = this.tabs[this.activeTab - 1];
-                    params.id = parent.data[parent.active].id;
+                    params.parentId = parent.data[parent.active].id;
                 }
                 this.ajaxLoad = true;
-                this.$http.post(this.$api[activeItem.api], params).then(res => {
+                this.$http.post(this.$api.findLogisticsGood, params).then(res => {
                     if (res.code === 1000) {
                         activeItem.data = res.data;
                     }
@@ -120,12 +112,12 @@
                 let nowItem = this.tabs[this.activeTab];
                 let acItem = nowItem.data[i];
                 nowItem.active = i;
-                nowItem.label = acItem.shortName;
+                nowItem.label = acItem.goodsName;
                 this.results = this.collectResults;
                 // 是否是最终选择完成，activeTab >= 2
-                if (this.activeTab < 2) {
+                if (this.activeTab < 1) {
                     this.tabs.forEach((item,i)=>{
-                        if( i <= 2 && i > this.activeTab){
+                        if( i <= 1 && i > this.activeTab){
                             this.tabs[i].active = null;
                             this.tabs[i].label = '请选择';
                         }

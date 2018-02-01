@@ -4,8 +4,9 @@ if (process.env.NODE_ENV == 'development') {
     ws = 'ws://192.168.0.251:8080/websocket';
     uploadHost = 'http://192.168.0.251'
 } else {
-    ws = 'ws://120.55.63.70:8080/websocket';
-    // ws = 'ws://192.168.0.251/websocket';
+    // ws = 'ws://120.55.63.70:8080/websocket';
+    // ws = 'ws://111.231.134.170:8080/websocket';
+    ws = 'ws://192.168.0.251/websocket';
     uploadHost = ''
 }
 
@@ -635,3 +636,25 @@ export const queryDemandInfo = '/api/storeInfo/queryDemandInfo'
  * 商家店铺资源查询
  */
 export const queryDemandStoreInfo = '/api/storeInfo/queryDemandStoreInfo'
+
+
+// =================================物流=================================
+/**
+ * 查询所有物流额外需求
+ */
+export const findAllLogisticsExtraDemand = '/api/query/findAllLogisticsExtraDemand'
+
+/**
+ * 物流滚动查询
+ */
+export const findScrollFreightLogisticOrder = '/demands/freightLogisticOrder/findScrollFreightLogisticOrder'
+
+/**
+ * 查询货物信息
+ */
+export const findLogisticsGood = '/api/query/findLogisticsGood'
+
+/**
+ * 发布物流
+ */
+export const saveFreightLogisticOrder = '/demands/freightLogisticOrder/saveFreightLogisticOrder'

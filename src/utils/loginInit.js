@@ -26,7 +26,8 @@ export default {
                             }
                         }
                     });
-                    this.initScoket();
+                    if (this.initScoket)
+                        this.initScoket();
                 }
             })
         },

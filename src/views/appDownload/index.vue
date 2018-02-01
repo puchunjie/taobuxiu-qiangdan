@@ -4,7 +4,7 @@
             <div class="header">
                 <div class="inner-1200">
                     <a class="warp-logo" href="/qd/index"><span class="logo iconfont icon-ziyuan4"></span></a>
-                    
+                    <router-link :to="{name:'index'}" style="float:right">首页</router-link>
                 </div>
             </div>
             <div class="content">
@@ -12,12 +12,14 @@
                     <h1>接单吧APP</h1>
                     <h2>不锈钢圈的手机生意助手</h2>
                     <div class="qr">
-                        <div class="erweima"></div>
+                        <div class="erweima">
+                            <img src="http://resource.jiedan8.cn/html/down.png">
+                        </div>
                         <div class="btns">
-                            <a class="down-btn">
+                            <a class="down-btn" href="https://itunes.apple.com/cn/app/%E6%8E%A5%E5%8D%95%E5%90%A7/id1336306378?l=en&mt=8">
                                 <span class="iconfont icon-ios"></span> iOS端下载
                             </a>
-                            <a class="down-btn"><span class="iconfont icon-android"></span>安卓端下载</a>
+                            <a class="down-btn" href=" http://jiedan8.cn/apk/app-release-1.0.0.apk" download><span class="iconfont icon-android"></span>安卓端下载</a>
                         </div>
                     </div>
     
@@ -149,16 +151,20 @@
             width: 100%;
             height: 750px;
             background: url('../../assets/app/appbg.png') no-repeat;
+            background-size: cover;
             color: #fff;
         }
         .header {
             width: 100%;
             height: 100px;
+            line-height: 100px;
             box-shadow: 0px 0px 10px -3px #4c4c4c;
             overflow: hidden;
+            a{
+                color: #fff;
+            }
             .warp-logo {
                 display: inline-block;
-                margin: 20px 0 0 10px;
                 cursor: pointer;
                 .logo {
                     font-size: 65px;
@@ -206,6 +212,10 @@
                 background-color: #fff;
                 margin-right: 20px;
                 vertical-align: top;
+                img{
+                    width:100%;
+                    height: 100%;
+                }
             }
             .btns {
                 display: inline-block;

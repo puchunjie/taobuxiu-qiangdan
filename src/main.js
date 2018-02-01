@@ -15,7 +15,9 @@ import VueLocalStorage from 'vue-ls';
 import Swiper from '../static/swiper/js/swiper.min'
 import { spinToggle } from './utils/spin'
 import cloneDeep from 'lodash/cloneDeep'
+import scroll from 'vue-seamless-scroll'
 
+Vue.use(scroll)
 Vue.use(VueLocalStorage);
 Object.keys(filters).forEach(key => {
     Vue.filter(key, filters[key])
