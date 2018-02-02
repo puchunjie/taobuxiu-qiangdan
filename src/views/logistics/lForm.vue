@@ -124,7 +124,7 @@
             combination() {
                 let arr = [];
                 for (let i = 1; i <= 3; i++) {
-                    if (this['freGoods' + i][i - 1])
+                    if (this['freGoods' + i].length>0)
                         arr.push({
                             goodId: this['freGoods' + i][0].id + ',' + this['freGoods' + i][1].id,
                             goodName: this['freGoods' + i][0].name + ',' + this['freGoods' + i][1].name,
