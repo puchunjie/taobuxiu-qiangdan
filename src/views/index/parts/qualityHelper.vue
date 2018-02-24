@@ -14,8 +14,8 @@
                 <label>公司</label>
                 <input v-model="apiData.company" @focus="showRelation('autoCompany')" @blur="showRelation('autoCompany')" class="goast-input level1" type="text">
                 <div class="relation-content" v-show="autoCompany">
-                    <div class="tag" @click="fillData('company',user.companyName)">
-                        {{ user.companyName }}
+                    <div class="tag" @click="fillData('company',buser.companyName)">
+                        {{ buser.companyName }}
                     </div>
                 </div>
             </div>
@@ -23,8 +23,8 @@
                 <label>联系人</label>
                 <input v-model="apiData.contactName" @focus="showRelation('autoContactName')" @blur="showRelation('autoContactName')" class="goast-input level1" type="text">
                 <div class="relation-content" v-show="autoContactName">
-                    <div class="tag" @click="fillData('contactName',user.contact)">
-                        {{ user.contact }}
+                    <div class="tag" @click="fillData('contactName',buser.contact)">
+                        {{ buser.contact }}
                     </div>
                 </div>
             </div>
@@ -32,8 +32,8 @@
                 <label>联系电话</label>
                 <input v-model="apiData.contactPhone" @focus="showRelation('autoContactPhone')" @blur="showRelation('autoContactPhone')" class="goast-input level1" type="text">
                 <div class="relation-content" v-show="autoContactPhone">
-                    <div class="tag" @click="fillData('contactPhone',user.contactNum)">
-                        {{ user.contactNum }}
+                    <div class="tag" @click="fillData('contactPhone',buser.contactNum)">
+                        {{ buser.contactNum }}
                     </div>
                 </div>
             </div>
@@ -73,14 +73,12 @@
                     disabledDate (date) {
                         return date && date.valueOf() < Date.now() - 86400000;
                     }
-                }
+                },
+                buser: ''
             }
         },
         computed: {
-            ...mapGetters(['user']),
-            isLogin() {
-                return this.user != ''
-            }
+            ...mapGetters(['user','isLogin'])
         },
         methods: {
             resetData(){
@@ -109,6 +107,7 @@
                 }
             },
             showRelation(tag) {
+                if(this.buser == '' || this.buser == undefined) return
                 setTimeout(() => {
                     this[tag] = !this[tag];
                 }, 100);
@@ -144,6 +143,11 @@
                 if (elClassName.indexOf('on-err') < 0) {
                     el.className = elClassName + ' ' + 'on-err';
                 }
+            }
+        },
+        watch: {
+            'user'(val){
+                this.buser = this.user != undefined ? this.user : ''
             }
         }
     }

@@ -10,7 +10,7 @@ Vue.use(VueLocalStorage);
 Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
-        user: "",
+        user: undefined,
         base: "",
         authorization: Vue.ls.get('authorization'),
         loginId: Vue.ls.get('loginId'),
@@ -36,7 +36,7 @@ export default new Vuex.Store({
     },
     getters: {
         isLogin: state => {
-            return state.user != ''
+            return state.user != undefined
         },
         roleId: state => {
             //写死的超管id,后期修改为从state user中获取

@@ -7,7 +7,7 @@
     <div class="fr group">
       <router-link :to="{name:'appDownload'}">APP下载</router-link>
       <a v-if="isLogin" @click="showP">
-            {{ user.companyName }}
+            {{ user.companyName ? user.companyName : '商户信息暂未认证' }}
             <span class="iconfont" :class="panelShow ? 'icon-iconjiaobiaoxiangshang': 'icon-iconjiaobiaoxiangxia'"></span>
           </a>
       <router-link v-else :to="{name:'login',query: { redirect: $router.currentRoute.fullPath }}">您好，请登录</router-link>
@@ -34,10 +34,7 @@
       }
     },
     computed: {
-      ...mapGetters(['user']),
-      isLogin() {
-        return this.user != ''
-      }
+      ...mapGetters(['user','isLogin'])
     },
     data() {
       return {

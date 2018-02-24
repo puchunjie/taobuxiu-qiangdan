@@ -58,7 +58,7 @@ axios.interceptors.response.use(response => {
         }
     } else if (response.data.code === 1002) {
         Modal.confirm({
-            content: '操作权限不够，请充值！',
+            content: '您还不是商户，请认证！',
             onOk() {
                 router.replace({
                     path: '/'
