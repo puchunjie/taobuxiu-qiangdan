@@ -14,7 +14,7 @@
     
         </div>
         <div class="icons-container">
-            <h2 class="title">淘不锈物</h2>
+            <h2 class="title">淘不锈物流</h2>
             <p class="f-title">淘不锈物流，是全国大宗商品领域中首家推出免费上门质检与先行赔付的物流平台。</p>
             <div class="icon-boxs inner-warp">
                 <div class="item">
