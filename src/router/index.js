@@ -284,6 +284,14 @@ const router = new Router({
             component: resolve => require(['@/views/register/index'], resolve)
         },
         {
+            path: '/Authentication',
+            name: 'Authentication',
+            meta: {
+                requireAuth: true
+            },
+            component: resolve => require(['@/views/Authentication/index'], resolve)
+        },
+        {
             path: '/shop-:id',
             name: 'shop',
             redirect: '/shop-:id/iron-:type',
