@@ -392,6 +392,15 @@
                 } else if (val == 1) {
                     this.step = 3;
                 }
+            },
+            cerfType(val){
+                if(val == 1){
+                    this.userData.bussinessLic = '';
+                    this.userData.financeLic = '';
+                    this.userData.codeLic = '';
+                }else if(val == 2){
+                    this.userData.allCer = '';
+                }
             }
         },
         methods: {

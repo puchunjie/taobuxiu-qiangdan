@@ -15,8 +15,9 @@
       <!-- <a class="back" v-show="!isLogin" href="http://www.itaobuxiu.com/html/view/common/register.html" target="_blank">注册</a> -->
     </div>
     <div class="action-panel" v-if="panelShow" v-clickoutside="togglePShow">
-      <div class="item" @click="go('BuserInfo')">个人中心</div>
-      <div class="item" @click="go('userInfo')">账号管理</div>
+      <div v-show="user == ''" class="item" @click="go('Authentication')">商户认证</div>
+      <div v-show="user != ''" class="item" @click="go('BuserInfo')">个人中心</div>
+      <div v-show="user != ''" class="item" @click="go('userInfo')">账号管理</div>
       <div class="item" @click="loginOut">退出登录</div>
     </div>
   </div>
@@ -52,12 +53,7 @@
           }
       },
       showP() {
-        if(this.user != ''){
-          this.panelShow = !this.panelShow;
-        }else{
-          this.$router.push({name: 'Authentication'})
-        }
-          
+        this.panelShow = !this.panelShow;
       },
       go(path) {
         this.$router.push({
@@ -92,7 +88,6 @@
     .action-panel {
       position: absolute;
       width: 100px;
-      height: 90px;
       right: 70px;
       top: 30px;
       text-indent: 10px;
