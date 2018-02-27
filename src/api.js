@@ -209,6 +209,11 @@ export const saveDiscount = '/demands/bInfo/updateBuserProInfo'
 
 // =================================用户基本信息=================================
 /**
+ * 查询专员列表
+ */
+export const findSalemans = '/api/died/findSalemanInfo'
+
+/**
  * 查询仓库数据
  */
 export const getStores = '/api/query/findStoreHouse'
@@ -228,6 +233,15 @@ export const updateBuserInfo = '/demands/bInfo/updateBInfo'
  */
 export const updatePsd = '/demands/baseUsers/updateBaseUsersSafeInfo'
 
+/**
+ * 认证商家
+ */
+export const registUser = '/demands/bregist/registUser'
+
+/**
+ * 根据用户编号来查询商户信息
+ */
+export const getBuserInfoByUserId = '/sys/buserInfo/getBuserInfoByUserId'
 
 // =================================首页=================================
 /**

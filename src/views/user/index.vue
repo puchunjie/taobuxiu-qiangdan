@@ -61,7 +61,7 @@
                     {{ base.mobile }}
                 </form-item>
                 <form-item label="公司名称">
-                    {{ user.companyName }}
+                    {{ user ? user.companyName : '' }}
                 </form-item>
                 <form-item label="联系人" prop="contact">
                     <i-input placeholder="请输入" v-model="userData.contact" class="form-input"></i-input>
@@ -79,7 +79,7 @@
                     <i-input placeholder="请输入详细地址" v-model="userData.address" style="width:300px"></i-input>
                 </form-item>
                 <form-item label="仓库" prop="storeHouseId">
-                    <ajaxSelect class="form-input" :api="$api.getStores" :value="userData.storeHouseId+'-'+userData.storeHouseName" @on-select="asyncStore"></ajaxSelect>
+                    <ajaxSelect class="form-input" :api="$api.getStores" :value="JSON.stringify({id:userData.storeHouseId,name:userData.storeHouseName})" @on-select="asyncStore"></ajaxSelect>
                 </form-item>
                 <form-item>
                     <a class="btn" @click="save">保存</a>
