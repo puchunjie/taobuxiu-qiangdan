@@ -45,6 +45,9 @@
         watch: {
             imgSrc(val) {
                 this.$emit('input', val)
+            },
+            value(val){
+                this.imgSrc = val;
             }
         },
         methods: {

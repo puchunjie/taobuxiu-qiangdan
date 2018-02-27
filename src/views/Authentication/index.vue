@@ -58,7 +58,7 @@
                         </form-item>
                         <div class="clearfix"></div>
                         <form-item label="绑定专员">
-                            <ajaxSelect class="form-input" style="width:240px" :api="$api.findSalemans" :valueKey="['userId','userName','userMobile']" :labelKey="['userName','userMobile']" @on-select="asyncData"></ajaxSelect>
+                            <ajaxSelect class="form-input" style="width:240px" :value="JSON.stringify({'saleId':userData.saleId,'saleName':userData.saleName,'saleMobile':userData.saleMobile})" :api="$api.findSalemans" :valueKey="['saleId','saleName','saleMobile']" :labelKey="['saleName','saleMobile']" @on-select="asyncData"></ajaxSelect>
                         </form-item>
                         <form-item label="店铺封面">
                             <uploadPic v-model="userData.cover"></uploadPic>
@@ -98,7 +98,7 @@
                 <div class="step1" v-show="step == 2" style="padding-bottom:40px;padding-top:0">
                     <div class="tip red" v-show="pass == 3">
                         <h3>审核未通过</h3>
-                        <p>原因：文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本</p>
+                        <p>原因：{{ remark }}</p>
                         <a class="action" @click="reCommit">重新提交</a>
                     </div>
                     <div class="tip blue" v-show="pass == 2">
@@ -129,8 +129,8 @@
                         <form-item label="办公地址">
                             {{ userData.provinceName }}{{ userData.cityName }}{{ userData.districtName }} {{ userData.address }}
                         </form-item>
-                        <form-item label="绑定专员" v-show="userData.userName != ''">
-                            {{ userData.userName }} {{ userData.userMobile }}
+                        <form-item label="绑定专员" v-show="userData.saleName != ''">
+                            {{ userData.saleName }} {{ userData.saleMobile }}
                         </form-item>
                         <form-item label="店铺封面" v-show="userData.cover != ''">
                             <img :src="userData.cover" class="show-pic">
@@ -160,7 +160,6 @@
                         </div>
                     </i-form>
                 </div>
-    
             </div>
         </div>
     
@@ -173,21 +172,72 @@
                     <span class="iconfont icon-close" @click="step = 0,agHide = false"></span>
                 </div>
                 <div class="cont">
-                    It is probably the dream of any amateur astronomer to be able to be the boss of one of the great multi million dollar telescopes even if it was just for one hour or for a few shots. Sure, we can have a lot of fun with our binoculars. And as we improve
-                    our personal equipment set, we get better and better at pinpointing what we want to see in the sky. But there is only so far we can go within the constraints of a family budget in building the perfect telescopic operation. Probably the
-                    next level then is to work together with others in your astronomy club. By pooling our resources, we can make more progress both in acquiring much more sophisticated equipment and in synchronizing our telescopic operations. All of this
-                    is good and its fun to tweak it and play with it always finding improvements. But when we are sitting back and dreaming, it’s those big institutional size telescopes that really grab our interest. Maybe you have had a chance to visit one
-                    at Kitt Peak, Arizona, Mauna Kea, Hawaii, Palomar Mountain, California or Mt. Locke, Texas to name just a few and as you walked around jaw dropped to your shoes, you thought, maybe if I could just run it for an hour, how awesome would
-                    that be? The good news is that while these huge observatories are not going to let you come in and turn the gears of the mightiest telescopes yourself, many of them will perform specific observations for you and allow you to “see through
-                    their eyes” via the internet for that short observation. This is a powerful option for an amateur astronomer and one you want to prepare for carefully. Here is what you do… 1. Begin compiling a list of the great telescopes of the world,
-                    their locations and how to contact them. Google will help you with finding lists of these observatories to contact by pointing you to specific directory sites like http://astro.nineplanets.org/bigeyes.html 2. You can start by submitting
-                    your request to a specific observatory. Now here is where you have to do your homework. If you have a specific celestial event you wish to observe, there will be particular telescopes around the globe that will be in the best position
-                    to get those shots for you. So study up and find just the right telescope and when the perfect moment for that observation would occur. Get out ahead of this homework as you need to submit your request in plenty of time for it to go through
-                    approval and for them to get back to you and to interact with you to nail down what you are going to have them look at. 3. There are two ways you can direct the operators of the telescopes. You can give them specific coordinates to focus
-                    on and a specific time frame to perform the observation. The other way is to give them a star, a planet or a particular star system to observe and let them figure out the coordinates. That might be easier because you know what you want
-                    to see. 4. Now you sit back and wait for the email that the observation is done. You will not be able to watch them do the observation dynamically. That would be nice but it just isn’t possible yet. These are telescopes, not web cams.
-                    But they will post the pictures from your observation on a particular web location and email the results to you for study. It’s pretty cool, free and customized to what you requested. And you can brag to your friends as you make color
-                    copies of your shots that you had Kitt Peak do these up for you personally. And you would not be lying.
+                    <label class="block">第1条</label>
+                    <p>
+                        为享有包括采购等更多的服务和平台操作功能，用户可以申请企业账号，首先需具备注册资格，您必须确保系依照中华人民共和国法律法规设立的合法组织，具有在中华人民共和国境内取得工商经营主体资格，并按商户企业账号要求提示上传相应证件。如您没有前述主体资格，本站有权拒绝用户注册或认证，据此造成的损失由您自行承担。
+                    </p>
+                    <br>
+
+                    <label class="block">第2条</label>
+                    <p>
+                        在您阅读并同意本协议,按照本站申请成为商家页面提示填写完整企业信息上传符合要求的资料信息并经过本站审核通过后，您即为本站企业账号 。 
+                    </p>
+                    <br>
+
+                    <label class="block">第3条</label>
+                    <p>
+                        您在成功完成企业账号申请并审核通过后，即成为企业账号管理员并享有挂货以及售卖行为的权利，您可以通过本站平台在线交易、发布现货库存资源信息、发布求购信息、发布特价资源信息等企业会员服务。 
+                    </p>
+                    <br>
+
+                    <label class="block">第4条</label>
+                    <p>
+                        您申请或认证企业账号时，您设置的企业信息不得侵犯或涉嫌侵犯他人合法权益。如您连续12个月未有使用手机号和密码登录本站及信息更新记录或实际使用本站服务的行为，本站保留对您中止或终止提供服务并注销账户的权利。
+                    </p>
+                    <br>
+
+                    <label class="block">第5条</label>
+                    <p>
+                        您注册为企业账号后，如注册登记信息发生变更，您须及时、主动联系本站进行更新。因您未及时更新，造成您不能享受相关服务的、或造成账号及密码泄露及一切影响正常交易等所有责任由您自行承担。 
+                    </p>
+                    <br>
+
+
+                    <label class="block">第6条</label>
+                    <p>
+                    您应对您的手机号和密码的安全，以及对通过其手机号和密码实施的行为负责。您在本站注册的手机号和密码仅限于您自己或您所授权的企业内部人员进行使用，不得给予任何第三方使用，否则由此造成的损失由您自行承担，且本站保留暂停或终止服务的权利（参见本协议3.4项条款）。
+                    </p>
+                    <br>
+
+                    <label class="block">第7条</label>
+                    <p>
+                    除非有法律规定或司法裁定，且征得本站的同意，否则，手机号和密码不能以任何方式转让、赠与或继承。 
+                    </p>
+                    <br>
+
+                    <label class="block">第8条</label>
+                    <p>
+                    您遗忘或丢失在本站注册的密码及无法找回时，可与本站客户服务人员取得联系，在提供相关证明资料并经本站审核确认后，可找回密码。
+                    </p>
+                    <br>
+
+                    <label class="block">第9条</label>
+                    <p>
+                    您注册为企业账号后，在本站进行挂货销售活动期间，请按时更新您所售卖产品的最新价格，真实库存等产品信息，如因您的挂货信息不准确，恶意或虚假挂货，一经本站核实，本站保留对您中止或终止提供服务并注销账户的权利，并且一切法律后果由您自行承担。
+                    </p>
+                    <br>
+
+                    <label class="block">第10条</label>
+                    <p>
+                    您注册为企业账号后，在本站进行发布求购的行为，需真实可靠，不得进行任何形式的恶意以及虚假发布，一经核实为违反本平台规范或法律条款的行为后，本站保留对您中止或终止提供服务并注销账户的权利，并且一切法律后果由您自行承担 。
+                    </p>
+                    <br>
+
+
+                    <label class="block">第11条</label>
+                    <p>
+                    本站提供的试点地区免费上门质检服务仅在征得买卖双方均同意认可的情况下方可进行。该项服务可以提供现场视频通讯服务，并于质检现场按照买卖双方均协商同意的事项进行现场质检，本站不参与买卖双方关于是否允许质检的协商讨论。在整个质检过程中，买卖双方均表示同意完成后则质检完成，本站不对质检完成后的任何资金交易，物流运输及收货等进一步交易行为进行负责，一切法律后果由买卖双方自行承担。
+                    </p>
                 </div>
                 <div class="bar-btn">
                     <a class="goast" @click="step = 0,agHide = false">不同意</a>
@@ -215,11 +265,13 @@
         },
         data() {
             return {
+                isFirst: true,
                 pass: '',
                 spinShow: false,
                 agHide: false,
                 cerfType: 1,
                 step: 0,
+                remark: '',
                 steps: [{
                         icon: 'icon-onestep',
                         span: "第一步",
@@ -236,6 +288,7 @@
                     }
                 ],
                 userData: {
+                    id: '',
                     companyName: '',
                     regMoney: '',
                     contact: '',
@@ -251,13 +304,13 @@
                     address: '',
                     sellerProfile: '',
                     cover: '',
-                    allCer: 'http://tbxoss.oss-cn-hangzhou.aliyuncs.com/assets/recommend/shop2.png',
+                    allCer: '',
                     bussinessLic: '',
                     codeLic: '',
                     financeLic: '',
-                    userId: '',
-                    userName: '',
-                    userMobile: ''
+                    saleId: '',
+                    saleName: '',
+                    saleMobile: ''
                 },
                 userDataRule: {
                     companyName: [{
@@ -314,7 +367,7 @@
                 let obj = this.$clearData(this.userData),
                     ok = true,
                     picOk = true;
-                ['userId', 'userName', 'userMobile', 'cover', 'allCer', 'bussinessLic', 'codeLic', 'financeLic'].forEach(key => delete obj[key]);
+                ['id','saleId', 'saleName', 'saleMobile', 'cover', 'allCer', 'bussinessLic', 'codeLic', 'financeLic'].forEach(key => delete obj[key]);
                 Object.keys(obj).forEach(key => {
                     if (obj[key] == '') {
                         ok = false;
@@ -335,9 +388,9 @@
                 if (val == undefined) {
                     this.step = 0;
                 } else if (val == 2 || val == 3) {
-                    this.step = 2;
+                    this.step  = 2;
                 } else if (val == 1) {
-                    step = 3;
+                    this.step = 3;
                 }
             }
         },
@@ -349,8 +402,10 @@
                 }).then(res => {
                     if (res.code === 1000) {
                         this.pass = res.data.buserInfo ? res.data.buserInfo.pass : undefined;
-                        if(res.data.buserInfo)
+                        if(res.data.buserInfo){
                             Object.keys(this.userData).forEach(key => this.userData[key] = res.data.buserInfo[key] ? res.data.buserInfo[key] : '');
+                            this.remark = res.data.buserInfo.remark;
+                        } 
                     }
                 })
             },
@@ -363,7 +418,8 @@
                 if (this.isOk) {
                     this.spinShow = true;
                     window.scrollTo(0, 0);
-                    this.$http.post(this.$api.AcUser, this.userData).then(res => {
+                    let apiUrl = this.isFirst ? this.$api.AcUser : this.$api.AcUserAgain;
+                    this.$http.post(apiUrl, this.userData).then(res => {
                         if (res.code === 1000) {
                             this.pass = res.data.pass;
                             this.step = 2;
@@ -377,6 +433,7 @@
                 }
             },
             reCommit() {
+                this.isFirst = false;
                 this.step--;
             }
         },

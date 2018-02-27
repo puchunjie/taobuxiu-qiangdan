@@ -251,6 +251,11 @@ export const updatePsd = '/demands/baseUsers/updateBaseUsersSafeInfo'
 export const AcUser = '/api/bregist/registUser'
 
 /**
+ * 重新提交
+ */
+export const AcUserAgain = '/api/bregist/registUserAgain'
+
+/**
  * 根据用户编号来查询商户信息
  */
 export const getBuserInfoByUserId = '/api/bregist/findBuserInfoById'
