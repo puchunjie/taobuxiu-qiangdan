@@ -170,7 +170,6 @@
     
     .register-container {
         width: 100%;
-        height: 100%;
         background: url('../../assets/registerBg.jpg') center center / cover no-repeat fixed;
         .register-logo {
             padding: 160px 0 100px;

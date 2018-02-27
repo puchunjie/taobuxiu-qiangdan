@@ -206,7 +206,7 @@
                         <div class="bar">
                             <!-- <span class="iconfont" :class="savePSD?'icon-check-box':'icon-check_box_unselecte'" @click="savePSD = !savePSD"></span>
                                 <a class="l" @click="savePSD = !savePSD">记住密码</a> -->
-                            <a class="l" href="http://www.itaobuxiu.com/html/view/common/register.html" target="_blank">没有账户？去注册</a>
+                            <a class="l" href="/qd/register" target="_blank">没有账户？去注册</a>
                             <a class="r" href="/qd/retrieve">忘记密码</a>
                         </div>
                         <a class="btn" @click="login">登录</a>

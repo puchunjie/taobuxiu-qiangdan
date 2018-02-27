@@ -21,7 +21,7 @@
                 <!-- 认证提示 -->
                 <div class="step0" v-show="step == 0">
                     <div class="tip red">
-                        <h3>正式使用本平台前，需认证称为企业身份</h3>
+                        <h3>正式使用本平台前，需认证为企业身份</h3>
                         <p>如有疑问，请联系平台客服：0510-81812186</p>
                     </div>
                     <p class="text">您暂未认证商家身份信息，<a class="btn" @click="step++,agHide = true">立即认证</a></p>
@@ -35,7 +35,7 @@
                             <i-input style="width:280px" placeholder="请输入" v-model="userData.companyName" class="form-input"></i-input>
                         </form-item>
                         <form-item label="注册基金" prop="regMoney">
-                            <i-input style="width:100px" placeholder="请输入" v-model="userData.regMoney" class="form-input"></i-input>
+                            <i-input style="width:100px;margin-right:10px" type="number" placeholder="请输入" v-model="userData.regMoney" class="form-input"></i-input>万元
                         </form-item>
                         <h3 class="f-title">商家业务信息</h3>
                         <form-item label="联系人" prop="contact">
@@ -111,7 +111,7 @@
                             {{ userData.companyName }}
                         </form-item>
                         <form-item label="注册基金">
-                            {{ userData.regMoney }}
+                            {{ userData.regMoney }} 万元
                         </form-item>
                         <h3 class="f-title">商家业务信息</h3>
                         <form-item label="联系人">
