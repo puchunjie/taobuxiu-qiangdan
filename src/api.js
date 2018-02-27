@@ -44,10 +44,22 @@ export const login = '/login/userLogin';
 export const pic_code = '/login/picCode'
 
 /**
- * 短信验证码
+ * 注册
+ * 图形验证码
+ */
+export const reg_pic_code = '/api/regist/picCode'
+
+/**
+ * 登录短信验证码
  */
 export const msg_code = '/login/smsCode'
 
+
+/**
+ * 注册
+ * 短信验证码
+ */
+export const reg_msg_code = '/api/regist/smsCode'
 /**
  * 检验验证码
  */
@@ -672,3 +684,9 @@ export const findLogisticsGood = '/api/query/findLogisticsGood'
  * 发布物流
  */
 export const saveFreightLogisticOrder = '/demands/freightLogisticOrder/saveFreightLogisticOrder'
+
+/**
+ * 保存手机注册用户
+ */
+export const registUser = '/api/regist/registUser'
+
