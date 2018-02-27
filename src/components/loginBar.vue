@@ -11,7 +11,8 @@
             <span class="iconfont" :class="panelShow ? 'icon-iconjiaobiaoxiangshang': 'icon-iconjiaobiaoxiangxia'"></span>
           </a>
       <router-link v-else :to="{name:'login',query: { redirect: $router.currentRoute.fullPath }}">您好，请登录</router-link>
-      <a class="back" v-show="!isLogin" href="http://www.itaobuxiu.com/html/view/common/register.html" target="_blank">注册</a>
+      <router-link class="back" v-show="!isLogin" :to="{name:'register'}">注册</router-link>
+      <!-- <a class="back" v-show="!isLogin" href="http://www.itaobuxiu.com/html/view/common/register.html" target="_blank">注册</a> -->
     </div>
     <div class="action-panel" v-if="panelShow" v-clickoutside="togglePShow">
       <div class="item" @click="go('BuserInfo')">个人中心</div>
@@ -51,7 +52,12 @@
           }
       },
       showP() {
-        this.panelShow = !this.panelShow;
+        if(this.user != ''){
+          this.panelShow = !this.panelShow;
+        }else{
+          this.$router.push({name: 'Authentication'})
+        }
+          
       },
       go(path) {
         this.$router.push({

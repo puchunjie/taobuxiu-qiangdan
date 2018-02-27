@@ -95,7 +95,7 @@
                 </div>
     
                 <!-- 第二步 -->
-                <div class="step1" v-show="step == 2" style="padding-bottom:40px">
+                <div class="step1" v-show="step == 2" style="padding-bottom:40px;padding-top:0">
                     <div class="tip red" v-show="pass == 3">
                         <h3>审核未通过</h3>
                         <p>原因：文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本</p>
@@ -133,7 +133,7 @@
                             {{ userData.userName }} {{ userData.userMobile }}
                         </form-item>
                         <form-item label="店铺封面" v-show="userData.cover != ''">
-                            <uploadPic v-model="userData.cover"></uploadPic>
+                            <img :src="userData.cover" class="show-pic">
                         </form-item>
                         <form-item label="店铺简介">
                             {{ userData.sellerProfile }}
@@ -365,7 +365,8 @@
                     window.scrollTo(0, 0);
                     this.$http.post(this.$api.AcUser, this.userData).then(res => {
                         if (res.code === 1000) {
-                            this.step++;
+                            this.pass = res.data.pass;
+                            this.step = 2;
                         } else {
                             this.$Message.error(res.message);
                         }
