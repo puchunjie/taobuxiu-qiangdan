@@ -61,7 +61,7 @@ axios.interceptors.response.use(response => {
             content: '您还不是商户，请认证！',
             onOk() {
                 router.replace({
-                    path: '/'
+                    path: '/Authentication'
                 })
             },
             onCancel() {

@@ -96,12 +96,12 @@
     
                 <!-- 第二步 -->
                 <div class="step1" v-show="step == 2" style="padding-bottom:40px">
-                    <div class="tip red">
+                    <div class="tip red" v-show="pass == 3">
                         <h3>审核未通过</h3>
                         <p>原因：文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本</p>
                         <a class="action" @click="reCommit">重新提交</a>
                     </div>
-                    <div class="tip blue">
+                    <div class="tip blue" v-show="pass == 2">
                         <h3>审核中。。。</h3>
                         <p>认证信息提交成功，将在1个工作日内完成审核，请耐心等待</p>
                     </div>
@@ -203,6 +203,9 @@
     import citySelect from '@/components/basics/citySelect/index'
     import uploadPic from '@/views/contract/authentication/parts/uploadPic.vue'
     import tbRadio from '@/components/business/tbRadio/index.vue'
+    import {
+        mapGetters
+    } from 'vuex'
     export default {
         components: {
             ajaxSelect,
@@ -212,6 +215,7 @@
         },
         data() {
             return {
+                pass: '',
                 spinShow: false,
                 agHide: false,
                 cerfType: 1,
@@ -247,7 +251,7 @@
                     address: '',
                     sellerProfile: '',
                     cover: '',
-                    allCer: '',
+                    allCer: 'http://tbxoss.oss-cn-hangzhou.aliyuncs.com/assets/recommend/shop2.png',
                     bussinessLic: '',
                     codeLic: '',
                     financeLic: '',
@@ -305,6 +309,7 @@
             }
         },
         computed: {
+            ...mapGetters(['base']),
             isOk() {
                 let obj = this.$clearData(this.userData),
                     ok = true,
@@ -325,11 +330,28 @@
                 return ok && picOk
             }
         },
+        watch: {
+            pass(val) {
+                if (val == undefined) {
+                    this.step = 0;
+                } else if (val == 2 || val == 3) {
+                    this.step = 2;
+                } else if (val == 1) {
+                    step = 3;
+                }
+            }
+        },
         methods: {
             // 查询审核状态
-            getStep(){
-                this.$http.post(this.$api.getBuserInfoByUserId).then(res => {
-
+            getStep() {
+                this.$http.post(this.$api.getBuserInfoByUserId, {
+                    bUserId: this.base.id
+                }).then(res => {
+                    if (res.code === 1000) {
+                        this.pass = res.data.buserInfo ? res.data.buserInfo.pass : undefined;
+                        if(res.data.buserInfo)
+                            Object.keys(this.userData).forEach(key => this.userData[key] = res.data.buserInfo[key] ? res.data.buserInfo[key] : '');
+                    }
                 })
             },
             //同步地区
@@ -338,27 +360,26 @@
             },
             // 提交信息
             commitInFo() {
-                // if(this.isOk){
-                //     this.spinShow = true;
-                //     window.scrollTo(0,0);
-                //     this.$http.post(this.$api.registUser,this.userData).then(res => {
-                //         if(this.res.code === 1000){ 
-    
-                //         }else{
-                //             this.$Message.error(res.message);
-                //         }
-                //         this.spinShow = false;
-                //     })
-                // }else{
-                //     this.$Message.error('请将信息填写完整');
-                // }
-                this.step++;
+                if (this.isOk) {
+                    this.spinShow = true;
+                    window.scrollTo(0, 0);
+                    this.$http.post(this.$api.AcUser, this.userData).then(res => {
+                        if (res.code === 1000) {
+                            this.step++;
+                        } else {
+                            this.$Message.error(res.message);
+                        }
+                        this.spinShow = false;
+                    })
+                } else {
+                    this.$Message.error('请将信息填写完整');
+                }
             },
-            reCommit(){
+            reCommit() {
                 this.step--;
             }
         },
-        created () {
+        created() {
             this.getStep();
         }
     }
@@ -567,14 +588,12 @@
                     font-weight: bold;
                     margin: 38px 0;
                 }
-
-                .show-pic{
+                .show-pic {
                     display: inline-block;
-                    width:240px;
+                    width: 240px;
                     height: 150px;
                     vertical-align: middle;
                 }
-
                 .certificates {
                     width: 100%;
                     padding: 0 40px;

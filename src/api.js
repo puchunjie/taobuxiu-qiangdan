@@ -60,9 +60,9 @@ export const msg_code = '/login/smsCode'
  * 短信验证码
  */
 export const reg_msg_code = '/api/regist/smsCode'
-/**
- * 检验验证码
- */
+    /**
+     * 检验验证码
+     */
 export const validateFirst = '/login/validateFirst'
 
 /**
@@ -223,7 +223,7 @@ export const saveDiscount = '/demands/bInfo/updateBuserProInfo'
 /**
  * 查询专员列表
  */
-export const findSalemans = '/api/died/findSalemanInfo'
+export const findSalemans = '/api/bregist/findSalemanInfo'
 
 /**
  * 查询仓库数据
@@ -248,12 +248,12 @@ export const updatePsd = '/demands/baseUsers/updateBaseUsersSafeInfo'
 /**
  * 认证商家
  */
-export const registUser = '/demands/bregist/registUser'
+export const AcUser = '/api/bregist/registUser'
 
 /**
  * 根据用户编号来查询商户信息
  */
-export const getBuserInfoByUserId = '/sys/buserInfo/getBuserInfoByUserId'
+export const getBuserInfoByUserId = '/api/bregist/findBuserInfoById'
 
 // =================================首页=================================
 /**
@@ -689,4 +689,3 @@ export const saveFreightLogisticOrder = '/demands/freightLogisticOrder/saveFreig
  * 保存手机注册用户
  */
 export const registUser = '/api/regist/registUser'
-
