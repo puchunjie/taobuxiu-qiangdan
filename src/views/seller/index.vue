@@ -24,7 +24,7 @@
                 this.menus[2].subs[0].count = this.userCount.sellX;
                 this.menus[2].subs[1].count = this.userCount.sellD;
                 this.menus[2].subs[2].count = this.userCount.sellT;
-                this.menus[1].subs[3].router.params.id = this.user.userId;
+                this.menus[1].subs[3].router.params.id = !!this.user ? this.user.userId : '';
                 return this.menus
             }
         },

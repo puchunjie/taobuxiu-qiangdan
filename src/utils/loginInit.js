@@ -34,7 +34,7 @@ export default {
         // 获取用户订单，求购数据统计
         async getUserCounts() {
             await this.getUserInfo();
-            if (this.user != '') {
+            if (this.user != '' && this.user.pass === '1') {
                 this.getUserCount();
             }
         }

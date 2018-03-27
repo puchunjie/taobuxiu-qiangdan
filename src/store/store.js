@@ -76,7 +76,7 @@ export default new Vuex.Store({
             Vue.ls.remove('loginId');
             state.authorization = undefined;
             state.loginId = undefined;
-            state.user = '';
+            state.user = undefined;
             state.base = '';
         },
         [types.SET_USER_INFO]: (state, payload) => {
