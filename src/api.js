@@ -50,6 +50,12 @@ export const pic_code = '/login/picCode'
 export const reg_pic_code = '/api/regist/picCode'
 
 /**
+ * 注册
+ * 校验图形验证码
+ */
+export const checkPicCode = '/api/regist/checkPicCode'
+
+/**
  * 登录短信验证码
  */
 export const msg_code = '/login/smsCode'

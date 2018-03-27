@@ -1,7 +1,7 @@
 <template>
     <div class="register-container">
         <div class="register-logo">
-            <span class="logo iconfont icon-ziyuan4"></span><span class="fnt">用户注册</span>
+            <router-link to="/index" class="logo iconfont icon-ziyuan4"></router-link><span class="fnt">用户注册</span>
         </div>
         <div class="register-body">
             <div class="reg-form">
@@ -12,19 +12,22 @@
                     <input class="goast-input" type="password" placeholder="请设置密码" v-model="apiData.passwordOne" @blur="check(apiData.passwordOne,'密码')">
                 </div>
                 <div class="reg-form-wrap">
-                    <input class="goast-input" placeholder="手机验证码" v-model="apiData.smsCode" @blur="check(apiData.smsCode,'手机验证码')">
-                    <a class="getsms" :class="{'disabled':!show}" @click="getmsCode">{{ show?'获取验证码':`重新获取(${count}s)` }}</a>
-                </div>
-                <div class="reg-form-wrap">
-                    <input class="goast-input goast-small" placeholder="输入验证码" v-model="apiData.picCode" @blur="check(apiData.picCode,'验证码')">
+                    <input class="goast-input goast-small" ref="picCode" placeholder="输入验证码" v-model="apiData.picCode" @blur="check(apiData.picCode,'验证码')">
                     <img class="img-code" @click="random = Math.random()" :src="picCodeUrl" />
                     <a @click="random = Math.random()" class="refresh"><span class="iconfont icon-msnui-refresh-line"></span></a>
                 </div>
+                <div class="reg-form-wrap">
+                    <input class="goast-input" placeholder="手机验证码" v-model="apiData.smsCode" @blur="check(apiData.smsCode,'手机验证码')">
+                    <a class="getsms" :class="{'disabled':!show}" @click="getsms">{{ show?'获取验证码':`重新获取(${count}s)` }}</a>
+                </div>
                 <div class="reg-form-wrap smallpadding">
-                    <p class="agreement"> 阅读并同意 <a href="">《淘不锈注册协议》</a></p>
+                    <p class="agreement"> 阅读并同意 <a @click="protocolHide = true">《淘不锈注册协议》</a></p>
                 </div>
                 <div class="reg-form-wrap smallpadding">
                     <a class="btn" @click="registerBtn">注册</a>
+                </div>
+                <div class="reg-form-wrap smallpadding">
+                    <div class="goLogin">已有账号？<router-link to="/login">去登录</router-link></div>
                 </div>
                 <!-- //  错误提示框 -->
                 <div class="err" v-show="isErr">
@@ -33,10 +36,81 @@
             </div>
         </div>
         <p class="copyright">COPYRIGHT copyright 2017 jiedan8.cn 无锡淘不锈电子商务有限公司 版权所有 苏ICP备16036551号-2</p>
-        <!-- <Modal v-model="regSuccess" closable okText="申请认证" cancelText="不申请认证" @onOk="regVal" @onCancel="regCancel">
-                                <div>注册成功！</div>
-                                <div>是否前往申请认证商家账户</div>
-                            </Modal> -->
+        <Modal v-model="protocolHide" width="800" title="淘不锈注册协议">
+            <div class="protocol">
+                <div class="cont">
+                    <label class="block">第1条</label>
+                    <p>
+                        为享有包括采购等更多的服务和平台操作功能，用户可以申请企业账号，首先需具备注册资格，您必须确保系依照中华人民共和国法律法规设立的合法组织，具有在中华人民共和国境内取得工商经营主体资格，并按商户企业账号要求提示上传相应证件。如您没有前述主体资格，本站有权拒绝用户注册或认证，据此造成的损失由您自行承担。
+                    </p>
+                    <br>
+    
+                    <label class="block">第2条</label>
+                    <p>
+                        在您阅读并同意本协议,按照本站申请成为商家页面提示填写完整企业信息上传符合要求的资料信息并经过本站审核通过后，您即为本站企业账号 。
+                    </p>
+                    <br>
+    
+                    <label class="block">第3条</label>
+                    <p>
+                        您在成功完成企业账号申请并审核通过后，即成为企业账号管理员并享有挂货以及售卖行为的权利，您可以通过本站平台在线交易、发布现货库存资源信息、发布求购信息、发布特价资源信息等企业会员服务。
+                    </p>
+                    <br>
+    
+                    <label class="block">第4条</label>
+                    <p>
+                        您申请或认证企业账号时，您设置的企业信息不得侵犯或涉嫌侵犯他人合法权益。如您连续12个月未有使用手机号和密码登录本站及信息更新记录或实际使用本站服务的行为，本站保留对您中止或终止提供服务并注销账户的权利。
+                    </p>
+                    <br>
+    
+                    <label class="block">第5条</label>
+                    <p>
+                        您注册为企业账号后，如注册登记信息发生变更，您须及时、主动联系本站进行更新。因您未及时更新，造成您不能享受相关服务的、或造成账号及密码泄露及一切影响正常交易等所有责任由您自行承担。
+                    </p>
+                    <br>
+    
+    
+                    <label class="block">第6条</label>
+                    <p>
+                        您应对您的手机号和密码的安全，以及对通过其手机号和密码实施的行为负责。您在本站注册的手机号和密码仅限于您自己或您所授权的企业内部人员进行使用，不得给予任何第三方使用，否则由此造成的损失由您自行承担，且本站保留暂停或终止服务的权利（参见本协议3.4项条款）。
+                    </p>
+                    <br>
+    
+                    <label class="block">第7条</label>
+                    <p>
+                        除非有法律规定或司法裁定，且征得本站的同意，否则，手机号和密码不能以任何方式转让、赠与或继承。
+                    </p>
+                    <br>
+    
+                    <label class="block">第8条</label>
+                    <p>
+                        您遗忘或丢失在本站注册的密码及无法找回时，可与本站客户服务人员取得联系，在提供相关证明资料并经本站审核确认后，可找回密码。
+                    </p>
+                    <br>
+    
+                    <label class="block">第9条</label>
+                    <p>
+                        您注册为企业账号后，在本站进行挂货销售活动期间，请按时更新您所售卖产品的最新价格，真实库存等产品信息，如因您的挂货信息不准确，恶意或虚假挂货，一经本站核实，本站保留对您中止或终止提供服务并注销账户的权利，并且一切法律后果由您自行承担。
+                    </p>
+                    <br>
+    
+                    <label class="block">第10条</label>
+                    <p>
+                        您注册为企业账号后，在本站进行发布求购的行为，需真实可靠，不得进行任何形式的恶意以及虚假发布，一经核实为违反本平台规范或法律条款的行为后，本站保留对您中止或终止提供服务并注销账户的权利，并且一切法律后果由您自行承担 。
+                    </p>
+                    <br>
+    
+    
+                    <label class="block">第11条</label>
+                    <p>
+                        本站提供的试点地区免费上门质检服务仅在征得买卖双方均同意认可的情况下方可进行。该项服务可以提供现场视频通讯服务，并于质检现场按照买卖双方均协商同意的事项进行现场质检，本站不参与买卖双方关于是否允许质检的协商讨论。在整个质检过程中，买卖双方均表示同意完成后则质检完成，本站不对质检完成后的任何资金交易，物流运输及收货等进一步交易行为进行负责，一切法律后果由买卖双方自行承担。
+                    </p>
+                </div>
+            </div>
+            <div slot="footer">
+                <a class="btns" @click="protocolHide = false">同意</a>
+            </div>
+        </Modal>
     </div>
 </template>
 
@@ -57,18 +131,22 @@
                 errInfo: '',
                 time: null,
                 count: '',
-                show: true
+                show: true,
+                protocolHide: false
             }
         },
         computed: {
             isMobileOk() {
                 return /^1[3|4|5|8][0-9]\d{4,8}$/.test(this.apiData.mobile)
             },
+            isPicCode() {
+                return this.apiData.picCode != '';
+            },
             //  刷新图片
             picCodeUrl() {
                 let host = '';
                 if (window.location.hostname == 'localhost')
-                    host = 'http://192.168.0.251'
+                    host = 'http://192.168.0.135:8080'
                 return host + this.$api.reg_pic_code + '?t=' + this.random
             },
     
@@ -126,6 +204,37 @@
                     this.$Message.error('请完善表单信息')
                 }
             },
+    
+            //  获取验证码
+            getsms() {
+                if (this.apiData.mobile != '') {
+                    if (this.apiData.picCode != '') {
+                        this.checkPicCode();
+                    } else {
+                        this.isErr = true;
+                        this.errInfo = '请输入图形验证码';
+                    }
+                } else {
+                    this.isErr = true;
+                    this.errInfo = '请输入手机号码';
+                }
+            },
+            checkPicCode() {
+                let params = {
+                    mobile: this.apiData.mobile,
+                    picCode: this.apiData.picCode,
+                    passwordOne: this.apiData.passwordOne,
+                    passwordTwo: this.apiData.passwordOne
+                }
+                this.$http.post(this.$api.checkPicCode, params).then(res => {
+                    if (res.code === 1000) {
+                        this.getmsCode();
+                    } else {
+                        this.isErr = true;
+                        this.errInfo = res.message
+                    }
+                })
+            },
             //  获取短信验证码
             getmsCode() {
                 if (this.show) {
@@ -146,8 +255,8 @@
                             }, 1000)
                         }
                     } else {
-                        this.$Message.error('请输入正确的手机号');
-                        this.$refs.mobile.focus();
+                        this.isErr = true;
+                        this.errInfo = '请输入正确的手机号'
                     }
                 }
             },
@@ -170,7 +279,9 @@
     
     .register-container {
         width: 100%;
-        background: url('../../assets/registerBg.jpg') center center / cover no-repeat fixed;
+        height: 100%;
+        background: url('../../assets/registerBg.jpg') top center no-repeat;
+        background-size: 100% 100%;
         .register-logo {
             padding: 160px 0 100px;
             text-align: center;
@@ -178,6 +289,7 @@
             color: #fff;
             .logo {
                 font-size: 60px;
+                color: #fff;
             }
             .fnt {
                 position: relative;
@@ -280,6 +392,27 @@
         font-size: 12px;
         color: #fff;
         margin-top: 180px;
+    }
+    .goLogin{
+        text-align: center;
+        a{
+            color: #fff;
+        }
+    }
+    .protocol{
+        max-height: 600px;
+        overflow-y: scroll;
+    }
+    .protocol::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+        background: rgba(0, 0, 0, 0.2);
+    }
+    
+    .protocol::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+        border-radius: 0;
+        background: rgba(0, 0, 0, 0.1);
     }
 </style>
 
