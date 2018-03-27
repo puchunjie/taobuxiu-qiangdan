@@ -2,7 +2,7 @@
     <div class="ac-container">
         <div class="head">
             <div class="inner-1200">
-                <span class="iconfont icon-ziyuan4"></span>
+                <router-link to="/index" class="iconfont icon-ziyuan4"></router-link>
                 <span class="tit">商户认证</span>
             </div>
         </div>
@@ -35,7 +35,7 @@
                             <i-input style="width:280px" placeholder="请输入" v-model="userData.companyName" class="form-input"></i-input>
                         </form-item>
                         <form-item label="注册基金" prop="regMoney">
-                            <i-input style="width:100px;margin-right:10px" type="number" placeholder="请输入" v-model="userData.regMoney" class="form-input"></i-input>万元
+                            <i-input style="width:100px;margin-right:10px" placeholder="请输入" v-model="userData.regMoney" class="form-input"></i-input>万元
                         </form-item>
                         <h3 class="f-title">商家业务信息</h3>
                         <form-item label="联系人" prop="contact">
@@ -44,10 +44,10 @@
                         <form-item label="联系电话" prop="contactNum">
                             <i-input style="width:150px" placeholder="请输入联系电话" v-model="userData.contactNum" class="form-input"></i-input>
                         </form-item>
-                        <form-item label="QQ" prop="qq">
+                        <form-item label="QQ">
                             <i-input style="width:150px" placeholder="请输入QQ" v-model="userData.qq" class="form-input"></i-input>
                         </form-item>
-                        <form-item label="传真" prop="fax">
+                        <form-item label="传真">
                             <i-input style="width:150px" placeholder="请输入传真" v-model="userData.fax" class="form-input"></i-input>
                         </form-item>
                         <form-item label="办公地址" prop="provinceId" style="float:left">
@@ -58,18 +58,19 @@
                         </form-item>
                         <div class="clearfix"></div>
                         <form-item label="绑定专员">
-                            <ajaxSelect class="form-input" style="width:240px" :value="JSON.stringify({'saleId':userData.saleId,'saleName':userData.saleName,'saleMobile':userData.saleMobile})" :api="$api.findSalemans" :valueKey="['saleId','saleName','saleMobile']" :labelKey="['saleName','saleMobile']" @on-select="asyncData"></ajaxSelect>
+                            <ajaxSelect class="form-input" style="width:240px" :value="JSON.stringify({'saleId':userData.saleId,'saleName':userData.saleName,'saleMobile':userData.saleMobile})" :api="$api.findSalemans" :valueKey="['saleId','saleName','saleMobile']" :labelKey="['saleName','saleMobile']"
+                                @on-select="asyncData"></ajaxSelect>
                         </form-item>
                         <form-item label="店铺封面">
                             <uploadPic v-model="userData.cover"></uploadPic>
                         </form-item>
-                        <form-item label="店铺简介" prop="sellerProfile">
+                        <form-item label="店铺简介">
                             <i-input style="width:560px" v-model="userData.sellerProfile" :rows="5" type="textarea" placeholder="请填写店铺简介"></i-input>
                         </form-item>
                         <h3 class="f-title">上传证件</h3>
     
                         <div class="certificates clearfix">
-                            <tbRadio v-model="cerfType" :data="[{id:'1',name:'三证合一'},{id:'2',name:'营业执照+组织机构代码证+税务登记证'}]"></tbRadio><br>
+                            <tbRadio v-model="cerfType" :data="[{id:1,name:'三证合一照'},{id:2,name:'营业执照+组织机构代码证+税务登记证'}]"></tbRadio><br>
                             <div class="ivu-form-item-required pic-item" v-show="cerfType == 1">
                                 <label class="ivu-form-item-label" style="float:inherit">合一证照</label><br>
                                 <uploadPic v-model="userData.allCer"></uploadPic>
@@ -132,8 +133,9 @@
                         <form-item label="绑定专员" v-show="userData.saleName != ''">
                             {{ userData.saleName }} {{ userData.saleMobile }}
                         </form-item>
-                        <form-item label="店铺封面" v-show="userData.cover != ''">
+                        <form-item label="店铺封面" style="width:330px;" v-show="userData.cover != ''">
                             <img :src="userData.cover" class="show-pic">
+                            <span class="preview-img"><i @click="previewBtn(userData.cover)" class="iconfont icon-webicon311"></i></span>
                         </form-item>
                         <form-item label="店铺简介">
                             {{ userData.sellerProfile }}
@@ -142,20 +144,24 @@
     
                         <div class="certificates clearfix">
                             <div class="ivu-form-item-required pic-item" v-show="cerfType == 1">
-                                <label class="ivu-form-item-label" style="float:inherit">合一证照</label><br>
+                                <label class="ivu-form-item-label" style="float:inherit">三证合一照</label><br>
                                 <img :src="userData.allCer" class="show-pic">
+                                <span class="preview-img"><i @click="previewBtn(userData.allCer)" class="iconfont icon-webicon311"></i></span>
                             </div>
                             <div class="ivu-form-item-required pic-item" v-show="cerfType == 2">
                                 <label class="ivu-form-item-label" style="float:inherit">营业执照</label><br>
                                 <img :src="userData.bussinessLic" class="show-pic">
+                                <span class="preview-img"><i @click="previewBtn(userData.bussinessLic)" class="iconfont icon-webicon311"></i></span>
                             </div>
                             <div class="ivu-form-item-required pic-item" v-show="cerfType == 2">
                                 <label class="ivu-form-item-label" style="float:inherit">组织机构代码证</label><br>
                                 <img :src="userData.codeLic" class="show-pic">
+                                <span class="preview-img"><i @click="previewBtn(userData.codeLic)" class="iconfont icon-webicon311"></i></span>
                             </div>
                             <div class="ivu-form-item-required pic-item" v-show="cerfType == 2">
                                 <label class="ivu-form-item-label" style="float:inherit">税务登记证</label><br>
                                 <img :src="userData.financeLic" class="show-pic">
+                                <span class="preview-img"><i @click="previewBtn(userData.financeLic)" class="iconfont icon-webicon311"></i></span>
                             </div>
                         </div>
                     </i-form>
@@ -168,7 +174,7 @@
         <div class="agreement" v-show="agHide">
             <div class="panel">
                 <div class="header">
-                    用户协议标题
+                    淘不锈平台商家入驻协议
                     <span class="iconfont icon-close" @click="step = 0,agHide = false"></span>
                 </div>
                 <div class="cont">
@@ -177,66 +183,66 @@
                         为享有包括采购等更多的服务和平台操作功能，用户可以申请企业账号，首先需具备注册资格，您必须确保系依照中华人民共和国法律法规设立的合法组织，具有在中华人民共和国境内取得工商经营主体资格，并按商户企业账号要求提示上传相应证件。如您没有前述主体资格，本站有权拒绝用户注册或认证，据此造成的损失由您自行承担。
                     </p>
                     <br>
-
+    
                     <label class="block">第2条</label>
                     <p>
-                        在您阅读并同意本协议,按照本站申请成为商家页面提示填写完整企业信息上传符合要求的资料信息并经过本站审核通过后，您即为本站企业账号 。 
+                        在您阅读并同意本协议,按照本站申请成为商家页面提示填写完整企业信息上传符合要求的资料信息并经过本站审核通过后，您即为本站企业账号 。
                     </p>
                     <br>
-
+    
                     <label class="block">第3条</label>
                     <p>
-                        您在成功完成企业账号申请并审核通过后，即成为企业账号管理员并享有挂货以及售卖行为的权利，您可以通过本站平台在线交易、发布现货库存资源信息、发布求购信息、发布特价资源信息等企业会员服务。 
+                        您在成功完成企业账号申请并审核通过后，即成为企业账号管理员并享有挂货以及售卖行为的权利，您可以通过本站平台在线交易、发布现货库存资源信息、发布求购信息、发布特价资源信息等企业会员服务。
                     </p>
                     <br>
-
+    
                     <label class="block">第4条</label>
                     <p>
                         您申请或认证企业账号时，您设置的企业信息不得侵犯或涉嫌侵犯他人合法权益。如您连续12个月未有使用手机号和密码登录本站及信息更新记录或实际使用本站服务的行为，本站保留对您中止或终止提供服务并注销账户的权利。
                     </p>
                     <br>
-
+    
                     <label class="block">第5条</label>
                     <p>
-                        您注册为企业账号后，如注册登记信息发生变更，您须及时、主动联系本站进行更新。因您未及时更新，造成您不能享受相关服务的、或造成账号及密码泄露及一切影响正常交易等所有责任由您自行承担。 
+                        您注册为企业账号后，如注册登记信息发生变更，您须及时、主动联系本站进行更新。因您未及时更新，造成您不能享受相关服务的、或造成账号及密码泄露及一切影响正常交易等所有责任由您自行承担。
                     </p>
                     <br>
-
-
+    
+    
                     <label class="block">第6条</label>
                     <p>
-                    您应对您的手机号和密码的安全，以及对通过其手机号和密码实施的行为负责。您在本站注册的手机号和密码仅限于您自己或您所授权的企业内部人员进行使用，不得给予任何第三方使用，否则由此造成的损失由您自行承担，且本站保留暂停或终止服务的权利（参见本协议3.4项条款）。
+                        您应对您的手机号和密码的安全，以及对通过其手机号和密码实施的行为负责。您在本站注册的手机号和密码仅限于您自己或您所授权的企业内部人员进行使用，不得给予任何第三方使用，否则由此造成的损失由您自行承担，且本站保留暂停或终止服务的权利（参见本协议3.4项条款）。
                     </p>
                     <br>
-
+    
                     <label class="block">第7条</label>
                     <p>
-                    除非有法律规定或司法裁定，且征得本站的同意，否则，手机号和密码不能以任何方式转让、赠与或继承。 
+                        除非有法律规定或司法裁定，且征得本站的同意，否则，手机号和密码不能以任何方式转让、赠与或继承。
                     </p>
                     <br>
-
+    
                     <label class="block">第8条</label>
                     <p>
-                    您遗忘或丢失在本站注册的密码及无法找回时，可与本站客户服务人员取得联系，在提供相关证明资料并经本站审核确认后，可找回密码。
+                        您遗忘或丢失在本站注册的密码及无法找回时，可与本站客户服务人员取得联系，在提供相关证明资料并经本站审核确认后，可找回密码。
                     </p>
                     <br>
-
+    
                     <label class="block">第9条</label>
                     <p>
-                    您注册为企业账号后，在本站进行挂货销售活动期间，请按时更新您所售卖产品的最新价格，真实库存等产品信息，如因您的挂货信息不准确，恶意或虚假挂货，一经本站核实，本站保留对您中止或终止提供服务并注销账户的权利，并且一切法律后果由您自行承担。
+                        您注册为企业账号后，在本站进行挂货销售活动期间，请按时更新您所售卖产品的最新价格，真实库存等产品信息，如因您的挂货信息不准确，恶意或虚假挂货，一经本站核实，本站保留对您中止或终止提供服务并注销账户的权利，并且一切法律后果由您自行承担。
                     </p>
                     <br>
-
+    
                     <label class="block">第10条</label>
                     <p>
-                    您注册为企业账号后，在本站进行发布求购的行为，需真实可靠，不得进行任何形式的恶意以及虚假发布，一经核实为违反本平台规范或法律条款的行为后，本站保留对您中止或终止提供服务并注销账户的权利，并且一切法律后果由您自行承担 。
+                        您注册为企业账号后，在本站进行发布求购的行为，需真实可靠，不得进行任何形式的恶意以及虚假发布，一经核实为违反本平台规范或法律条款的行为后，本站保留对您中止或终止提供服务并注销账户的权利，并且一切法律后果由您自行承担 。
                     </p>
                     <br>
-
-
+    
+    
                     <label class="block">第11条</label>
                     <p>
-                    本站提供的试点地区免费上门质检服务仅在征得买卖双方均同意认可的情况下方可进行。该项服务可以提供现场视频通讯服务，并于质检现场按照买卖双方均协商同意的事项进行现场质检，本站不参与买卖双方关于是否允许质检的协商讨论。在整个质检过程中，买卖双方均表示同意完成后则质检完成，本站不对质检完成后的任何资金交易，物流运输及收货等进一步交易行为进行负责，一切法律后果由买卖双方自行承担。
+                        本站提供的试点地区免费上门质检服务仅在征得买卖双方均同意认可的情况下方可进行。该项服务可以提供现场视频通讯服务，并于质检现场按照买卖双方均协商同意的事项进行现场质检，本站不参与买卖双方关于是否允许质检的协商讨论。在整个质检过程中，买卖双方均表示同意完成后则质检完成，本站不对质检完成后的任何资金交易，物流运输及收货等进一步交易行为进行负责，一切法律后果由买卖双方自行承担。
                     </p>
                 </div>
                 <div class="bar-btn">
@@ -245,6 +251,14 @@
                 </div>
             </div>
         </div>
+        <Modal v-model="prevHide" width="800" title="查看大图">
+            <div class="preview-imgs">
+                <img :src="showImg">
+            </div>
+            <div slot="footer">
+                <a class="btns" @click="prevHide = false">关闭</a>
+            </div>
+        </Modal>
     </div>
 </template>
 
@@ -253,10 +267,13 @@
     import citySelect from '@/components/basics/citySelect/index'
     import uploadPic from '@/views/contract/authentication/parts/uploadPic.vue'
     import tbRadio from '@/components/business/tbRadio/index.vue'
+    import loginInit from '../../utils/loginInit.js'
     import {
         mapGetters
     } from 'vuex'
+    import * as types from '@/store/types'
     export default {
+        mixins: [loginInit],
         components: {
             ajaxSelect,
             citySelect,
@@ -265,11 +282,12 @@
         },
         data() {
             return {
+                prevHide: false,
                 isFirst: true,
                 pass: '',
                 spinShow: false,
                 agHide: false,
-                cerfType: 1,
+                cerfType: 2,
                 step: 0,
                 remark: '',
                 steps: [{
@@ -333,16 +351,6 @@
                         message: '联系电话不能为空',
                         trigger: 'blur'
                     }],
-                    qq: [{
-                        required: true,
-                        message: 'QQ不能为空',
-                        trigger: 'blur'
-                    }],
-                    fax: [{
-                        required: true,
-                        message: '传真不能为空',
-                        trigger: 'blur'
-                    }],
                     provinceId: [{
                         required: true,
                         message: '请选择办公地址',
@@ -352,13 +360,9 @@
                         required: true,
                         message: '详细地址不能为空',
                         trigger: 'blur'
-                    }],
-                    sellerProfile: [{
-                        required: true,
-                        message: '填写店铺简介',
-                        trigger: 'blur'
                     }]
-                }
+                },
+                showImg: ''
             }
         },
         computed: {
@@ -367,7 +371,7 @@
                 let obj = this.$clearData(this.userData),
                     ok = true,
                     picOk = true;
-                ['id','saleId', 'saleName', 'saleMobile', 'cover', 'allCer', 'bussinessLic', 'codeLic', 'financeLic'].forEach(key => delete obj[key]);
+                ['id', 'saleId', 'saleName', 'saleMobile', 'qq', 'fax', 'sellerProfile', 'cover', 'allCer', 'bussinessLic', 'codeLic', 'financeLic'].forEach(key => delete obj[key]);
                 Object.keys(obj).forEach(key => {
                     if (obj[key] == '') {
                         ok = false;
@@ -384,21 +388,24 @@
             }
         },
         watch: {
+            base() {
+                this.getStep();
+            },
             pass(val) {
                 if (val == undefined) {
                     this.step = 0;
                 } else if (val == 2 || val == 3) {
-                    this.step  = 2;
+                    this.step = 2;
                 } else if (val == 1) {
                     this.step = 3;
                 }
             },
-            cerfType(val){
-                if(val == 1){
+            cerfType(val) {
+                if (val == 1) {
                     this.userData.bussinessLic = '';
                     this.userData.financeLic = '';
                     this.userData.codeLic = '';
-                }else if(val == 2){
+                } else if (val == 2) {
                     this.userData.allCer = '';
                 }
             }
@@ -411,10 +418,11 @@
                 }).then(res => {
                     if (res.code === 1000) {
                         this.pass = res.data.buserInfo ? res.data.buserInfo.pass : undefined;
-                        if(res.data.buserInfo){
+                        if (res.data.buserInfo) {
                             Object.keys(this.userData).forEach(key => this.userData[key] = res.data.buserInfo[key] ? res.data.buserInfo[key] : '');
                             this.remark = res.data.buserInfo.remark;
-                        } 
+                            this.cerfType = this.userData.allCer != '' ? 1 : 2;
+                        }
                     }
                 })
             },
@@ -444,6 +452,11 @@
             reCommit() {
                 this.isFirst = false;
                 this.step--;
+            },
+            //  预览大图
+            previewBtn(data) {
+                this.prevHide = true;
+                this.showImg = data;
             }
         },
         created() {
@@ -665,9 +678,24 @@
                     width: 100%;
                     padding: 0 40px;
                     .pic-item {
+                        position: relative;
                         margin-top: 30px;
                         margin-right: 30px;
                         float: left;
+                    }
+                }
+                .preview-img {
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 20px;
+                    line-height: 20px;
+                    text-align: right;
+                    background-color: rgba(255, 255, 255, 0.5);
+                    .iconfont {
+                        color: #fff;
+                        cursor: pointer;
                     }
                 }
                 .footer {
@@ -694,6 +722,14 @@
                     }
                 }
             }
+        }
+    }
+    
+    .preview-imgs {
+        img {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
         }
     }
 </style>
