@@ -5,6 +5,7 @@
             <router-link :class="{'active':$route.name == 'index'}" :to="{name:'index'}" tag="li">首页</router-link>
             <router-link :class="{'active':$route.name == 'publishIron'}" :to="{name:'publishIron',params:{isCopy: 0}}" tag="li">发布求购</router-link>
             <router-link :class="{'active':$route.name == 'mIron' || $route.name == 'mPlan' || $route.name == 'mSpecial'}" :to="{name:'market'}" tag="li">资源市场</router-link>
+            <router-link :class="{'active':$route.name == 'logistics'}" :to="{name:'logistics'}" tag="li">找物流</router-link>
         </ul>
         <div class="account-group">
             <router-link :to="{name:'Bbuys',params:{isToday:1}}" class="br" :class="{'active':isBuyer}">买家中心</router-link>

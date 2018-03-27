@@ -6,7 +6,7 @@ if (process.env.NODE_ENV == 'development') {
 } else {
     // ws = 'ws://120.55.63.70:8080/websocket';
     // ws = 'ws://111.231.134.170:8080/websocket';
-    ws = 'ws://192.168.0.251/websocket';
+    ws = `ws://${window.location.host}/websocket`;
     uploadHost = ''
 }
 

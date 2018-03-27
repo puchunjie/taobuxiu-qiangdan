@@ -118,13 +118,14 @@
                     endPlaces: JSON.stringify(this.endPlaces),
                     logisticsExtraDemands: JSON.stringify(this.logisticsExtraDemands),
                     freightLogisticGoods: this.combination(),
-                    tel: this.tel
+                    tel: this.tel,
+                    remark: this.remark
                 }
             },
             combination() {
                 let arr = [];
                 for (let i = 1; i <= 3; i++) {
-                    if (this['freGoods' + i].length>0)
+                    if (this['freGoods' + i].length>0 && this['weight' + i] != '')
                         arr.push({
                             goodId: this['freGoods' + i][0].id + ',' + this['freGoods' + i][1].id,
                             goodName: this['freGoods' + i][0].name + ',' + this['freGoods' + i][1].name,
@@ -148,7 +149,6 @@
                         }
                     })
                 }else{
-                    console.log("参数不全")
                     this.$Message.error('请将参数填写完整！')
                 }
             }
@@ -236,10 +236,10 @@
                     padding: 0;
                     text-indent: 10px;
                     vertical-align: top;
-                    .placeholder( {
+                    .placeholder {
                         color: #999
                     }
-                    );
+                  
                     &:focus {
                         outline: 0
                     }

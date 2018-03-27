@@ -3,9 +3,9 @@
         <div class="banner-container">
             <div class="inner-warp">
                 <longBar isNew>
-                    <span style="font-size:30px;vertical-align: middle;" class="iconfont icon-ziyuandefuben"></span>
+                    <a href="http://www.itaobuxiu.com" target="_blank" style="font-size:30px;vertical-align: middle;cursor: pointer;" class="iconfont icon-ziyuandefuben"></a>
                     <span class="shu"></span>
-                    <span style="font-size:18px">物流中心</span>
+                    <router-link tag="span" :to="{name:'index'}" class="iconfont icon-ziyuan4" style="font-size:45px;vertical-align: middle;cursor: pointer;"></router-link>
                 </longBar>
                 <p class="p1">淘不锈物流 让钢材运</p>
                 <p class="p2">更简单、更放心、更准时</p>

@@ -122,7 +122,6 @@
                 let acItem = nowItem.data[i];
                 nowItem.active = i;
                 nowItem.label = acItem.shortName;
-                this.results = this.collectResults;
                 // 是否是最终选择完成，activeTab >= 2
                 if (this.activeTab < 2) {
                     this.tabs.forEach((item, i) => {
@@ -134,6 +133,7 @@
                     this.activeTab++;
                     this.getData();
                 } else {
+                    this.results = this.collectResults;
                     this.closePanel();
                 }
             },

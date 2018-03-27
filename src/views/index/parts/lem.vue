@@ -199,7 +199,7 @@
                     this.$ls.set('rand', rand);
                 }
                 // // 建立WebSocket链接
-                let ws = new WebSocket(this.$api.ws + '/ni?pg' + rand);
+                let ws = new WebSocket('ws://120.55.63.70:8080/websocket/ni?pg' + rand);
     
                 ws.onopen = function(evt) {
                     // console.log("lem链接成功 ...");
