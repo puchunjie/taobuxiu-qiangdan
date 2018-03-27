@@ -45,24 +45,31 @@
             }
         },
         watch: {
-            activeItem(){
-                this.$emit('input', this.activeItem.id);
+            // activeItem(old,newVal){
+            //     if(newVal.id)
+            //         this.$emit('input', this.activeItem.id);
+            // }
+            value(val){
+                this.activeIndex = findIndex(this.data, el => {
+                    return el.id == val
+                })
             }
         },
         methods: {
             picker(i) {
                 this.activeIndex = i;
+                this.$emit('input', this.activeItem.id);
             },
             setActive() {
                 let inputActive = findIndex(this.data, el => {
-                    return el.id == this.id
+                    return el.id == this.activeItem.id
                 })
                 if (inputActive > 0) {
                     this.activeIndex = inputActive;
                 } else {
                     this.activeIndex = 0;
-                    this.$emit('input', this.activeItem.id);
                 }
+                this.$emit('input', this.activeItem.id);
                 this.isInit = true;
             }
         },
