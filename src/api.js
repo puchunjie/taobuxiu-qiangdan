@@ -684,7 +684,7 @@ export const findAllLogisticsExtraDemand = '/api/query/findAllLogisticsExtraDema
 /**
  * 物流滚动查询
  */
-export const findScrollFreightLogisticOrder = '/demands/freightLogisticOrder/findScrollFreightLogisticOrder'
+export const findScrollFreightLogisticOrder = '/api/query/findScrollFreightLogisticOrder'
 
 /**
  * 查询货物信息
