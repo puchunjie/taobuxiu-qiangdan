@@ -520,6 +520,7 @@
                     line-height: 40px;
                     text-align: center;
                     background-color: @dark_blue;
+                    vertical-align: middle;
                     .borderRadius;
                     &.goast {
                         background-color: #fff;

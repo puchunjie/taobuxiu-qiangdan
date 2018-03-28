@@ -21,10 +21,10 @@
                     <a class="getsms" :class="{'disabled':!show}" @click="getsms">{{ show?'获取验证码':`重新获取(${count}s)` }}</a>
                 </div>
                 <div class="reg-form-wrap smallpadding">
-                    <p class="agreement"> 阅读并同意 <a @click="protocolHide = true">《淘不锈注册协议》</a></p>
+                    <p class="agreement"><i class="iconfont" @click="agrHandle" :class="agreement ? 'icon-check-box':'icon-check_box_unselecte'"></i> 阅读并同意 <a @click="protocolHide = true">《淘不锈注册协议》</a></p>
                 </div>
                 <div class="reg-form-wrap smallpadding">
-                    <a class="btn" @click="registerBtn">注册</a>
+                    <a class="btn" :class="agreement ? '':'disabled'" @click="registerBtn">注册</a>
                 </div>
                 <div class="reg-form-wrap smallpadding">
                     <div class="goLogin">已有账号？<router-link to="/login">去登录</router-link></div>
@@ -108,7 +108,7 @@
                 </div>
             </div>
             <div slot="footer">
-                <a class="btns" @click="protocolHide = false">同意</a>
+                <a class="btns" @click="protocolHide = false,agreement = true">同意</a>
             </div>
         </Modal>
     </div>
@@ -132,7 +132,8 @@
                 time: null,
                 count: '',
                 show: true,
-                protocolHide: false
+                protocolHide: false,
+                agreement: true
             }
         },
         computed: {
@@ -146,7 +147,7 @@
             picCodeUrl() {
                 let host = '';
                 if (window.location.hostname == 'localhost')
-                    host = 'http://192.168.0.135:8080'
+                    host = 'http://192.168.0.251'
                 return host + this.$api.reg_pic_code + '?t=' + this.random
             },
     
@@ -166,6 +167,7 @@
                 this.register();
             },
             register() {
+                if(this.agreement){
                 if (this.apiData.passwordOne != '' && this.apiData.mobile != '' && this.apiData.smsCode != '' && this.apiData.picCode != '') {
                     this.apiData.passwordTwo = this.apiData.passwordOne;
                     this.$http.post(this.$api.registUser, this.apiData).then(res => {
@@ -202,6 +204,7 @@
                     })
                 } else {
                     this.$Message.error('请完善表单信息')
+                }
                 }
             },
     
@@ -264,6 +267,9 @@
                 return this.$http.post(this.$api.reg_msg_code, {
                     mobile: this.apiData.mobile
                 })
+            },
+            agrHandle(){
+                this.agreement = !this.agreement;
             }
         }
     }
@@ -378,8 +384,35 @@
                 &:hover {
                     background-color: @hover_blue;
                 }
+                &.disabled{
+                    background: #888;
+                    cursor: not-allowed;
+                }
             }
             .agreement {
+                .iconfont{
+                    position: relative;
+                    cursor: pointer;
+                    vertical-align: -2px;
+                    &.icon-check-box{
+                        color: #2856B6;
+                        z-index: 9;
+                        &:after{
+                            content: '';
+                            position: absolute;
+                            width: 14px;
+                            height: 14px;
+                            display: inline-block;
+                            top: 1px;
+                            left: 1px;
+                            background-color: #fff;
+                            z-index: -1;
+                        }
+                    }
+                    &.icon-check_box_unselecte{
+                        color: #fff;
+                    }
+                }
                 a {
                     color: #fff;
                 }
