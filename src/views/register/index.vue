@@ -1,5 +1,6 @@
 <template>
     <div class="register-container">
+        <div class="register-bg"></div>
         <div class="register-logo">
             <router-link to="/index" class="logo iconfont icon-ziyuan4"></router-link><span class="fnt">用户注册</span>
         </div>
@@ -286,8 +287,16 @@
     .register-container {
         width: 100%;
         height: 100%;
-        background: url('../../assets/registerBg.jpg') top center no-repeat;
-        background-size: 100% 100%;
+        .register-bg{
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('../../assets/registerBg.jpg') center center no-repeat;
+            background-size: 100% 100%;
+            z-index: -1;
+        }
         .register-logo {
             padding: 160px 0 100px;
             text-align: center;
