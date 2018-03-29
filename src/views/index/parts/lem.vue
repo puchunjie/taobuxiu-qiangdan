@@ -186,7 +186,7 @@
                     if (day.code === 1000 && mounth.code === 1000) {
                         this.list = [day.data, mounth.data];
                         this.chartInit();
-                        this.scoketInit();
+                        // this.scoketInit();
                     }
                 }))
             },
