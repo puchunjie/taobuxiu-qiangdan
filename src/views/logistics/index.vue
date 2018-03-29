@@ -7,7 +7,7 @@
                     <span class="shu"></span>
                     <router-link tag="span" :to="{name:'index'}" class="iconfont icon-ziyuan4" style="font-size:45px;vertical-align: middle;cursor: pointer;"></router-link>
                 </longBar>
-                <p class="p1">淘不锈物流 让钢材运</p>
+                <p class="p1">淘不锈物流 让钢材运输</p>
                 <p class="p2">更简单、更放心、更准时</p>
                 <lForm></lForm>
             </div>

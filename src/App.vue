@@ -11,9 +11,9 @@
 <style lang="less">
   @import './assets/base.less';
   @import "./assets/common.less";
-  html,body{
-    height: 100%;
-  }
+  // html,body{
+  //   height: 100%;
+  // }
 
   .main-container {
     width: 100%;
