@@ -4,6 +4,7 @@
             <div class="inner-1200">
                 <router-link to="/index" class="iconfont icon-ziyuan4"></router-link>
                 <span class="tit">商户认证</span>
+                <router-link to="/index" class="goIndex">首页</router-link>
             </div>
         </div>
         <div class="step-bar" v-show="step > 0">
@@ -34,7 +35,7 @@
                         <form-item label="公司名称" prop="companyName">
                             <i-input style="width:280px" placeholder="请输入" v-model="userData.companyName" class="form-input"></i-input>
                         </form-item>
-                        <form-item label="注册基金" prop="regMoney">
+                        <form-item label="注册资金" prop="regMoney">
                             <i-input style="width:100px;margin-right:10px" placeholder="请输入" v-model="userData.regMoney" class="form-input"></i-input>万元
                         </form-item>
                         <h3 class="f-title">商家业务信息</h3>
@@ -72,7 +73,7 @@
                         <div class="certificates clearfix">
                             <tbRadio v-model="cerfType" :data="[{id:1,name:'三证合一照'},{id:2,name:'营业执照+组织机构代码证+税务登记证'}]"></tbRadio><br>
                             <div class="ivu-form-item-required pic-item" v-show="cerfType == 1">
-                                <label class="ivu-form-item-label" style="float:inherit">合一证照</label><br>
+                                <label class="ivu-form-item-label" style="float:inherit">三证合一照</label><br>
                                 <uploadPic v-model="userData.allCer"></uploadPic>
                             </div>
                             <div class="ivu-form-item-required pic-item" v-show="cerfType == 2">
@@ -111,7 +112,7 @@
                         <form-item label="公司名称">
                             {{ userData.companyName }}
                         </form-item>
-                        <form-item label="注册基金">
+                        <form-item label="注册资金">
                             {{ userData.regMoney }} 万元
                         </form-item>
                         <h3 class="f-title">商家业务信息</h3>
@@ -473,6 +474,11 @@
         width: 1200px;
         height: 100%;
         margin: 0 auto;
+        .goIndex{
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
     }
     
     .agreement {
