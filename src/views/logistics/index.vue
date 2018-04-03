@@ -57,7 +57,7 @@
                     <ul class="item">
                         <li v-for="(item,i) in listData" :key="i">
                             <span class="date">{{ item.createTime | dateformat('hh:mm') }}</span>
-                            <span class="tel">{{ item.tell }}</span>
+                            <span class="tel">{{ item.tell | hidePhone }}</span>
                             <span style="margin-left:60px">委托货物<span style="color:#1BC08B">{{ item.event }}</span>吨(T)</span>
                         </li>
                     </ul>

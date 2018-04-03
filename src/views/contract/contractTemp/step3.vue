@@ -34,7 +34,7 @@
                     <div class="label">
                         <span class="iconfont icon-bitianxiang"></span> 公司名称
                     </div>
-                    <p class="input-disable">{{ base.realName }}</p>
+                    <p class="input-disable">{{ user.companyName }}</p>
                 </div>
                 <div class="from-group">
                     <div class="label">
@@ -122,7 +122,7 @@
             }
         },
         computed: {
-            ...mapGetters(['base']),
+            ...mapGetters(['base','user']),
             type() {
                 return this.$route.params.type
             },
