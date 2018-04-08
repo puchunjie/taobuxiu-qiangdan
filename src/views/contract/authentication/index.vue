@@ -121,6 +121,9 @@
                 this.startAtAction();
             },
             goOnrz() {
+                let data = this.$clearData(this.rzInfo);
+                data.v = this.ajaxHead.loginId;
+                this.$ls.set('rzInfo', data);
                 this.$router.push({
                     name: this.type == 1 ? 'BatStep2' : 'SatStep2',
                     params: {
