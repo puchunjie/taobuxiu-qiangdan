@@ -1,12 +1,14 @@
 <template>
     <div class="offer-list">
-        <div class="tit">报价列表</div>
+        <div class="tit">报价列表
+            <div class="time"><slot></slot></div>
+        </div>
         <div class="list-row list-head">
             <div class="item date">时间</div>
             <div class="item price">单价</div>
             <div class="item tolerance">公差</div>
             <div class="item proPlaces">产地</div>
-            <div class="item totlePrice">总价</div>
+            <!-- <div class="item totlePrice">总价</div> -->
             <div class="item remark">备注</div>
             <div class="item action"></div>
         </div>
@@ -69,6 +71,7 @@
         border: @b_d1;
         .borderRadius;
         .tit {
+            position: relative;
             width: 100%;
             height: 50px;
             line-height: 50px;
@@ -76,6 +79,12 @@
             color: @f_dark;
             border-bottom: @b_d1;
             .p20;
+
+            .time{
+                position: absolute;
+                right: 15px;
+                top: 0;
+            }
         }
         .offers-scorll-warp {
             width: 100%;
@@ -111,13 +120,9 @@
                     min-width: 100px;
                     width: 12.13%;
                 }
-                &.totlePrice {
-                    min-width: 100px;
-                    width: 12.13%;
-                }
                 &.remark {
-                    min-width: 210px;
-                    width: 25.5%;
+                    min-width: 310px;
+                    width: 37.63%;
                 }
                 &.action {
                     min-width: 153px;

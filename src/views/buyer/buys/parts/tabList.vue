@@ -28,7 +28,7 @@
 <style lang="less" scoped>
     .tab-list {
         position: absolute;
-        width: 330px;
+        width: 398px;
         margin-top: 16px;
         min-height: 630px;
         .page-count {

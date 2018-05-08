@@ -19,8 +19,19 @@
                       </div>
                       <offerItem :item="selectBusiness" v-if="selectBusiness" :isDone="false" style="border-bottom:0"></offerItem>
                     </div>
-                    <Info :item="activeItem"></Info>
-                    <offerList :offerList="offerList" :buyStatus="activeItem.buyStatus" @on-bidDone="bidDone"></offerList>
+                    <!-- <Info :item="activeItem"></Info> -->
+                    <offerList :offerList="offerList" :buyStatus="activeItem.buyStatus" @on-bidDone="bidDone">
+                        <template v-if="activeItem.buyStatus == 1">
+                          剩余时间：<countDown :endTime="activeItem.createTime + activeItem.timeLimit" :nowTime="activeItem.serveTime"></countDown>
+                      </template>
+                      <template v-else-if="activeItem.buyStatus == 2">
+                          成交时间：{{ activeItem.updateTime | dateformat }}
+                      </template>
+                      <template v-else>
+                          失效时间：{{ activeItem.updateTime | dateformat }}
+                      </template>
+
+                    </offerList>
                   </div>
                   <!-- 编辑面板 -->
                   <div class="edit-container" v-if="editShow">
@@ -32,7 +43,7 @@
                       <editItem :data="activeItem" @on-close="editShow = false" @on-save="doEdit"></editItem>
                     </div>
                   </div>
-</template>
+    </template>
     <img v-else class="no-list" src="http://tbxoss.oss-cn-hangzhou.aliyuncs.com/assets/no-list.png">
   </div>
 </template>
@@ -49,6 +60,7 @@
   import editItem from './parts/editItem.vue';
   import offerItem from './parts/offerItem.vue';
   import pushAsync from '@/utils/pushAsync.js'
+  import countDown from '@/components/countDown.vue'
   export default {
     mixins: [pushAsync],
     components: {
@@ -58,7 +70,8 @@
       Info,
       offerList,
       editItem,
-      offerItem
+      offerItem,
+      countDown
     },
     data() {
       return {
@@ -262,7 +275,7 @@
 <style lang="less" scoped>
   @import '../../../assets/base.less';
   .info-list {
-    margin: 16px 0 0 330px;
+    margin: 16px 0 0 398px;
   }
   
   .buy-index {

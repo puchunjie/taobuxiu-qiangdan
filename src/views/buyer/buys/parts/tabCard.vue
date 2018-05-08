@@ -6,12 +6,15 @@
                 <span>{{ item.materialName }}</span>
                 <span>{{ item.surfaceName }}</span>
                 <span>{{ item.proPlacesName }}</span>
+
+                <span class="pro-place">{{ item.locationName }}</span>
             </h3>
             <p>
                 <span>{{ item.specifications!= '' ? item.specifications : `${ item.height }*${ item.width }*${ item.length }` }}</span>
                 <span>{{ item.tolerance }}</span>
+                <span>{{ item.weights != '' ? `${item.weights}${item.weightUnit}` : '-' }}/{{ item.numbers != '' ? `${item.numbers}${item.numberUnit}` : '-' }}</span>
             </p>
-            <p>{{ item.remark }}</p>
+            <p>{{ item.remark | emptyHlod('暂无备注') }}</p>
             <p class="goast">{{ item.createTime | dateformat }}</p>
         </div>
         <div class="count-action">
@@ -86,12 +89,12 @@
     @import '../../../../assets/base.less';
     .tab-card {
         position: relative;
-        width: 312px;
+        width: 380px;
         height: 100px;
         .borderRadius;
         .content {
             float: left;
-            width: 248px;
+            width: 315px;
             height: 100px;
             padding: 0 10px;
             margin-left: 4px;
@@ -100,12 +103,28 @@
             background-color: #fff;
             color: @f_dark;
             .point-title {
+                position: relative;
                 height: 30px;
                 line-height: 30px;
                 font-weight: bold;
                 .ellipsis;
                 span {
                     margin-right: 8px;
+                }
+
+                .pro-place{
+                    position: absolute;
+                    margin: 0;
+                    display: block;
+                    width: auto;
+                    height: 20px;
+                    line-height: 18px;
+                    border: 1px solid;
+                    right: 0;
+                    top: 5px;
+                    padding: 0 10px;
+                    font-size: 14px;
+                    .borderRadius;
                 }
             }
             p {
@@ -169,6 +188,10 @@
                     background-color: #fff3d1;
                 }
             }
+            .pro-place{
+                color: @light_yellow;
+                border-color: @light_yellow;
+            }
         }
         &.status1.active {
             &:before {
@@ -187,6 +210,10 @@
                     background-color: #f3ffe5;
                 }
             }
+            .pro-place{
+                color: @light_green;
+                border-color: @light_green;
+            }
         }
         &.status2.active {
             &:before {
@@ -204,6 +231,10 @@
                     border-color: @f_goast;
                     background-color: #d1d1d1;
                 }
+            }
+            .pro-place{
+                color: @f_goast;
+                border-color: @f_goast;
             }
         }
         &.status3.active {

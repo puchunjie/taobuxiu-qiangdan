@@ -196,13 +196,13 @@
         </div>
         <div class="action-btns">
             <template v-if="item.offerStatus == 0">
-                    <a class="btn goast" @click="ignore">无计划或无货</a>
-                    <a class="btn" @click="offer">立即报价</a>
-</template>
+                <a class="btn goast" @click="ignore">无计划或无货</a>
+                <a class="btn" @click="offer">立即报价</a>
+            </template>
 
-<template v-else-if="item.offerStatus == 1">
-    <a v-if="item.ironSell.length < 6" class="btn" @click="offer">修改报价</a>
-</template>
+            <template v-else-if="item.offerStatus == 1">
+                <a v-if="item.ironSell.length < 6" class="btn" @click="offer">修改报价</a>
+            </template>
         </div>
         <div class="offers-warp" v-show="offerHistory">
             <p style="margin-bottom:10px">报价历史</p>
@@ -270,20 +270,15 @@
                 return this.item.ironTypeName == '不锈钢卷' || this.item.ironTypeName == '不锈钢板'
             },
             units() {
-                let arr = [];
-                if (this.item.numbers != '')
-                    arr.push({
-                        name: this.item.numberUnit,
-                        id: this.item.numberUnitId,
-                        key: 'numbers'
-                    })
-                if (this.item.weights != '')
-                    arr.push({
-                        name: this.item.weightUnit,
-                        id: this.item.weightUnitId,
-                        key: 'weights'
-                    })
-                return arr
+                return [{
+                    name: this.item.numberUnit,
+                    id: this.item.numberUnitId,
+                    key: 'numbers'
+                }, {
+                    name: this.item.weightUnit,
+                    id: this.item.weightUnitId,
+                    key: 'weights'
+                }];
             },
             unit() {
                 return this.units[this.activeUnit]
@@ -350,7 +345,7 @@
                 this.fuzzy.selectApi = this.$api.G_getProPlaces;
                 this.fuzzy.oldVal = event.target.value;
                 this.fuzzy.isCity = inputId.indexOf('city') >= 0;
-
+    
                 this.fuzzy.show = false;
                 setTimeout(() => {
                     this.fuzzy.show = true

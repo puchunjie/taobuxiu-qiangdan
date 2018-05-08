@@ -6,10 +6,10 @@
             <div class="item price">&yen;{{ item.offerPerPrice }}/{{ item.baseUnit }}</div>
             <div class="item tolerance">{{ item.tolerance | emptyHlod }}</div>
             <div class="item proPlaces">{{ item.offerPlaces }}</div>
-            <div class="item totlePrice">&yen;{{ item.offerPrice }}</div>
+            <!-- <div class="item totlePrice">&yen;{{ item.offerPrice }}</div> -->
             <div class="item remark">
                 <Poptip placement="bottom" trigger="hover" :content="item.offerRemark">
-                    {{item.offerRemark}}
+                    {{item.offerRemark }}
                 </Poptip>
             </div>
         </div>
@@ -63,7 +63,7 @@
             <div class="item price">&yen;{{ sub.offerPerPrice }}/{{ sub.baseUnit }}</div>
             <div class="item tolerance">{{ sub.tolerance }}</div>
             <div class="item proPlace">{{ sub.offerPlaces }}</div>
-            <div class="item totlePrice">&yen;{{ sub.offerPrice }}</div>
+            <!-- <div class="item totlePrice">&yen;{{ sub.offerPrice }}</div> -->
             <div class="item remark">{{ sub.offerRemark }}</div>
         </div>
     </div>
@@ -157,13 +157,9 @@
                 min-width: 100px;
                 width: 12.13%;
             }
-            &.totlePrice {
-                min-width: 100px;
-                width: 12.13%;
-            }
             &.remark {
-                min-width: 210px;
-                width: 25.5%;
+                min-width: 310px;
+                width: 37.63%;
                 .ellipsis;
             }
         }
