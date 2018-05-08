@@ -6,7 +6,7 @@
                     <tabCard v-for="(item,index) in list" @click.native="selectItem(index)" :class="{ 'active':activeIndex == index }" :key="index" :item="item" :index="index" @on-edit="itemEdit" @on-del="deleteItem" @on-copy="copy(index)"></tabCard>
                   </tabList>
                   <div class="info-list">
-                    <div class="winner-panel" v-if="activeItem.buyStatus == 2">
+                    <!-- <div class="winner-panel" v-if="activeItem.buyStatus == 2">
                       <div class="tit">中标商家</div>
                       <div class="list-row list-head">
                         <div class="item date">时间</div> 
@@ -18,7 +18,7 @@
                         <div class="item action"></div>
                       </div>
                       <offerItem :item="selectBusiness" v-if="selectBusiness" :isDone="false" style="border-bottom:0"></offerItem>
-                    </div>
+                    </div> -->
                     <!-- <Info :item="activeItem"></Info> -->
                     <offerList :offerList="offerList" :buyStatus="activeItem.buyStatus" @on-bidDone="bidDone">
                         <template v-if="activeItem.buyStatus == 1">

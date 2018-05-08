@@ -88,7 +88,7 @@
         }
         .offers-scorll-warp {
             width: 100%;
-            height: 330px;
+            height: 520px;
             overflow-x: hidden;
         }
         .list-head {
@@ -105,27 +105,27 @@
                 height: 100%;
                 text-indent: 20px;
                 &.date {
-                    min-width: 60px;
+                    min-width: 56px;
                     width: 7.28%;
                 }
                 &.price {
-                    min-width: 100px;
+                    min-width: 93px;
                     width: 12.13%;
                 }
                 &.tolerance {
-                    min-width: 100px;
+                    min-width: 93px;
                     width: 12.13%;
                 }
                 &.proPlaces {
-                    min-width: 100px;
+                    min-width: 93px;
                     width: 12.13%;
                 }
                 &.remark {
-                    min-width: 310px;
-                    width: 37.63%;
+                    min-width: 287px;
+                    width: 37.33%;
                 }
                 &.action {
-                    min-width: 153px;
+                    min-width: 138px;
                     width: 18%;
                 }
             }

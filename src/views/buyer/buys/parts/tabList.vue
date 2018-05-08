@@ -30,7 +30,7 @@
         position: absolute;
         width: 398px;
         margin-top: 16px;
-        min-height: 630px;
+        min-height: 615px;
         .page-count {
             position: absolute;
             bottom: 0;

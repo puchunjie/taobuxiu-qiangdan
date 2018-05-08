@@ -16,7 +16,7 @@
         <div class="company-info">
             <div class="item space">
                 <template v-if="item.offerStatus == 4">
-                        {{ item.createTime | dateformat('hh:mm') }}
+                            {{ item.createTime | dateformat('hh:mm') }}
 </template>
             </div>
             <div class="item left name">
@@ -139,27 +139,27 @@
         .item {
             float: left;
             height: 100%;
-            text-indent: 20px;
+            text-indent: 18px;
             .ellipsis;
             &.date {
-                min-width: 60px;
+                min-width: 56px;
                 width: 7.28%;
             }
             &.price {
-                min-width: 100px;
+                min-width: 93px;
                 width: 12.13%;
             }
             &.tolerance {
-                min-width: 100px;
+                min-width: 93px;
                 width: 12.13%;
             }
             &.proPlaces {
-                min-width: 100px;
+                min-width: 93px;
                 width: 12.13%;
             }
             &.remark {
-                min-width: 310px;
-                width: 37.63%;
+                min-width: 287px;
+                width: 37.33%;
                 .ellipsis;
             }
         }
@@ -194,7 +194,7 @@
             .item {
                 float: left;
                 height: 100%;
-                text-indent: 20px;
+                text-indent: 18px;
                 color: @f_goast;
                 .iconfont {
                     font-size: 16px;
@@ -206,7 +206,7 @@
                     width: 7.28%;
                 }
                 &.left {
-                    min-width: 300px;
+                    min-width: 274px;
                     width: 36.39%;
                 }
                 &.right {
@@ -229,7 +229,7 @@
             background-color: #fff;
             color: #FE5252;
             font-weight: bold;
-            text-indent: 20px;
+            text-indent: 18px;
         }
         .get-deal {
             position: absolute;
