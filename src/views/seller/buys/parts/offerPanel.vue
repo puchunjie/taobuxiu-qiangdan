@@ -57,7 +57,7 @@
                     color: @f_goast;
                 }
                 div {
-                    width: 25%;
+                    width: 33.33%;
                     height: 100%;
                     float: left;
                     border-right: @b_d1;
@@ -168,10 +168,10 @@
                 <input class="goast-input level1" style="width:120px" type="text" ref="-proPlace" id="-proPlace" v-model="offerApi.offerPlaces" @focus="showFuzzy" @keyup="setInput">
                 <p class="err">{{ offerApi.offerPlaces == '' ? '请选择产地' : '无效内容' }}</p>
             </div>
-            <div class="input-item-warp wid-180 disabel">
-                <label>总价</label>
-                <span style="float:right">{{ totlePrice }}元</span>
-            </div>
+            <!-- <div class="input-item-warp wid-180 disabel">
+                    <label>总价</label>
+                    <span style="float:right">{{ totlePrice }}元</span>
+                </div> -->
             <div class="input-item-warp wid-550 no-margin">
                 <label for="offerRemark">备注(选填)</label>
                 <input id="offerRemark" class="goast-input level1" maxlength="35" type="text" v-model="offerApi.offerRemark" placeholder="请填写您的交货期等其他要求，最多35字">
@@ -182,13 +182,13 @@
                 <div class="price">单价</div>
                 <div class="tolerance">公差</div>
                 <div class="place">产地</div>
-                <div class="totleprice">总价</div>
+                <!-- <div class="totleprice">总价</div> -->
             </div>
             <div class="tr">
                 <div class="price">{{ finalOffer.offerPerPrice }}元/{{ finalOffer.baseUnit }}</div>
-                <div class="tolerance">{{ finalOffer.tolerance }}</div>
+                <div class="tolerance">{{ finalOffer.tolerance | emptyHlod }}</div>
                 <div class="place">{{ finalOffer.offerPlaces }}</div>
-                <div class="totleprice">{{ finalOffer.offerPrice }}元</div>
+                <!-- <div class="totleprice">{{ finalOffer.offerPrice }}元</div> -->
             </div>
             <div class="tr">
                 <label>备注：</label>{{ finalOffer.offerRemark }}
@@ -196,13 +196,13 @@
         </div>
         <div class="action-btns">
             <template v-if="item.offerStatus == 0">
-                <a class="btn goast" @click="ignore">无计划或无货</a>
-                <a class="btn" @click="offer">立即报价</a>
-            </template>
+                    <a class="btn goast" @click="ignore">无计划或无货</a>
+                    <a class="btn" @click="offer">立即报价</a>
+</template>
 
-            <template v-else-if="item.offerStatus == 1">
-                <a v-if="item.ironSell.length < 6" class="btn" @click="offer">修改报价</a>
-            </template>
+<template v-else-if="item.offerStatus == 1">
+    <a v-if="item.ironSell.length < 6" class="btn" @click="offer">修改报价</a>
+</template>
         </div>
         <div class="offers-warp" v-show="offerHistory">
             <p style="margin-bottom:10px">报价历史</p>
@@ -213,7 +213,7 @@
                 <div class="price">{{ offer.offerPerPrice }}/{{ offer.baseUnit }}</div>
                 <div class="tolerance">{{ offer.tolerance }}</div>
                 <div class="place">{{ offer.offerPlaces }}</div>
-                <div class="totleprcie">{{ offer.offerPrice }}元</div>
+                <!-- <div class="totleprcie">{{ offer.offerPrice }}元</div> -->
                 <div class="remark">{{ offer.offerRemark }}</div>
             </div>
         </div>
@@ -271,13 +271,13 @@
             },
             units() {
                 return [{
-                    name: this.item.numberUnit,
-                    id: this.item.numberUnitId,
-                    key: 'numbers'
-                }, {
                     name: this.item.weightUnit,
                     id: this.item.weightUnitId,
                     key: 'weights'
+                }, {
+                    name: this.item.numberUnit,
+                    id: this.item.numberUnitId,
+                    key: 'numbers'
                 }];
             },
             unit() {

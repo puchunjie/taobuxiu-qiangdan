@@ -139,7 +139,7 @@
         .item {
             float: left;
             height: 100%;
-            text-indent: 18px;
+            text-indent: 10px;
             .ellipsis;
             &.date {
                 min-width: 56px;
@@ -194,7 +194,7 @@
             .item {
                 float: left;
                 height: 100%;
-                text-indent: 18px;
+                text-indent: 10px;
                 color: @f_goast;
                 .iconfont {
                     font-size: 16px;
