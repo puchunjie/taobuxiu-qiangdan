@@ -207,7 +207,7 @@
                 }
                 &.left {
                     min-width: 274px;
-                    width: 36.39%;
+                    width: 37.39%;
                 }
                 &.right {
                     min-width: 410px;
