@@ -8,7 +8,7 @@
             <div class="item proPlaces">{{ item.offerPlaces }}</div>
             <!-- <div class="item totlePrice">&yen;{{ item.offerPrice }}</div> -->
             <div class="item remark">
-                <Poptip placement="bottom" trigger="hover" :content="item.offerRemark">
+                <Poptip placement="bottom" trigger="hover"  style="text-indent:0" :content="item.offerRemark">
                     {{item.offerRemark }}
                 </Poptip>
             </div>
@@ -139,7 +139,7 @@
         .item {
             float: left;
             height: 100%;
-            text-indent: 10px;
+            text-indent: 18px;
             .ellipsis;
             &.date {
                 min-width: 56px;
@@ -194,7 +194,7 @@
             .item {
                 float: left;
                 height: 100%;
-                text-indent: 10px;
+                text-indent: 18px;
                 color: @f_goast;
                 .iconfont {
                     font-size: 16px;
@@ -202,7 +202,7 @@
                 &.space {
                     font-size: 14px;
                     color: @f_dark;
-                    min-width: 60px;
+                    min-width: 56px;
                     width: 7.28%;
                 }
                 &.left {

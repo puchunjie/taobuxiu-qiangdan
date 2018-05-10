@@ -350,7 +350,7 @@
       .item {
         float: left;
         height: 100%;
-        text-indent: 20px;
+        text-indent: 18px;
         .ellipsis;
         &.date {
           min-width: 60px;

@@ -103,7 +103,7 @@
             .item {
                 float: left;
                 height: 100%;
-                text-indent: 20px;
+                text-indent: 18px;
                 &.date {
                     min-width: 56px;
                     width: 7.28%;
