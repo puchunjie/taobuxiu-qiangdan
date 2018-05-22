@@ -1,12 +1,12 @@
 export let ws = '';
 let uploadHost = '';
 if (process.env.NODE_ENV == 'development') {
-    ws = 'ws://192.168.0.251:8080/websocket';
+    ws = 'wss://192.168.0.251:8080/websocket';
     uploadHost = 'http://192.168.0.251'
 } else {
     // ws = 'ws://120.55.63.70:8080/websocket';
     // ws = 'ws://111.231.134.170:8080/websocket';
-    ws = `ws://${window.location.host}/websocket`;
+    ws = `wss://${window.location.host}/websocket`;
     uploadHost = ''
 }
 
