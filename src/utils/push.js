@@ -49,6 +49,13 @@ export default {
 
             if (window.Notification)
                 Notification.requestPermission();
+
+
+            //浏览器关闭的时候close掉scoket连接
+            window.onbeforeunload = function() {
+                ws.onclose = function() {}; // disable onclose handler first
+                ws.close()
+            };
         },
         notify(data) {
             let _this = this;
