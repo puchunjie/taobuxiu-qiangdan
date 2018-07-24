@@ -7,8 +7,8 @@
 </template>
 
 <script>
-  import longBar from '@/components/loginBar_v2'
-  import PublicHead from '@/components/publicHead_v2'
+  import longBar from '@/components/loginBar'
+  import PublicHead from '@/components/publicHead_back'
   import push from '@/utils/push.js'
   import leftMenu from '@/components/leftMenu.vue'
   import loginInit from '@/utils/loginInit.js'

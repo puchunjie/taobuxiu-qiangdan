@@ -4,7 +4,7 @@
         <div class="form">
             <div class="input-item-warp wid-quality" ref="inDoorTime">
                 <label style="float:left">时间</label>
-                <DatePicker placement="bottom-end" :options="dataOptions" v-model="apiData.inDoorTime" class="goast-picker level1" type="datetime"></DatePicker>
+                <DatePicker style="top:-3px" placement="bottom-end" :options="dataOptions" v-model="apiData.inDoorTime" class="goast-picker level1" type="datetime"></DatePicker>
             </div>
             <div class="input-item-warp wid-quality" ref="place">
                 <label>地点</label>

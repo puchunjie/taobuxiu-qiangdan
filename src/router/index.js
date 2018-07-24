@@ -20,18 +20,64 @@ const router = new Router({
             redirect: '/index',
             name: 'main',
             component: resolve => require(['@/views/main.vue'], resolve),
-            children: [{
+            children: [
+                {
                     path: '/index',
                     name: 'index',
                     meta: {
                         requireAuth: true
                     },
                     component: resolve => require(['@/views/index/index'], resolve),
-                }, {
+                }, 
+                {
                     path: '/publishIron-:isCopy',
                     name: 'publishIron',
                     component: resolve => require(['@/views/publish/iron/index'], resolve),
                 },
+                {
+                    path: '/market',
+                    name: 'market',
+                    redirect: '/market/iron',
+                    component: resolve => require(['@/views/market/index'], resolve),
+                    meta: {
+                        requireAuth: true
+                    },
+                    children: [{
+                        path: 'iron',
+                        name: 'mIron',
+                        component: resolve => require(['@/views/market/iron/index'], resolve),
+                        meta: {
+                            requireAuth: true
+                        }
+                    }, {
+                        path: 'plan',
+                        name: 'mPlan',
+                        component: resolve => require(['@/views/market/plan/index'], resolve),
+                        meta: {
+                            requireAuth: true
+                        }
+                    }, {
+                        path: 'special',
+                        name: 'mSpecial',
+                        component: resolve => require(['@/views/market/special/index'], resolve),
+                        meta: {
+                            requireAuth: true
+                        }
+                    }]
+                },
+                {
+                    path: '/userInfo',
+                    name: 'userInfo',
+                    component: resolve => require(['@/views/user/index.vue'], resolve),
+                }
+            ]
+        },
+        {
+            path: '/',
+            redirect: '/index',
+            name: 'main',
+            component: resolve => require(['@/views/backEnd.vue'], resolve), 
+            children: [
                 {
                     path: '/buyer',
                     name: 'buyer',
@@ -122,6 +168,9 @@ const router = new Router({
                 {
                     path: '/seller',
                     name: 'seller',
+                    meta: {
+                        isBack: true
+                    },
                     component: resolve => require(['@/views/seller/index'], resolve),
                     children: [{
                             path: 'Sbuys-:isToday',
@@ -228,42 +277,6 @@ const router = new Router({
                             component: resolve => require(['@/views/contract/authentication/step3'], resolve)
                         }
                     ]
-                },
-                {
-                    path: '/market',
-                    name: 'market',
-                    redirect: '/market/iron',
-                    component: resolve => require(['@/views/market/index'], resolve),
-                    meta: {
-                        requireAuth: true
-                    },
-                    children: [{
-                        path: 'iron',
-                        name: 'mIron',
-                        component: resolve => require(['@/views/market/iron/index'], resolve),
-                        meta: {
-                            requireAuth: true
-                        }
-                    }, {
-                        path: 'plan',
-                        name: 'mPlan',
-                        component: resolve => require(['@/views/market/plan/index'], resolve),
-                        meta: {
-                            requireAuth: true
-                        }
-                    }, {
-                        path: 'special',
-                        name: 'mSpecial',
-                        component: resolve => require(['@/views/market/special/index'], resolve),
-                        meta: {
-                            requireAuth: true
-                        }
-                    }]
-                },
-                {
-                    path: '/userInfo',
-                    name: 'userInfo',
-                    component: resolve => require(['@/views/user/index.vue'], resolve),
                 }
             ]
         },

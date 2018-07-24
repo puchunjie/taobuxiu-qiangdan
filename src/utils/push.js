@@ -40,6 +40,7 @@ export default {
 
             ws.onclose = function(evt) {
                 console.log("Connection closed.");
+                if(process.env.NODE_ENV == 'development') return
                 // 后台重启服务器，10秒后重连
                 setTimeout(() => {
                     if (_this.initScoket)

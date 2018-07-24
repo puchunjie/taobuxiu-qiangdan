@@ -32,7 +32,7 @@
         width: 160px;
         min-height: 100%;
         top: 0;
-        padding-top: 148px;
+        padding-top: 100px;
         background-color: #303653;
     }
     
