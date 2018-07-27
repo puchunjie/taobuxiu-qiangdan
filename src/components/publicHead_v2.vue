@@ -16,6 +16,7 @@
                     <router-link :class="{'active':$route.name == 'publishIron'}" :to="{name:'publishIron',params:{isCopy: 0}}" tag="li">发布求购</router-link>
                     <router-link :class="{'active':$route.name == 'mIron' || $route.name == 'mPlan' || $route.name == 'mSpecial'}" :to="{name:'market'}" tag="li">资源市场</router-link>
                     <router-link :class="{'active':$route.name == 'logistics'}" :to="{name:'logistics'}" tag="li">找物流</router-link>
+                    <router-link :class="{'active':$route.name == 'auction'}" :to="{name:'auction'}" tag="li">拍卖</router-link>
                 </ul>
             </div>
         </div>

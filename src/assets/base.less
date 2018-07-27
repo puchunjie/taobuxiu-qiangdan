@@ -3,7 +3,7 @@
 @bg_color: #f0f0f0;
 
 //color
-@dark_blue:#2856B6;
+@dark_blue:#3366CC;
 @light_blue:#2E71F0;
 @mask_blue:#609EE9;
 @goast_blue:#E8F3FD;
@@ -25,19 +25,25 @@
 
 // font_color
 @f_dark: #3c3d41;
-@f_ligth: #757575;
+@f_ligth: #666666;
 @f_goast: #888888;
 @goast_gray:#EEEEEE;
-@back_gray:#d1d1d1;
+@back_gray:#d9d9d9;
 @table_headbg: #EDEEF2;
 
 // border_color
 @b_gray: #dddddd;
-@b_d1: 1px solid #d1d1d1;
+@b_d1: 1px solid #d9d9d9;
 
 .p20() {
     padding: 0 20px;
   }
+
+  .box-shadow(@b) {
+    -webkit-box-shadow: @b; 
+    -moz-box-shadow: @b; 
+    box-shadow: @b; 
+}
 
 .opacity(@factor) {
     @iefactor: @factor*100;

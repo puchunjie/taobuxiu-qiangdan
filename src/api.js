@@ -1,7 +1,7 @@
 export let ws = '';
 let uploadHost = '';
 if (process.env.NODE_ENV == 'development') {
-    ws = 'wss://192.168.0.251:8080/websocket';
+    ws = 'ws://192.168.0.251:8080/websocket';
     uploadHost = 'http://192.168.0.251'
 } else {
     // ws = 'ws://120.55.63.70:8080/websocket';
@@ -700,3 +700,45 @@ export const saveFreightLogisticOrder = '/demands/freightLogisticOrder/saveFreig
  * 保存手机注册用户
  */
 export const registUser = '/api/regist/registUser'
+
+
+// =================================拍卖=================================
+/**
+ * 查询所有参数
+ */
+export const queryAllFilters = '/api/auctionQuery/queryAll'
+
+/**
+ * 拍卖场次
+ */
+export const acutionIndex = '/api/auctionQuery/acutionIndex'
+
+/**
+ * 拍卖货品类型
+ */
+export const goodsType = '/api/auctionQuery/goodsType'
+
+/**
+ * 拍卖品类
+ */
+export const auctionIronType = '/api/auctionQuery/auctionIronType'
+
+/**
+ * 拍卖产地
+ */
+export const auctionProPlace = '/api/auctionQuery/auctionProPlace'
+
+/**
+ * 拍卖材质
+ */
+export const auctionMaterial = '/api/auctionQuery/auctionMaterial'
+
+/**
+ * 拍卖表面
+ */
+export const auctionSurface = '/api/auctionQuery/auctionSurface'
+
+/**
+ * 拍卖仓库
+ */
+export const auctionStoreHouse = '/api/auctionQuery/auctionStoreHouse'
