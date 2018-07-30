@@ -39,7 +39,7 @@
             },
             nowTime: {
                 type: [String, Number],
-                default: 0
+                default: new Date().getTime()
             },
             endText: {
                 type: String,

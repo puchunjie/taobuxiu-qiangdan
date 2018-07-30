@@ -2,10 +2,10 @@
     <div class="sreen-warp">
         <!-- 拍卖类型切换 -->
         <div class="switch-parts">
-            <a class="item" :class="{ 'active': activeSwitch == i }" @click="pickAindex(item)" v-for="(item,i) in switchs" :key="i">{{ item}}</a>
+            <a class="item" :class="{ 'active': activeSwitch == i }" @click="pickAindex(item,i)" v-for="(item,i) in switchs" :key="i">{{ item}}</a>
         </div>
         <!-- 选中的筛选值展示 -->
-        <div class="screen-body">
+        <div class="screen-body" :class="{'open': filterShow}">
             <div class="filter-items">
                 <label class="filter-label label">全部结果:</label>
                 <div class="item-tab" v-for="(item,i) in filterResults" :key="i">
@@ -14,11 +14,11 @@
                 <a @click="emptyFilters" v-show="filterResults.length > 0">清空</a>
     
                 <div class="toggle-filter" @click="filterShow = !filterShow">
-                    收起筛选
+                    {{ filterShow ? '收起' : '展开' }}筛选
                     <i class="iconfont" :class="filterShow ? 'icon-up' : 'icon-down'"></i>
                 </div>
             </div>
-            <div class="filter-warp" v-show="filterShow">
+            <div class="filter-warp">
                 <filterItem name="类型" :api="$api.goodsType" ref="goodsType" keyName="goodsType" @on-pick="filterOnPick"></filterItem>
                 <filterItem name="品类" :api="$api.auctionIronType" ref="ironType" keyName="ironType" @on-pick="filterOnPick"></filterItem>
                 <filterItem multi name="产地" :api="$api.auctionProPlace" ref="proPlace" keyName="proPlace" @on-pick="filterOnPick"></filterItem>
@@ -32,7 +32,7 @@
                     </div>
     
                 </div>
-                <filterItem name="状态" :data="['等待拍卖','正在拍卖','已经结束']" ref="status" keyName="status" @on-pick="filterOnPick"></filterItem>
+                <filterItem name="状态" :data="status" ref="status" keyName="status" @on-pick="filterOnPick"></filterItem>
             </div>
         </div>
     </div>
@@ -83,13 +83,16 @@
                     lengthMax: '', //长最大
                     status: '', //状态（ 1等待拍卖 2正在拍卖 3竞拍完成
                 },
+                status: ['等待拍卖','正在拍卖','已经结束'],
                 city: []
             }
         },
         watch: {
             listParams: {
                 handler(cval, oval) {
-                    this.$emit('on-change', cval)
+                    let data = this.$clearData(cval);
+                    data.status = this.status.findIndex(item => item == data.status) + 1 || '';
+                    this.$emit('on-change', data)
                 },
                 deep: true
             }
@@ -118,8 +121,21 @@
             emptyFilters() {
                 this.filterResults.forEach((item, i) => {
                     let key = this.filterResults[i].key;
-                    this.listParams[key] = '';
-                    this.$refs[key].init();
+                    let fucName = this.filterResults[i].fucName;
+                    // 处理城市等多个值得清空
+                    if (key.split(',').length > 1) {
+                        key.split(',').forEach(k => {
+                            this.listParams[k] = '';
+                        })
+                    } else {
+                        this.listParams[key] = '';
+                    }
+
+                    if (this.$refs[key]) {
+                        this.$refs[key].init();
+                    } else {
+                        this[fucName]();
+                    }
                 })
                 this.filterResults = [];
             },
@@ -140,8 +156,9 @@
                 this.listParams[item.key] = item.label;
             },
             // 选择场次
-            pickAindex(val) {
-                this.listParams.auctionIndex = val;
+            pickAindex(item,i) {
+                this.activeSwitch = i;
+                this.listParams.auctionIndex = item;
             },
             getAcutionIndex() {
                 this.$http.post(this.$api.acutionIndex).then(res => {
@@ -204,14 +221,16 @@
         .screen-body {
             width: 100%;
             height: auto;
-            padding: 0 16px 16px 16px;
+            padding: 0 16px 0 16px;
             font-size: 12px;
+            .filter-warp{
+                display: none;
+            }
             .filter-items {
                 position: relative;
                 width: 100%;
                 min-height: 40px;
                 line-height: 40px;
-                border-bottom: @b_d1;
                 padding: 0 148px 0 75px;
                 .toggle-filter {
                     position: absolute;
@@ -252,6 +271,16 @@
                             color: red
                         }
                     }
+                }
+            }
+
+            &.open{
+                padding: 0 16px 16px 16px;
+                .filter-warp{
+                    display: block;
+                }
+                .filter-items{
+                    border-bottom: @b_d1;
                 }
             }
         }

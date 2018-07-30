@@ -742,3 +742,8 @@ export const auctionSurface = '/api/auctionQuery/auctionSurface'
  * 拍卖仓库
  */
 export const auctionStoreHouse = '/api/auctionQuery/auctionStoreHouse'
+
+/**
+ * 拍卖信息列表
+ */
+export const findAuctionList = '/demands/auction/findAuctionList'
