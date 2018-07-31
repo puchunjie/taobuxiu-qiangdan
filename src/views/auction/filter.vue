@@ -9,7 +9,7 @@
             <div class="filter-items">
                 <label class="filter-label label">全部结果:</label>
                 <div class="item-tab" v-for="(item,i) in filterResults" :key="i">
-                    {{ item.label }} <span @click="delItem(i)" class="del">&times;</span>
+                    {{ item.name }}:{{ item.label }} <span @click="delItem(i)" class="del">&times;</span>
                 </div>
                 <a @click="emptyFilters" v-show="filterResults.length > 0">清空</a>
     
@@ -24,13 +24,16 @@
                 <filterItem multi name="产地" :api="$api.auctionProPlace" ref="proPlace" keyName="proPlace" @on-pick="filterOnPick"></filterItem>
                 <filterItem multi name="材质" :api="$api.auctionMaterial" ref="material" keyName="material" @on-pick="filterOnPick"></filterItem>
                 <filterItem multi name="表面" :api="$api.auctionSurface" ref="surface" keyName="surface" @on-pick="filterOnPick"></filterItem>
+                <div class="filter-item">
+                    <label class="label">规格:</label>
+                    <spec :showDeatil="isBj" ref="spec" @on-pick="speOnpick" @on-reset="specReset"></spec>
+                </div>
                 <filterItem multi name="仓库" :api="$api.auctionStoreHouse" ref="storeHouse" keyName="storeHouse" @on-pick="filterOnPick"></filterItem>
                 <div class="filter-item">
                     <label class="label">所在地:</label>
                     <div class="ac-city-warp">
                         <cityPicker ref="cityPick" placeholder="请选择" v-model="city" @on-finsh="syncCity"></cityPicker>
                     </div>
-    
                 </div>
                 <filterItem name="状态" :data="status" ref="status" keyName="status" @on-pick="filterOnPick"></filterItem>
             </div>
@@ -41,10 +44,12 @@
 <script>
     import filterItem from './filterItem.vue'
     import cityPicker from './cityPicker.vue'
+    import spec from './spec.vue'
     export default {
         components: {
             filterItem,
-            cityPicker
+            cityPicker,
+            spec
         },
         props: {
             params: {
@@ -83,8 +88,13 @@
                     lengthMax: '', //长最大
                     status: '', //状态（ 1等待拍卖 2正在拍卖 3竞拍完成
                 },
-                status: ['等待拍卖','正在拍卖','已经结束'],
+                status: ['等待拍卖', '正在拍卖', '已经结束'],
                 city: []
+            }
+        },
+        computed: {
+            isBj() {
+                return this.listParams.ironType == '不锈钢卷' || this.listParams.ironType == '不锈钢板' || this.listParams.ironType == ''
             }
         },
         watch: {
@@ -130,7 +140,7 @@
                     } else {
                         this.listParams[key] = '';
                     }
-
+    
                     if (this.$refs[key]) {
                         this.$refs[key].init();
                     } else {
@@ -155,8 +165,56 @@
                 }
                 this.listParams[item.key] = item.label;
             },
+            //规格选择
+            speOnpick(data) {
+                let height = '厚：' + this.assemble(data.heightMin,data.heightMax);
+                let width = '宽：' + this.assemble(data.widthMin,data.widthMax);
+                let length = '长：' + this.assemble(data.lengthMin,data.lengthMax);
+                let item = {
+                    label: data.specification != '' ? data.specification : `${height} ${width} ${length}`,
+                    key: "specification,heightMin,heightMax,widthMin,widthMax,lengthMin,lengthMax",
+                    name: "规格",
+                    isCheck: false,
+                    fucName: 'resetSpec'
+                }
+                if (this.filterResults.length > 0) {
+                    let inSide = this.filterResults.findIndex(el => el.key == item.key);
+                    if (inSide >= 0) {
+                        for (let key in this.filterResults[inSide]) {
+                            this.filterResults[inSide][key] = item[key]
+                        }
+                    } else {
+                        this.filterResults.push(item)
+                    }
+                } else {
+                    this.filterResults.push(item)
+                }
+
+                for (let key in data) {
+                    this.listParams[key] = data[key];
+                }
+                
+            },
+            //规格重置
+            specReset(){
+                let inSide = this.filterResults.findIndex(el => el.key == "specification,heightMin,heightMax,widthMin,widthMax,lengthMin,lengthMax" );
+                if(inSide >=0)
+                    this.filterResults.splice(inSide, 1);
+            },
+            // 拼装规格
+            assemble(min,max){
+                if(min != '' && max != ''){
+                    return min + '-' + max
+                }else if(min != '' && max == ''){
+                    return '>=' + min
+                }else if(min == '' && max != ''){
+                    return '0-'+ max
+                }else{
+                    return ''
+                }
+            },
             // 选择场次
-            pickAindex(item,i) {
+            pickAindex(item, i) {
                 this.activeSwitch = i;
                 this.listParams.auctionIndex = item;
             },
@@ -183,6 +241,16 @@
             resetCity() {
                 this.city = [];
                 this.$refs.cityPick.init();
+            },
+            resetSpec() {
+                this.listParams.specification = '';
+                this.listParams.heightMin = '';
+                this.listParams.heightMax = '';
+                this.listParams.widthMin = '';
+                this.listParams.widthMax = '';
+                this.listParams.lengthMin = '';
+                this.listParams.lengthMax = '';
+                this.$refs.spec.init();
             }
         },
         created() {
@@ -223,7 +291,7 @@
             height: auto;
             padding: 0 16px 0 16px;
             font-size: 12px;
-            .filter-warp{
+            .filter-warp {
                 display: none;
             }
             .filter-items {
@@ -273,13 +341,12 @@
                     }
                 }
             }
-
-            &.open{
+            &.open {
                 padding: 0 16px 16px 16px;
-                .filter-warp{
+                .filter-warp {
                     display: block;
                 }
-                .filter-items{
+                .filter-items {
                     border-bottom: @b_d1;
                 }
             }

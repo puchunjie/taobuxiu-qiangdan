@@ -105,9 +105,10 @@
                             </div>
                         </div>
                     </div>
+                    <img class="empty-img" v-show="list.length == 0" src="../../assets/Group@3x.png">
                 </div>
-                <div class="page-count">
-                    <Page  @on-change="getList" :total="totalCount" :current.sync="page.currentPage" :page-size="page.pageSize" @on-page-size-change="initList" show-elevator show-sizer />
+                <div class="page-count" v-show="list.length != 0">
+                    <Page show-total @on-change="getList" :total="totalCount" :current.sync="page.currentPage" :page-size="page.pageSize" @on-page-size-change="initList" show-elevator show-sizer />
                 </div>
             </div>
             
@@ -177,21 +178,6 @@
                     sort: this.listParams.endTime
                 }]
             }
-        },
-        watch:{
-            // listParams: {
-            //     handler(cval, oval) {
-            //         this.page.currentPage = 1;
-            //         this.getList(); 
-            //     },
-            //     deep: true
-            // },
-            // page: {
-            //     handler(cval, oval) {
-            //         this.getList();
-            //     },
-            //     deep: true
-            // }
         },
         methods: {
             //更新api参数
@@ -323,6 +309,11 @@
         .list-container {
             width: 100%;
             margin-bottom: 8px;
+            .empty-img{
+                display: block;
+                width: 166px;
+                margin: 50px auto 0;
+            }
             .red {
                 color: @dark_red;
             }
