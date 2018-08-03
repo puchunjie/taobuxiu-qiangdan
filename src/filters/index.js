@@ -191,3 +191,36 @@ export const numToCny = (num) => {
     }
     return strPrefix + strOutput.replace(/零角零分$/, '整').replace(/零[仟佰拾]/g, '零').replace(/零{2,}/g, '零').replace(/零([亿|万])/g, '$1').replace(/零+元/, '元').replace(/亿零{0,3}万/, '亿').replace(/^元/, "零元");
 }
+
+// 拍卖状态转换
+export const auctionSatateStr = (value) => {
+    switch (Number(value)) {
+        case 1:
+            return '等待拍卖'
+            break;
+        case 2:
+            return '正在拍卖'
+            break;
+        case 3:
+            return '已经结束'
+            break;
+        default:
+            break;
+    }
+}
+
+// 毫秒转时分秒
+export const formatDuring = (mss) => {
+    let hours = parseInt(mss / (1000 * 60 * 60));
+    let minutes = parseInt((mss % (1000 * 60 * 60)) / (1000 * 60));
+    return hours + "小时" + minutes + "分";
+  }
+
+
+  export const toMoney =(num) =>{
+    num = num || 0;
+    num = num.toFixed(2);
+    num = parseFloat(num)
+    num = num.toLocaleString();
+    return num;//返回的是字符串23,245.12保留2位小数
+}

@@ -74,6 +74,11 @@ const router = new Router({
                     path: '/auction',
                     name: 'auction',
                     component: resolve => require(['@/views/auction/index.vue'], resolve),
+                },
+                {
+                    path: '/auctionDetail:id',
+                    name: 'auctionDetail',
+                    component: resolve => require(['@/views/auction/detail.vue'], resolve),
                 }
             ]
         },

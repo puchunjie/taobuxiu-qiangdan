@@ -1,9 +1,9 @@
 
 <template>
     <div class="time-warp">
-        <div v-if="!flag">
+        <div v-if="!flag" class="out">
             <span v-if="time == ''">计算中...</span>
-            <span v-else>{{time}}</span>
+            <div v-else v-html="time"></div>
         </div>
         <span v-else>已结束</span>
     </div>
@@ -11,11 +11,29 @@
 
 <script>
     export default {
+        props: {
+            endTime: {
+                type: [String, Number]
+            },
+            nowTime: {
+                type: [String, Number],
+                default: undefined
+            },
+            color: {
+                type: String,
+                default: String
+            },
+            isDetail: {
+                type: Boolean,
+                default: false
+            }
+        },
         data() {
             return {
                 time: '',
                 flag: false,
-                interval: null
+                interval: null,
+                styles: 'display:inline-block;vertical-align: bottom;font-weight:bold;font-size:18px;margin:0 4px;'
             }
         },
         mounted() {
@@ -25,15 +43,6 @@
                 }
                 this.timeDown()
             }, 500)
-        },
-        props: {
-            endTime: {
-                type: [String, Number]
-            },
-            nowTime: {
-                type: [String, Number],
-                default: undefined
-            }
         },
         methods: {
             timeDown() {
@@ -48,7 +57,9 @@
                     this.flag = true
                     this.$emit('time-end')
                 }
-                this.time = `${d}天${h}小时${m}分${s}秒`
+                this.time = this.isDetail 
+                ?`<span style="color:${this.color};${this.styles}">${d}</span>天<span style="color:${this.color};${this.styles}">${h}</span>小时<span style="color:${this.color};${this.styles}">${m}</span>分<span style="color:${this.color};${this.styles}">${s}</span>秒` 
+                :`<span style="color:${this.color}">${d}</span>天<span style="color:${this.color}">${h}</span>小时<span style="color:${this.color}">${m}</span>分<span style="color:${this.color}">${s}</span>秒`
             },
             formate(time) {
                 if (time >= 10) {
@@ -72,9 +83,16 @@
     }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
+    @import url('../../../assets/base.less');
     .time-warp {
         display: inline-block;
-        width: 140px;
+        min-width: 140px;
+        &.green .out span {
+            color: @dark_green;
+        }
+        &.red .out span {
+            color: @dark_red;
+        }
     }
 </style>

@@ -16,21 +16,23 @@
                     </div> 
                 </div>
                 <div class="list-container">
-                    <div class="item" :class="{'open':item.isOpen}" v-for="(item,i) in list" :key="i">
+                    <div class="item" :class="{'open':item.isOpen}" v-for="(item,i) in list" :key="i" @click="goDetail(item)">
                         <div class="header">
-                            <span class="tag">{{ item.goodsType }}</span>
-                            <span class="category">{{ item.ironType }}</span>
-                            <span>{{ item.description }}</span>
-                            <span class="has-b-price" :class="{'disable': item.reservePrice == ''}">{{ item.reservePrice == '' ? '无' : '有' }}底价</span>
+                            <span class="spec-link" @click="toggleAuctionInfos(item)">
+                                <span class="tag">{{ item.goodsType }}</span>
+                                <span class="category">{{ item.ironType }}</span>
+                                <span>{{ item.description }}</span>
+                                <span class="has-b-price" :class="{'disable': item.reservePrice == ''}">{{ item.reservePrice == '' ? '无' : '有' }}底价</span>
+                            </span>
 
-                            <span v-if="item.status == 1" class="time">开始倒计时：<countDown style="color:#4CAF50" :endTime='item.startTime'></countDown></span>
-                            <span v-if="item.status == 2" class="time">结束倒计时：<countDown style="color:#F5222D" :endTime='item.realEndTime'></countDown></span>
+                            <span v-if="item.status == 1" class="time">开始倒计时：<countDown color="#00A854" :endTime='item.startTime'></countDown></span>
+                            <span v-if="item.status == 2" class="time">结束倒计时：<countDown color="#F5222D" :endTime='item.realEndTime'></countDown></span>
                             <span v-if="item.status == 3" class="time st3">出价次数：{{ item.priceNumber }} 结束时间：{{ item.realEndTime | dateformat }}</span>
                         </div>
                         <div class="body">
                             <div v-show="item.status == 1">
                                 <div v-if="item.isBatch" @click="toggleAuctionInfos(item)" class="state-tip1">
-                                    展开<i class="iconfont icon-down"></i>
+                                    展开<i class="iconfont" :class="item.isOpen ? 'icon-up' : 'icon-down'"></i>
                                 </div>
                                 <div v-else class="state-tip">预热中</div>
                             </div>
@@ -38,14 +40,14 @@
                             <div v-show="item.status == 2" class="count">
                                 <div class="number">{{ item.priceNumber }}</div>
                                 <div class="toggle">
-                                    <i v-if="item.isBatch" @click="toggleAuctionInfos(item)" class="iconfont icon-down"></i>
+                                    <i v-if="item.isBatch" @click="toggleAuctionInfos(item)" class="iconfont" :class="item.isOpen ? 'icon-up' : 'icon-down'"></i>
                                     <span v-else>次出价</span>
                                 </div>
                             </div>
 
                             <div v-show="item.status == 3">
                                 <div v-if="item.isBatch" @click="toggleAuctionInfos(item)" class="state-tip3">
-                                    展开<i class="iconfont icon-down"></i>
+                                    展开<i class="iconfont" :class="item.isOpen ? 'icon-up' : 'icon-down'"></i>
                                 </div>
                                 <div v-else class="state-tip tip3">已结束</div>
                             </div>
@@ -67,6 +69,10 @@
                                         <label class="tit">成交价</label>
                                         <div style="width:310px" class="red bold">{{ item.money }}元/吨</div>
                                     </template>
+                                    <template v-if="item.status == 3 && item.isBatch">
+                                        <label class="tit">成交价</label>
+                                        <div style="width:310px" class="some" @click="toggleAuctionInfos(item)">多个结果<i class="iconfont"  :class="item.isOpen ? 'icon-up' : 'icon-down'"></i></div>
+                                    </template>
                                     
                                 </div>
                                 <div class="group">
@@ -82,7 +88,7 @@
                         <div class="price-list">
                             <div class="list-item" v-for="(el,j) in item.auctionInfos" :key="j">
                                 <div class="inner">
-                                    <span class="desc">{{ item.description }}</span>
+                                    <router-link tag="span" :to="{ name: 'auctionDetail', params: { id: el.auctionInfoId } }" class="desc">{{ item.description }}</router-link>
                                     <label class="tit">重量</label>
                                     <div>{{ el.weight }}KG</div>
                                     <label class="tit">数量</label>
@@ -114,19 +120,22 @@
             
             <div class="notice-warp"></div>
         </div>
+        <div class="inner-container"><process></process></div>
         <div style="background-color: #3E3C3A"><publicFooter></publicFooter></div>
     </div>
 </template>
 
 <script>
-    import screenFilter from './filter.vue'
+    import screenFilter from './parts/filter.vue'
+    import process from './parts/process.vue'
     import publicFooter from '@/components/publicFooter.vue'
-    import countDown from './countDown.vue'
+    import countDown from './parts/countDown.vue'
     export default {
         components: {
             screenFilter,
             publicFooter,
-            countDown
+            countDown,
+            process
         },
         data() {
             return {
@@ -228,7 +237,13 @@
             },
             //展开搜索
             toggleAuctionInfos(item){
+                if(!item.isBatch) return 
                 item.isOpen = !item.isOpen
+            },
+            // 进入详情
+            goDetail(item){
+                if(item.isBatch) return 
+                this.$router.push({ name: 'auctionDetail', params: { id: item.auctionInfos[0].auctionInfoId } })
             }
         }
     }
@@ -320,6 +335,9 @@
             .bold {
                 font-weight: bold;
             }
+            .some{
+                cursor: pointer;
+            }
             .tit {
                 display: block;
                 margin-right: 8px;
@@ -334,12 +352,18 @@
                 font-size: 14px;
                 margin-bottom: 8px;
                 overflow: hidden;
+                border: 1px solid #fff;
                 .header {
                     width: 100%;
                     height: 20px;
                     color: @f_dark;
                     padding: 0 16px;
-                    span {
+                    .spec-link:hover{
+                        color: @dark_blue;
+                        cursor: pointer;
+                    }
+
+                    & > span {
                         margin-right: 8px;
                     }
                     .tag {
@@ -517,6 +541,10 @@
                             .desc{
                                 color: @f_dark;
                                 margin-left: 30px;
+                                cursor: pointer;
+                                &:hover{
+                                    color: @dark_blue;
+                                }
                             }
 
                             .tit{
@@ -544,6 +572,9 @@
                 &.open .price-list{
                     height: auto;
                     border-top: 1px solid #E9E9E9;
+                }
+                &:hover{
+                    border-color: #FFA39E;
                 }
             }
         }

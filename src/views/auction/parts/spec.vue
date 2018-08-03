@@ -107,7 +107,7 @@
 
 
 <style lang="less" scoped>
-    @import url('../../assets/base.less');
+    @import url('../../../assets/base.less');
     .auction-spec-container {
         .flex-block;
         width: auto;

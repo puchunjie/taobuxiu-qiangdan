@@ -262,7 +262,7 @@
 
 
 <style lang="less">
-    @import url('../../assets/base.less');
+    @import url('../../../assets/base.less');
     .sreen-warp {
         width: 100%;
         height: auto;

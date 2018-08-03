@@ -747,3 +747,18 @@ export const auctionStoreHouse = '/api/auctionQuery/auctionStoreHouse'
  * 拍卖信息列表
  */
 export const findAuctionList = '/demands/auction/findAuctionList'
+
+/**
+ * 拍卖详情
+ */
+export const findAuction = '/demands/auction/findAuction'
+
+/**
+ * 获取用户账户余额
+ */
+export const myAccount = '/demands/buserAccount/myAccount'
+
+/**
+ * 竞价历史
+ */
+export const findOfferAuction = '/demands/auction/findOfferAuction'
