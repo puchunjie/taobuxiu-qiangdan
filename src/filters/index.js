@@ -219,8 +219,8 @@ export const formatDuring = (mss) => {
 
   export const toMoney =(num) =>{
     num = num || 0;
+    num = parseFloat(num);
     num = num.toFixed(2);
-    num = parseFloat(num)
     num = num.toLocaleString();
     return num;//返回的是字符串23,245.12保留2位小数
 }

@@ -37,6 +37,15 @@
                     <div class="group">
                         <label>所在地</label>{{ data.province + data.city }}
                     </div>
+                    <div class="group">
+                        <label>数量</label>{{ info.number }}
+                    </div>
+                    <div class="group">
+                        <label>重量(kg)</label>{{ info.weight }}
+                    </div>
+                    <div class="group">
+                        <label>包装</label>{{ data.packaging }}
+                    </div>
                     <div class="group" style="width:100%;">
                         <label>备注</label>{{ data.remark }}
                     </div>
@@ -96,6 +105,7 @@
     @import url('../../../assets/base.less');
     .goods-info {
         width: 984px;
+        height: 186px;
         background-color: #fff;
         margin-top: 16px;
         .header {

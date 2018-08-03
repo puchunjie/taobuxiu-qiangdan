@@ -1,0 +1,39 @@
+@import url('../../../assets/base.less');
+    .auction-bar {
+        position: relative;
+        width: 480px;
+        height: 40px;
+        line-height: 38px;
+        background-color: #FFF8E1;
+        margin-top: 10px;
+        .borderRadius(4px);
+        border: 1px solid #FFE082;
+        font-size: 14px;
+        color: @f_ligth;
+        padding: 0 16px;
+        &.success{
+            background-color: #E8F5E9;
+            border-color: #A5D6A7;
+        }
+
+        .iconfont{
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+
+        .icon-exclamation-circle{
+            color: #FFC107;
+        }
+
+        .icon-check-circle{
+            color: #A5D6A7;
+        }
+
+        .btn{
+            float: right;
+            color: @dark_blue;
+            &:not(:first-child){
+                margin-left: 16px;
+            }
+        }
+    }

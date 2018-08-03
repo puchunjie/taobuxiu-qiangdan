@@ -5,24 +5,30 @@
             <span>查看更多</span>
         </div>
         <div class="content">
+            <template v-if="status == 2">
+                <Alert show-icon v-show="isLogin && isDeposit && !isOffer">您已获得竞拍资格，赶紧出价吧！</Alert>
+                <Alert type="warning" v-show="isLogin && isDeposit && isOffer && isBackward" show-icon>您的出价已落后！加油</Alert>
+                <Alert type="success" v-show="isLogin && isDeposit && isOffer && !isBackward" show-icon>您的出价暂时领先！祝您好运！</Alert>
+            </template>
+    
             <table>
                 <thead>
                     <th style="width:110px">状态</th>
                     <th style="width:110px">金额</th>
                     <th>出价时间</th>
                 </thead>
-                <tbody>
+                <tbody v-show="isLogin">
                     <tr v-for="(item,i) in list" :key="item.id">
                         <td>
                             <span class="tag" :class="{ 'on': i == 0 }">{{ i == 0 ? '领先' : '出局' }}</span>
-                            <span class="my">我的</span>
+                            <span class="my" v-show="item.createUserId == userInfo.userId">我的</span>
                         </td>
                         <td>&yen;{{ item.price }}</td>
                         <td>{{ item.createTime | dateformat('hh:mm:ss') }}</td>
                     </tr>
                 </tbody>
             </table>
-            <template v-if="list.length == 0">
+            <template v-if="list.length == 0 || !isLogin">
                 <img class="empty-img" src="../../../assets/offer-empty.png">
                 <p class="empty-text">暂无出价记录</p>
             </template>
@@ -31,9 +37,24 @@
 </template>
 
 <script>
+    import {
+        mapGetters
+    } from 'vuex'
     export default {
         props: {
             id: {
+                type: String,
+                default: ''
+            },
+            isDeposit: {
+                type: Boolean,
+                default: false
+            },
+            isOffer: {
+                type: Boolean,
+                default: false
+            },
+            status: {
                 type: String,
                 default: ''
             }
@@ -47,7 +68,24 @@
                     createUserId: '',
                     price: 1200
                 }],
+                userInfo: {userId: ''},
                 totalCount: 0
+            }
+        },
+        watch:{
+            user(val){
+                this.userInfo = val
+            }
+        },
+        computed: {
+            ...mapGetters(['isLogin', 'user']),
+            // 我的竞价是否落后
+            isBackward() {
+                if (this.list.length > 0) {
+                    return this.list[0].createUserId != this.userInfo.userId
+                } else {
+                    return false
+                }
             }
         },
         methods: {
@@ -55,9 +93,9 @@
                 this.$http.post(this.$api.findOfferAuction, {
                     auctionInfoId: this.id,
                     currentPage: 1,
-                    currentPage: 8
+                    pageSize: 7
                 }).then(res => {
-                    if(res.code === 1000){
+                    if (res.code === 1000) {
                         this.list = res.data.list;
                         this.totalCount = res.data.totalCount;
                     }
@@ -65,7 +103,7 @@
             }
         },
         created() {
-            // this.getList();   
+            this.getList();
         }
     }
 </script>
@@ -99,13 +137,13 @@
         }
         .content {
             width: 100%;
-            padding: 16px;
+            padding: 10px 16px;
             table {
                 width: 100%;
                 th {
                     line-height: 20px;
                 }
-                td{
+                td {
                     height: 40px;
                 }
             }
@@ -119,8 +157,7 @@
                 color: #ccc;
                 margin-top: 30px;
             }
-
-            .tag{
+            .tag {
                 display: inline-block;
                 width: 40px;
                 height: 22px;
@@ -130,13 +167,13 @@
                 text-align: center;
                 font-size: 12px;
                 background-color: #F5F5F5;
-                &.on{
+                &.on {
                     border-color: #FFA39E;
                     background-color: #FFF1F0;
                     color: #F5222D;
-                } 
+                }
             }
-            .my{
+            .my {
                 color: @dark_blue;
                 font-size: 12px;
                 margin-left: 5px;

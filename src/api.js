@@ -762,3 +762,18 @@ export const myAccount = '/demands/buserAccount/myAccount'
  * 竞价历史
  */
 export const findOfferAuction = '/demands/auction/findOfferAuction'
+
+/**
+ * 缴纳保证金
+ */
+export const doDeposit = '/demands/auction/doDeposit'
+
+/**
+ * 拍卖出价
+ */
+export const offerAuction = '/demands/auction/offerAuction'
+
+/**
+ * 收藏拍卖
+ */
+export const storeUp = '/demands/auction/storeUp'

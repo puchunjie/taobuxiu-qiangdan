@@ -20,6 +20,10 @@
             step:{
                 type: Number,
                 default: 1
+            },
+            now: {
+                type: Number,
+                default: 0
             }
         },
         data () {
@@ -34,6 +38,14 @@
           num(val){
               let data = val > 0 ? val : '';
               this.$emit('input',data)
+          },
+          now(){
+              this.initNum();
+          }  
+        },
+        computed: {
+          underPrice(){
+              return this.now > this.min ? this.now  : this.min;
           }  
         },
         methods: {
@@ -44,19 +56,22 @@
             },
             isOk(e){
                 let num = +e.target.value;
-                if(num < (this.min + (+this.num))  || num == 0 )
-                    this.num = this.min + this.step
+                if(num < (this.underPrice + (+this.num))  || num == 0 )
+                    this.num = this.underPrice + this.step
             },
             minus(){
-                if(this.num > (this.min + this.step))
+                if(this.num > (this.underPrice + this.step))
                     this.num = (+this.num) - this.step
             },
             plus(){
                 this.num = (+this.num )+ this.step
+            },
+            initNum(){
+                this.num =   this.now > this.min ? this.now + this.step : this.min + this.step;
             }
         },
         created() {
-            this.num = this.min + this.step;
+            this.initNum();
         }
     }
 </script>

@@ -39,7 +39,8 @@ import {
     Option,
     DatePicker,
     Spin,
-    Upload
+    Upload,
+    Alert
 } from 'iview';
 // import Modal from 'iview/src/components/modal'
 // import Button from 'iview/src/components/button'
@@ -76,6 +77,7 @@ Vue.prototype.$Message = Message;
 Vue.prototype.$Spin = Spin;
 Vue.component(Spin.name, Spin);
 Vue.component(Upload.name, Upload);
+Vue.component(Alert.name, Alert);
 
 
 Vue.prototype.$api = api; //所有接口列表挂载

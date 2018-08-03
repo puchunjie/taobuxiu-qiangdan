@@ -16,6 +16,9 @@ export default {
             } else if (val.type == 'contract') {
                 if (this.getList)
                     this.getList();
+            } else if (val.type == 'auction') {
+                if (this.init)
+                    this.init(val);
             }
         }, 500)
     }

@@ -11,13 +11,13 @@
                 <!-- 是否有足够的钱 -->
                 <template v-if="hasMoney">
                     <i class="iconfont icon-check-circle"></i>余额{{ account | toMoney }}元，可以参加本场拍卖，请收藏并等待开拍。
-                    <a class="btn" v-show="state == 1">收藏</a>
-                    <a class="btn" v-show="state == 2">去缴纳</a>
+                    <a class="btn" v-show="state == 1" style="margin:0">收藏</a>
+                    <a class="btn" v-show="state == 2" style="margin:0" @click="toPay">去缴纳</a>
                 </template>
                 <template v-else>
                     <i class="iconfont icon-exclamation-circle"></i>余额{{ account | toMoney }}元，不足以参加本场保证金。
                     <a class="btn">去充值</a>
-                    <a class="btn">收藏</a>
+                    <a class="btn" v-show="!$parent.$parent.isStoreUp" @click="$parent.$parent.collectAuction">收藏</a>
                 </template>
             </template>
         </span>
@@ -74,6 +74,10 @@
                         this.account = res.data.account;
                     }
                 })
+            },
+            //缴纳保证金
+            toPay(){
+                this.$parent.$parent.payDeposit = true
             }
         },
         created() {
@@ -84,44 +88,6 @@
 </script>
 
 
-<style lang="less" scoped>
-    @import url('../../../assets/base.less');
-    .auction-bar {
-        position: relative;
-        width: 480px;
-        height: 40px;
-        line-height: 38px;
-        background-color: #FFF8E1;
-        margin-top: 10px;
-        .borderRadius(4px);
-        border: 1px solid #FFE082;
-        font-size: 14px;
-        color: @f_ligth;
-        padding: 0 16px;
-        &.success{
-            background-color: #E8F5E9;
-            border-color: #A5D6A7;
-        }
-
-        .iconfont{
-            vertical-align: middle;
-            margin-right: 8px;
-        }
-
-        .icon-exclamation-circle{
-            color: #FFC107;
-        }
-
-        .icon-check-circle{
-            color: #A5D6A7;
-        }
-
-        .btn{
-            float: right;
-            color: @dark_blue;
-            &:not(:first-child){
-                margin-left: 16px;
-            }
-        }
-    }
+<style lang="less">
+    @import url('./auctionBar.less');
 </style>

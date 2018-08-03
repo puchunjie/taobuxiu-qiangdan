@@ -4,7 +4,9 @@
             <div class="state-tag" :class="`st${base.status}`">{{ base.status | auctionSatateStr }}</div>
             <div class="time">
                 {{ base.status | stateLabel }}：
-                <countDown v-if="base.status < 3" isDetail :color="base.status == 1 ? '#00A854' : '#F5222D'" :endTime='base.status == 1 ? base.startTime : base.realEndTime'></countDown>
+                <countDown v-if="base.status < 3" isDetail :color="base.status == 1 ? '#00A854' : '#F5222D'" 
+                @time-end="$parent.init(true)"
+                :endTime='base.status == 1 ? base.startTime : base.realEndTime'></countDown>
                 <span v-else>{{ base.realEndTime | dateformat }}</span>
             </div>
             <div class="number">场次编号：{{ data.auctionId }}</div>
@@ -22,11 +24,11 @@
             <!-- 正在拍卖 -->
             <template v-if="base.status == 2">
                 <div class="group-item">
-                    <label>当前价</label> <span class="price red">{{ base.currentPrice | toMoney }}</span>
+                    <label>当前价</label> <span class="price red">{{ data.currentPrice | toMoney }}</span>
                 </div>
                 <div class="group-item">
                     <label>出价</label>
-                    <payInput :min="base.currentPrice" :step="base.priceStep" v-model="payMoney"></payInput>
+                    <payInput :now="data.currentPrice" :min="base.startPrice" :step="base.priceStep" v-model="payMoney"></payInput>
                     <span class="budget">预计总金额: &yen;{{ totalePayMoney | toMoney }}</span>
                 </div>
                 <div class="group-item">
@@ -36,11 +38,16 @@
             </template>
             <!-- 拍卖结束 成交 -->
             <template v-if="base.status == 3 && data.status == 2">
-                成交
+                <img class="tip-img" src="../../../assets/deal.png" />
+                <div class="tip-text">
+                    <h3>本单已成交</h3>
+                    <p>成交价 <span class="price">{{ data.money | toMoney }}</span></p>
+                </div>
             </template>
             <!-- 拍卖结束 流拍 -->
             <template v-if="base.status == 3 && data.status == 3">
-                流拍
+                <img class="tip-img" src="../../../assets/racket.png" />
+                <span class="tip-text">本单已流拍，未达保留价</span>
             </template>
             <auctionBar :bond="data.maigin" :isDeposit="isDeposit" :state="base.status" v-if="base.status == 1 || base.status == 2"></auctionBar>
             <div class="info">
@@ -165,12 +172,44 @@
                         content: '您还未缴纳保证金，是否立即缴纳？',
                         okText: '立即缴纳',
                         onOk: () => {
-                            
+                            this.$Modal.remove();
+                            this.$parent.payDeposit = true;
                         }
                     })
                     return 
                 }
-                
+
+                //获取是否设置过跳过提示
+                let skipHints = this.$ls.get('skipHints');
+                if(skipHints){
+                    this.offerAjax();
+                }else{
+                    this.$Modal.confirm({
+                        title: '缴纳确认',
+                        content: '是否确认缴纳保证金？',
+                        okText: '立即缴纳',
+                        cancelText: '我再想想',
+                        loading: true,
+                        onOk: () => {
+                            // this.$Modal.remove();
+                            this.offerAjax();
+                        }
+                    })
+                }
+            },
+            offerAjax(){
+                this.$http.post(this.$api.offerAuction,{
+                    auctionInfoId: this.$route.params.id,
+                    price: this.payMoney
+                }).then(res => {
+                    this.$Modal.remove();
+                    if(res.code === 1000){
+                        this.$Message.success('出价成功');
+                        this.$parent.auctionInfo.currentPrice = this.payMoney;
+                    }else{
+                        this.$Message.success(res.message);
+                    }
+                })
             }
         }
     }
@@ -180,6 +219,7 @@
     @import url('../../../assets/base.less');
     .auction-info {
         width: 984px;
+        height: 276px;
         background-color: #fff;
         margin-top: 16px;
         .top {
@@ -219,8 +259,8 @@
         .bottom {
             position: relative;
             width: 100%;
-            height: 227px;
             padding: 40px 465px 24px 24px;
+            height: 227px;
             .group-item{
                 width: 100%;
                 // height: 40px;
@@ -264,6 +304,35 @@
                     font-size: 12px;
                     color: @f_goast;
                     margin-left: 10px;
+                }
+            }
+
+            .tip-img{
+                width: 89px;
+                margin: 32px 32px 0 44px;
+                display: inline-block;
+                vertical-align: middle;
+            }
+
+            .tip-text{
+                display: inline-block;
+                margin-top: 32px;
+                vertical-align: middle;
+                h3{
+                    line-height: 24px;
+                    color: #404040;
+                    font-size: 18px;
+                }
+                p{
+                    margin-top: 10px;
+                    line-height: 20px;
+                    font-size: 14px;
+                    color: @f_goast;
+                    .price{
+                        color: @dark_red;
+                        font-weight: bold;
+                        font-size: 24px;
+                    }
                 }
             }
 

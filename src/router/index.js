@@ -74,11 +74,14 @@ const router = new Router({
                     path: '/auction',
                     name: 'auction',
                     component: resolve => require(['@/views/auction/index.vue'], resolve),
+                    meta: {
+                        keepAlive: true
+                    }
                 },
                 {
                     path: '/auctionDetail:id',
                     name: 'auctionDetail',
-                    component: resolve => require(['@/views/auction/detail.vue'], resolve),
+                    component: resolve => require(['@/views/auction/detail.vue'], resolve)
                 }
             ]
         },
