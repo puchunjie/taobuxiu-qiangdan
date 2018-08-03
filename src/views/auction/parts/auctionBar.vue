@@ -23,7 +23,7 @@
         </span>
         <span v-else>
             <i class="iconfont icon-exclamation-circle"></i>登录后，方可参与竞价。
-            <a class="btn">去登录</a>
+            <router-link replace :to="{ path: '/login', query: { redirect: $route.fullPath } }" class="btn">去登录</router-link>
         </span>
     </div>
 </template>
@@ -61,7 +61,6 @@
         },
         watch: {
             isLogin(val){
-                console.log(val)
                 if(val)
                     this.getAccount();
             }

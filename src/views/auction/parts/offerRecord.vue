@@ -17,18 +17,18 @@
                     <th style="width:110px">金额</th>
                     <th>出价时间</th>
                 </thead>
-                <tbody v-show="isLogin">
+                <tbody>
                     <tr v-for="(item,i) in list" :key="item.id">
                         <td>
                             <span class="tag" :class="{ 'on': i == 0 }">{{ i == 0 ? '领先' : '出局' }}</span>
-                            <span class="my" v-show="item.createUserId == userInfo.userId">我的</span>
+                            <span v-if="userInfo != undefined" class="my" v-show="item.createUserId == userInfo.userId">我的</span>
                         </td>
                         <td>&yen;{{ item.price }}</td>
                         <td>{{ item.createTime | dateformat('hh:mm:ss') }}</td>
                     </tr>
                 </tbody>
             </table>
-            <template v-if="list.length == 0 || !isLogin">
+            <template v-if="list.length == 0">
                 <img class="empty-img" src="../../../assets/offer-empty.png">
                 <p class="empty-text">暂无出价记录</p>
             </template>
@@ -74,6 +74,7 @@
         },
         watch:{
             user(val){
+                console.log(111111)
                 this.userInfo = val
             }
         },
@@ -104,6 +105,7 @@
         },
         created() {
             this.getList();
+            this.userInfo = this.user;
         }
     }
 </script>
