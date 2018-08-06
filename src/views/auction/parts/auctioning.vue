@@ -4,10 +4,11 @@
             <div class="state-tag" :class="`st${base.status}`">{{ base.status | auctionSatateStr }}</div>
             <div class="time">
                 {{ base.status | stateLabel }}：
-                <countDown v-if="base.status < 3" isDetail :color="base.status == 1 ? '#00A854' : '#F5222D'" 
-                @time-end="$parent.init(true)"
-                :endTime='base.status == 1 ? base.startTime : base.realEndTime'></countDown>
-                <span v-else>{{ base.realEndTime | dateformat }}</span>
+                <countDown v-if="base.status == 1" key="c1" isDetail :color="'#00A854'" 
+                @time-end="timeOut" :endTime='base.startTime'></countDown>
+                <countDown v-if="base.status == 2" key="c2" isDetail :color="'#F5222D'" 
+                @time-end="timeOut" :endTime='base.realEndTime'></countDown>
+                <span v-if="base.status == 3">{{ base.realEndTime | dateformat }}</span>
             </div>
             <div class="number">场次编号：{{ data.auctionId }}</div>
         </div>
@@ -49,7 +50,7 @@
                 <img class="tip-img" src="../../../assets/racket.png" />
                 <span class="tip-text">本单已流拍，未达保留价</span>
             </template>
-            <auctionBar :bond="data.maigin" :isDeposit="isDeposit" :state="base.status" v-if="base.status == 1 || base.status == 2"></auctionBar>
+            <auctionBar :bond="data.maigin" :isStoreUp="$parent.isStoreUp" :isDeposit="isDeposit" :state="base.status" v-if="base.status == 1 || base.status == 2"></auctionBar>
             <div class="info">
                 <div class="group" style="width:170px">起拍价(元/吨)：¥{{ base.startPrice }}</div>
                 <div class="group" style="width:135px">加价幅度：¥{{ base.priceStep }}</div>
@@ -185,9 +186,9 @@
                     this.offerAjax();
                 }else{
                     this.$Modal.confirm({
-                        title: '缴纳确认',
-                        content: '是否确认缴纳保证金？',
-                        okText: '立即缴纳',
+                        title: '出价确认',
+                        content: '是否确认此次出价？',
+                        okText: '立即出价',
                         cancelText: '我再想想',
                         loading: true,
                         onOk: () => {
@@ -206,10 +207,20 @@
                     if(res.code === 1000){
                         this.$Message.success('出价成功');
                         this.$parent.auctionInfo.currentPrice = this.payMoney;
+                        this.$parent.$refs.offerRecord.getList();
+                        //如果正好选在出价列表上，则更新
+                        if(this.$parent.tabValue == 'record'){
+                            this.$parent.$refs.record.updateSinge()
+                        }
                     }else{
                         this.$Message.success(res.message);
                     }
                 })
+            },
+            timeOut(){
+                setTimeout(() => {
+                    this.$parent.init(true);
+                }, 500);
             }
         }
     }

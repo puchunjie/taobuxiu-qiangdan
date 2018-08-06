@@ -11,13 +11,13 @@
                 <!-- 是否有足够的钱 -->
                 <template v-if="hasMoney">
                     <i class="iconfont icon-check-circle"></i>余额{{ account | toMoney }}元，可以参加本场拍卖，请收藏并等待开拍。
-                    <a class="btn" v-show="state == 1" style="margin:0">收藏</a>
+                    <a class="btn" v-show="state == 1 && !isStoreUp" style="margin:0" @click="$parent.$parent.collectAuction">收藏</a>
                     <a class="btn" v-show="state == 2" style="margin:0" @click="toPay">去缴纳</a>
                 </template>
                 <template v-else>
                     <i class="iconfont icon-exclamation-circle"></i>余额{{ account | toMoney }}元，不足以参加本场保证金。
                     <a class="btn">去充值</a>
-                    <a class="btn" v-show="!$parent.$parent.isStoreUp" @click="$parent.$parent.collectAuction">收藏</a>
+                    <a class="btn" v-show="!isStoreUp" @click="$parent.$parent.collectAuction">收藏</a>
                 </template>
             </template>
         </span>
@@ -43,6 +43,10 @@
                 default: 0
             },
             isDeposit:{
+                type:Boolean,
+                default: false
+            },
+            isStoreUp:{
                 type:Boolean,
                 default: false
             }

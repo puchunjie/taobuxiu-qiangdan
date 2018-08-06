@@ -6,24 +6,34 @@
         </div>
     
         <div class="top-part clearfix">
-            <offerRecord ref="offerRecord" :id="id"  :isDeposit="isDeposit" :isOffer="isOffer" :status="auction.status"></offerRecord>
+            <offerRecord ref="offerRecord" :id="id" :isDeposit="isDeposit" :isOffer="isOffer" :status="auction.status"></offerRecord>
             <detailBase :data="auction" :info="auctionInfo"></detailBase>
-            <auctioning :base="auction" :data="auctionInfo" :isDeposit="isDeposit"></auctioning>
+            <auctioning :systemTime="systemTime" :base="auction" :data="auctionInfo" :isDeposit="isDeposit"></auctioning>
             <div class="collection-share">
                 <div class="item" @click="collectAuction" :class="{ 'collected': isStoreUp }">
-                    <i class="iconfont icon-heart-o"></i>
-                    收藏拍卖
+                    <i class="iconfont icon-heart-o"></i> 收藏拍卖
                 </div>
                 <div class="item">
-                    <i class="iconfont icon-fenxiang"></i>
-                    分享链接
+                    <i class="iconfont icon-fenxiang"></i> 分享链接
                 </div>
             </div>
         </div>
         <process></process>
-        
-
-
+    
+        <div class="details-container">
+            <div class="tabs">
+                <div v-show="auction.pack" class="item" :class="{ 'active': tabValue == 'pack' }" @click="tabValue = 'pack'">打包详情</div>
+                <div class="item" :class="{ 'active': tabValue == 'introduce' }" @click="tabValue = 'introduce'">标的物介绍</div>
+                <div class="item" :class="{ 'active': tabValue == 'notes' }" @click="tabValue = 'notes'">竞买须知</div>
+                <div class="item" :class="{ 'active': tabValue == 'record' }" @click="tabValue = 'record'">出价记录（{{ $refs.offerRecord ? $refs.offerRecord.totalCount : 0 }}）</div>
+                <div class="item" :class="{ 'active': tabValue == 'bond' }" @click="tabValue = 'bond'">保证金须知</div>
+            </div>
+            <div class="content">
+                <component :is="tabValue" :ref="tabValue"></component>
+            </div>
+        </div>
+    
+    
         <!-- 缴纳保证金 -->
         <Modal title="缴纳保证金" :width="520" v-model="payDeposit" class-name="pay-deposit">
             <Spin fix v-show="payLoading">
@@ -35,6 +45,7 @@
                     <i class="iconfont icon-check-circle"></i> 
                     恭喜！当前账户余额 {{ base.buserAccount ? base.buserAccount.account : 0 | toMoney }}，可以缴纳本场竞拍保证金。
                 </template>
+
                 <template v-else>
                     <i class="iconfont icon-exclamation-circle"></i>
                     余额不足！当前账户余额 {{ base.buserAccount ? base.buserAccount.account : 0 | toMoney }}，无法缴纳本场保证金。
@@ -65,6 +76,11 @@
     import {
         mapGetters
     } from 'vuex'
+    import pack from './parts/pack.vue'
+    import introduce from './parts/introduce.vue'
+    import notes from './parts/notes.vue'
+    import record from './parts/record.vue'
+    import bond from './parts/bond.vue'
     import process from './parts/process.vue'
     import detailBase from './parts/detalBase.vue'
     import auctioning from './parts/auctioning.vue'
@@ -76,17 +92,31 @@
             process,
             detailBase,
             auctioning,
-            offerRecord
+            offerRecord,
+            pack,
+            introduce,
+            notes,
+            record,
+            bond
         },
         data() {
             return {
-                auction: {},
+                auction: {
+                    auctionLob:{
+                        packMessage: "<p>安达市大所大所大多</p>",
+                        introduction: "",
+                        priceNotice: "",
+                        moneyNotice: ""
+                    }
+                },
                 auctionInfo: {},
                 isDeposit: false, //是否需要支付保证金
-                isOffer: false,//是否出过价
-                isStoreUp: false,//是否收藏
+                isOffer: false, //是否出过价
+                isStoreUp: false, //是否收藏
                 payDeposit: false,
-                payLoading: false
+                payLoading: false,
+                systemTime: '',
+                tabValue: 'pack'
             }
         },
         computed: {
@@ -114,11 +144,13 @@
                         this.isDeposit = res.data.isDeposit;
                         this.isOffer = res.data.isOffer;
                         this.isStoreUp = res.data.isStoreUp;
+                        this.systemTime = res.data.systemTime;
+                        this.tabValue = res.data.auction.pack ? 'pack' : 'introduce';
                     }
                 })
             },
             // 缴纳保证金
-            doDeposit(){
+            doDeposit() {
                 this.$Modal.confirm({
                     title: '缴纳确认',
                     content: '是否确认缴纳保证金？',
@@ -127,13 +159,15 @@
                     onOk: () => {
                         this.$Modal.remove();
                         this.payLoading = true;
-                        this.$http.post(this.$api.doDeposit,{
+                        this.$http.post(this.$api.doDeposit, {
                             auctionInfoId: this.id
                         }).then(res => {
-                            if(res.code === 1000){
+                            if (res.code === 1000) {
                                 this.payDeposit = false;
                                 this.$Message.success('缴纳成功');
                                 this.getDetail();
+                            } else {
+                                this.$Message.error(res.message);
                             }
                             this.payLoading = false;
                         })
@@ -141,22 +175,22 @@
                 })
             },
             // 收藏拍卖
-            collectAuction(){
-                this.$http.post(this.$api.storeUp,{
+            collectAuction() {
+                this.$http.post(this.$api.storeUp, {
                     auctionInfoId: this.id
                 }).then(res => {
-                    if(res.code === 1000){
+                    if (res.code === 1000) {
                         this.$Message.success(this.isStoreUp ? '取消收藏' : '收藏成功');
                         this.isStoreUp = !this.isStoreUp;
-                    }else{
+                    } else {
                         this.$Message.error(res.message)
                     }
                 })
             },
-            init(res){
+            init(res) {
                 let willDo = res.data ? his.id == res.data.auctionInfoId : res
                 // 对比下推送过来的信息是否是当前正在查看的拍卖信息，对比id
-                if(willDo){
+                if (willDo) {
                     this.$refs.offerRecord.getList();
                     this.getDetail();
                 }
@@ -189,8 +223,7 @@
                 float: left;
             }
         }
-
-        .collection-share{
+        .collection-share {
             .flex-block;
             width: 312px;
             height: 56px;
@@ -201,30 +234,59 @@
             color: @f_ligth;
             padding: 8px 0;
             font-size: 14px;
-            .item{
+            .item {
                 width: 50%;
                 text-align: center;
                 cursor: pointer;
-                &:not(:last-child){
+                &:not(:last-child) {
                     border-right: 1px solid #E9E9E9;
                 }
-                .iconfont{
+                .iconfont {
                     font-size: 20px;
                     color: @f_goast;
                     margin-right: 8px;
                     vertical-align: middle;
                 }
-
-                &:hover{
+                &:hover {
                     color: @dark_blue;
                 }
-
-                &.collected{
+                &.collected {
                     color: @dark_blue;
-                    .iconfont{
+                    .iconfont {
                         color: @dark_blue;
                     }
                 }
+            }
+        }
+        .details-container {
+            width: 100%;
+            height: 660px;
+            background-color: #fff;
+            .tabs {
+                .flex-block;
+                width: 100%;
+                height: 40px;
+                border-bottom: @b_d1;
+                color: @f_ligth;
+                .item {
+                    width: auto;
+                    padding: 0 20px;
+                    height: 100%;
+                    line-height: 40px;
+                    border-bottom: 2px solid #fff;
+                    cursor: pointer;
+                    &:hover,
+                    &.active {
+                        color: @dark_blue;
+                        border-color: @dark_blue;
+                    }
+                }
+            }
+            .content {
+                width: 100%;
+                height: 100%;
+                padding: 24px;
+                color: @f_ligth;
             }
         }
     }
@@ -269,7 +331,7 @@
         .ivu-modal-footer {
             border-top: 0;
         }
-        .btn{
+        .btn {
             display: inline-block;
             padding: 0 16px;
             height: 32px;
@@ -279,7 +341,7 @@
             font-size: 14px;
             color: @f_ligth;
             margin-left: 10px;
-            &.primary{
+            &.primary {
                 background-color: @dark_blue;
                 color: #fff;
                 border-color: @dark_blue;

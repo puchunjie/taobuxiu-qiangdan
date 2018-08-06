@@ -71,6 +71,7 @@
         },
         watch: {
             'endTime': function(newValue) {
+                console.log('检测到结束时间变化 重新开始')
                 clearInterval(this.interval);
                 this.interval = setInterval(() => {
                     if (this.flag == true) {

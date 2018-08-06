@@ -74,7 +74,6 @@
         },
         watch:{
             user(val){
-                console.log(111111)
                 this.userInfo = val
             }
         },
