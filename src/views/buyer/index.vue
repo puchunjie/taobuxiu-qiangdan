@@ -116,7 +116,10 @@
                     subs: [{
                             name: '充值管理',
                             router: {
-                                name: 'Recharge'
+                                name: 'Recharge',
+                                query: {
+                                    step: 1
+                                }
                             }
                         }]
                 }, {

@@ -1,4 +1,3 @@
-import * as types from '@/store/types'
 import { mapGetters } from 'vuex'
 import debounce from 'lodash/debounce'
 export default {
