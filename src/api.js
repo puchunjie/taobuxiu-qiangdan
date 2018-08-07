@@ -777,3 +777,12 @@ export const offerAuction = '/demands/auction/offerAuction'
  * 收藏拍卖
  */
 export const storeUp = '/demands/auction/storeUp'
+
+
+
+// 我的资产
+
+/**
+ * 生成支付二维码
+ */
+export const rechargeSave = '/demands/recharge/save'

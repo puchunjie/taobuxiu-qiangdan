@@ -193,6 +193,11 @@
                 if (willDo) {
                     this.$refs.offerRecord.getList();
                     this.getDetail();
+
+                    //如果正好选在出价列表上，则更新
+                    if(this.tabValue == 'record'){
+                        this.$refs.record.updateSinge()
+                    }
                 }
             }
         },

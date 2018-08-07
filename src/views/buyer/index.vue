@@ -110,6 +110,15 @@
                             }
                         }
                     }]
+                },{
+                    title: '我的资产',
+                    icon: '',
+                    subs: [{
+                            name: '充值管理',
+                            router: {
+                                name: 'Recharge'
+                            }
+                        }]
                 }, {
                     title: '我的买家档案',
                     icon: 'icon-ziyuan11',

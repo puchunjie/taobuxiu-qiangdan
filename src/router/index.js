@@ -179,6 +179,11 @@ const router = new Router({
                             path: 'BocAuthenStep3-:type',
                             name: 'BatStep3',
                             component: resolve => require(['@/views/contract/authentication/step3'], resolve)
+                        },
+                        {
+                            path: 'Recharge',
+                            name: 'Recharge',
+                            component: resolve => require(['@/views/buyer/myAssets/recharge/index.vue'], resolve)
                         }
                     ]
                 },
