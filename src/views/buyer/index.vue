@@ -101,13 +101,32 @@
                                 type: 1
                             }
                         }
-                    },{
+                    }, {
                         name: '认证合同',
                         router: {
                             name: 'BocAuthen',
                             params: {
                                 type: 1
                             }
+                        }
+                    }]
+                }, {
+                    title: '我的拍卖',
+                    icon: 'icon-ziyuan11',
+                    subs: [{
+                        name: '我的竞拍',
+                        router: {
+                            name: 'bidders'
+                        }
+                    }, {
+                        name: '我的保证金',
+                        router: {
+                            name: 'deposit'
+                        }
+                    }, {
+                        name: '我的收藏',
+                        router: {
+                            name: 'collection'
                         }
                     }]
                 }, {

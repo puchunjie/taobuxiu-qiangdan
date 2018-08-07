@@ -777,3 +777,25 @@ export const offerAuction = '/demands/auction/offerAuction'
  * 收藏拍卖
  */
 export const storeUp = '/demands/auction/storeUp'
+
+/**
+ * 拍卖收藏列表
+ */
+export const findStoreUpList = '/demands/auction/findStoreUpList'
+
+
+/**
+ * 删除收藏
+ */
+export const deleteStoreUp = '/demands/auction/deleteStoreUp'
+
+
+/**
+ * 我的竞拍
+ */
+export const findMyAuction = '/demands/auction/findMyAuction'
+
+/**
+ * 我的保证金
+ */
+export const findMyMargin = '/demands/auction/findMyMargin'

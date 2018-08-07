@@ -179,6 +179,21 @@ const router = new Router({
                             path: 'BocAuthenStep3-:type',
                             name: 'BatStep3',
                             component: resolve => require(['@/views/contract/authentication/step3'], resolve)
+                        },
+                        {
+                            path: 'collection',
+                            name: 'collection',
+                            component: resolve => require(['@/views/buyer/collection/index'], resolve)
+                        },
+                        {
+                            path: 'bidders',
+                            name: 'bidders',
+                            component: resolve => require(['@/views/buyer/bidders/index'], resolve)
+                        },
+                        {
+                            path: 'deposit',
+                            name: 'deposit',
+                            component: resolve => require(['@/views/buyer/deposit/index'], resolve)
                         }
                     ]
                 },
