@@ -3,7 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import '../static/css/reset.css';
-import '../static/css/iview.css';
+import 'iview/dist/styles/iview.css';
 import '../static/swiper/css/swiper.min.css';
 import router from './router'
 import store from './store/store'

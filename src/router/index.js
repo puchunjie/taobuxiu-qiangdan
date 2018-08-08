@@ -186,6 +186,11 @@ const router = new Router({
                             component: resolve => require(['@/views/buyer/myAssets/recharge/index.vue'], resolve)
                         },
                         {
+                            path: 'assetDetail',
+                            name: 'assetDetail',
+                            component: resolve => require(['@/views/buyer/myAssets/assetDetail/index.vue'], resolve)
+                        },
+                        {
                             path: 'collection',
                             name: 'collection',
                             component: resolve => require(['@/views/buyer/collection/index'], resolve)

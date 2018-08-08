@@ -121,6 +121,12 @@
                                     step: 1
                                 }
                             }
+                        },
+                        {
+                            name: '资产明细',
+                            router: {
+                                name: 'assetDetail'
+                            }
                         }]
                 }, {
                     title: '我的拍卖',

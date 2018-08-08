@@ -781,6 +781,11 @@ export const storeUp = '/demands/auction/storeUp'
 
 
 // 我的资产
+/**
+ * 商户资金账户详情
+ */
+export const buserAccountLog = '/demands/buserAccount/log'
+
 
 /**
  * 生成支付二维码
@@ -803,6 +808,7 @@ export const deleteStoreUp = '/demands/auction/deleteStoreUp'
  * 我的竞拍
  */
 export const findMyAuction = '/demands/auction/findMyAuction'
+
 
 /**
  * 我的保证金
