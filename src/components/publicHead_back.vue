@@ -40,7 +40,7 @@
             float: left;
             color: @dark_blue;
             font-size: 45px;
-            margin: 8px 0 0 15px;
+            margin: 0 0 0 15px;
         }
         .switch-btn {
             display: block;

@@ -114,6 +114,12 @@
                         title: '我的资产',
                         icon: '',
                         subs: [{
+                                name: '资产明细',
+                                router: {
+                                    name: 'assetDetail'
+                                }
+                            },
+                            {
                                 name: '充值管理',
                                 router: {
                                     name: 'Recharge',
@@ -123,9 +129,9 @@
                                 }
                             },
                             {
-                                name: '资产明细',
+                                name: '提现管理',
                                 router: {
-                                    name: 'assetDetail'
+                                    name: 'putForwardList'
                                 }
                             },
                             {

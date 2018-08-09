@@ -841,3 +841,18 @@ export const bankCardDetail = '/demands/buserAccount/bankCard/detail'
  * 银行卡-保存
  */
 export const bankCardSave = '/demands/buserAccount/bankCard/save'
+
+/**
+ * 提现申请
+ */
+export const putForward = '/demands/widthDraw/save'
+
+/**
+ * 撤回提现申请
+ */
+export const cancelputForward = '/demands/widthDraw/cancel'
+
+/**
+ * 提现申请列表
+ */
+export const putForwardList = '/demands/widthDraw/page'

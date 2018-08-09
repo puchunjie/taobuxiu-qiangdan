@@ -12,7 +12,7 @@
             </div>
             <div class="btns">
                 <router-link :to="{ name: 'Recharge', query: { step: 1 } }" class="btn">充值</router-link>
-                <a class="btn goast">提现</a>
+                <router-link :to="{ name: 'putForward' }" class="btn goast">提现</router-link>
             </div>
         </div>
     
@@ -32,8 +32,8 @@
                         <i-input style="width: 232px" placeholder="请输入" v-model="keyStr" class="form-input"></i-input>
                     </form-item>
                     <form-item label="金额范围:" class="group-item">
-                        <i-input style="width: 105px" placeholder="请输入" v-model="keyStr" class="form-input"></i-input> -
-                        <i-input style="width: 105px" placeholder="请输入" v-model="keyStr" class="form-input"></i-input>
+                        <i-input style="width: 105px" placeholder="请输入" @on-blur="testNumber" v-model="keyStr" class="form-input"></i-input> -
+                        <i-input style="width: 105px" placeholder="请输入" @on-blur="testNumber" v-model="keyStr" class="form-input"></i-input>
                     </form-item>
                     <form-item label="交易状态:" class="group-item">
                         <i-select v-model="apiData.tradeType" style="width:140px">
@@ -49,8 +49,8 @@
                     </form-item>
                 </i-form>
                 <div class="btns">
-                    <a class="btn goast">取消</a>
-                    <a class="btn">搜索</a>
+                    <a class="btn goast" @click="reset">取消</a>
+                    <a class="btn" @click="search">搜索</a>
                 </div>
             </div>
             <div class="table">
@@ -61,7 +61,7 @@
             </div>
         </div>
     
-        <Modal v-model="detailShow" footer-hide title="详情" :width="1200">
+        <Modal v-model="detailShow" footer-hide title="明细详情" :width="1200">
             <component :is="detailName" :data="detailData" v-if="detailName != '' && detailShow"></component>
         </Modal>
     </div>
@@ -185,6 +185,8 @@
         methods: {
             getList() {
                 let params = this.$clearData(this.apiData);
+                params.createTimeBegin = params.createTimeBegin != '' ? new Date(params.createTimeBegin).getTime() : '';
+                params.createTimeEnd = params.createTimeEnd != '' ? new Date(params.createTimeEnd).getTime() : '';
                 this.$http.post(this.$api.buserAccountLog, params).then(res => {
                     if (res.code === 1000) {
                         this.list = res.data.data;
@@ -195,6 +197,20 @@
             initList(data) {
                 this.apiData.pageSize = data;
                 this.getList();
+            },
+            reset(){
+                for(let key in this.apiData){
+                    this.apiData[key] = ''
+                }
+                this.apiData.currentPage = 1;
+                this.apiData.pageSize = 10;
+                this.getList();
+            },
+            search(){
+                this.apiData.currentPage = 1;
+                this.getList();
+            },
+            testNumber(val){
             }
         },
         created() {

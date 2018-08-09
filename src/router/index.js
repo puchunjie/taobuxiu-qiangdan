@@ -206,6 +206,16 @@ const router = new Router({
                             component: resolve => require(['@/views/buyer/myAssets/bankCard/detail.vue'], resolve)
                         },
                         {
+                            path: 'putForwardList',
+                            name: 'putForwardList',
+                            component: resolve => require(['@/views/buyer/myAssets/putForward/index.vue'], resolve)
+                        },
+                        {
+                            path: 'putForward',
+                            name: 'putForward',
+                            component: resolve => require(['@/views/buyer/myAssets/putForward/putForward.vue'], resolve)
+                        },
+                        {
                             path: 'collection',
                             name: 'collection',
                             component: resolve => require(['@/views/buyer/collection/index'], resolve)

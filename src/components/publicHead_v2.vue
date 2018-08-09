@@ -53,7 +53,7 @@
             display: block;
             float: left;
             color: @dark_blue;
-            font-size: 65px;
+            font-size: 50px;
             margin: 5px 0 0 0;
         }
         .menu {

@@ -40,7 +40,7 @@
             display: block;
             float: left;
             color: #fff;
-            font-size: 65px;
+            font-size: 52px;
             margin: 5px 0 0 15px;
         }
         .menu {

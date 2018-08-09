@@ -21,16 +21,24 @@
         <div class="bottom">
             <h3>历史记录</h3>
     
-            <prog>
+            <prog :isDone="data.tradeSt != 0">
                 <template slot="left">
                     <h2>冻结中</h2>
                     <p>操作人：{{ data.createUser }}</p>
                     <p>拍卖场次：{{ data.auctionIndex }}</p>
-                    <p>操作时间：{{ data.updateTime | dateformat }}</p>
+                    <p>操作时间：{{ data.createTime | dateformat }}</p>
                 </template>
 
                 <template slot="right">
-                    <h2>拍卖成交，抵货款</h2>
+                    <template v-if="data.tradeSt != 2">
+                        <h2>拍卖成交，抵货款</h2>
+                    </template>
+                    <template v-if="data.tradeSt == 2">
+                        <h2>流拍，退回余额</h2>
+                        <p>操作人：{{ data.createUser }}</p>
+                        <p>拍卖场次：{{ data.auctionIndex }}</p>
+                        <p>操作时间：{{ data.updateTime | dateformat }}</p>
+                    </template>
                 </template>
             </prog>
         </div>
@@ -50,9 +58,6 @@
         },
         components: {
             prog
-        },
-        methods: {
-    
         }
     }
 </script>
