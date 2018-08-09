@@ -1,6 +1,6 @@
 <template>
-    <Cascader v-model="activeValue" :data="areaData" class="form-input" @on-change="asyncValue">
-    </Cascader>
+    <Cascader v-model="activeValue" :data="areaData" :placeholder="placeHolder" class="form-input" @on-change="asyncValue">
+    </Cascader :class="isValue ? 'holder':''">
 </template>
 
 <script>
@@ -13,6 +13,11 @@
                 areaData: [],
                 activeValue: []
             }
+        },
+        computed: {
+          placeHolder(){
+            return this.value[0] != '' ? `${this.value[0]}/${this.value[1]}/${this.value[2]}` : '请选择'
+          } 
         },
         methods: {
             // 获取仓库列表

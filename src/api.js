@@ -808,3 +808,30 @@ export const findMyAuction = '/demands/auction/findMyAuction'
  * 我的保证金
  */
 export const findMyMargin = '/demands/auction/findMyMargin'
+
+/**
+ * 银行卡-分页
+ */
+export const bankCardPage = '/demands/buserAccount/bankCard/page'
+
+/**
+ * 银行卡-删除
+ */
+export const bankCardDelete = '/demands/buserAccount/bankCard/delete'
+
+
+/**
+ * 银行卡-设置/取消默认
+ */
+export const bankCardchangeDefault = '/demands/buserAccount/bankCard/changeDefault'
+
+/**
+ * 银行卡-详情
+ */
+export const bankCardDetail = '/demands/buserAccount/bankCard/detail'
+
+
+/**
+ * 银行卡-保存
+ */
+export const bankCardSave = '/demands/buserAccount/bankCard/save'

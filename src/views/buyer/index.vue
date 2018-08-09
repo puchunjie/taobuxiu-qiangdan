@@ -110,18 +110,23 @@
                             }
                         }
                     }]
-                },{
+                }, {
                     title: '我的资产',
                     icon: '',
                     subs: [{
-                            name: '充值管理',
-                            router: {
-                                name: 'Recharge',
-                                query: {
-                                    step: 1
-                                }
+                        name: '充值管理',
+                        router: {
+                            name: 'Recharge',
+                            query: {
+                                step: 1
                             }
-                        }]
+                        }
+                    }, {
+                        name: '银行卡管理',
+                        router: {
+                            name: 'bankCard',
+                        }
+                    }]
                 }, {
                     title: '我的拍卖',
                     icon: 'icon-ziyuan11',
