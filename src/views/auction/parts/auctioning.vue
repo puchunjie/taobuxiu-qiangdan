@@ -63,14 +63,8 @@
 
                 <p class="sevice">
                     <span>服务支持：</span>
-                    <span class="item">
-                        <i class="iconfont icon-duigou1"></i>现场质检
-                    </span>
-                    <span class="item">
-                        <i class="iconfont icon-duigou1"></i>担保交易
-                    </span>
-                    <span class="item">
-                        <i class="iconfont icon-duigou1"></i>证书认证
+                    <span class="item" v-for="(item,i) in base.auctionRights" :key="i">
+                        <i class="iconfont" :class="item.icon"></i>{{ item.name }}
                     </span>
                 </p>
             </div>

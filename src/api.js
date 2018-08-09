@@ -704,6 +704,11 @@ export const registUser = '/api/regist/registUser'
 
 // =================================拍卖=================================
 /**
+ * 拍卖公告
+ */
+export const auctionAffiche = '/api/auctionQuery/auctionAffiche'
+
+/**
  * 查询所有参数
  */
 export const queryAllFilters = '/api/auctionQuery/queryAll'

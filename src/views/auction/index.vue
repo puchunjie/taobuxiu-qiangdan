@@ -87,8 +87,8 @@
                         </div>
                         <div class="price-list">
                             <div class="list-item" v-for="(el,j) in item.auctionInfos" :key="j">
-                                <div class="inner">
-                                    <router-link tag="span" :to="{ name: 'auctionDetail', params: { id: el.auctionInfoId } }" class="desc">{{ item.description }}</router-link>
+                                <router-link tag="div" :to="{ name: 'auctionDetail', params: { id: el.auctionInfoId } }"  class="inner">
+                                    <span class="desc">{{ item.description }}</span>
                                     <label class="tit">重量</label>
                                     <div>{{ el.weight }}KG</div>
                                     <label class="tit">数量</label>
@@ -107,7 +107,7 @@
                                         </template>
                                         <span class="lp" v-show="el.status == 3">已流拍</span>
                                     </div>
-                                </div>
+                                </router-link>
                             </div>
                         </div>
                     </div>
@@ -118,7 +118,15 @@
                 </div>
             </div>
             
-            <div class="notice-warp"></div>
+            <div class="notice-warp">
+                <div class="tit">
+                    <span></span>
+                    竞拍公告
+                </div>
+                <div class="item" v-for="(item,i) in affiches" :key="i" @click="goNews(item)">
+                    {{ item.typeName }} <span>{{ item.updateTime | dateformat('hh:mm') }}</span>
+                </div>
+            </div>
         </div>
         <div class="inner-container"><process></process></div>
         <div style="background-color: #3E3C3A"><publicFooter></publicFooter></div>
@@ -167,7 +175,8 @@
                 },
                 list: [],
                 totalCount: 0,
-                nowTime: 0
+                nowTime: 0,
+                affiches: []
             }
         },
         computed: {
@@ -231,6 +240,17 @@
                     }
                 })
             },
+            // 获取公告
+            getauctionAffiche(){
+                this.$http.post(this.$api.auctionAffiche,{
+                    currentPage: 1,
+                    pageSize: 6
+                }).then(res => {
+                    if(res.code === 1000){
+                        this.affiches = res.data.list;
+                    }
+                })
+            },
             initList(data){
                 this.page.pageSize = data;
                 this.getList();
@@ -244,7 +264,13 @@
             goDetail(item){
                 if(item.isBatch) return 
                 this.$router.push({ name: 'auctionDetail', params: { id: item.auctionInfos[0].auctionInfoId } })
+            },
+            goNews(item){
+                console.log(item.id)
             }
+        },
+        created(){
+            this.getauctionAffiche();
         }
     }
 </script>
@@ -319,7 +345,38 @@
             height: 254px;
             margin-top: 24px;
             background-color: #fff;
+            padding: 20px;
             float: right;
+            .tit{
+                color: @f_dark;
+                font-weight: bold;
+                line-height: 24px;
+                font-size: 16px;
+                margin-bottom: 10px;
+                span{
+                    display: inline-block;
+                    width: 4px;
+                    height: 20px;
+                    background-color: @dark_blue;
+                    vertical-align: middle;
+                }
+            }
+
+            .item{
+                position: relative;
+                width: 100%;
+                margin-top: 10px;
+                color: @f_ligth;
+                font-size: 14px;
+                cursor: pointer;
+                &:hover{
+                    color: @dark_blue;
+                }
+                span{
+                    position: absolute;
+                    right: 0;
+                }
+            }
         }
         .list-container {
             width: 100%;
@@ -522,8 +579,13 @@
                             height: 100%;
                             margin-left: 24px;
                             border-left: 1px solid #E9E9E9;
+                            cursor: pointer;
                             &:not(:last-child){
                                 border-left: 1px solid #E9E9E9;
+                            }
+
+                            &:hover{
+                                background-color: #FAFAFA;
                             }
 
                             &:before{
