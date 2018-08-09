@@ -245,6 +245,7 @@
               line-height: 52px;
               background-color: #fafafa;
               th {
+                position: relative;
                 color: @f_dark;
                 font-size: 14px;
                 font-weight: bold;

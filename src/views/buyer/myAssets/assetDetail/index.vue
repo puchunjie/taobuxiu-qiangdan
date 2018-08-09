@@ -22,7 +22,7 @@
                 <i-form inline :label-width="70">
                     <form-item label="交易类型:" class="group-item">
                         <i-select v-model="apiData.tradeType" style="width:140px">
-                            <i-option v-for="(item,i) in tradeTypes" :value="item" :key="i">{{ item }}</i-option>
+                            <i-option v-for="(item,i) in tradeTypes" :value="item.name" :key="i">{{ item.name }}</i-option>
                         </i-select>
                     </form-item>
                     <form-item label="关键词:" class="group-item">
@@ -54,15 +54,15 @@
                 </div>
             </div>
             <div class="table">
-                <i-table  :columns="columns" :data="list"></i-table>
+                <i-table :columns="columns" :data="list"></i-table>
                 <div class="page-count" v-show="list.length != 0">
                     <Page show-total @on-change="getList" :total="totalCount" :current.sync="apiData.currentPage" :page-size="apiData.pageSize" @on-page-size-change="initList" show-elevator show-sizer />
                 </div>
             </div>
         </div>
-
+    
         <Modal v-model="detailShow" footer-hide title="详情" :width="1200">
-            <component :is="detailName" v-if="detailName != '' && detailShow"></component>
+            <component :is="detailName" :data="detailData" v-if="detailName != '' && detailShow"></component>
         </Modal>
     </div>
 </template>
@@ -71,16 +71,22 @@
     import {
         mapGetters
     } from 'vuex'
-    import { dateformat } from '@/filters'
+    import {
+        dateformat
+    } from '@/filters'
     import rechargeDetail from './rechargeDetail.vue'
+    import bondDetail from './bondDetail.vue'
+    import putfDetail from './putfDetail.vue'
     export default {
-        components:{
-            rechargeDetail
+        components: {
+            rechargeDetail,
+            putfDetail,
+            bondDetail
         },
         data() {
             return {
                 detailShow: false,
-                detailDta: {},
+                detailData: {},
                 detailName: 'rechargeDetail',
                 apiData: {
                     currentPage: 1,
@@ -96,20 +102,28 @@
                     tradeType: '', //交易类型
                     tradeStatus: '', //交易状态    
                 },
-                tradeTypes: ['充值', '提现', '拍卖保证金'],
+                tradeTypes: [{
+                    name: '充值',
+                    comp: 'rechargeDetail'
+                }, {
+                    name: '提现',
+                    comp: 'putfDetail'
+                }, {
+                    name: '拍卖',
+                    comp: 'bondDetail'
+                }],
                 tradeStatus: ['交易成功', '处理中', '退回账户', '冻结中'],
                 keys: ['流水号', '提现编号', '场次编号'],
                 activeKey: '流水号',
                 keyStr: '',
                 list: [],
                 totalCount: 0,
-                columns: [
-                    {
+                columns: [{
                         title: '操作时间',
                         key: 'tradeTime',
                         width: 110,
-                        render: (h,params) => {
-                            return h('span',dateformat(params.row.tradeTime))
+                        render: (h, params) => {
+                            return h('span', dateformat(params.row.tradeTime))
                         }
                     },
                     {
@@ -146,17 +160,20 @@
                     },
                     {
                         title: '详情',
-                        render: (h,params) => {
-                            return h('a',{
-                                style:{
+                        render: (h, params) => {
+                            return h('a', {
+                                style: {
                                     color: '#3366CC'
                                 },
                                 on: {
                                     click: () => {
+                                        console.log(params.row.tradeType)
+                                        this.detailName = this.tradeTypes.find(item => item.name == params.row.tradeType).comp;
+                                        this.detailData = this.list[params.index];
                                         this.detailShow = true;
                                     }
                                 }
-                            },'查看')
+                            }, '查看')
                         }
                     }
                 ]
@@ -168,14 +185,14 @@
         methods: {
             getList() {
                 let params = this.$clearData(this.apiData);
-                this.$http.post(this.$api.buserAccountLog,params).then(res => {
-                    if(res.code === 1000){
+                this.$http.post(this.$api.buserAccountLog, params).then(res => {
+                    if (res.code === 1000) {
                         this.list = res.data.data;
                         this.totalCount = res.data.totalCount;
                     }
                 })
             },
-            initList(data){
+            initList(data) {
                 this.apiData.pageSize = data;
                 this.getList();
             }
@@ -257,12 +274,11 @@
                 font-size: 16px;
                 font-weight: bold;
             }
-
-            .table{
+            .table {
                 width: 100%;
                 padding: 0 16px;
             }
-            .page-count{
+            .page-count {
                 text-align: right;
                 margin-top: 10px;
             }
@@ -275,8 +291,7 @@
                 margin-bottom: 16px;
                 margin-right: 40px;
             }
-
-            .btns{
+            .btns {
                 position: absolute;
                 right: 16px;
                 bottom: 30px;

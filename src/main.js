@@ -37,6 +37,8 @@ import {
     Cascader,
     Select,
     Option,
+    RadioGroup,
+    Radio,
     DatePicker,
     Spin,
     Upload,
@@ -56,6 +58,8 @@ Vue.component('form-item', Form.Item);
 Vue.component('i-input', Input);
 Vue.component('i-select', Select);
 Vue.component('i-option', Option);
+Vue.component('i-radioGroup', RadioGroup);
+Vue.component('i-radio', Radio);
 Vue.component('i-table', Table);
 Vue.component(Poptip.name, Poptip);
 Vue.component(Tooltip.name, Tooltip);

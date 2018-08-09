@@ -30,140 +30,149 @@
         data() {
             return {
                 menus: [{
-                    title: '现货求购管理',
-                    icon: 'icon-ziyuan10',
-                    subs: [{
-                        name: '今日',
-                        count: 0,
-                        router: {
-                            name: 'Bbuys',
-                            params: {
-                                isToday: 1
-                            }
-                        }
-                    }, {
-                        name: '历史',
-                        count: 0,
-                        router: {
-                            name: 'Bbuys',
-                            params: {
-                                isToday: 0
-                            }
-                        }
-                    }]
-                }, {
-                    title: '我的订单',
-                    icon: 'icon-ziyuan13',
-                    subs: [{
-                        name: '现货订单',
-                        count: 0,
-                        router: {
-                            name: 'BironOrder',
-                            params: {
-                                isToday: 1
-                            }
-                        }
-                    }, {
-                        name: '定开订单',
-                        count: 0,
-                        router: {
-                            name: 'BplanOrder',
-                            params: {
-                                isToday: 0
-                            }
-                        }
-                    }, {
-                        name: '特价订单',
-                        count: 0,
-                        router: {
-                            name: 'BspecialOrder',
-                            params: {
-                                isToday: 0
-                            }
-                        }
-                    }]
-                }, {
-                    title: '合同管理',
-                    icon: 'icon-ic_import_contacts_b',
-                    subs: [{
-                        name: '起草合同',
-                        router: {
-                            name: 'Bstep1',
-                            params: {
-                                type: 1
-                            }
-                        }
-                    }, {
-                        name: '管理合同',
-                        router: {
-                            name: 'BocManage',
-                            params: {
-                                type: 1
-                            }
-                        }
-                    }, {
-                        name: '认证合同',
-                        router: {
-                            name: 'BocAuthen',
-                            params: {
-                                type: 1
-                            }
-                        }
-                    }]
-                },{
-                    title: '我的资产',
-                    icon: '',
-                    subs: [{
-                            name: '充值管理',
+                        title: '现货求购管理',
+                        icon: 'icon-ziyuan10',
+                        subs: [{
+                            name: '今日',
+                            count: 0,
                             router: {
-                                name: 'Recharge',
-                                query: {
-                                    step: 1
+                                name: 'Bbuys',
+                                params: {
+                                    isToday: 1
                                 }
                             }
-                        },
-                        {
-                            name: '资产明细',
+                        }, {
+                            name: '历史',
+                            count: 0,
                             router: {
-                                name: 'assetDetail'
+                                name: 'Bbuys',
+                                params: {
+                                    isToday: 0
+                                }
                             }
                         }]
-                }, {
-                    title: '我的拍卖',
-                    icon: 'icon-ziyuan11',
-                    subs: [{
-                        name: '我的竞拍',
-                        router: {
-                            name: 'bidders'
-                        }
                     }, {
-                        name: '我的保证金',
-                        router: {
-                            name: 'deposit'
-                        }
+                        title: '我的订单',
+                        icon: 'icon-ziyuan13',
+                        subs: [{
+                            name: '现货订单',
+                            count: 0,
+                            router: {
+                                name: 'BironOrder',
+                                params: {
+                                    isToday: 1
+                                }
+                            }
+                        }, {
+                            name: '定开订单',
+                            count: 0,
+                            router: {
+                                name: 'BplanOrder',
+                                params: {
+                                    isToday: 0
+                                }
+                            }
+                        }, {
+                            name: '特价订单',
+                            count: 0,
+                            router: {
+                                name: 'BspecialOrder',
+                                params: {
+                                    isToday: 0
+                                }
+                            }
+                        }]
                     }, {
-                        name: '我的收藏',
-                        router: {
-                            name: 'collection'
-                        }
-                    }]
-                }, {
-                    title: '我的买家档案',
-                    icon: 'icon-ziyuan11',
-                    subs: [{
-                            name: '基本信息',
+                        title: '合同管理',
+                        icon: 'icon-ic_import_contacts_b',
+                        subs: [{
+                            name: '起草合同',
                             router: {
-                                name: 'BuserInfo'
+                                name: 'Bstep1',
+                                params: {
+                                    type: 1
+                                }
                             }
-                        },
-                        {
-                            name: '权益说明',
+                        }, {
+                            name: '管理合同',
                             router: {
-                                name: 'Bright'
+                                name: 'BocManage',
+                                params: {
+                                    type: 1
+                                }
                             }
-                        }
-                    ]
-                }]
+                        }, {
+                            name: '认证合同',
+                            router: {
+                                name: 'BocAuthen',
+                                params: {
+                                    type: 1
+                                }
+                            }
+                        }]
+                    }, {
+                        title: '我的资产',
+                        icon: '',
+                        subs: [{
+                                name: '充值管理',
+                                router: {
+                                    name: 'Recharge',
+                                    query: {
+                                        step: 1
+                                    }
+                                }
+                            },
+                            {
+                                name: '资产明细',
+                                router: {
+                                    name: 'assetDetail'
+                                }
+                            },
+                            {
+                                name: '银行卡管理',
+                                router: {
+                                    name: 'bankCard',
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        title: '我的拍卖',
+                        icon: 'icon-ziyuan11',
+                        subs: [{
+                            name: '我的竞拍',
+                            router: {
+                                name: 'bidders'
+                            }
+                        }, {
+                            name: '我的保证金',
+                            router: {
+                                name: 'deposit'
+                            }
+                        }, {
+                            name: '我的收藏',
+                            router: {
+                                name: 'collection'
+                            }
+                        }]
+                    }, {
+                        title: '我的买家档案',
+                        icon: 'icon-ziyuan11',
+                        subs: [{
+                                name: '基本信息',
+                                router: {
+                                    name: 'BuserInfo'
+                                }
+                            },
+                            {
+                                name: '权益说明',
+                                router: {
+                                    name: 'Bright'
+                                }
+                            }
+                        ]
+                    }
+                ]
             }
         }
     }

@@ -191,6 +191,21 @@ const router = new Router({
                             component: resolve => require(['@/views/buyer/myAssets/assetDetail/index.vue'], resolve)
                         },
                         {
+                            path: 'bankCard',
+                            name: 'bankCard',
+                            component: resolve => require(['@/views/buyer/myAssets/bankCard/index.vue'], resolve)
+                        },
+                        {
+                            path: 'addCard',
+                            name: 'addCard',
+                            component: resolve => require(['@/views/buyer/myAssets/bankCard/add.vue'], resolve)
+                        },
+                        {
+                            path: 'bankDetail',
+                            name: 'bankDetail',
+                            component: resolve => require(['@/views/buyer/myAssets/bankCard/detail.vue'], resolve)
+                        },
+                        {
                             path: 'collection',
                             name: 'collection',
                             component: resolve => require(['@/views/buyer/collection/index'], resolve)
