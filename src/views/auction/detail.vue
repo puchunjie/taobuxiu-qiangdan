@@ -11,7 +11,7 @@
             <auctioning :systemTime="systemTime" :base="auction" :data="auctionInfo" :isDeposit="isDeposit"></auctioning>
             <div class="collection-share">
                 <div class="item" @click="collectAuction" :class="{ 'collected': isStoreUp }">
-                    <i class="iconfont icon-heart-o"></i> 收藏拍卖
+                    <i class="iconfont " :class="isStoreUp ? 'icon-icon-heart-heart' : 'icon-heart-o'"></i> 收藏拍卖
                 </div>
                 <div class="item">
                     <i class="iconfont icon-fenxiang"></i> 分享链接
@@ -113,6 +113,7 @@
                 isDeposit: false, //是否需要支付保证金
                 isOffer: false, //是否出过价
                 isStoreUp: false, //是否收藏
+                hasPrice: false,//拍卖是否有过报价
                 payDeposit: false,
                 payLoading: false,
                 systemTime: '',
@@ -143,6 +144,7 @@
                         this.auctionInfo = res.data.auctionInfo;
                         this.isDeposit = res.data.isDeposit;
                         this.isOffer = res.data.isOffer;
+                        this.hasPrice = res.data.hasPrice;
                         this.isStoreUp = res.data.isStoreUp;
                         this.systemTime = res.data.systemTime;
                         this.tabValue = res.data.auction.pack ? 'pack' : 'introduce';
@@ -256,9 +258,11 @@
                     color: @dark_blue;
                 }
                 &.collected {
-                    color: @dark_blue;
-                    .iconfont {
-                        color: @dark_blue;
+                    .icon-heart-o {
+                        color: @f_goast;
+                    }
+                    .icon-icon-heart-heart{
+                        color: @dark_red;
                     }
                 }
             }

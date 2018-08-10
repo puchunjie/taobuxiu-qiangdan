@@ -2,7 +2,7 @@
     <div class="offer-record">
         <div class="head">
             出价记录（{{ totalCount }}）
-            <span>查看更多</span>
+            <!-- <span>查看更多</span> -->
         </div>
         <div class="content">
             <template v-if="status == 2">

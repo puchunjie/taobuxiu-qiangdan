@@ -1,8 +1,8 @@
 <template>
     <div class="pay-input">
-        <input type="text" class="input" placeholder="请输入" v-model="num" @input="checkNum" @blur="isOk"/>
-        <i class="iconfont icon-minus-square-o" @click="minus"></i>
+        <input type="text" class="input" placeholder="请输入" v-model="num" @input="checkNum" @blur="isOk" />
         <i class="iconfont icon-plus-square-o" @click="plus"></i>
+        <i class="iconfont icon-minus-square-o" @click="minus"></i>
     </div>
 </template>
 
@@ -10,64 +10,73 @@
     export default {
         props: {
             value: {
-                type: [String,Number],
+                type: [String, Number],
                 default: ''
             },
             min: {
                 type: Number,
                 default: 0
             },
-            step:{
+            step: {
                 type: Number,
                 default: 1
             },
             now: {
                 type: Number,
                 default: 0
+            },
+            hasPrice: {
+                type: Boolean,
+                default: false
             }
         },
-        data () {
+        data() {
             return {
                 num: ''
             }
         },
         watch: {
-          value(val){
-              this.num = val;
-          },
-          num(val){
-              let data = val > 0 ? val : '';
-              this.$emit('input',data)
-          },
-          now(){
-              this.initNum();
-          }  
+            value(val) {
+                this.num = val;
+            },
+            num(val) {
+                let data = val > 0 ? val : '';
+                this.$emit('input', data)
+            },
+            now() {
+                this.initNum();
+            },
+            hasPrice() {
+                this.initNum();
+            }
         },
         computed: {
-          underPrice(){
-              return this.now > this.min ? this.now  : this.min;
-          }  
+            underPrice() {
+                return this.hasPrice ? this.now + this.step : this.min
+            }
         },
         methods: {
-            checkNum(e){
+            checkNum(e) {
                 if (isNaN(+e.target.value)) {
                     this.num = ''
                 }
             },
-            isOk(e){
+            isOk(e) {
                 let num = +e.target.value;
-                if(num < (this.underPrice + (+this.num))  || num == 0 )
-                    this.num = this.underPrice + this.step
+                let cantPay = !this.hasPrice ? num < this.underPrice : (num - this.underPrice) < this.step;
+                if (cantPay)
+                    this.num = this.underPrice
             },
-            minus(){
-                if(this.num > (this.underPrice + this.step))
+            minus() {
+                let canMinus = this.hasPrice ? (this.num - this.underPrice) >= this.step : (this.num - this.step) >= this.underPrice;
+                if (canMinus)
                     this.num = (+this.num) - this.step
             },
-            plus(){
-                this.num = (+this.num )+ this.step
+            plus() {
+                this.num = (+this.num) + this.step
             },
-            initNum(){
-                this.num =   this.now > this.min ? this.now + this.step : this.min + this.step;
+            initNum() {
+                this.num = this.hasPrice ? this.now + this.step : this.min;
             }
         },
         created() {
@@ -105,10 +114,10 @@
             }
         }
         .icon-minus-square-o {
-            top: 0;
+            bottom: 0;
         }
         .icon-plus-square-o {
-            bottom: 0;
+            top: 0;
         }
     }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div class="auction-container">
+    <div class="main-auction-container">
         <div class="inner-container clearfix">
             <screenFilter :params="listParams" @on-change="updateParams"></screenFilter>
             <div class="body-warp">
@@ -25,8 +25,8 @@
                                 <span class="has-b-price" :class="{'disable': item.reservePrice == ''}">{{ item.reservePrice == '' ? '无' : '有' }}底价</span>
                             </span>
 
-                            <span v-if="item.status == 1" class="time">开始倒计时：<countDown color="#00A854" :endTime='item.startTime'></countDown></span>
-                            <span v-if="item.status == 2" class="time">结束倒计时：<countDown color="#F5222D" :endTime='item.realEndTime'></countDown></span>
+                            <span v-if="item.status == 1" class="time">开始倒计时：<countDown @time-end="getList" color="#00A854" :endTime='item.startTime'></countDown></span>
+                            <span v-if="item.status == 2" class="time">结束倒计时：<countDown @time-end="getList" color="#F5222D" :endTime='item.realEndTime'></countDown></span>
                             <span v-if="item.status == 3" class="time st3">出价次数：{{ item.priceNumber }} 结束时间：{{ item.realEndTime | dateformat }}</span>
                         </div>
                         <div class="body">
@@ -267,6 +267,7 @@
             },
             goNews(item){
                 console.log(item.id)
+                window.open(`http://www.itaobuxiu.com/portal/newsDetail?id=${item.id}`)
             }
         },
         created(){
@@ -279,7 +280,7 @@
 <style lang="less">
     @import url('../../assets/base.less');
     @import url('../../assets/common.less');
-    .auction-container {
+    .main-auction-container {
         margin-top: 24px;
         .sort-pag-div {
             position: relative;

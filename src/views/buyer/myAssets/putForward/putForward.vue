@@ -108,7 +108,7 @@
                     this.$http.post(this.$api.putForward,this.apiData).then(res => {
                         if(res.code == 1000){
                             this.$Modal.confirm({
-                                title: '提现申请已提交？',
+                                title: '提现申请已提交',
                                 content: '提现申请已提交，是否前往提现列表？',
                                 okText: '前往',
                                 cancelText: '继续提现',

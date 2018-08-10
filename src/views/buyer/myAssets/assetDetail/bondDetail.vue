@@ -1,7 +1,7 @@
 <template>
     <div class="sub-detail-container">
         <div class="top">
-            <h3>拍卖保证金</h3>
+            <h3>{{ data.logType }}</h3>
             <table>
                 <tr>
                     <td>交易类型：{{ data.tradeType }}</td>

@@ -26,14 +26,14 @@
                         </i-select>
                     </form-item>
                     <form-item label="关键词:" class="group-item">
-                        <i-select v-model="activeKey" style="width:88px">
+                        <i-select v-model="activeKey" style="width:88px" @on-change="setSearchKey">
                             <i-option v-for="(item,i) in keys" :value="item" :key="i">{{ item }}</i-option>
                         </i-select>
-                        <i-input style="width: 232px" placeholder="请输入" v-model="keyStr" class="form-input"></i-input>
+                        <i-input style="width: 232px" @input="setSearchKey" placeholder="请输入" v-model="keyStr" class="form-input"></i-input>
                     </form-item>
                     <form-item label="金额范围:" class="group-item">
-                        <i-input style="width: 105px" placeholder="请输入" @on-blur="testNumber" v-model="keyStr" class="form-input"></i-input> -
-                        <i-input style="width: 105px" placeholder="请输入" @on-blur="testNumber" v-model="keyStr" class="form-input"></i-input>
+                        <i-input style="width: 105px" placeholder="请输入" @on-blur="testNumber" v-model="apiData.amountBegin" class="form-input"></i-input> -
+                        <i-input style="width: 105px" placeholder="请输入" @on-blur="testNumber" v-model="apiData.amountEnd" class="form-input"></i-input>
                     </form-item>
                     <form-item label="交易状态:" class="group-item">
                         <i-select v-model="apiData.tradeType" style="width:140px">
@@ -45,7 +45,7 @@
                         <DatePicker v-model="apiData.createTimeEnd" format="yyyy/MM/dd" type="date" placement="bottom-end" placeholder="结束时间" style="width: 155px"></DatePicker>
                     </form-item>
                     <form-item label="操作人:" class="group-item">
-                        <i-input style="width: 140px" placeholder="请输入" v-model="keyStr" class="form-input"></i-input>
+                        <i-input style="width: 140px" placeholder="请输入" v-model="apiData.createUser" class="form-input"></i-input>
                     </form-item>
                 </i-form>
                 <div class="btns">
@@ -91,7 +91,8 @@
                 apiData: {
                     currentPage: 1,
                     pageSize: 10,
-                    withDrawId: '',
+                    withDrawId: '', //提现单编号
+                    auctionIndex: '',//场次编号
                     createUser: '', //操作人
                     createTimeBegin: '', //操作起始时间
                     createTimeEnd: '', //操作时间结束范围
@@ -187,12 +188,34 @@
                 let params = this.$clearData(this.apiData);
                 params.createTimeBegin = params.createTimeBegin != '' ? new Date(params.createTimeBegin).getTime() : '';
                 params.createTimeEnd = params.createTimeEnd != '' ? new Date(params.createTimeEnd).getTime() : '';
+                
                 this.$http.post(this.$api.buserAccountLog, params).then(res => {
                     if (res.code === 1000) {
                         this.list = res.data.data;
                         this.totalCount = res.data.totalCount;
                     }
                 })
+            },
+            setSearchKey(){
+                switch (this.activeKey) {
+                    case '流水号':
+                        this.apiData.tradeNo = this.keyStr;
+                        this.apiData.withDrawId = '';
+                        this.apiData.auctionIndex = '';
+                        break;
+                    case '提现编号':
+                        this.apiData.withDrawId = this.keyStr;
+                        this.apiData.tradeNo = '';
+                        this.apiData.auctionIndex = '';
+                        break;
+                    case '场次编号':
+                        this.apiData.auctionIndex = this.keyStr;
+                        this.apiData.tradeNo = '';
+                        this.apiData.withDrawId = '';
+                        break;
+                    default:
+                        break;
+                }
             },
             initList(data) {
                 this.apiData.pageSize = data;

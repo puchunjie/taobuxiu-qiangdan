@@ -386,7 +386,8 @@
                     color: @dark_blue;
                 }
                 .iconfont {
-                    vertical-align: text-bottom;
+                    position: relative;
+                    top: 1px;
                 }
             }
             .show-more {

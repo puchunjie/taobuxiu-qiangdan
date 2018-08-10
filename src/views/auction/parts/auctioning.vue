@@ -29,7 +29,7 @@
                 </div>
                 <div class="group-item">
                     <label>出价</label>
-                    <payInput :now="data.currentPrice" :min="base.startPrice" :step="base.priceStep" v-model="payMoney"></payInput>
+                    <payInput :hasPrice="$parent.hasPrice" :now="data.currentPrice" :min="base.startPrice" :step="base.priceStep" v-model="payMoney"></payInput>
                     <span class="budget">预计总金额: &yen;{{ totalePayMoney | toMoney }}</span>
                 </div>
                 <div class="group-item">
@@ -201,6 +201,7 @@
                     if(res.code === 1000){
                         this.$Message.success('出价成功');
                         this.$parent.auctionInfo.currentPrice = this.payMoney;
+                        this.$parent.hasPrice = true;
                         this.$parent.$refs.offerRecord.getList();
                         //如果正好选在出价列表上，则更新
                         if(this.$parent.tabValue == 'record'){
