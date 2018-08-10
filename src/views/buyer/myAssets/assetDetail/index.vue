@@ -36,13 +36,13 @@
                         <i-input style="width: 105px" placeholder="请输入" @on-blur="testNumber" v-model="apiData.amountEnd" class="form-input"></i-input>
                     </form-item>
                     <form-item label="交易状态:" class="group-item">
-                        <i-select v-model="apiData.tradeType" style="width:140px">
+                        <i-select v-model="apiData.tradeStatus" style="width:140px">
                             <i-option v-for="(item,i) in tradeStatus" :value="item" :key="i">{{ item }}</i-option>
                         </i-select>
                     </form-item>
                     <form-item label="操作时间:" class="group-item">
                         <DatePicker v-model="apiData.createTimeBegin" format="yyyy年MM月dd日" type="date" placeholder="开始时间" style="width: 155px"></DatePicker> -
-                        <DatePicker v-model="apiData.createTimeEnd" format="yyyy/MM/dd" type="date" placement="bottom-end" placeholder="结束时间" style="width: 155px"></DatePicker>
+                        <DatePicker v-model="apiData.createTimeEnd" format="yyyy年MM月dd日" type="date" placement="bottom-end" placeholder="结束时间" style="width: 155px"></DatePicker>
                     </form-item>
                     <form-item label="操作人:" class="group-item">
                         <i-input style="width: 140px" placeholder="请输入" v-model="apiData.createUser" class="form-input"></i-input>
@@ -110,7 +110,7 @@
                     name: '提现',
                     comp: 'putfDetail'
                 }, {
-                    name: '拍卖',
+                    name: '拍卖保证金',
                     comp: 'bondDetail'
                 }],
                 tradeStatus: ['交易成功', '处理中', '退回账户', '冻结中'],
@@ -227,6 +227,7 @@
                 }
                 this.apiData.currentPage = 1;
                 this.apiData.pageSize = 10;
+                this.keyStr = '';
                 this.getList();
             },
             search(){

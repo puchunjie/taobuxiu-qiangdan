@@ -10,7 +10,7 @@
                 </form-item>
                 <form-item label="申请时间:" class="group-item">
                     <DatePicker v-model="apiData.timeBegin" format="yyyy年MM月dd日" type="date" placeholder="开始时间" style="width: 155px"></DatePicker> -
-                    <DatePicker v-model="apiData.timeEnd" format="yyyy/MM/dd" type="date" placement="bottom-end" placeholder="结束时间" style="width: 155px"></DatePicker>
+                    <DatePicker v-model="apiData.timeEnd" format="yyyy年MM月dd日" type="date" placement="bottom-end" placeholder="结束时间" style="width: 155px"></DatePicker>
                 </form-item>
                 <form-item label="状态:" class="group-item">
                     <i-select v-model="apiData.tradeType" style="width:140px">

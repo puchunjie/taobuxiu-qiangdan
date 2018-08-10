@@ -16,8 +16,8 @@
                 </template>
                 <template v-else>
                     <i class="iconfont icon-exclamation-circle"></i>余额{{ account | toMoney }}元，不足以参加本场保证金。
-                    <a class="btn">去充值</a>
-                    <a class="btn" v-show="!isStoreUp" @click="$parent.$parent.collectAuction">收藏</a>
+                    <router-link :to="{name:'Recharge',query: {step: 1}}" class="btn">去充值</router-link>
+                    <a class="btn" @click="$parent.$parent.collectAuction">{{ isStoreUp ? '取消收藏' : '收藏' }}</a>
                 </template>
             </template>
         </span>

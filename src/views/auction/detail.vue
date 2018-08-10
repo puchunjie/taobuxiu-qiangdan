@@ -66,7 +66,7 @@
             <div slot="footer">
                 <a class="btn" @click="payDeposit = !payDeposit">取消</a>
                 <a class="btn primary" v-show="hasMoney" @click="doDeposit">缴纳保证金</a>
-                <a class="btn primary" v-show="!hasMoney">去充值</a>
+                <router-link :to="{name:'Recharge',query: {step: 1}}" class="btn primary" v-show="!hasMoney">去充值</router-link>
             </div>
         </Modal>
     </div>
