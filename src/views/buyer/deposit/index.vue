@@ -8,7 +8,7 @@
         <span class="count-item">总余额<i>{{count.all}}</i></span>
         <span class="count-item">已冻结<i>{{count.lock}}</i></span>
         <span class="count-item">可用余额<i>{{count.account}}</i></span>
-        <a class="btn money-btn">余额管理</a>
+        <a class="btn money-btn" @click="goassetDetail">余额管理</a>
       </div>
       <div class="auction-container-list">
         <div class="auction-container-list">
@@ -179,6 +179,9 @@
           }
         });
         window.open(href, '_blank');
+      },
+      goassetDetail(){
+        this.$router.push({name: 'assetDetail'})
       }
     },
     created() {
@@ -406,6 +409,8 @@
         text-align: center;
         &.price-list-item1 {
           width: 150px;
+          text-align: left;
+          padding-left: 40px;
         }
         &.price-list-item2 {
           width: 150px;
@@ -421,6 +426,7 @@
           background: rgba(245, 245, 245, 1);
           border-radius: 4px;
           border: 1px solid rgba(217, 217, 217, 1);
+          text-align: center;
           &.current {
             color: @dark_red;
             background: rgba(255, 241, 240, 1);
