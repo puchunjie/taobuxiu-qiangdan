@@ -380,6 +380,8 @@
         text-align: center;
         &.price-list-item1 {
           width: 150px;
+          text-align: left;
+          padding-left: 40px;
         }
         &.price-list-item2 {
           width: 150px;
@@ -395,6 +397,7 @@
           background: rgba(245, 245, 245, 1);
           border-radius: 4px;
           border: 1px solid rgba(217, 217, 217, 1);
+          text-align: center;
           &.current {
             color: @dark_red;
             background: rgba(255, 241, 240, 1);

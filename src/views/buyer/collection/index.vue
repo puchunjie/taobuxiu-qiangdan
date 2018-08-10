@@ -58,7 +58,7 @@
               </td>
               <td>{{item.auctionId}}</td>
               <td class="description">
-                <span>{{item.description}}</span>
+                <span class="detail-name" @click="goDetail(item)">{{item.description}}</span>
                 <span class="details">
                                         <span class="iconfont icon-youdijia"></span>
                 <span class="hasReservePrice">{{item.hasReservePrice ? '有底价':'无底价'}}</span>
@@ -259,6 +259,17 @@
             })
           }
         });
+      },
+      goDetail(item) {
+        let {
+          href
+        } = this.$router.resolve({
+          name: "auctionDetail",
+          params: {
+            id: item.auctionInfoId,
+          }
+        });
+        window.open(href, '_blank');
       }
     },
     created() {
@@ -380,7 +391,12 @@
             font-size: 14px;
             padding: 0 10px;
             &.description {
-              color: @dark_blue;
+              .detail-name{
+                cursor: pointer;
+                &:hover{
+                  color: @dark_blue;
+                }
+              }
             }
             .unCollect {
               color: @dark_blue;
@@ -421,8 +437,7 @@
             z-index: 2;
             font-size: 12px;
             width: 59px;
-            height: 23px;
-            line-height: 23px;
+            line-height: 30px;
             text-align: center;
           }
         }
