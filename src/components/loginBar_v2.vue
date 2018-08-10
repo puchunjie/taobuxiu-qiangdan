@@ -1,6 +1,6 @@
 <template>
     <div class="main-bar" :class="{'new':isNew}">
-        <div class="inner-container">
+        <div class="inner-container" style="position:relative">
             <slot>
                 <a class="back" href="http://www.itaobuxiu.com" target="_blank">淘不锈首页</a>
                 <a class="link"><span class="iconfont icon-ziyuan7"></span>0510-81812186</a>
@@ -89,7 +89,7 @@
         .action-panel {
             position: absolute;
             width: 100px;
-            right: 70px;
+            right: 10px;
             top: 30px;
             text-indent: 10px;
             background-color: #fff;
