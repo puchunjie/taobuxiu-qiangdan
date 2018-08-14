@@ -148,7 +148,10 @@
                         subs: [{
                             name: '我的竞拍',
                             router: {
-                                name: 'bidders'
+                                name: 'bidders',
+                                query: {
+                                    status: 1
+                                }
                             }
                         }, {
                             name: '我的保证金',

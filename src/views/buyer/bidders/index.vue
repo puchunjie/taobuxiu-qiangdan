@@ -119,13 +119,24 @@
         show: false
       }
     },
-    watch: {
-      'pageApi.status' () {
-        this.getList(this.pageApi)
+    computed: {
+      ...mapGetters(['user']),
+      status() {
+        return this.$route.query.status
       }
     },
-    computed: {
-      ...mapGetters(['user'])
+    watch: {
+      'pageApi.status' (val) {
+        this.$router.push({
+          query: {
+            status: val
+          }
+        })
+      },
+      'status' (val) {
+        this.pageApi.status = val.toString();
+        this.getList(this.pageApi)
+      }
     },
     methods: {
       getList(params) {
@@ -169,11 +180,14 @@
         });
         window.open(href, '_blank');
       },
-      goAuction(){
-        this.$router.push({name: 'auction'})
+      goAuction() {
+        this.$router.push({
+          name: 'auction'
+        })
       }
     },
     created() {
+      this.pageApi.status = this.status.toString();
       this.getList(this.pageApi)
     }
   }
@@ -289,6 +303,7 @@
           .main-item-wrap {
             height: 52px;
             line-height: 52px;
+            overflow: hidden;
             .header-item {
               float: left;
               width: 10%;
