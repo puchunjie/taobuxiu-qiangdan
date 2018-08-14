@@ -19,3 +19,5 @@ export const UPDATE_PUSH_MSG = 'unpdate_push_msg'
 
 //订单，求购数据存储
 export const SAVE_USER_COUNT = 'save_user_count'
+
+export const UPDATE_ACCOUNT = 'update_account'

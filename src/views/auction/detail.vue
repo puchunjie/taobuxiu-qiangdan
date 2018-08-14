@@ -13,7 +13,7 @@
                 <div class="item" @click="collectAuction" :class="{ 'collected': isStoreUp }">
                     <i class="iconfont " :class="isStoreUp ? 'icon-icon-heart-heart' : 'icon-heart-o'"></i> 收藏拍卖
                 </div>
-                <div class="item">
+                <div class="item" @click="share = true">
                     <i class="iconfont icon-fenxiang"></i> 分享链接
                 </div>
             </div>
@@ -43,12 +43,12 @@
             <div class="auction-bar" :class="{ 'success': hasMoney }" style="margin-top:0">
                 <template v-if="hasMoney">
                     <i class="iconfont icon-check-circle"></i> 
-                    恭喜！当前账户余额 {{ base.buserAccount ? base.buserAccount.account : 0 | toMoney }}，可以缴纳本场竞拍保证金。
+                    恭喜！当前账户余额 {{ account.account | toMoney }}，可以缴纳本场竞拍保证金。
                 </template>
 
                 <template v-else>
                     <i class="iconfont icon-exclamation-circle"></i>
-                    余额不足！当前账户余额 {{ base.buserAccount ? base.buserAccount.account : 0 | toMoney }}，无法缴纳本场保证金。
+                    余额不足！当前账户余额 {{ account.account | toMoney }}，无法缴纳本场保证金。
                 </template>
             </div>
             <div class="pay-deposit-content">
@@ -69,12 +69,17 @@
                 <router-link :to="{name:'Recharge',query: {step: 1}}" class="btn primary" v-show="!hasMoney">去充值</router-link>
             </div>
         </Modal>
+
+        <Modal v-model="share" footer-hide class="share">
+            <share :config="shareConfig"></share>
+        </Modal>
     </div>
 </template>
 
 <script>
     import {
-        mapGetters
+        mapGetters,
+        mapActions
     } from 'vuex'
     import pack from './parts/pack.vue'
     import introduce from './parts/introduce.vue'
@@ -117,24 +122,25 @@
                 payDeposit: false,
                 payLoading: false,
                 systemTime: '',
-                tabValue: 'pack'
+                tabValue: 'pack',
+                share: false, //是否显示分享
+                shareConfig: {
+                    
+                }
             }
         },
         computed: {
-            ...mapGetters(['base']),
+            ...mapGetters(['account']),
             id() {
                 return this.$route.params.id
             },
             hasMoney() {
-                if (this.base.buserAccount) {
-                    return this.base.buserAccount.account >= this.auctionInfo.maigin
-                } else {
-                    return false
-                }
+                return this.account.account >= this.auctionInfo.maigin
     
             }
         },
         methods: {
+            ...mapActions(['getAccount']),
             getDetail() {
                 this.$http.post(this.$api.findAuction, {
                     auctionInfoId: this.id
@@ -201,10 +207,12 @@
                         this.$refs.record.updateSinge()
                     }
                 }
+                this.getAccount();
             }
         },
         created() {
             this.getDetail();
+            this.getAccount();
         }
     }
 </script>
@@ -356,6 +364,10 @@
                 border-color: @dark_blue;
             }
         }
+    }
+
+    .share .ivu-modal{
+        top: 200px!important;
     }
 </style>
 

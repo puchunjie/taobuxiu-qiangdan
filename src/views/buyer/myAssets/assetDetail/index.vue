@@ -3,12 +3,12 @@
         <div class="top-div">
             <div class="tatal">
                 <h3>账户总金额</h3>
-                <p>&yen;{{ base != '' ? base.buserAccount.totalAccount : '' }}</p>
+                <p>&yen;{{ account.totalAccount }}</p>
             </div>
             <div class="detail">
-                <p>可用余额：&yen;{{ base != '' ? base.buserAccount.account : '' }}</p>
-                <p>冻结金额（提现）：{{ base != '' ? base.buserAccount.withDrawAccount : '' }}</p>
-                <p>冻结金额（拍卖）：{{ base != '' ? base.buserAccount.lockAccount : '' }}</p>
+                <p>可用余额：&yen;{{ account.account }}</p>
+                <p>冻结金额（提现）：{{ account.withDrawAccount }}</p>
+                <p>冻结金额（拍卖）：{{ account.lockAccount }}</p>
             </div>
             <div class="btns">
                 <router-link :to="{ name: 'Recharge', query: { step: 1 } }" class="btn">充值</router-link>
@@ -69,7 +69,8 @@
 
 <script>
     import {
-        mapGetters
+        mapGetters,
+        mapActions
     } from 'vuex'
     import {
         dateformat
@@ -181,9 +182,10 @@
             }
         },
         computed: {
-            ...mapGetters(['base'])
+            ...mapGetters(['account'])
         },
         methods: {
+            ...mapActions(['getAccount']),
             getList() {
                 let params = this.$clearData(this.apiData);
                 params.createTimeBegin = params.createTimeBegin != '' ? new Date(params.createTimeBegin).getTime() : '';
@@ -239,6 +241,7 @@
         },
         created() {
             this.getList();
+            this.getAccount();
         }
     }
 </script>

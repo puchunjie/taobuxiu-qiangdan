@@ -3,8 +3,8 @@
         <h3>输入提现金额</h3>
         <div class="from">
             <i-form ref="form1" :model="apiData" :rules="rules" :label-width="90">
-                <form-item label="可用余额：" class="group-item"> {{ base != '' ? base.buserAccount.account : '' }} </form-item>
-                <form-item label="可提金额：" class="group-item"> {{ base != '' ? base.buserAccount.account : '' }} </form-item>
+                <form-item label="可用余额：" class="group-item"> {{  account.account }} </form-item>
+                <form-item label="可提金额：" class="group-item"> {{ account.account }} </form-item>
                 <form-item label="提现金额：" class="group-item" prop="amount">
                     <i-input style="width: 224px" placeholder="请输入" v-model="apiData.amount" class="form-input"></i-input>
                 </form-item>
@@ -45,7 +45,8 @@
 
 <script>
     import {
-        mapGetters
+        mapGetters,
+        mapActions
     } from 'vuex'
     export default {
         data() {
@@ -67,7 +68,7 @@
                             validator: (rule, value, callback) => {
                                 if (isNaN(value)) {
                                     return callback(new Error('请输入数字'));
-                                } else if (+value <= 0 || +value > this.base.buserAccount.account) {
+                                } else if (+value <= 0 || +value > this.account.account) {
                                     return callback(new Error('超出充值范围'));
                                 } else {
                                     callback();
@@ -86,9 +87,10 @@
             }
         },
         computed: {
-            ...mapGetters(['base'])
+            ...mapGetters(['account'])
         },
         methods: {
+            ...mapActions(['getAccount']),
             getbankCard() {
                 this.$http.post(this.$api.bankCardPage, {
                     currentPage: 1,
@@ -136,6 +138,7 @@
         },
         created() {
             this.getbankCard();
+            this.getAccount();
         }
     }
 </script>

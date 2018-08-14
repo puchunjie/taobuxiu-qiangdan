@@ -70,7 +70,7 @@ export default {
                     requireInteraction: true
                 });
                 notif.onclick = () => {
-                    this.$router.push(code2Url(data.code))
+                    this.$router.push(code2Url(data))
 
                     window.focus();
                     notif.close();

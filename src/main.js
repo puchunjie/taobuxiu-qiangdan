@@ -16,7 +16,10 @@ import Swiper from '../static/swiper/js/swiper.min'
 import { spinToggle } from './utils/spin'
 import cloneDeep from 'lodash/cloneDeep'
 import scroll from 'vue-seamless-scroll'
+import Share from 'vue-social-share'
+import 'vue-social-share/dist/client.css';
 
+Vue.use(Share)
 Vue.use(scroll)
 Vue.use(VueLocalStorage);
 Object.keys(filters).forEach(key => {
