@@ -31,6 +31,10 @@
             <p>仓库</p>
             <asyncPicker v-model="storeHouse" :api="$api.getStores"></asyncPicker>
         </div>
+        <div class="group">
+            <p>倒计时</p>
+            <countDown isDetail :color="'#F5222D'" @time-end="timeOut" :endTime='endTime'></countDown>
+        </div>
     </div>
 </template>
 
@@ -40,13 +44,15 @@
     import cityPicter from '@/components/business/cityPicker/index'
     import asyncPicker from '@/components/business/asyncPicker/index'
     import specPicker from '@/components/business/specPicker/index'
+    import countDown from '@/views/auction/parts/countDown.vue'
     export default {
         components: {
             tbInput,
             tbSelect,
             cityPicter,
             asyncPicker,
-            specPicker
+            specPicker,
+            countDown
         },
         data() {
             return {
@@ -83,6 +89,12 @@
                     name: '',
                     id: ''
                 },
+                endTime:1534310588813
+            }
+        },
+        methods:{
+            timeOut(){
+                this.endTime = this.endTime + 3000
             }
         }
     }

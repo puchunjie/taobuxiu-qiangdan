@@ -57,9 +57,9 @@
                     this.flag = true
                     this.$emit('time-end')
                 }
-                this.time = this.isDetail 
-                ?`<span style="color:${this.color};${this.styles}">${d}</span>天<span style="color:${this.color};${this.styles}">${h}</span>小时<span style="color:${this.color};${this.styles}">${m}</span>分<span style="color:${this.color};${this.styles}">${s}</span>秒` 
-                :`<span style="color:${this.color}">${d}</span>天<span style="color:${this.color}">${h}</span>小时<span style="color:${this.color}">${m}</span>分<span style="color:${this.color}">${s}</span>秒`
+                this.time = this.isDetail ?
+                    `<span style="color:${this.color};${this.styles}">${d}</span>天<span style="color:${this.color};${this.styles}">${h}</span>小时<span style="color:${this.color};${this.styles}">${m}</span>分<span style="color:${this.color};${this.styles}">${s}</span>秒` :
+                    `<span style="color:${this.color}">${d}</span>天<span style="color:${this.color}">${h}</span>小时<span style="color:${this.color}">${m}</span>分<span style="color:${this.color}">${s}</span>秒`
             },
             formate(time) {
                 if (time >= 10) {
@@ -72,12 +72,13 @@
         watch: {
             'endTime': function(newValue) {
                 clearInterval(this.interval);
-                this.interval = setInterval(() => {
-                    if (this.flag == true) {
-                        clearInterval(this.interval)
-                    }
-                    this.timeDown()
+                this.flag = false;
+                setTimeout(() => {
+                    this.interval = setInterval(() => {
+                        this.timeDown()
+                    }, 500)
                 }, 500)
+    
             }
         }
     }

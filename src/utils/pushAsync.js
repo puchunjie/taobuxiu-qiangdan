@@ -18,7 +18,7 @@ export default {
             } else if (val.type == 'auction') {
                 if (this.init)
                     this.init(val);
-            }
+            } 
         }, 500)
     }
 }
