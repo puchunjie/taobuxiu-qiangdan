@@ -106,6 +106,7 @@
   import swiperBottom from './parts/swiperBottom.vue'
   import publicFooter from '@/components/publicFooter.vue'
   import quickNvigation from '@/components/quickNvigation.vue'
+
   export default {
     components: {
       swiperBanner,
