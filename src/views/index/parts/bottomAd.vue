@@ -13,18 +13,18 @@
       return {
         openLeft: 0,
         show: false,
-        closeLeft: -239
+        closeLeft: -179
       }
     },
     methods: {
       open() {
-        this.closeLeft = -239;
+        this.closeLeft = -179;
         setTimeout(() => {
           this.openLeft = 0;
         }, 1000)
       },
       close() {
-        this.openLeft = -239;
+        this.openLeft = -179;
         setTimeout(() => {
           this.closeLeft = 0;
         }, 1000)
@@ -42,10 +42,10 @@
     z-index: 99;
     .bottom-ad-close {
       position: absolute;
-      left: -239px;
+      left: -179px;
       bottom: 0;
-      height: 140px;
-      width: 239px;
+      height: 90px;
+      width: 179px;
       background: url('../../../assets/ad-close.png') no-repeat;
       cursor: pointer;
       transition: left 1s ease-in-out;
@@ -54,9 +54,9 @@
       position: absolute;
       left: 0;
       bottom: 0;
-      height: 140px;
+      height: 90px;
       width: 100%;
-      background: #0f1264 top center url('../../../assets/ad-open.jpg') no-repeat;
+      background: #0f1264 top center url('../../../assets/ad-open.png') no-repeat;
       transition: left 1s ease-in-out;
       .close {
         position: absolute;

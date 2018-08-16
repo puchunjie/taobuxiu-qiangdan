@@ -31,9 +31,9 @@
   .aside-ad {
     position: fixed;
     top: 200px;
-    width: 180px;
-    height: 300px;
-    background: url('../../../assets/aside-ad.png') no-repeat;
+    width: 160px;
+    height: 240px;
+    background: top center url('../../../assets/aside-ad.png') no-repeat;
     z-index: 999;
     &.right {
       right: 5px;
