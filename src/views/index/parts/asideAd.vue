@@ -1,5 +1,6 @@
 <template>
   <div class="aside-ad" :class="isLeft ? 'left':'right'" :style="!show ? 'display: none':''">
+    <img :src="bg">
     <a class="aside-close" @click="close"></a>
   </div>
 </template>
@@ -17,6 +18,9 @@
     computed: {
       isLeft() {
         return this.position === 'left'
+      },
+      bg(){
+        return this.isLeft ? 'https://tbxoss.oss-cn-hangzhou.aliyuncs.com/assets/recommend/1.png' : 'https://tbxoss.oss-cn-hangzhou.aliyuncs.com/assets/recommend/2.png'
       }
     },
     methods: {
@@ -33,8 +37,10 @@
     top: 200px;
     width: 160px;
     height: 240px;
-    background: top center url('../../../assets/aside-ad.png') no-repeat;
     z-index: 999;
+    img{
+      max-width: 100%;
+    }
     &.right {
       right: 5px;
     }

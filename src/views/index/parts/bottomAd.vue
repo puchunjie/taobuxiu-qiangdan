@@ -46,7 +46,7 @@
       bottom: 0;
       height: 90px;
       width: 179px;
-      background: url('../../../assets/ad-close.png') no-repeat;
+      background: url('https://tbxoss.oss-cn-hangzhou.aliyuncs.com/assets/recommend/sq.png') no-repeat;
       cursor: pointer;
       transition: left 1s ease-in-out;
     }
@@ -56,7 +56,7 @@
       bottom: 0;
       height: 90px;
       width: 100%;
-      background: #0f1264 top center url('../../../assets/ad-open.png') no-repeat;
+      background: #0f1264 top center url('https://tbxoss.oss-cn-hangzhou.aliyuncs.com/assets/recommend/zk.png') no-repeat;
       transition: left 1s ease-in-out;
       .close {
         position: absolute;
