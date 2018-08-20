@@ -137,9 +137,6 @@
       getData(){
         this.$http.post(this.$api.getHomeAdv).then( res =>{
           if(res.code === 1000){
-            res.data.forEach(el =>{
-              el.srcs = el.src
-            })
             this.adList = res.data;
           }
         })
