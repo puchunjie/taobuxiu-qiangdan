@@ -27,8 +27,11 @@
             }
         },
         watch: {
-            menus() {
-                this.initMenu();
+            menus: {
+                handler: function(newVal, oldVal) {
+                    this.initMenu();
+                },
+                deep: true
             }
         },
         methods: {
@@ -39,7 +42,7 @@
                     return item
                 })
             },
-            toggleItem(item,i) {
+            toggleItem(item, i) {
                 this.inMenus[i].isOpen = !this.inMenus[i].isOpen;
             }
         },

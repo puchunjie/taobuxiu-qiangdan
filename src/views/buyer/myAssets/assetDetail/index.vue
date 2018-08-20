@@ -7,8 +7,8 @@
             </div>
             <div class="detail">
                 <p>可用余额：&yen;{{ account.account }}</p>
-                <p>冻结金额（提现）：{{ account.withDrawAccount }}</p>
-                <p>冻结金额（拍卖）：{{ account.lockAccount }}</p>
+                <p>冻结金额（提现）：&yen;{{ account.withDrawAccount }}</p>
+                <p>冻结金额（拍卖）：&yen;{{ account.lockAccount }}</p>
             </div>
             <div class="btns">
                 <router-link :to="{ name: 'Recharge', query: { step: 1 } }" class="btn">充值</router-link>

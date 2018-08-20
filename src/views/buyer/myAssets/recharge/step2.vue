@@ -1,6 +1,9 @@
 <template>
     <div class="main-content">
-        <h3 class="tip">待支付<span style="font-size: 18px">&yen;{{ data.money }}</span>,请及时扫码支付，下图二维码将在<span>29分54秒</span>后失效</h3>
+        <h3 class="tip">待支付<span style="font-size: 18px">
+            &yen;{{ data.money }}</span>,请及时扫码支付，下图二维码将在
+            <span><countDown normal :endTime='new Date().getTime() + 1790000'></countDown></span>后失效
+        </h3>
         <div class="pay-way"><i class="iconfont" :class="data.payWay == 1 ? 'icon-weixinzhifu' : 'icon-alipay'"></i></div>
         <div id="qrcode" class="qr-code"></div>
         <div class="f-tip">
@@ -14,7 +17,11 @@
 
 <script>
     import QRCode from 'qrcodejs2'
+    import countDown from '@/components/countDown.vue'
     export default {
+        components:{
+            countDown
+        },
         props: {
             data: {
                 type: Object,
@@ -30,7 +37,6 @@
                     height: 278,
                     text: this.data.url
                 })
-                console.log(qrcode)
             },
             back(){
                 this.$parent.step = 1;

@@ -10,7 +10,7 @@
             </form-item>
             <form-item label="充值金额:" class="group-item" prop="amount">
                 <i-input style="width: 224px" placeholder="请输入" v-model="params.amount" class="form-input"></i-input>
-                <span class="tip"> <i class="iconfont icon-about"></i> 必须为大于10元，小于50000元的整数金额</span>
+                <span class="tip"> <i class="iconfont icon-about"></i> 必须为大于0.01元，小于50000元的整数金额</span>
             </form-item>
         </i-form>
     
@@ -31,8 +31,8 @@
     
             <div class="detail">
                 <p>开户名称：无锡淘不锈电子商务有限公司</p>
-                <p>银行账号：4646663293453825</p>
-                <p>开户银行：中国工商银行无锡长江北路支行</p>
+                <p>银行账号：1103057409000097730</p>
+                <p>开户银行：中国工商银行股份有限公司无锡工博园支行</p>
             </div>
         </div>
     
@@ -41,9 +41,9 @@
     
             <div class="detail">
                 <p>无锡公司地址：江苏省无锡市新吴区纺城大道南方不锈钢市场1-107</p>
-                <p>联系电话：021-45556435</p>
+                <p>联系电话：0510-81812186</p>
                 <p>工作时间：8:30 - 17:30（周一 - 周六）</p>
-                <p>支持现金、银联卡、信用支付</p>
+                <p>支持现金、微信、支付宝</p>
             </div>
         </div>
     </div>
@@ -70,7 +70,7 @@
                             validator: function(rule, value, callback) {
                                 if (isNaN(value)) {
                                     return callback(new Error('请输入数字'));
-                                } else if(+value <= 10 || +value >50000){
+                                } else if(+value < 0.01 || +value >50000){
                                     return callback(new Error('超出充值范围'));
                                 }else {
                                     callback();
