@@ -68,7 +68,7 @@
                     this.num = this.underPrice
             },
             minus() {
-                let canMinus = this.hasPrice ? (this.num - this.underPrice) >= this.step : (this.num - this.step) >= this.underPrice;
+                let canMinus = this.hasPrice ? (+this.num - this.underPrice) >= this.step : (+this.num - this.step) >= this.underPrice;
                 if (canMinus)
                     this.num = (+this.num) - this.step
             },
