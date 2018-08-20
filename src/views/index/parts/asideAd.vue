@@ -1,7 +1,7 @@
 <template>
   <div class="aside-ad" :class="position" :style="!show ? 'display: none':''" v-if="vals">
     <a :href="vals.buserId != '' ? `/qd/shop-${vals.buserId}/iron-1` : 'javascript:void(0);'" target="_blank">
-      <img :src="vals.srcs">
+      <img :src="vals.src">
     </a>
     <a class="aside-close" @click="close"></a>
   </div>
