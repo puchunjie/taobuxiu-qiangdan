@@ -92,6 +92,10 @@
     </div>
 
     <quickNvigation></quickNvigation>
+
+    <bottomAd></bottomAd>
+    <asideAd position="left"></asideAd>
+    <asideAd position="right"></asideAd>
   </div>
 </template>
 
@@ -106,6 +110,9 @@
   import swiperBottom from './parts/swiperBottom.vue'
   import publicFooter from '@/components/publicFooter.vue'
   import quickNvigation from '@/components/quickNvigation.vue'
+  import bottomAd from '@/views/index/parts/bottomAd.vue'
+  import asideAd from '@/views/index/parts/asideAd.vue'
+
   export default {
     components: {
       swiperBanner,
@@ -117,7 +124,9 @@
       todayPrice,
       swiperBottom,
       publicFooter,
-      quickNvigation
+      quickNvigation,
+      bottomAd,
+      asideAd
     }
   }
 </script>

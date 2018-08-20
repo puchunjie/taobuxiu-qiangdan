@@ -16,7 +16,7 @@
   import leftMenu from '@/components/leftMenu.vue'
   import loginInit from '@/utils/loginInit.js'
   export default {
-    mixins: [loginInit,push],
+    mixins: [loginInit, push],
     components: {
       PublicHead,
       longBar
