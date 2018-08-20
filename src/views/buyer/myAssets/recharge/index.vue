@@ -2,7 +2,7 @@
     <div class="recharge-container">
         <step1 v-show="step == 1" @on-pay="onPay"></step1>
         <step2 v-if="step == 2" :data="qrData"></step2>
-        <step3 ref="step3" v-if="step == 3" :data="qrData"></step3>
+        <step3 ref="step3" v-show="step == 3" :data="qrData"></step3>
         <div class="footer-tip">
             <h1 class="title">温馨提示</h1>
             <p>1. 充值成功后，余额可能存在延迟现象，一般1到5分钟内到账；<br/> 2. 充值金额输入值必须是不小于0.01且不大于50000的正整数；<br/> 3. 线上充值只能使用支付宝、微信两种方式充值；<br/> 4. 充值完成后，您可以进入我的资金账户页面查看余额充值情况。</p>
@@ -42,8 +42,11 @@
         },
         watch: {
             pushData: debounce(function(val) {
+                console.log(val)
+                console.log(val.code)
+                console.log(this.qrData.id == val.data.id)
                 if (val.code == 60 && this.qrData.id == val.data.id) {
-                    this.setp = 3;
+                    this.step = 3;
                     this.$refs.step3.isSuccess = true;
                 }
             }, 500)
