@@ -64,7 +64,7 @@
                 <p class="sevice">
                     <span>服务支持：</span>
                     <span class="item" v-for="(item,i) in base.auctionRights" :key="i">
-                        <i class="iconfont" :class="item.icon"></i>{{ item.name }}
+                        <img class="icon" :src="item.icon"/>{{ item.name }}
                     </span>
                 </p>
             </div>
@@ -371,6 +371,12 @@
                         color:#FFC107;
                         font-weight: bold;
                         margin-right: 20px;
+                    }
+
+                    .icon{
+                        display: inline-block;
+                        width: 12px;
+                        height: 10px;
                     }
                 }
             }

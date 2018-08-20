@@ -32,7 +32,7 @@
   
   .container {
     width: 100%;
-    background-color: #303653;
+    background-color: #3f3f3f;
     .right-content {
       margin: 15px 0 0 160px;
       padding: 0 15px;
