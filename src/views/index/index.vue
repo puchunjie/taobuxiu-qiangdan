@@ -93,9 +93,9 @@
 
     <quickNvigation></quickNvigation>
 
-    <bottomAd></bottomAd>
-    <asideAd position="left"></asideAd>
-    <asideAd position="right"></asideAd>
+    <asideAd position="left" :vals="adList[0]"></asideAd>
+    <asideAd position="right":vals="adList[1]"></asideAd>
+    <bottomAd :openVal="adList[3]" :closeVal="adList[2]"></bottomAd>
   </div>
 </template>
 
@@ -127,6 +127,26 @@
       quickNvigation,
       bottomAd,
       asideAd
+    },
+    data(){
+      return {
+        adList: []
+      }
+    },
+    methods:{
+      getData(){
+        this.$http.post(this.$api.getHomeAdv).then( res =>{
+          if(res.code === 1000){
+            res.data.forEach(el =>{
+              el.srcs = el.src
+            })
+            this.adList = res.data;
+          }
+        })
+      }
+    },
+    created(){
+      this.getData();
     }
   }
 </script>
