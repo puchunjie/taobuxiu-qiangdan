@@ -1,6 +1,8 @@
 <template>
-  <div class="aside-ad" :class="isLeft ? 'left':'right'" :style="!show ? 'display: none':''">
-    <img :src="bg">
+  <div class="aside-ad" :class="position" :style="!show ? 'display: none':''" v-if="vals">
+    <a :href="vals.buserId != '' ? `/qd/shop-${vals.buserId}/iron-1` : 'javascript:void(0);'" target="_blank">
+      <img :src="vals.srcs">
+    </a>
     <a class="aside-close" @click="close"></a>
   </div>
 </template>
@@ -8,19 +10,12 @@
 <script>
   export default {
     props: {
-      position: String
+      position: String,
+      vals: Object
     },
     data() {
       return {
         show: true
-      }
-    },
-    computed: {
-      isLeft() {
-        return this.position === 'left'
-      },
-      bg(){
-        return this.isLeft ? 'https://tbxoss.oss-cn-hangzhou.aliyuncs.com/assets/recommend/1.png' : 'https://tbxoss.oss-cn-hangzhou.aliyuncs.com/assets/recommend/2.png'
       }
     },
     methods: {
@@ -38,7 +33,7 @@
     width: 160px;
     height: 240px;
     z-index: 999;
-    img{
+    img {
       max-width: 100%;
     }
     &.right {

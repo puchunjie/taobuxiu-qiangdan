@@ -1,7 +1,10 @@
 <template>
-  <div class="bottom-ad">
-    <div class="bottom-ad-close" @click="open" :style="{left: closeLeft + 'px'}"></div>
-    <div class="bottom-ad-open" :style="{left: openLeft + '%'}">
+  <div class="bottom-ad" v-if="openVal">
+    <div class="bottom-ad-close" @click="open" :style="openStyle"></div>
+    <div class="bottom-ad-open" :style="closeStyle">
+      <a :href="openVal.buserId != '' ? `/qd/shop-${openVal.buserId}/iron-1` : 'javascript:void(0);'" target="_blank">
+        <img :src="openVal.src" style="margin: 0 auto;display: block;">
+      </a>
       <span class="close" @click="close"></span>
     </div>
   </div>
@@ -9,11 +12,29 @@
 
 <script>
   export default {
+    props: {
+      openVal: Object,
+      closeVal: Object
+    },
     data() {
       return {
         openLeft: 0,
         show: false,
         closeLeft: -179
+      }
+    },
+    computed: {
+      openStyle() {
+        return {
+          left: this.closeLeft + 'px',
+          'background-image': `url('${this.closeVal.src}')`
+        }
+      },
+      closeStyle() {
+        return {
+          left: this.openLeft + '%',
+          'background-color': this.openVal.bgColor
+        }
       }
     },
     methods: {
@@ -33,7 +54,7 @@
   }
 </script>
 
-<style lang='less' scoped>
+<style lang='less'>
   .bottom-ad {
     position: fixed;
     bottom: 0;
@@ -46,8 +67,8 @@
       bottom: 0;
       height: 90px;
       width: 179px;
-      background: url('https://tbxoss.oss-cn-hangzhou.aliyuncs.com/assets/recommend/sq.png') no-repeat;
       cursor: pointer;
+      background-repeat: no-repeat;
       transition: left 1s ease-in-out;
     }
     .bottom-ad-open {
@@ -56,7 +77,8 @@
       bottom: 0;
       height: 90px;
       width: 100%;
-      background: #0f1264 top center url('https://tbxoss.oss-cn-hangzhou.aliyuncs.com/assets/recommend/zk.png') no-repeat;
+      background-position: top center;
+      background-repeat: no-repeat;
       transition: left 1s ease-in-out;
       .close {
         position: absolute;
