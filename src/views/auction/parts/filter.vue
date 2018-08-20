@@ -357,7 +357,7 @@
         .filter-item {
             position: relative;
             width: 100%;
-            height: 24px;
+            min-height: 24px;
             line-height: 24px;
             padding: 0 148px 0 75px;
             margin-top: 16px;
@@ -400,6 +400,7 @@
             .multi-btn {
                 position: absolute;
                 right: 100px;
+                top: 0;
             }
             .multi-btns {
                 width: 100%;
