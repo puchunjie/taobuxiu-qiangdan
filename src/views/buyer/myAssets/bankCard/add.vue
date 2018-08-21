@@ -18,24 +18,28 @@
               <i-option v-for="(item,i) in [{val: '1',label: '基本账户'},{val: '2',label: '一般账户'},{val: '3',label: '专用账户'},{val: '4',label: '临时账户'}]" :value="item.val" :key="i">{{item.label}}</i-option>
             </i-select>
           </form-item>
-          <form-item :label="dataApi.bankCardType === '1' ? '公司抬头：':'开户人姓名：'" prop="userName">
+          <form-item :label="dataApi.bankCardType === '1' ? '公司抬头：':'户名：'" prop="userName">
             <i-input placeholder="请输入" :disabled="isB" v-model="dataApi.userName" style="width: 320px;"></i-input>
           </form-item>
-          <form-item label="开户行名称：" prop="bankName">
+          <!-- <form-item label="开户行名称：" prop="bankName">
+              <i-input placeholder="请输入" v-model="dataApi.bankName" style="width: 320px;"></i-input>
+            </form-item> -->
+          <form-item label="银行账号：" prop="bankCardNo">
+            <i-input placeholder="请输入" v-model="dataApi.bankCardNo" @on-blur="cardNum" style="width: 320px;"></i-input>
+          </form-item>
+          <form-item label="开户银行：" prop="bankName" v-if="dataApi.bankCardType === '1'">
             <i-input placeholder="请输入" v-model="dataApi.bankName" style="width: 320px;"></i-input>
           </form-item>
-          <form-item label="开户银行：" prop="bank">
-            <i-input placeholder="请输入" v-model="dataApi.bank" style="width: 320px;"></i-input>
-          </form-item>
-          <form-item label="银行账号：" prop="bankCardNo">
-            <i-input placeholder="请输入" v-model="dataApi.bankCardNo" style="width: 320px;"></i-input>
+          <form-item label="开户银行：" prop="bank" v-if="dataApi.bankCardType === '2'">
+            <i-input placeholder="请输入" disabled v-model="dataApi.bank" style="width: 140px;"></i-input>
+            <i-input placeholder="请输入支行" v-model="dataApi.bankName" style="width: 160px;"></i-input>
           </form-item>
           <form-item label="开户行地址：" prop="bankProvince" :class="type === 2 ? 'form-placeholder':''">
             <citySelect :value="[dataApi.bankProvince,dataApi.bankCity,dataApi.bankArea]" @on-select="asyncAdress" style="width: 320px;"></citySelect>
           </form-item>
           <form-item label="账户币种：" prop="financeType">
             <i-radioGroup v-model="dataApi.financeType">
-              <i-radio v-for="(item,i) in [{id:'1',name:'人民币'},{id:'2',name:'美元'}]" :key="i" :label="item.id">
+              <i-radio v-for="(item,i) in [{id:'1',name:'人民币'},{id:'2',name:'外币'}]" :key="i" :label="item.id">
                 <span>{{item.name}}</span>
               </i-radio>
             </i-radioGroup>
@@ -60,6 +64,9 @@
     mapGetters
   } from 'vuex'
   import citySelect from '@/components/basics/citySelect/index'
+  import {
+    bankCardAttribution
+  } from '@/utils/getBankName'
   export default {
     components: {
       citySelect
@@ -87,7 +94,7 @@
         rules: {
           userName: [{
             required: true,
-            message: '公司抬头不能为空',
+            message: '不能为空',
             trigger: 'blur'
           }],
           bankName: [{
@@ -189,6 +196,18 @@
       },
       defaults() {
         this.dataApi.isDefault = !this.dataApi.isDefault;
+      },
+      // 获取银行卡名称6217001210024455220
+      cardNum(e) {
+        if (this.dataApi.bankCardType === '2') {
+          console.log(bankCardAttribution(e.target.value))
+          if (bankCardAttribution(e.target.value) === 'error') {
+            this.$Message.error('请输入正确的银行卡号')
+            this.dataApi.bank = '';
+          } else {
+            this.dataApi.bank = bankCardAttribution(e.target.value).bankName;
+          }
+        }
       },
       asyncAdress(data) {
         this.dataApi.bankProvince = data.provinceName;
