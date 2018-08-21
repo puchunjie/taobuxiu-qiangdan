@@ -16,7 +16,6 @@
         background-color: #455D9E;
       }
       &.floor4 {
-        height: 340px;
         background-color: #3E3C3A;
       }
     }
