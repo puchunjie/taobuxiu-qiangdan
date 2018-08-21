@@ -269,6 +269,7 @@
             left: 26px;
             right: 26px;
             font-size: 14px;
+            z-index: 9;
             .edit {
               float: right;
               .iconfont {
