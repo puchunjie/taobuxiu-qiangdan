@@ -169,7 +169,6 @@
                                 },
                                 on: {
                                     click: () => {
-                                        console.log(params.row.tradeType)
                                         this.detailName = this.tradeTypes.find(item => item.name == params.row.tradeType).comp;
                                         this.detailData = this.list[params.index];
                                         this.detailShow = true;

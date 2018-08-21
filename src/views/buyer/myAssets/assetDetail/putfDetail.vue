@@ -13,7 +13,7 @@
                     <td>提现编号：{{ data.withDrawId }}</td>
                     <td>操作人：{{ data.createUser }}</td>
                     <td><span class="bold">{{ data.tradeStatus }}</span></td>
-                    <td><span class="bold">&yen;{{ data.lockAccount | toMoney }}</span></td>
+                    <td><span class="bold">&yen;{{ data.amount < 0 ? (data.amount * -1) : data.amount | toMoney }}</span></td>
                 </tr>
                 <tr>
                     <td colspan="4">备注：{{ data.remark }}</td>

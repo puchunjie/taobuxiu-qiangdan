@@ -118,12 +118,13 @@
                                     this.$router.replace({name: 'putForwardList'})
                                 },
                                 onCancel: ()=> {
+                                    this.getAccount();
                                     this.reset();
                                 }
                             });
                             
                         }else{
-                            this.$Message.error(re.message)
+                            this.$Message.error(res.message)
                         }
                     })
                 }else{

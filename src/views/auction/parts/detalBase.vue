@@ -35,7 +35,7 @@
                         <label>仓库</label>{{ data.storeHouse }}
                     </div>
                     <div class="group">
-                        <label>所在地</label>{{ data.province + data.city }}
+                        <label>所在地</label>{{ data.province == data.city ? data.city : (data.province + data.city) }}
                     </div>
                     <div class="group">
                         <label>数量</label>{{ info.number }}
@@ -68,7 +68,7 @@
                         <label>产地</label>{{ data.proPlace }}
                     </div>
                     <div class="group">
-                        <label>所在地</label>{{ data.province + data.city }}
+                        <label>所在地</label>{{ data.province == data.city ? data.city : (data.province + data.city) }}
                     </div>
                     <div class="group">
                         <label>包装</label>{{ data.packaging }}

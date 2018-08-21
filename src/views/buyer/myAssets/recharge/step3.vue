@@ -2,8 +2,8 @@
     <div class="result-contnet">
         <i class="resicon iconfont" :class="isSuccess ? 'icon-check-circle' : 'icon-close-circle'"></i>
         <h3>充值{{ isSuccess ? '成功' : '失败' }}</h3>
-        <p v-if="isSuccess" class="tip">本页面将在 <span>3</span>秒钟后自动关闭，请前往<router-link :to="{ name:'assetDetail' }">资产明细</router-link>进行查看</p>
-        <p v-else class="tip">本页面将在 <span>3</span>秒钟后自动关闭，请联系客服进行充值。</p>
+        <p v-if="isSuccess" class="tip">请前往<router-link :to="{ name:'assetDetail' }">资产明细</router-link>进行查看</p>
+        <p v-else class="tip">请联系客服进行充值。</p>
         <div class="account">
             <p><label>账户名称：</label>{{ user ? user.companyName : '' }}</p>
             <p><label>用户名：</label>{{ base.mobile }}</p>

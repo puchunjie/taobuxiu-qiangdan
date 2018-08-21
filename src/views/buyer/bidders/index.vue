@@ -122,16 +122,19 @@
     computed: {
       ...mapGetters(['user']),
       status() {
-        return this.$route.query.status
+        return this.$route.query.status || 1
       }
     },
     watch: {
       'pageApi.status' (val) {
+        // this.$route.query.status = val
         this.$router.push({
           query: {
             status: val
           }
         })
+        // this.pageApi.status = val;
+        // this.getList(this.pageApi)
       },
       'status' (val) {
         this.pageApi.status = val.toString();
