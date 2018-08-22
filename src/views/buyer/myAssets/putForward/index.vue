@@ -92,10 +92,10 @@
                 </template>
                 <template v-if="detail.status === 8">
                     <form-item label="提现状态：">
-                        <div class="details">审核已处理</div>
+                        <div class="details">撤回申请</div>
                     </form-item>
                     <form-item label="更新时间：">
-                        <div class="details">{{detail.checkTime | dateformat}}</div>
+                        <div class="details">{{detail.updateTime | dateformat}}</div>
                     </form-item>
                 </template>
             </i-form>
