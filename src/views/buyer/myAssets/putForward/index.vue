@@ -5,7 +5,7 @@
         </div>
         <div class="filter-form">
             <i-form inline :label-width="70">
-                <form-item label="申请单号:" class="group-item">
+                <form-item label="提现单号:" class="group-item">
                     <i-input style="width: 140px" placeholder="请输入" v-model="apiData.id" class="form-input"></i-input>
                 </form-item>
                 <form-item label="申请时间:" class="group-item">
@@ -35,7 +35,7 @@
         </div>
         <Modal v-model="show" footer-hide title="提现详情" :width="600">
             <i-form :label-width="100">
-                <form-item label="申请单号：">
+                <form-item label="提现单号：">
                     <div class="details">{{detail.id}}</div>
                 </form-item>
                 <form-item label="申请时间：">
