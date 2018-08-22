@@ -33,6 +33,78 @@
                 <Page show-total @on-change="getList" :total="totalCount" :current.sync="apiData.currentPage" :page-size="apiData.pageSize" @on-page-size-change="initList" show-elevator show-sizer />
             </div>
         </div>
+        <Modal v-model="show" footer-hide title="提现详情" :width="600">
+            <i-form :label-width="100">
+                <form-item label="申请单号：">
+                    <div class="details">{{detail.id}}</div>
+                </form-item>
+                <form-item label="申请时间：">
+                    <div class="details">{{detail.createTime | dateformat}}</div>
+                </form-item>
+                <form-item label="提现金额：">
+                    <div class="details">￥{{detail.amount}}</div>
+                </form-item>
+                <form-item label="提现账户：">
+                    <div class="details">
+                        <p>{{detail.toAccountName}}</p>
+                        <p>{{detail.toBank}}</p>
+                        <p>{{detail.toBankCardNo}}</p>
+                    </div>
+                </form-item>
+                <form-item label="提现备注：">
+                    <div class="details">{{detail.remark | emptyHlod('暂无')}}</div>
+                </form-item>
+                <template v-if="detail.status === 1">
+                        <form-item label="提现状态：">
+                            <div class="details">提现成功</div>
+                        </form-item>
+                        <form-item label="转账记录：">
+                            <div class="details">
+                                <Button v-if="detail.files != ''" @click="showPic(detail.files)">查看转账记录</Button>
+                                <span v-else>暂无</span>
+                            </div>
+                        </form-item>
+                        <form-item label="审核人：">
+                            <div class="details">{{detail.checkUser}}</div>
+                        </form-item>
+                        <form-item label="更新时间：">
+                            <div class="details">{{detail.checkTime | dateformat}}</div>
+                        </form-item>
+                </template>
+                <template v-if="detail.status === 2">
+                    <form-item label="提现状态：">
+                        <div class="details">提现失败</div>
+                    </form-item>
+                    <form-item label="驳回理由：">
+                        <div class="details">{{detail.rejectRemark}}</div>
+                    </form-item>
+                    <form-item label="审核人：">
+                        <div class="details">{{detail.checkUser}}</div>
+                    </form-item>
+                    <form-item label="更新时间：">
+                        <div class="details">{{detail.checkTime | dateformat}}</div>
+                    </form-item>
+                </template>
+                <template v-if="detail.status === 0">
+                    <form-item label="提现状态：">
+                        <div class="details">待审核处理</div>
+                    </form-item>
+                </template>
+                <template v-if="detail.status === 8">
+                    <form-item label="提现状态：">
+                        <div class="details">审核已处理</div>
+                    </form-item>
+                    <form-item label="更新时间：">
+                        <div class="details">{{detail.checkTime | dateformat}}</div>
+                    </form-item>
+                </template>
+            </i-form>
+        </Modal>
+        <Modal v-model="picShow" footer-hide title="查看转账记录" :width="800">
+            <div class="showImg" v-for="(item,i) in files.split(',')" :key="i">
+                <img :src="item">
+            </div>
+        </Modal>
     </div>
 </template>
 
@@ -76,6 +148,10 @@
                 ],
                 list: [],
                 totalCount: 0,
+                detail: {},
+                show: false,
+                picShow: false,
+                files: '',
                 columns: [{
                         title: '申请时间',
                         key: 'tradeTime',
@@ -106,8 +182,8 @@
                         title: '状态',
                         key: 'status',
                         render: (h, params) => {
-                            return h('div',[
-                                h('span',{
+                            return h('div', [
+                                h('span', {
                                     class: `tag t${params.row.status}`
                                 }),
                                 h('span', this.status.find(item => item.value == params.row.status).label)
@@ -136,7 +212,7 @@
                                     },
                                     on: {
                                         click: () => {
-    
+                                            this.detailputForward(params.row.id)
                                         }
                                     }
                                 }, '详情'),
@@ -156,7 +232,7 @@
                                                     this.cancelputForward(params.row.id)
                                                 }
                                             });
-                                            
+    
                                         }
                                     }
                                 }, '撤回')
@@ -194,6 +270,22 @@
                     }
                 })
             },
+            //  详情
+            detailputForward(id) {
+                this.show = true;
+                this.$http.post(this.$api.widthDrawDetail, {
+                    id: id
+                }).then(res => {
+                    if (res.code === 1000) {
+                        this.detail = res.data;
+                    }
+                })
+            },
+            //  查看转账记录
+            showPic(pic) {
+                this.picShow = true;
+                this.files = pic;
+            },
             initList(data) {
                 this.apiData.pageSize = data;
                 this.getList();
@@ -221,6 +313,10 @@
 
 <style lang="less">
     @import url('../../../../assets/base.less');
+    .ivu-form-item {
+        margin-bottom: 10px;
+    }
+    
     .put-forward-list-container {
         width: 100%;
         background-color: #fff;
@@ -278,24 +374,30 @@
             text-align: right;
             margin-top: 10px;
         }
-        .tag{
-                display: inline-block;
-                width: 8px;
-                height: 8px;
-                .borderRadius(8px);
-                margin-right: 5px;
-                &.t0{
-                    background-color: @dark_blue;
-                }
-                &.t1{
-                    background-color: @dark_green
-                }
-                 &.t2{
-                    background-color: @dark_red
-                }
-                 &.t8{
-                    background-color: @dark_yellow
-                }
+        .tag {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            .borderRadius(8px);
+            margin-right: 5px;
+            &.t0 {
+                background-color: @dark_blue;
             }
+            &.t1 {
+                background-color: @dark_green
+            }
+            &.t2 {
+                background-color: @dark_red
+            }
+            &.t8 {
+                background-color: @dark_yellow
+            }
+        }
+    }
+    
+    .showImg {
+        img {
+            max-width: 100%;
+        }
     }
 </style>

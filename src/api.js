@@ -862,6 +862,13 @@ export const cancelputForward = '/demands/widthDraw/cancel'
  */
 export const putForwardList = '/demands/widthDraw/page'
 
+
+/**
+ * 提现申请详情
+ */
+export const widthDrawDetail = '/demands/widthDraw/detail'
+
+
 /**
  * 首页浮动广告
  */
