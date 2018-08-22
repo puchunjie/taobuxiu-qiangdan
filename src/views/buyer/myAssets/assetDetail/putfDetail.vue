@@ -26,10 +26,14 @@
                     <div class="group">
                         账户性质：{{ data.bankCardType == 1 ? '对公' : '个人' }}
                     </div>
-                    <div class="group">
+                    <div class="group" v-if="data.bankCardType == 1">
                         账户种类：{{ data.accountType | atStr }}
-                    </div><br/>
-                    <div class="group">
+                    </div>
+                    <div class="group" v-else>
+                        户名：{{ data.toAccountName }}
+                    </div>
+                    <br/>
+                    <div class="group" v-show="data.bankCardType == 1">
                         公司抬头：{{ data.toAccountName }}
                     </div>
                     <div class="group">
@@ -66,7 +70,7 @@
                         <p>提现编号：{{ data.withDrawId }}</p>
                         <p>操作时间：{{ data.updateTime | dateformat }}</p>
                     </template>
-                    <template v-if="data.tradeSt == 8">
+                    <template v-if="data.tradeSt == 3">
                         <h2>提现撤回</h2>
                         <p>操作人：{{ data.createUser }}</p>
                         <p>提现编号：{{ data.withDrawId }}</p>

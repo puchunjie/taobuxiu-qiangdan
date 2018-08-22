@@ -22,7 +22,7 @@
                 <form-item label="提现账户：" class="group-item" prop="bankCardId">
                     <i-select v-model="apiData.bankCardId" style="width:560px">
                         <i-option v-for="(item,i) in accounts" :value="item.id" :key="i">
-                            {{ bankCardType == 1 ? '对公' : '个人' }} | {{ item.bankName }} | {{ item.bankCardNo }}
+                            {{ bankCardType == 1 ? '对公' : '个人' }} | {{ bankCardType == 1 ? atStr(item.accountType) : item.userName  }} | {{ bankCardType == 1 ? item.bank + '-' + item.bankName : item.bank }} | {{ item.bankCardNo }}
                         </i-option>
                     </i-select>
                 </form-item>
@@ -69,7 +69,7 @@
                                 if (isNaN(value)) {
                                     return callback(new Error('请输入数字'));
                                 } else if (+value <= 0 || +value > this.account.account) {
-                                    return callback(new Error('超出充值范围'));
+                                    return callback(new Error('请输入合理的提现金额'));
                                 } else {
                                     callback();
                                 }
@@ -91,6 +91,24 @@
         },
         methods: {
             ...mapActions(['getAccount']),
+            atStr(value){
+                switch (Number(value)) {
+                    case 1:
+                        return '基本账户'    
+                        break;
+                    case 2:
+                        return '一般账户'    
+                        break;
+                    case 3:
+                        return '专用账户'    
+                        break;
+                    case 4:
+                        return '临时账户'    
+                        break;
+                    default:
+                        break;
+                }
+            },
             getbankCard() {
                 this.$http.post(this.$api.bankCardPage, {
                     currentPage: 1,

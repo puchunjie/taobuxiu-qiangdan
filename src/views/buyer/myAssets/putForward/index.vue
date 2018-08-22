@@ -13,7 +13,7 @@
                     <DatePicker v-model="apiData.timeEnd" format="yyyy年MM月dd日" type="date" placement="bottom-end" placeholder="结束时间" style="width: 155px"></DatePicker>
                 </form-item>
                 <form-item label="状态:" class="group-item">
-                    <i-select v-model="apiData.tradeType" style="width:140px">
+                    <i-select v-model="apiData.status" style="width:140px">
                         <i-option v-for="(item,i) in status" :value="item.value" :key="i">{{ item.label }}</i-option>
                     </i-select>
                 </form-item>
@@ -68,10 +68,6 @@
                     }, {
                         label: '撤回申请',
                         value: 8
-                    },
-                    {
-                        label: '删除',
-                        value: 9
                     }
                 ],
                 list: [],
