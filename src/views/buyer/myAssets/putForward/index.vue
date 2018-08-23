@@ -254,7 +254,6 @@
                 })
             },
             cancelputForward(id) {
-                console.log(id)
                 this.$http.post(this.$api.cancelputForward, {
                     id: id
                 }).then(res => {

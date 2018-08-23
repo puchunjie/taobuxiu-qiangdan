@@ -35,7 +35,7 @@
             {{item.bankProvince}}{{item.bankCity}}{{item.bankArea}}
           </form-item>
           <form-item label="货币种类：">
-            {{item.bankCardNo}}
+            {{item.financeType === '1' ? '人民币':'外币'}}
           </form-item>
           <form-item label="默认账户：">
             {{item.isDefault ? '是':'否'}}

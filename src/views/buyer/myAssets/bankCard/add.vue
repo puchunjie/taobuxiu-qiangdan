@@ -200,7 +200,6 @@
       // 获取银行卡名称6217001210024455220
       cardNum(e) {
         if (this.dataApi.bankCardType === '2') {
-          console.log(bankCardAttribution(e.target.value))
           if (bankCardAttribution(e.target.value) === 'error') {
             this.$Message.error('请输入正确的银行卡号')
             this.dataApi.bank = '';
