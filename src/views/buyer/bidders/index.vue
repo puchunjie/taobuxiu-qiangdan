@@ -46,7 +46,7 @@
                   <span v-if="pageApi.status === '3'" class="currentMoney">{{item.currentMoney}}元/kg</span>
                 </div>
                 <div class="header-item">{{item.startPrice}}元/kg</div>
-                <div class="header-item">{{item.maigin}}</div>
+                <div class="header-item">￥{{item.maigin}}</div>
                 <div class="header-item">
                   <div v-if="pageApi.status === '1'" class="options" @click="priceHistory(item)"><a>查看出价</a></div>
                   <div v-if="pageApi.status != '1'" class="options"><a @click="goDetail(item)">详情</a><span class="split">|</span><a @click="priceHistory(item)">查看出价</a></div>
@@ -256,7 +256,10 @@
           width: 10%;
           padding: 16px;
           &:first-child {
-            width: 40%;
+            width: 35%;
+          }
+          &:last-child {
+            width: 15%;
           }
         }
       }
@@ -329,7 +332,10 @@
                 }
               }
               &:first-child {
-                width: 40%;
+                width: 35%;
+              }
+              &:last-child {
+                width: 15%;
               }
             }
             .currentMoney {

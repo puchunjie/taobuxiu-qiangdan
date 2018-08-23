@@ -200,7 +200,7 @@
                     this.$Modal.remove();
                     if(res.code === 1000){
                         this.$Message.success('出价成功');
-                        this.$parent.auctionInfo.currentPrice = this.payMoney;
+                        this.$parent.auctionInfo.currentPrice = Number(this.payMoney);
                         this.$parent.hasPrice = true;
                         this.$parent.$refs.offerRecord.getList();
                         //如果正好选在出价列表上，则更新
