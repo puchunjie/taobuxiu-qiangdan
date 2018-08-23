@@ -18,7 +18,9 @@ export default {
             } else if (val.type == 'auction') {
                 if (this.init)
                     this.init(val);
-            } 
+            } else if(val.type == 'recharge'){
+                this.getAccount();
+            }
         }, 500)
     }
 }

@@ -14,7 +14,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['getUserCount']),
+        ...mapActions(['getUserCount','getAccount']),
         initScoket() {
             let _this = this;
             let rand = this.$ls.get('rand');
@@ -96,7 +96,8 @@ export default {
             }
         },
         updateCount: debounce(function() {
-            this.getUserCount()
+            this.getUserCount();
+            this.getAccount();
         }, 2000)
     }
 }

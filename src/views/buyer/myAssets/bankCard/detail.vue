@@ -177,7 +177,6 @@
       .card-form-main {
         padding: 40px;
         .ivu-form-item {
-          margin-bottom: 10px;
           color: #666;
           .ivu-form-item-label {
             font-size: 14px;

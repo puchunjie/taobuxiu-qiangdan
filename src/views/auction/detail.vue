@@ -196,7 +196,7 @@
                 })
             },
             init(res) {
-                let willDo = res.data ? his.id == res.data.auctionInfoId : res
+                let willDo = res.data ? this.id == res.data.auctionInfoId : res
                 // 对比下推送过来的信息是否是当前正在查看的拍卖信息，对比id
                 if (willDo) {
                     this.$refs.offerRecord.getList();

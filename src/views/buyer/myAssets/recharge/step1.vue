@@ -10,7 +10,7 @@
             </form-item>
             <form-item label="充值金额:" class="group-item" prop="amount">
                 <i-input style="width: 224px" placeholder="请输入" v-model="params.amount" class="form-input"></i-input>
-                <span class="tip"> <i class="iconfont icon-about"></i> 必须为大于0.01元，小于50000元的整数金额</span>
+                <span class="tip"> <i class="iconfont icon-about"></i> 必须为大于0.01元，小于50000元的金额</span>
             </form-item>
         </i-form>
     

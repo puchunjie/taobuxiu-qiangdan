@@ -69,6 +69,10 @@
                                         <label class="tit">成交价</label>
                                         <div style="width:310px" class="red bold">{{ item.money }}元/吨</div>
                                     </template>
+                                    <template v-if="item.status == 3 && item.auctionInfos.length === 1 && item.auctionInfos[0].status == 3">
+                                        <label class="tit">状态</label>
+                                        <div style="width:310px" class="red bold">已流拍</div>
+                                    </template>
                                     <template v-if="item.status == 3 && item.isBatch">
                                         <label class="tit">成交价</label>
                                         <div style="width:310px" class="some" @click="toggleAuctionInfos(item)">多个结果<i class="iconfont"  :class="item.isOpen ? 'icon-up' : 'icon-down'"></i></div>
