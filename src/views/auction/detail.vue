@@ -277,7 +277,7 @@
         }
         .details-container {
             width: 100%;
-            height: 660px;
+            min-height: 660px;
             background-color: #fff;
             .tabs {
                 .flex-block;

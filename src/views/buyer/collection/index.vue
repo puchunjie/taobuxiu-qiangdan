@@ -65,8 +65,8 @@
                 </span>
               </td>
               <td>{{item.proPlace}}</td>
+              <td>{{item.weight}}</td>
               <td>{{item.startPrice}}</td>
-              <td>{{item.maigin}}</td>
               <td>{{item.maigin}}</td>
               <td>{{item.participate ? '是':'否'}}</td>
               <td v-show="!isBatch"><span class="unCollect" @click="unCollect(item)">取消收藏</span></td>
