@@ -1,31 +1,34 @@
 <template>
     <div class="mian-content">
-        <h1 class="title">输入充值金额</h1>
-        <i-form ref="form" :label-width="90" :model="params" :rules="rules">
-            <form-item label="账户名称:" class="group-item">
-                {{ user ? user.companyName : '' }}
-            </form-item>
-            <form-item label="用户名:" class="group-item">
-                {{ base.mobile }}
-            </form-item>
-            <form-item label="充值金额:" class="group-item" prop="amount">
-                <i-input style="width: 224px" placeholder="请输入" v-model="params.amount" class="form-input"></i-input>
-                <span class="tip"> <i class="iconfont icon-about"></i> 必须是不小于0.01元，且50000元以内的金额</span>
-            </form-item>
-        </i-form>
+        <div class="can-show" v-if="phonePay">
+            <h1 class="title">输入充值金额</h1>
+            <i-form ref="form" :label-width="90" :model="params" :rules="rules">
+                <form-item label="账户名称:" class="group-item">
+                    {{ user ? user.companyName : '' }}
+                </form-item>
+                <form-item label="用户名:" class="group-item">
+                    {{ base.mobile }}
+                </form-item>
+                <form-item label="充值金额:" class="group-item" prop="amount">
+                    <i-input style="width: 224px" placeholder="请输入" v-model="params.amount" class="form-input"></i-input>
+                    <span class="tip"> <i class="iconfont icon-about"></i> 必须是不小于0.01元，且50000元以内的金额</span>
+                </form-item>
+            </i-form>
     
-        <h1 class="title" style="margin-top:35px">选择充值方式</h1>
+            <h1 class="title" style="margin-top:35px">选择充值方式</h1>
     
-        <div class="card dark">
-            <span class="tit">平台支付</span>
+            <div class="card dark">
+                <span class="tit">平台支付</span>
     
-            <i class="iconfont icon-alipay" :class="{ 'active': params.payWay == 2 }" @click="params.payWay = 2"></i>
-            <i class="iconfont icon-weixinzhifu" :class="{ 'active': params.payWay == 1 }" @click="params.payWay = 1"></i>
+                <i class="iconfont icon-alipay" :class="{ 'active': params.payWay == 2 }" @click="params.payWay = 2"></i>
+                <i class="iconfont icon-weixinzhifu" :class="{ 'active': params.payWay == 1 }" @click="params.payWay = 1"></i>
     
     
-            <a class="go-pay" @click="pay">去付款</a>
+                <a class="go-pay" @click="pay">去付款</a>
+            </div>
         </div>
     
+        <h1 class="title" style="margin-top:35px" v-show="!phonePay">选择充值方式</h1>
         <div class="card">
             <span class="tit">对公转账</span>
     
@@ -70,15 +73,16 @@
                             validator: function(rule, value, callback) {
                                 if (isNaN(value)) {
                                     return callback(new Error('请输入数字'));
-                                } else if(+value < 0.01 || +value >50000){
+                                } else if (+value < 0.01 || +value > 50000) {
                                     return callback(new Error('超出充值范围'));
-                                }else {
+                                } else {
                                     callback();
                                 }
                             }
                         }
                     ]
-                }
+                },
+                phonePay: false
             }
         },
         computed: {
@@ -103,7 +107,17 @@
                     }
                 })
     
+            },
+            getPay() {
+                this.$http.post(this.$api.phonePay).then(res => {
+                    if (res.code === 1000) {
+                        this.phonePay = res.data;
+                    }
+                })
             }
+        },
+        created() {
+            this.getPay();
         }
     }
 </script>

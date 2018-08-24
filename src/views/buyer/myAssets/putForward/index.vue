@@ -308,10 +308,6 @@
 
 <style lang="less">
     @import url('../../../../assets/base.less');
-    .ivu-form-item {
-        margin-bottom: 10px;
-    }
-    
     .put-forward-list-container {
         width: 100%;
         background-color: #fff;

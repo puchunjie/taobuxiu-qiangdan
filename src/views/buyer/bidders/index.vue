@@ -65,7 +65,7 @@
       <div class="price-content">
         <div class="price-header">
           <div class="price-item price-item1">状态</div>
-          <div class="price-item price-item2">出价</div>
+          <div class="price-item price-item2">出价(元/吨)</div>
           <div class="price-item price-item3">时间</div>
         </div>
         <div class="price-list-main">

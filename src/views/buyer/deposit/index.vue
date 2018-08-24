@@ -5,9 +5,9 @@
     </div>
     <div class="auction-container-main">
       <div class="count">
-        <span class="count-item">总余额<i>{{count.all}}</i></span>
-        <span class="count-item">已冻结<i>{{count.lock}}</i></span>
-        <span class="count-item">可用余额<i>{{count.account}}</i></span>
+        <span class="count-item">总余额<i>￥{{count.all}}</i></span>
+        <span class="count-item">已冻结<i>￥{{count.lock}}</i></span>
+        <span class="count-item">可用余额<i>￥{{count.account}}</i></span>
         <a class="btn money-btn" @click="goassetDetail">余额管理</a>
       </div>
       <div class="auction-container-list">
@@ -43,7 +43,7 @@
                 <td>{{item.auctionId}}</td>
                 <td>{{item.description}}</td>
                 <td><span :class="`point point${item.status}`"></span>{{item.status | status}}</td>
-                <td>{{item.maigin}} <span :class="`status-label status${item.status}`">{{item.status | maiginStatus}}</span></td>
+                <td>￥{{item.maigin}} <span :class="`status-label status${item.status}`">{{item.status | maiginStatus}}</span></td>
                 <td>{{item.startTime | dateformat('yyyy-MM-dd hh:mm:ss')}}</td>
                 <td>{{item.updateTime | dateformat('yyyy-MM-dd hh:mm:ss')}}</td>
                 <td>
@@ -64,7 +64,7 @@
       <div class="price-content">
         <div class="price-header">
           <div class="price-item price-item1">状态</div>
-          <div class="price-item price-item2">出价</div>
+          <div class="price-item price-item2">出价(元/吨)</div>
           <div class="price-item price-item3">时间</div>
         </div>
         <div class="price-list-main">

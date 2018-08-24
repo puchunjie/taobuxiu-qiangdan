@@ -868,6 +868,12 @@ export const putForwardList = '/demands/widthDraw/page'
  */
 export const widthDrawDetail = '/demands/widthDraw/detail'
 
+/**
+ * 是否开启支付
+ * **/
+
+ export const phonePay = '/api/query/phonePay'
+
 
 /**
  * 首页浮动广告
