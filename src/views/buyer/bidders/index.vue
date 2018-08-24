@@ -391,6 +391,21 @@
     .price-list-main {
       height: 400px;
       overflow: auto;
+       &::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+        background-color: #F5F5F5;
+      }
+       &::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        background-color: #F5F5F5;
+      }
+       &::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .1);
+        background-color: #ccc;
+      }
     }
     .price-list {
       height: 52px;

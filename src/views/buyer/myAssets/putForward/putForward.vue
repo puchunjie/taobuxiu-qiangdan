@@ -3,7 +3,7 @@
         <h3>输入提现金额</h3>
         <div class="from">
             <i-form ref="form1" :model="apiData" :rules="rules" :label-width="90">
-                <form-item label="可用余额：" class="group-item"> {{  account.account }} </form-item>
+                <form-item label="可用余额：" class="group-item"> {{ account.account }} </form-item>
                 <form-item label="可提金额：" class="group-item"> {{ account.account }} </form-item>
                 <form-item label="提现金额：" class="group-item" prop="amount">
                     <i-input style="width: 224px" placeholder="请输入" v-model="apiData.amount" class="form-input"></i-input>
@@ -22,7 +22,7 @@
                 <form-item label="提现账户：" class="group-item" prop="bankCardId">
                     <i-select v-model="apiData.bankCardId" style="width:560px">
                         <i-option v-for="(item,i) in accounts" :value="item.id" :key="i">
-                            {{ bankCardType == 1 ? '对公' : '个人' }} | {{ bankCardType == 1 ? atStr(item.accountType) : item.userName  }} | {{ bankCardType == 1 ? item.bank + '-' + item.bankName : item.bank }} | {{ item.bankCardNo }}
+                            {{ bankCardType == 1 ? '对公' : '个人' }} | {{ bankCardType == 1 ? atStr(item.accountType) : item.userName }} | {{ bankCardType == 1 ? item.bank + '-' + item.bankName : item.bank }} | {{ item.bankCardNo }}
                         </i-option>
                     </i-select>
                 </form-item>
@@ -30,7 +30,7 @@
         </div>
         <h3>其它信息</h3>
         <div class="from">
-            <i-form  ref="form3" :label-width="90">
+            <i-form ref="form3" :label-width="90">
                 <form-item label="备注：" class="group-item">
                     <i-input style="width:400px" v-model="apiData.remark" type="textarea" :autosize="{minRows: 4,maxRows: 5}" placeholder="请输入"></i-input>
                 </form-item>
@@ -86,24 +86,30 @@
                 }
             }
         },
+        watch: {
+            bankCardType() {
+                this.apiData.bankCardId = '';
+                this.$refs.form2.resetFields();
+            }
+        },
         computed: {
             ...mapGetters(['account'])
         },
         methods: {
             ...mapActions(['getAccount']),
-            atStr(value){
+            atStr(value) {
                 switch (Number(value)) {
                     case 1:
-                        return '基本账户'    
+                        return '基本账户'
                         break;
                     case 2:
-                        return '一般账户'    
+                        return '一般账户'
                         break;
                     case 3:
-                        return '专用账户'    
+                        return '专用账户'
                         break;
                     case 4:
-                        return '临时账户'    
+                        return '临时账户'
                         break;
                     default:
                         break;
@@ -119,39 +125,40 @@
                         this.accounts = res.data.data;
                     }
                 })
-                this.apiData.bankCardId = '';
-                this.$refs.form2.resetFields();
             },
             submit() {
-                let ok1 = true,ok2 = true;
+                let ok1 = true,
+                    ok2 = true;
                 this.$refs.form1.validate((valid) => ok1 = valid);
                 this.$refs.form2.validate((valid) => ok2 = valid);
-                if(ok1 && ok2){
-                    this.$http.post(this.$api.putForward,this.apiData).then(res => {
-                        if(res.code == 1000){
+                if (ok1 && ok2) {
+                    this.$http.post(this.$api.putForward, this.apiData).then(res => {
+                        if (res.code == 1000) {
                             this.$Modal.confirm({
                                 title: '提现申请已提交',
                                 content: '提现申请已提交，是否前往提现列表？',
                                 okText: '前往',
                                 cancelText: '继续提现',
                                 onOk: () => {
-                                    this.$router.replace({name: 'putForwardList'})
+                                    this.$router.replace({
+                                        name: 'putForwardList'
+                                    })
                                 },
-                                onCancel: ()=> {
+                                onCancel: () => {
                                     this.getAccount();
                                     this.reset();
                                 }
                             });
-                            
-                        }else{
+    
+                        } else {
                             this.$Message.error(res.message)
                         }
                     })
-                }else{
+                } else {
                     this.$Message.warning('请填写必填项');
                 }
             },
-            reset(){
+            reset() {
                 this.$refs.form1.resetFields();
                 this.$refs.form2.resetFields();
                 this.apiData.remark = '';
