@@ -119,6 +119,8 @@
                         this.accounts = res.data.data;
                     }
                 })
+                this.apiData.bankCardId = '';
+                this.$refs.form2.resetFields();
             },
             submit() {
                 let ok1 = true,ok2 = true;

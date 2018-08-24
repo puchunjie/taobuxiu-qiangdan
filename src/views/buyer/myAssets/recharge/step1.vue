@@ -108,6 +108,7 @@
                 })
     
             },
+            //  是否开启支付宝微信支付
             getPay() {
                 this.$http.post(this.$api.phonePay).then(res => {
                     if (res.code === 1000) {
