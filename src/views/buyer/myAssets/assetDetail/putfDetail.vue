@@ -54,7 +54,7 @@
                     <h2>申请提现</h2>
                     <p>操作人：{{ data.createUser }}</p>
                     <p>提现编号：{{ data.withDrawId }}</p>
-                    <p>操作时间：{{ data.createTime | dateformat }}</p>
+                    <p>操作时间：{{ data.tradeTime | dateformat }}</p>
                 </template>
 
                 <template slot="right">
@@ -62,19 +62,19 @@
                         <h2>提现成功</h2>
                         <p>操作人：{{ data.createUser }}</p>
                         <p>提现编号：{{ data.withDrawId }}</p>
-                        <p>操作时间：{{ data.updateTime | dateformat }}</p>
+                        <p>操作时间：{{ data.createTime | dateformat }}</p>
                     </template>
                     <template v-if="data.tradeSt == 2">
                         <h2>提现失败</h2>
                         <p>操作人：{{ data.createUser }}</p>
                         <p>提现编号：{{ data.withDrawId }}</p>
-                        <p>操作时间：{{ data.updateTime | dateformat }}</p>
+                        <p>操作时间：{{ data.createTime | dateformat }}</p>
                     </template>
                     <template v-if="data.tradeSt == 3">
                         <h2>提现撤回</h2>
                         <p>操作人：{{ data.createUser }}</p>
                         <p>提现编号：{{ data.withDrawId }}</p>
-                        <p>操作时间：{{ data.updateTime | dateformat }}</p>
+                        <p>操作时间：{{ data.createTime | dateformat }}</p>
                     </template>
                 </template>
             </prog>

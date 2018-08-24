@@ -26,7 +26,7 @@
                     <h2>冻结中</h2>
                     <p>操作人：{{ data.createUser }}</p>
                     <p>拍卖场次：{{ data.auctionIndex }}</p>
-                    <p>操作时间：{{ data.createTime | dateformat }}</p>
+                    <p>操作时间：{{ data.tradeTime | dateformat }}</p>
                 </template>
 
                 <template slot="right">
@@ -37,7 +37,7 @@
                         <h2>流拍，退回余额</h2>
                         <p>操作人：{{ data.createUser }}</p>
                         <p>拍卖场次：{{ data.auctionIndex }}</p>
-                        <p>操作时间：{{ data.updateTime | dateformat }}</p>
+                        <p>操作时间：{{ data.createTime | dateformat }}</p>
                     </template>
                 </template>
             </prog>

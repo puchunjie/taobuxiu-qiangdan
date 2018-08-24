@@ -7,9 +7,9 @@
                     <div class="item" :class="{'active': activeSort == i}" v-for="(sort,i) in sorts" :key='i' @click="switchSort(sort,i)">
                         {{ sort.label }}
                         <template v-if="sort.sort != null">
-                            <i class="iconfont icon-caret-up" :class="{'active': sort.sort}"></i>
-                            <i class="iconfont icon-caret-down" :class="{'active': !sort.sort}"></i>
-                        </template>
+                                <i class="iconfont icon-caret-up" :class="{'active': sort.sort}"></i>
+                                <i class="iconfont icon-caret-down" :class="{'active': !sort.sort}"></i>
+</template>
                     </div>
                     <div class="simple-page">
                         <Page @on-change="getList" :total="totalCount" :current.sync="page.currentPage" :page-size="page.pageSize" @on-page-size-change="initList" size="small" show-elevator show-sizer />
@@ -57,26 +57,29 @@
                                     <div style="width:190px">{{ item.weight }}KG</div>
                                     <label class="tit">产地</label>
                                     <div style="width:260px">{{ item.proPlace }}</div>
-                                    <template v-if="item.status == 1">
-                                        <label class="tit">加价幅度</label>
-                                        <div style="width:310px" class="red bold">{{ item.priceStep }}元/吨</div>
-                                    </template>
-                                    <template v-if="item.status == 2">
-                                        <label class="tit">当前价</label>
-                                        <div style="width:310px" class="red bold">{{ item.currentPrice }}元/吨</div>
-                                    </template>
-                                    <template v-if="item.status == 3 && item.money != ''">
-                                        <label class="tit">成交价</label>
-                                        <div style="width:310px" class="red bold">{{ item.money }}元/吨</div>
-                                    </template>
-                                    <template v-if="item.status == 3 && item.auctionInfos.length === 1 && item.auctionInfos[0].status == 3">
-                                        <label class="tit">状态</label>
-                                        <div style="width:310px" class="red bold">已流拍</div>
-                                    </template>
-                                    <template v-if="item.status == 3 && item.isBatch">
-                                        <label class="tit">成交价</label>
-                                        <div style="width:310px" class="some" @click="toggleAuctionInfos(item)">多个结果<i class="iconfont"  :class="item.isOpen ? 'icon-up' : 'icon-down'"></i></div>
-                                    </template>
+<template v-if="item.status == 1">
+    <label class="tit">加价幅度</label>
+    <div style="width:310px" class="red bold">{{ item.priceStep }}元/吨</div>
+</template>
+
+<template v-if="item.status == 2">
+    <label class="tit">当前价</label>
+    <div style="width:310px" class="red bold">{{ item.currentPrice }}元/吨</div>
+</template>
+
+<template v-if="item.status == 3 && item.money != ''">
+    <label class="tit">成交价</label>
+    <div style="width:310px" class="red bold">{{ item.money }}元/吨</div>
+</template>
+
+<template v-if="item.status == 3 && item.auctionInfos.length === 1 && item.auctionInfos[0].status == 3">
+    <label class="tit">已流拍</label>
+</template>
+
+<template v-if="item.status == 3 && item.isBatch">
+    <label class="tit">成交价</label>
+    <div style="width:310px" class="some" @click="toggleAuctionInfos(item)">多个结果<i class="iconfont" :class="item.isOpen ? 'icon-up' : 'icon-down'"></i></div>
+</template>
                                     
                                 </div>
                                 <div class="group">
@@ -97,18 +100,18 @@
                                     <div>{{ el.weight }}KG</div>
                                     <label class="tit">数量</label>
                                     <div>{{ el.number }}</div>
-                                    <template v-if="item.status == 2">
-                                        <label class="tit">当前价</label>
-                                        <div class="red bold">{{ el.currentPrice }}</div>
-                                    </template>
+<template v-if="item.status == 2">
+    <label class="tit">当前价</label>
+    <div class="red bold">{{ el.currentPrice }}</div>
+</template>
 
                                     <div class="prcie" v-show="item.status == 2">
                                         <span class="red bold">{{ el.priceNumber }}</span>次出价
                                     </div>
                                     <div class="state" v-show="item.status == 3">
-                                        <template v-if="el.status == 2">
-                                            成交价 <span  class="red bold">{{ el.money }}元/吨</span>
-                                        </template>
+<template v-if="el.status == 2">
+     成交价 <span class="red bold">{{ el.money }}元/吨</span>
+</template>
                                         <span class="lp" v-show="el.status == 3">已流拍</span>
                                     </div>
                                 </router-link>
@@ -133,7 +136,11 @@
             </div>
         </div>
         <div class="inner-container"><process></process></div>
-        <div style="background-color: #3E3C3A"><publicFooter></publicFooter></div>
+        <div style="background-color: #3E3C3A">
+            <div class="footer-warpper">
+                <publicFooter></publicFooter>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -173,7 +180,7 @@
                     price: '', //按价格排序（true正序 false 倒序）
                     endTime: '', //按结束时间排序（true正序 false 倒序）
                 },
-                page:{
+                page: {
                     currentPage: 1,
                     pageSize: 10
                 },
@@ -231,10 +238,10 @@
                 this.getList();
             },
             // 获取拍卖列表
-            getList(){
-                let params = Object.assign(this.listParams,this.page)
-                this.$http.post(this.$api.findAuctionList,params).then(res =>{
-                    if(res.code === 1000){
+            getList() {
+                let params = Object.assign(this.listParams, this.page)
+                this.$http.post(this.$api.findAuctionList, params).then(res => {
+                    if (res.code === 1000) {
                         this.list = res.data.list.map(item => {
                             item.isOpen = false;
                             return item
@@ -245,36 +252,41 @@
                 })
             },
             // 获取公告
-            getauctionAffiche(){
-                this.$http.post(this.$api.auctionAffiche,{
+            getauctionAffiche() {
+                this.$http.post(this.$api.auctionAffiche, {
                     currentPage: 1,
                     pageSize: 6
                 }).then(res => {
-                    if(res.code === 1000){
+                    if (res.code === 1000) {
                         this.affiches = res.data.list;
                     }
                 })
             },
-            initList(data){
+            initList(data) {
                 this.page.pageSize = data;
                 this.getList();
             },
             //展开搜索
-            toggleAuctionInfos(item){
-                if(!item.isBatch) return 
+            toggleAuctionInfos(item) {
+                if (!item.isBatch) return
                 item.isOpen = !item.isOpen
             },
             // 进入详情
-            goDetail(item){
-                if(item.isBatch) return 
-                this.$router.push({ name: 'auctionDetail', params: { id: item.auctionInfos[0].auctionInfoId } })
+            goDetail(item) {
+                if (item.isBatch) return
+                this.$router.push({
+                    name: 'auctionDetail',
+                    params: {
+                        id: item.auctionInfos[0].auctionInfoId
+                    }
+                })
             },
-            goNews(item){
+            goNews(item) {
                 console.log(item.id)
                 window.open(`http://www.itaobuxiu.com/portal/newsDetail?id=${item.id}`)
             }
         },
-        created(){
+        created() {
             this.getauctionAffiche();
         }
     }
@@ -328,37 +340,35 @@
                     top: 3px;
                 }
             }
-
-            .simple-page{
+            .simple-page {
                 position: absolute;
                 right: 16px;
             }
         }
         .body-warp {
             width: 984px;
-            padding-bottom: 20px; 
+            padding-bottom: 20px;
             margin-top: 24px;
             float: left;
-            .page-count{
+            .page-count {
                 text-align: center;
                 margin-top: 10px;
             }
         }
-
-        .notice-warp{
+        .notice-warp {
             width: 312px;
             height: 254px;
             margin-top: 24px;
             background-color: #fff;
             padding: 20px;
             float: right;
-            .tit{
+            .tit {
                 color: @f_dark;
                 font-weight: bold;
                 line-height: 24px;
                 font-size: 16px;
                 margin-bottom: 10px;
-                span{
+                span {
                     display: inline-block;
                     width: 4px;
                     height: 20px;
@@ -366,18 +376,17 @@
                     vertical-align: middle;
                 }
             }
-
-            .item{
+            .item {
                 position: relative;
                 width: 100%;
                 margin-top: 10px;
                 color: @f_ligth;
                 font-size: 14px;
                 cursor: pointer;
-                &:hover{
+                &:hover {
                     color: @dark_blue;
                 }
-                span{
+                span {
                     position: absolute;
                     right: 0;
                 }
@@ -386,7 +395,7 @@
         .list-container {
             width: 100%;
             margin-bottom: 8px;
-            .empty-img{
+            .empty-img {
                 display: block;
                 width: 166px;
                 margin: 50px auto 0;
@@ -397,7 +406,7 @@
             .bold {
                 font-weight: bold;
             }
-            .some{
+            .some {
                 cursor: pointer;
             }
             .tit {
@@ -420,12 +429,11 @@
                     height: 20px;
                     color: @f_dark;
                     padding: 0 16px;
-                    .spec-link:hover{
+                    .spec-link:hover {
                         color: @dark_blue;
                         cursor: pointer;
                     }
-
-                    & > span {
+                    &>span {
                         margin-right: 8px;
                     }
                     .tag {
@@ -486,7 +494,7 @@
                         position: absolute;
                         right: 16px;
                         margin: 0;
-                        &.st3{
+                        &.st3 {
                             color: @f_goast;
                         }
                     }
@@ -528,8 +536,7 @@
                             cursor: pointer;
                         }
                     }
-
-                    .state-tip{
+                    .state-tip {
                         position: absolute;
                         width: 80px;
                         height: 40px;
@@ -538,46 +545,42 @@
                         color: @dark_green;
                         background-color: #E8F5E9;
                         text-align: center;
-                        &.tip3{
+                        &.tip3 {
                             color: @f_ligth;
                             background-color: #E8E8E8;
                         }
                     }
-
-                    .state-tip1{
+                    .state-tip1 {
                         position: absolute;
                         color: @dark_green;
                         right: 16px;
                         top: 20px;
                         cursor: pointer;
-                        .iconfont{
+                        .iconfont {
                             font-size: 14px;
                         }
                     }
-
-                    .state-tip3{
+                    .state-tip3 {
                         position: absolute;
                         color: @f_goast;
                         right: 16px;
                         top: 20px;
                         cursor: pointer;
-                        .iconfont{
+                        .iconfont {
                             font-size: 14px;
                         }
                     }
-                    
                 }
-
-                .price-list{
+                .price-list {
                     width: 100%;
                     margin-top: 16px;
                     background-color: #fff;
                     height: 0;
-                    .list-item{
+                    .list-item {
                         width: 100%;
                         height: 64px;
                         line-height: 64px;
-                        .inner{
+                        .inner {
                             .flex-block;
                             position: relative;
                             width: 100%;
@@ -585,15 +588,13 @@
                             margin-left: 24px;
                             border-left: 1px solid #E9E9E9;
                             cursor: pointer;
-                            &:not(:last-child){
+                            &:not(:last-child) {
                                 border-left: 1px solid #E9E9E9;
                             }
-
-                            &:hover{
+                            &:hover {
                                 background-color: #FAFAFA;
                             }
-
-                            &:before{
+                            &:before {
                                 position: absolute;
                                 left: -4px;
                                 top: 28px;
@@ -604,46 +605,47 @@
                                 .borderRadius(8px);
                                 background-color: #E9E9E9;
                             }
-
-                            .desc{
+                            .desc {
                                 color: @f_dark;
                                 margin-left: 30px;
                                 cursor: pointer;
-                                &:hover{
+                                &:hover {
                                     color: @dark_blue;
                                 }
                             }
-
-                            .tit{
+                            .tit {
                                 margin-left: 50px;
                             }
-
-                            .prcie{
+                            .prcie {
                                 position: absolute;
                                 color: @f_goast;
                                 right: 40px;
                             }
-
-                            .state{
+                            .state {
                                 position: absolute;
                                 color: @f_goast;
                                 right: 40px;
-                                .lp{
+                                .lp {
                                     font-weight: bold;
                                 }
                             }
                         }
                     }
                 }
-
-                &.open .price-list{
+                &.open .price-list {
                     height: auto;
                     border-top: 1px solid #E9E9E9;
                 }
-                &:hover{
+                &:hover {
                     border-color: #FFA39E;
                 }
             }
         }
+    }
+    
+    .footer-warpper {
+        width: 1320px;
+        height: 100%;
+        margin: 0 auto;
     }
 </style>
