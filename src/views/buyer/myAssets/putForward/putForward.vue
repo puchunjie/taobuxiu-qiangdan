@@ -88,6 +88,7 @@
         },
         watch: {
             bankCardType() {
+                this.accounts = [];
                 this.apiData.bankCardId = '';
                 this.$refs.form2.resetFields();
             }
