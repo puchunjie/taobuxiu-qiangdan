@@ -203,6 +203,7 @@
                         this.$parent.auctionInfo.currentPrice = Number(this.payMoney);
                         this.$parent.hasPrice = true;
                         this.$parent.$refs.offerRecord.getList();
+                        this.$parent.isOffer = true; //更新掉是否出过价
                         //如果正好选在出价列表上，则更新
                         if(this.$parent.tabValue == 'record'){
                             this.$parent.$refs.record.updateSinge()

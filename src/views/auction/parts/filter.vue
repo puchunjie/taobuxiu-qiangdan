@@ -196,10 +196,14 @@
                 
             },
             //规格重置
-            specReset(){
+            specReset(data){
                 let inSide = this.filterResults.findIndex(el => el.key == "specification,heightMin,heightMax,widthMin,widthMax,lengthMin,lengthMax" );
                 if(inSide >=0)
                     this.filterResults.splice(inSide, 1);
+
+                for (let key in data) {
+                    this.listParams[key] = data[key];
+                }   
             },
             // 拼装规格
             assemble(min,max){

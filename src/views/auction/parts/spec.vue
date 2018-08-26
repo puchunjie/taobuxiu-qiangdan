@@ -90,7 +90,8 @@
             },
             cancel(){
                 this.init();
-                this.$emit('on-reset');
+                let data = this.$clearData(this.params);
+                this.$emit('on-reset',data);
             },
             init() {
                 this.params.specification = '';

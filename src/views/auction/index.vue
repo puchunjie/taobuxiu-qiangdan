@@ -9,7 +9,7 @@
                         <template v-if="sort.sort != null">
                                 <i class="iconfont icon-caret-up" :class="{'active': sort.sort}"></i>
                                 <i class="iconfont icon-caret-down" :class="{'active': !sort.sort}"></i>
-</template>
+                        </template>
                     </div>
                     <div class="simple-page">
                         <Page @on-change="getList" :total="totalCount" :current.sync="page.currentPage" :page-size="page.pageSize" @on-page-size-change="initList" size="small" show-elevator show-sizer />
@@ -57,29 +57,29 @@
                                     <div style="width:190px">{{ item.weight }}KG</div>
                                     <label class="tit">产地</label>
                                     <div style="width:260px">{{ item.proPlace }}</div>
-<template v-if="item.status == 1">
-    <label class="tit">加价幅度</label>
-    <div style="width:310px" class="red bold">{{ item.priceStep }}元/吨</div>
-</template>
+                                    <template v-if="item.status == 1">
+                                        <label class="tit">加价幅度</label>
+                                        <div style="width:310px" class="red bold">{{ item.priceStep }}元/吨</div>
+                                    </template>
 
-<template v-if="item.status == 2">
-    <label class="tit">当前价</label>
-    <div style="width:310px" class="red bold">{{ item.currentPrice }}元/吨</div>
-</template>
+                                    <template v-if="item.status == 2">
+                                        <label class="tit">当前价</label>
+                                        <div style="width:310px" class="red bold">{{ item.currentPrice }}元/吨</div>
+                                    </template>
 
-<template v-if="item.status == 3 && item.money != ''">
-    <label class="tit">成交价</label>
-    <div style="width:310px" class="red bold">{{ item.money }}元/吨</div>
-</template>
+                                    <template v-if="item.status == 3 && item.money != ''">
+                                        <label class="tit">成交价</label>
+                                        <div style="width:310px" class="red bold">{{ item.money }}元/吨</div>
+                                    </template>
 
-<template v-if="item.status == 3 && item.auctionInfos.length === 1 && item.auctionInfos[0].status == 3">
-    <label class="tit">已流拍</label>
-</template>
+                                    <template v-if="item.status == 3 && item.auctionInfos.length === 1 && item.auctionInfos[0].status == 3">
+                                        <label class="tit">已流拍</label>
+                                    </template>
 
-<template v-if="item.status == 3 && item.isBatch">
-    <label class="tit">成交价</label>
-    <div style="width:310px" class="some" @click="toggleAuctionInfos(item)">多个结果<i class="iconfont" :class="item.isOpen ? 'icon-up' : 'icon-down'"></i></div>
-</template>
+                                    <template v-if="item.status == 3 && item.isBatch">
+                                        <label class="tit">成交价</label>
+                                        <div style="width:310px" class="some" @click="toggleAuctionInfos(item)">多个结果<i class="iconfont" :class="item.isOpen ? 'icon-up' : 'icon-down'"></i></div>
+                                    </template>
                                     
                                 </div>
                                 <div class="group">
@@ -100,18 +100,18 @@
                                     <div>{{ el.weight }}KG</div>
                                     <label class="tit">数量</label>
                                     <div>{{ el.number }}</div>
-<template v-if="item.status == 2">
-    <label class="tit">当前价</label>
-    <div class="red bold">{{ el.currentPrice }}</div>
-</template>
+                                    <template v-if="item.status == 2">
+                                        <label class="tit">当前价</label>
+                                        <div class="red bold">{{ el.currentPrice }}元/吨</div>
+                                    </template>
 
                                     <div class="prcie" v-show="item.status == 2">
                                         <span class="red bold">{{ el.priceNumber }}</span>次出价
                                     </div>
                                     <div class="state" v-show="item.status == 3">
-<template v-if="el.status == 2">
-     成交价 <span class="red bold">{{ el.money }}元/吨</span>
-</template>
+                                    <template v-if="el.status == 2">
+                                        成交价 <span class="red bold">{{ el.money }}元/吨</span>
+                                    </template>
                                         <span class="lp" v-show="el.status == 3">已流拍</span>
                                     </div>
                                 </router-link>
@@ -211,6 +211,7 @@
         methods: {
             //更新api参数
             updateParams(params) {
+                console.log(params)
                 for (let key in params) {
                     this.listParams[key] = params[key]
                 }
@@ -282,7 +283,6 @@
                 })
             },
             goNews(item) {
-                console.log(item.id)
                 window.open(`http://www.itaobuxiu.com/portal/newsDetail?id=${item.id}`)
             }
         },
