@@ -3,8 +3,8 @@
         <div class="header">
             <span class="tag">{{ data.goodsType }}</span>
             <span class="category">{{ data.ironType }}</span>
-            <span v-if="!data.pack">{{ data.material }}/{{ data.surface }}/{{ data.specifiction ? data.specifiction : `${ data.height }*${ data.width }*${ data.length }` }}</span>
-            <span v-else>{{ data.packDescription }}</span>
+            <span style="font-size:14px" v-if="!data.pack">{{ data.material }}/{{ data.surface }}/{{ data.specifiction ? data.specifiction : `${ data.height }*${ data.width }*${ data.length }` }}/({{ data.tolerance }})</span>
+            <span style="font-size:14px" v-else>{{ data.packDescription }}</span>
             <span class="has-b-price" :class="{'disable': data.reservePrice == ''}">{{ data.reservePrice == '' ? '无' : '有' }}底价</span>
     
             <div class="merchant"><label>送拍商户：</label>{{ data.companyName }}</div>
@@ -131,6 +131,7 @@
             }
             .category {
                 font-weight: bold;
+                font-size: 16px;
             }
             .has-b-price {
                 position: relative;

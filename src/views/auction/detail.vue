@@ -222,6 +222,7 @@
     @import url('./parts/auctionBar.less');
     .auction-detail {
         margin-top: 24px;
+        font-size: 14px;
         .links {
             color: @f_ligth;
             font-size: 12px;
