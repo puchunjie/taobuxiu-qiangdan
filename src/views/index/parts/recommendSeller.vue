@@ -27,17 +27,17 @@
                     id: "402880f25f725cc7015f725dd657022e",
                     img: "shop4"
                 },{
-                    id: "402880f25f725cc7015f725d4eb20104",
-                    img: "shop5"
+                    id: "",
+                    img: "shop0"
                 },{
-                    id: "402880f25f725fca015f7263407204bf",
-                    img: "shop6"
+                    id: "",
+                    img: "shop0"
                 },{
-                    id: "402880f25f725cc7015f725d4ff00106",
-                    img: "shop7"
+                    id: "",
+                    img: "shop0"
                 },{
-                    id: "402880f25f725fca015f7261ee67017f",
-                    img: "shop8"
+                    id: "",
+                    img: "shop0"
                 },{
                     id: "2c90182f608259c00160b61357f0081e",
                     img: "shop9"

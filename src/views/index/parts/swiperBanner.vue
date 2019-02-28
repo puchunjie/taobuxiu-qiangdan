@@ -3,7 +3,7 @@
         <div class="swiper-wrapper">
             <div class="swiper-slide" v-for="(el,i) in data" :key="i">
                 <a :href="el != '' ? `/qd/shop-${el}/iron-1` : 'javascript:void(0);'" target="_blank">
-                    <img :src="`http://tbxoss.oss-cn-hangzhou.aliyuncs.com/assets/banner/banner${i+1}.png`">
+                    <img :src="`http://tbxoss.oss-cn-hangzhou.aliyuncs.com/assets/banner/banner${ el != '' ? i+1 : '1'}.png`">
                 </a>
             </div>
         </div>
@@ -26,9 +26,9 @@
                 data: [
                     '',
                     '402880f25f725cc7015f725daf8701d8',
-                    '402880f25f725fca015f7263b4dd05cb',
-                    '402880f25f725cc7015f725cf978004c',
-                    '402880f25f725cc7015f725da10e01b8',
+                    '',
+                    '',
+                    '',
                     '402880f25f725fca015f72628c2e030d'
                 ]
             }

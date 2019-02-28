@@ -21,6 +21,13 @@
         </div>
     </div>
 </template>
+<script>
+export default {
+    created(){
+        document.querySelector('.govicon').className = 'govicon goviconShow'
+    }
+}
+</script>
 
 <style lang="less" scoped>
     @import '../assets/base.less';

@@ -14,7 +14,14 @@
   // html,body{
   //   height: 100%;
   // }
-
+  .govicon{
+    text-align: center;
+    background-color: #3E3C3A;
+    display: none;
+    &.goviconShow{
+      display: block;
+    }
+  }
   .main-container {
     width: 100%;
     min-width: 1360px;
